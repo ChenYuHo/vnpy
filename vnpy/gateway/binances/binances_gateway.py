@@ -270,7 +270,7 @@ class BinancesRestApi(RestClient):
 
         self.start(session_number)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
         self.query_time()
         self.query_account()
@@ -457,7 +457,7 @@ class BinancesRestApi(RestClient):
             if account.balance:
                 self.gateway.on_account(account)
 
-        self.gateway.write_log("账户资金查询成功")
+        self.gateway.write_log("賬戶資金查詢成功")
 
     def on_query_position(self, data: dict, request: Request) -> None:
         """"""
@@ -475,7 +475,7 @@ class BinancesRestApi(RestClient):
             if position.volume:
                 self.gateway.on_position(position)
 
-        self.gateway.write_log("持仓信息查询成功")
+        self.gateway.write_log("持倉資訊查詢成功")
 
     def on_query_order(self, data: dict, request: Request) -> None:
         """"""
@@ -499,7 +499,7 @@ class BinancesRestApi(RestClient):
             )
             self.gateway.on_order(order)
 
-        self.gateway.write_log("委托信息查询成功")
+        self.gateway.write_log("委託資訊查詢成功")
 
     def on_query_contract(self, data: dict, request: Request) -> None:
         """"""
@@ -532,7 +532,7 @@ class BinancesRestApi(RestClient):
 
             symbol_name_map[contract.symbol] = contract.name
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
     def on_send_order(self, data: dict, request: Request) -> None:
         """"""
@@ -546,7 +546,7 @@ class BinancesRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"委托失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"委託失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -613,13 +613,13 @@ class BinancesRestApi(RestClient):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空，开始时间：{start_time}"
+                    msg = f"獲取歷史資料為空，開始時間：{start_time}"
                     self.gateway.write_log(msg)
                     break
 
@@ -644,7 +644,7 @@ class BinancesRestApi(RestClient):
 
                 begin = buf[0].datetime
                 end = buf[-1].datetime
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Break if total data count less than limit (latest date collected)
@@ -675,7 +675,7 @@ class BinancesTradeWebsocketApi(WebsocketClient):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("交易Websocket API连接成功")
+        self.gateway.write_log("交易Websocket API連線成功")
 
     def on_packet(self, packet: dict) -> None:  # type: (dict)->None
         """"""
@@ -777,12 +777,12 @@ class BinancesDataWebsocketApi(WebsocketClient):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("行情Websocket API连接刷新")
+        self.gateway.write_log("行情Websocket API連線重新整理")
 
     def subscribe(self, req: SubscribeRequest) -> None:
         """"""
         if req.symbol not in symbol_name_map:
-            self.gateway.write_log(f"找不到该合约代码{req.symbol}")
+            self.gateway.write_log(f"找不到該合約程式碼{req.symbol}")
             return
 
         # Create tick buf data

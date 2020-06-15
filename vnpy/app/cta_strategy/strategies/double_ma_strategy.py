@@ -11,7 +11,7 @@ from vnpy.app.cta_strategy import (
 
 
 class DoubleMaStrategy(CtaTemplate):
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     fast_window = 10
     slow_window = 20
@@ -43,7 +43,7 @@ class DoubleMaStrategy(CtaTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
         self.put_event()
 
     def on_stop(self):

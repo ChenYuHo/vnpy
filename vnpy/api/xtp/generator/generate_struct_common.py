@@ -24,7 +24,7 @@ class StructGenerator:
         self.SHORT2FULL: Dict[str, str] = {}
 
     def run(self):
-        """运行生成"""
+        """執行生成"""
         self.f_cpp = open(self.filename, "r", encoding="UTF-8")
         self.f_struct = open("test_xtp_struct_common.py", "w", encoding="UTF-8")
 
@@ -65,7 +65,7 @@ class StructGenerator:
             self.f_struct.write(new_line)
 
     def process_line(self, line: str):
-        """处理每行"""
+        """處理每行"""
         line = line.replace(";", "")
         line = line.replace("\n", "")
 

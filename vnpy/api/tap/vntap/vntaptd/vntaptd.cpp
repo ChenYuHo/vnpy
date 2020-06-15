@@ -1,5 +1,5 @@
 ﻿
-// vntaptd.cpp : 定义 DLL 应用程序的导出函数。
+// vntaptd.cpp : 定義 DLL 應用程式的匯出函式。
 //
 
 #include "vntaptd.h"
@@ -8,11 +8,11 @@
 
 //test3
 
-//用户名密码
+//使用者名稱密碼
 #define DEFAULT_USERNAME	("Q779375914")
 #define DEFAULT_PASSWORD	("123456")
 
-//下单
+//下單
 #define DEFAULT_ACCOUNT_NO		(DEFAULT_USERNAME)
 #define DEFAULT_EXCHANGE_NO		("NYMEX")
 #define DEFAULT_COMMODITY_TYPE	(TAPI_COMMODITY_TYPE_FUTURES)
@@ -25,7 +25,7 @@
 
 
 ///-------------------------------------------------------------------------------------
-///C++的回调函数将数据保存到队列中
+///C++的回撥函式將資料儲存到佇列中
 ///-------------------------------------------------------------------------------------
 
 void TdApi::OnConnect()
@@ -755,7 +755,7 @@ void TdApi::OnRspFillLocalRemove(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAP
 
 
 ///-------------------------------------------------------------------------------------
-///工作线程从队列中取出数据，转化为python对象后，进行推送
+///工作執行緒從佇列中取出資料，轉化為python物件後，進行推送
 ///-------------------------------------------------------------------------------------
 
 void TdApi::processTask()
@@ -2826,7 +2826,7 @@ void TdApi::processRspFillLocalRemove(Task *task)
 
 
 ///-------------------------------------------------------------------------------------
-///主动函数
+///主動函式
 ///-------------------------------------------------------------------------------------
 
 void TdApi::createITapTradeAPI(const dict &req, int iResult)
@@ -2835,8 +2835,8 @@ void TdApi::createITapTradeAPI(const dict &req, int iResult)
 	memset(&myreq, 0, sizeof(myreq));
 	getString(req, "AuthCode", myreq.AuthCode);
 	getString(req, "KeyOperationLogPath", myreq.KeyOperationLogPath);
-	this->api = (ITapTradeAPI*)CreateITapTradeAPI(&myreq, iResult); // 创建API接口对象
-	this->api->SetAPINotify(this);  //注册回调函数对象
+	this->api = (ITapTradeAPI*)CreateITapTradeAPI(&myreq, iResult); // 建立API介面物件
+	this->api->SetAPINotify(this);  //註冊回撥函式物件
 };
 
 void TdApi::release()
@@ -3276,7 +3276,7 @@ int TdApi::qryAccountMarginRent(const dict &req)
 };
 
 ///-------------------------------------------------------------------------------------
-///Boost.Python封装
+///Boost.Python封裝
 ///-------------------------------------------------------------------------------------
 
 class PyTdApi : public TdApi

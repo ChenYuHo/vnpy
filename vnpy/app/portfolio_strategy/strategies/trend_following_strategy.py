@@ -8,7 +8,7 @@ from vnpy.trader.object import TickData, BarData
 class TrendFollowingStrategy(StrategyTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     atr_window = 22
     atr_ma_window = 10
@@ -70,7 +70,7 @@ class TrendFollowingStrategy(StrategyTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

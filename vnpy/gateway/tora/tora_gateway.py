@@ -24,10 +24,10 @@ class ToraGateway(BaseGateway):
     """"""
 
     default_setting = {
-        "账号": "",
-        "密码": "",
-        "交易服务器": "",
-        "行情服务器": "",
+        "賬號": "",
+        "密碼": "",
+        "交易伺服器": "",
+        "行情伺服器": "",
     }
 
     exchanges = list(EXCHANGE_VT2TORA.keys())
@@ -44,10 +44,10 @@ class ToraGateway(BaseGateway):
 
     def connect(self, setting: dict):
         """"""
-        username = setting['账号']
-        password = setting['密码']
-        td_address = setting["交易服务器"]
-        md_address = setting["行情服务器"]
+        username = setting['賬號']
+        password = setting['密碼']
+        td_address = setting["交易伺服器"]
+        md_address = setting["行情伺服器"]
 
         if not is_valid_front_address(td_address):
             td_address = "tcp://" + td_address
@@ -92,5 +92,5 @@ class ToraGateway(BaseGateway):
         self._td_api.query_positions()
 
     def _async_callback_exception_handler(self, e: AsyncDispatchException):
-        error_str = f"发生内部错误：\n" f"位置：{e.instance}.{e.function_name}" f"详细信息：{e.what}"
+        error_str = f"發生內部錯誤：\n" f"位置：{e.instance}.{e.function_name}" f"詳細資訊：{e.what}"
         self.write_log(error_str)

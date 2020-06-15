@@ -99,13 +99,13 @@ class RecorderEngine(BaseEngine):
     def add_bar_recording(self, vt_symbol: str):
         """"""
         if vt_symbol in self.bar_recordings:
-            self.write_log(f"已在K线记录列表中：{vt_symbol}")
+            self.write_log(f"已在K線記錄列表中：{vt_symbol}")
             return
 
         if Exchange.LOCAL.value not in vt_symbol:
             contract = self.main_engine.get_contract(vt_symbol)
             if not contract:
-                self.write_log(f"找不到合约：{vt_symbol}")
+                self.write_log(f"找不到合約：{vt_symbol}")
                 return
 
             self.bar_recordings[vt_symbol] = {
@@ -121,19 +121,19 @@ class RecorderEngine(BaseEngine):
         self.save_setting()
         self.put_event()
 
-        self.write_log(f"添加K线记录成功：{vt_symbol}")
+        self.write_log(f"新增K線記錄成功：{vt_symbol}")
 
     def add_tick_recording(self, vt_symbol: str):
         """"""
         if vt_symbol in self.tick_recordings:
-            self.write_log(f"已在Tick记录列表中：{vt_symbol}")
+            self.write_log(f"已在Tick記錄列表中：{vt_symbol}")
             return
 
         # For normal contract
         if Exchange.LOCAL.value not in vt_symbol:
             contract = self.main_engine.get_contract(vt_symbol)
             if not contract:
-                self.write_log(f"找不到合约：{vt_symbol}")
+                self.write_log(f"找不到合約：{vt_symbol}")
                 return
 
             self.tick_recordings[vt_symbol] = {
@@ -150,31 +150,31 @@ class RecorderEngine(BaseEngine):
         self.save_setting()
         self.put_event()
 
-        self.write_log(f"添加Tick记录成功：{vt_symbol}")
+        self.write_log(f"新增Tick記錄成功：{vt_symbol}")
 
     def remove_bar_recording(self, vt_symbol: str):
         """"""
         if vt_symbol not in self.bar_recordings:
-            self.write_log(f"不在K线记录列表中：{vt_symbol}")
+            self.write_log(f"不在K線記錄列表中：{vt_symbol}")
             return
 
         self.bar_recordings.pop(vt_symbol)
         self.save_setting()
         self.put_event()
 
-        self.write_log(f"移除K线记录成功：{vt_symbol}")
+        self.write_log(f"移除K線記錄成功：{vt_symbol}")
 
     def remove_tick_recording(self, vt_symbol: str):
         """"""
         if vt_symbol not in self.tick_recordings:
-            self.write_log(f"不在Tick记录列表中：{vt_symbol}")
+            self.write_log(f"不在Tick記錄列表中：{vt_symbol}")
             return
 
         self.tick_recordings.pop(vt_symbol)
         self.save_setting()
         self.put_event()
 
-        self.write_log(f"移除Tick记录成功：{vt_symbol}")
+        self.write_log(f"移除Tick記錄成功：{vt_symbol}")
 
     def register_event(self):
         """"""

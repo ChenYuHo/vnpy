@@ -160,13 +160,13 @@ class BitstampGateway(BaseGateway):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空，开始时间：{req.start}"
+                    msg = f"獲取歷史資料為空，開始時間：{req.start}"
                     self.write_log(msg)
                     break
 
@@ -190,7 +190,7 @@ class BitstampGateway(BaseGateway):
 
                 begin = buf[0].datetime
                 end = buf[-1].datetime
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.write_log(msg)
 
                 # Update start time
@@ -250,7 +250,7 @@ class BitstampRestApi(RestClient):
         self.init(REST_HOST, proxy_host, proxy_port)
         self.start(3)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
         self.query_contract()
         self.query_account()
@@ -360,7 +360,7 @@ class BitstampRestApi(RestClient):
         )
 
     def on_query_order(self, data, request):
-        """获取委托订单"""
+        """獲取委託訂單"""
         for d in data:
             sys_orderid = d["id"]
             local_orderid = self.order_manager.get_local_orderid(sys_orderid)
@@ -383,7 +383,7 @@ class BitstampRestApi(RestClient):
             )
             self.order_manager.on_order(order)
 
-        self.gateway.write_log("委托信息查询成功")
+        self.gateway.write_log("委託資訊查詢成功")
 
     def query_account(self):
         """"""
@@ -440,7 +440,7 @@ class BitstampRestApi(RestClient):
             symbol_name_map[contract.symbol] = contract.name
             name_symbol_map[contract.name] = contract.symbol
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
         self.query_order()
 
@@ -475,12 +475,12 @@ class BitstampRestApi(RestClient):
             order.status = Status.CANCELLED
             self.order_manager.on_order(order)
 
-        self.gateway.write_log(f"撤单成功：{order.orderid}")
+        self.gateway.write_log(f"撤單成功：{order.orderid}")
 
     def on_cancel_order_error(self, data, request):
         """"""
         error_msg = data["error"]
-        self.gateway.write_log(f"撤单请求出错，信息：{error_msg}")
+        self.gateway.write_log(f"撤單請求出錯，資訊：{error_msg}")
 
     def send_order(self, req: OrderRequest):
         """"""
@@ -554,7 +554,7 @@ class BitstampRestApi(RestClient):
         reason = data["reason"]
         code = data["code"]
 
-        msg = f"{request.path} 请求失败，状态码：{status_code}，错误信息：{reason}，错误代码: {code}"
+        msg = f"{request.path} 請求失敗，狀態碼：{status_code}，錯誤資訊：{reason}，錯誤程式碼: {code}"
         self.gateway.write_log(msg)
 
     def on_error(
@@ -563,7 +563,7 @@ class BitstampRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -592,7 +592,7 @@ class BitstampWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("Websocket API连接成功")
+        self.gateway.write_log("Websocket API連線成功")
 
         # Auto re-subscribe market data after reconnected
         for req in self.subscribed.values():

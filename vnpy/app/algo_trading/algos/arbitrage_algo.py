@@ -59,7 +59,7 @@ class ArbitrageAlgo(AlgoTemplate):
 
     def on_stop(self):
         """"""
-        self.write_log("停止算法")
+        self.write_log("停止演算法")
 
     def on_order(self, order: OrderData):
         """"""
@@ -87,7 +87,7 @@ class ArbitrageAlgo(AlgoTemplate):
 
         # Hedge if active symbol traded
         if trade.vt_symbol == self.active_vt_symbol:
-            self.write_log("收到主动腿成交回报，执行对冲")
+            self.write_log("收到主動腿成交回報，執行對衝")
             self.hedge()
 
         self.put_variables_event()
@@ -103,13 +103,13 @@ class ArbitrageAlgo(AlgoTemplate):
 
         # Cancel all active orders before moving on
         if self.active_vt_orderid or self.passive_vt_orderid:
-            self.write_log("有未成交委托，执行撤单")
+            self.write_log("有未成交委託，執行撤單")
             self.cancel_all()
             return
 
         # Make sure that active leg is fully hedged by passive leg
         if (self.active_pos + self.passive_pos) != 0:
-            self.write_log("主动腿和被动腿数量不一致，执行对冲")
+            self.write_log("主動腿和被動腿數量不一致，執行對衝")
             self.hedge()
             return
 
@@ -117,7 +117,7 @@ class ArbitrageAlgo(AlgoTemplate):
         active_tick = self.get_tick(self.active_vt_symbol)
         passive_tick = self.get_tick(self.passive_vt_symbol)
         if not active_tick or not passive_tick:
-            self.write_log("获取某条套利腿的行情失败，无法交易")
+            self.write_log("獲取某條套利腿的行情失敗，無法交易")
             return
 
         # Calculate spread
@@ -129,15 +129,15 @@ class ArbitrageAlgo(AlgoTemplate):
         spread_ask_volume = min(active_tick.ask_volume_1,
                                 passive_tick.bid_volume_1)
 
-        msg = f"价差盘口，买：{spread_bid_price} ({spread_bid_volume})，卖：{spread_ask_price} ({spread_ask_volume})"
+        msg = f"價差盤口，買：{spread_bid_price} ({spread_bid_volume})，賣：{spread_ask_price} ({spread_ask_volume})"
         self.write_log(msg)
 
         # Sell condition
         if spread_bid_price > self.spread_up:
-            self.write_log("套利价差超过上限，满足做空条件")
+            self.write_log("套利價差超過上限，滿足做空條件")
 
             if self.active_pos > -self.max_pos:
-                self.write_log("当前持仓小于最大持仓限制，执行卖出操作")
+                self.write_log("當前持倉小於最大持倉限制，執行賣出操作")
 
                 volume = min(spread_bid_volume,
                              self.active_pos + self.max_pos)
@@ -150,10 +150,10 @@ class ArbitrageAlgo(AlgoTemplate):
 
         # Buy condition
         elif spread_ask_price < -self.spread_down:
-            self.write_log("套利价差超过下限，满足做多条件")
+            self.write_log("套利價差超過下限，滿足做多條件")
 
             if self.active_pos < self.max_pos:
-                self.write_log("当前持仓小于最大持仓限制，执行买入操作")
+                self.write_log("當前持倉小於最大持倉限制，執行買入操作")
 
                 volume = min(spread_ask_volume,
                              self.max_pos - self.active_pos)

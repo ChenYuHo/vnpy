@@ -35,7 +35,7 @@ class RecorderManager(QtWidgets.QWidget):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("行情记录")
+        self.setWindowTitle("行情記錄")
         self.resize(1000, 600)
 
         # Create widgets
@@ -52,13 +52,13 @@ class RecorderManager(QtWidgets.QWidget):
             self.symbol_completer.PopupCompletion)
         self.symbol_line.setCompleter(self.symbol_completer)
 
-        add_bar_button = QtWidgets.QPushButton("添加")
+        add_bar_button = QtWidgets.QPushButton("新增")
         add_bar_button.clicked.connect(self.add_bar_recording)
 
         remove_bar_button = QtWidgets.QPushButton("移除")
         remove_bar_button.clicked.connect(self.remove_bar_recording)
 
-        add_tick_button = QtWidgets.QPushButton("添加")
+        add_tick_button = QtWidgets.QPushButton("新增")
         add_tick_button.clicked.connect(self.add_tick_recording)
 
         remove_tick_button = QtWidgets.QPushButton("移除")
@@ -75,23 +75,23 @@ class RecorderManager(QtWidgets.QWidget):
 
         # Set layout
         grid = QtWidgets.QGridLayout()
-        grid.addWidget(QtWidgets.QLabel("K线记录"), 0, 0)
+        grid.addWidget(QtWidgets.QLabel("K線記錄"), 0, 0)
         grid.addWidget(add_bar_button, 0, 1)
         grid.addWidget(remove_bar_button, 0, 2)
-        grid.addWidget(QtWidgets.QLabel("Tick记录"), 1, 0)
+        grid.addWidget(QtWidgets.QLabel("Tick記錄"), 1, 0)
         grid.addWidget(add_tick_button, 1, 1)
         grid.addWidget(remove_tick_button, 1, 2)
 
         hbox = QtWidgets.QHBoxLayout()
-        hbox.addWidget(QtWidgets.QLabel("本地代码"))
+        hbox.addWidget(QtWidgets.QLabel("原生代碼"))
         hbox.addWidget(self.symbol_line)
         hbox.addWidget(QtWidgets.QLabel("     "))
         hbox.addLayout(grid)
         hbox.addStretch()
 
         grid2 = QtWidgets.QGridLayout()
-        grid2.addWidget(QtWidgets.QLabel("K线记录列表"), 0, 0)
-        grid2.addWidget(QtWidgets.QLabel("Tick记录列表"), 0, 1)
+        grid2.addWidget(QtWidgets.QLabel("K線記錄列表"), 0, 0)
+        grid2.addWidget(QtWidgets.QLabel("Tick記錄列表"), 0, 1)
         grid2.addWidget(self.bar_recording_edit, 1, 0)
         grid2.addWidget(self.tick_recording_edit, 1, 1)
         grid2.addWidget(self.log_edit, 2, 0, 1, 2)

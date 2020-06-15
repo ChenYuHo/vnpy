@@ -8,7 +8,7 @@ from vnpy.app.algo_trading import AlgoTemplate
 class TwapAlgo(AlgoTemplate):
     """"""
 
-    display_name = "TWAP 时间加权平均"
+    display_name = "TWAP 時間加權平均"
 
     default_setting = {
         "vt_symbol": "",
@@ -66,7 +66,7 @@ class TwapAlgo(AlgoTemplate):
         self.traded += trade.volume
 
         if self.traded >= self.volume:
-            self.write_log(f"已交易数量：{self.traded}，总数量：{self.volume}")
+            self.write_log(f"已交易數量：{self.traded}，總數量：{self.volume}")
             self.stop()
         else:
             self.put_variables_event()
@@ -78,7 +78,7 @@ class TwapAlgo(AlgoTemplate):
         self.put_variables_event()
 
         if self.total_count >= self.time:
-            self.write_log("执行时间已结束，停止算法")
+            self.write_log("執行時間已結束，停止演算法")
             self.stop()
             return
 

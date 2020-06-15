@@ -17,7 +17,7 @@ class PortfolioStrategyApp(BaseApp):
     app_name = APP_NAME
     app_module = __module__
     app_path = Path(__file__).parent
-    display_name = "组合策略"
+    display_name = "組合策略"
     engine_class = StrategyEngine
     widget_name = "PortfolioStrategyManager"
     icon_name = "strategy.ico"

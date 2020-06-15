@@ -81,11 +81,11 @@ class FutuGateway(BaseGateway):
     """"""
 
     default_setting = {
-        "密码": "",
+        "密碼": "",
         "地址": "127.0.0.1",
-        "端口": 11111,
-        "市场": ["HK", "US"],
-        "环境": [TrdEnv.REAL, TrdEnv.SIMULATE],
+        "埠": 11111,
+        "市場": ["HK", "US"],
+        "環境": [TrdEnv.REAL, TrdEnv.SIMULATE],
     }
 
     exchanges = list(EXCHANGE_FUTU2VT.values())
@@ -117,10 +117,10 @@ class FutuGateway(BaseGateway):
     def connect(self, setting: dict):
         """"""
         self.host = setting["地址"]
-        self.port = setting["端口"]
-        self.market = setting["市场"]
-        self.password = setting["密码"]
-        self.env = setting["环境"]
+        self.port = setting["埠"]
+        self.market = setting["市場"]
+        self.password = setting["密碼"]
+        self.env = setting["環境"]
 
         self.connect_quote()
         self.connect_trade()
@@ -186,7 +186,7 @@ class FutuGateway(BaseGateway):
         self.quote_ctx.set_handler(OrderBookHandler())
         self.quote_ctx.start()
 
-        self.write_log("行情接口连接成功")
+        self.write_log("行情介面連線成功")
 
     def connect_trade(self):
         """
@@ -226,15 +226,15 @@ class FutuGateway(BaseGateway):
         # Unlock to allow trading.
         code, data = self.trade_ctx.unlock_trade(self.password)
         if code == RET_OK:
-            self.write_log("交易接口解锁成功")
+            self.write_log("交易介面解鎖成功")
         else:
-            self.write_log(f"交易接口解锁失败，原因：{data}")
+            self.write_log(f"交易介面解鎖失敗，原因：{data}")
 
         # Start context.
         self.trade_ctx.set_handler(OrderHandler())
         self.trade_ctx.set_handler(DealHandler())
         self.trade_ctx.start()
-        self.write_log("交易接口连接成功")
+        self.write_log("交易介面連線成功")
 
     def subscribe(self, req: SubscribeRequest):
         """"""
@@ -243,7 +243,7 @@ class FutuGateway(BaseGateway):
             code, data = self.quote_ctx.subscribe(futu_symbol, data_type, True)
 
             if code:
-                self.write_log(f"订阅行情失败：{data}")
+                self.write_log(f"訂閱行情失敗：{data}")
 
     def send_order(self, req: OrderRequest):
         """"""
@@ -268,7 +268,7 @@ class FutuGateway(BaseGateway):
         )
 
         if code:
-            self.write_log(f"委托失败：{data}")
+            self.write_log(f"委託失敗：{data}")
             return ""
 
         for ix, row in data.iterrows():
@@ -285,7 +285,7 @@ class FutuGateway(BaseGateway):
         )
 
         if code:
-            self.write_log(f"撤单失败：{data}")
+            self.write_log(f"撤單失敗：{data}")
 
     def query_contract(self):
         """"""
@@ -295,7 +295,7 @@ class FutuGateway(BaseGateway):
             )
 
             if code:
-                self.write_log(f"查询合约信息失败：{data}")
+                self.write_log(f"查詢合約資訊失敗：{data}")
                 return
 
             for ix, row in data.iterrows():
@@ -313,14 +313,14 @@ class FutuGateway(BaseGateway):
                 self.on_contract(contract)
                 self.contracts[contract.vt_symbol] = contract
 
-        self.write_log("合约信息查询成功")
+        self.write_log("合約資訊查詢成功")
 
     def query_account(self):
         """"""
         code, data = self.trade_ctx.accinfo_query(trd_env=self.env, acc_id=0)
 
         if code:
-            self.write_log(f"查询账户资金失败：{data}")
+            self.write_log(f"查詢賬戶資金失敗：{data}")
             return
 
         for ix, row in data.iterrows():
@@ -339,7 +339,7 @@ class FutuGateway(BaseGateway):
         )
 
         if code:
-            self.write_log(f"查询持仓失败：{data}")
+            self.write_log(f"查詢持倉失敗：{data}")
             return
 
         for ix, row in data.iterrows():
@@ -362,22 +362,22 @@ class FutuGateway(BaseGateway):
         code, data = self.trade_ctx.order_list_query("", trd_env=self.env)
 
         if code:
-            self.write_log(f"查询委托失败：{data}")
+            self.write_log(f"查詢委託失敗：{data}")
             return
 
         self.process_order(data)
-        self.write_log("委托查询成功")
+        self.write_log("委託查詢成功")
 
     def query_trade(self):
         """"""
         code, data = self.trade_ctx.deal_list_query("", trd_env=self.env)
 
         if code:
-            self.write_log(f"查询成交失败：{data}")
+            self.write_log(f"查詢成交失敗：{data}")
             return
 
         self.process_deal(data)
-        self.write_log("成交查询成功")
+        self.write_log("成交查詢成功")
 
     def close(self):
         """"""
@@ -409,7 +409,7 @@ class FutuGateway(BaseGateway):
         return tick
 
     def process_quote(self, data):
-        """报价推送"""
+        """報價推送"""
         for ix, row in data.iterrows():
             symbol = row["code"]
 

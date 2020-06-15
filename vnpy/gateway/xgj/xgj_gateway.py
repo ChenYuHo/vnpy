@@ -126,16 +126,16 @@ class XgjGateway(BaseGateway):
     """
 
     default_setting = {
-        "行情用户名": "",
-        "行情密码": "",
-        "行情服务器": "",
-        "交易用户名": "",
-        "交易密码": "",
-        "交易服务器": "",
-        "经纪商代码": "",
-        "产品名称": "",
-        "授权编码": "",
-        "产品信息": ""
+        "行情使用者名稱": "",
+        "行情密碼": "",
+        "行情伺服器": "",
+        "交易使用者名稱": "",
+        "交易密碼": "",
+        "交易伺服器": "",
+        "經紀商程式碼": "",
+        "產品名稱": "",
+        "授權編碼": "",
+        "產品資訊": ""
     }
 
     exchanges = list(EXCHANGE_XGJ2VT.values())
@@ -149,16 +149,16 @@ class XgjGateway(BaseGateway):
 
     def connect(self, setting: dict):
         """"""
-        md_userid = setting["行情用户名"]
-        md_password = setting["行情密码"]
-        md_address = setting["行情服务器"]
-        td_userid = setting["交易用户名"]
-        td_password = setting["交易密码"]
-        td_address = setting["交易服务器"]
-        brokerid = setting["经纪商代码"]
-        appid = setting["产品名称"]
-        auth_code = setting["授权编码"]
-        product_info = setting["产品信息"]
+        md_userid = setting["行情使用者名稱"]
+        md_password = setting["行情密碼"]
+        md_address = setting["行情伺服器"]
+        td_userid = setting["交易使用者名稱"]
+        td_password = setting["交易密碼"]
+        td_address = setting["交易伺服器"]
+        brokerid = setting["經紀商程式碼"]
+        appid = setting["產品名稱"]
+        auth_code = setting["授權編碼"]
+        product_info = setting["產品資訊"]
 
         if not td_address.startswith("tcp://"):
             td_address = "tcp://" + td_address
@@ -199,7 +199,7 @@ class XgjGateway(BaseGateway):
         """"""
         error_id = error["ErrorID"]
         error_msg = error["ErrorMsg"]
-        msg = f"{msg}，代码：{error_id}，信息：{error_msg}"
+        msg = f"{msg}，程式碼：{error_id}，資訊：{error_msg}"
         self.write_log(msg)
 
     def process_timer_event(self, event):
@@ -244,7 +244,7 @@ class XgjMdApi(MdApi):
         """
         Callback when front server is connected.
         """
-        self.gateway.write_log("行情服务器连接成功")
+        self.gateway.write_log("行情伺服器連線成功")
         self.login()
 
     def onFrontDisconnected(self, reason: int):
@@ -252,7 +252,7 @@ class XgjMdApi(MdApi):
         Callback when front server is disconnected.
         """
         self.login_status = False
-        self.gateway.write_log(f"行情服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"行情伺服器連線斷開，原因{reason}")
 
     def onRspUserLogin(self, data: dict, error: dict, reqid: int, last: bool):
         """
@@ -260,25 +260,25 @@ class XgjMdApi(MdApi):
         """
         if not error["ErrorID"]:
             self.login_status = True
-            self.gateway.write_log("行情服务器登录成功")
+            self.gateway.write_log("行情伺服器登入成功")
 
             for symbol in self.subscribed:
                 self.subscribeMarketData(symbol)
         else:
-            self.gateway.write_error("行情服务器登录失败", error)
+            self.gateway.write_error("行情伺服器登入失敗", error)
 
     def onRspError(self, error: dict, reqid: int, last: bool):
         """
         Callback when error occured.
         """
-        self.gateway.write_error("行情接口报错", error)
+        self.gateway.write_error("行情介面報錯", error)
 
     def onRspSubMarketData(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
         if not error or not error["ErrorID"]:
             return
 
-        self.gateway.write_error("行情订阅失败", error)
+        self.gateway.write_error("行情訂閱失敗", error)
 
     def onRtnDepthMarketData(self, data: dict):
         """
@@ -400,7 +400,7 @@ class XgjTdApi(TdApi):
 
     def onFrontConnected(self):
         """"""
-        self.gateway.write_log("交易服务器连接成功")
+        self.gateway.write_log("交易伺服器連線成功")
 
         if self.auth_code:
             self.authenticate()
@@ -410,16 +410,16 @@ class XgjTdApi(TdApi):
     def onFrontDisconnected(self, reason: int):
         """"""
         self.login_status = False
-        self.gateway.write_log(f"交易服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"交易伺服器連線斷開，原因{reason}")
 
     def onRspAuthenticate(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
         if not error['ErrorID']:
             self.auth_staus = True
-            self.gateway.write_log("交易服务器授权验证成功")
+            self.gateway.write_log("交易伺服器授權驗證成功")
             self.login()
         else:
-            self.gateway.write_error("交易服务器授权验证失败", error)
+            self.gateway.write_error("交易伺服器授權驗證失敗", error)
 
     def onRspUserLogin(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
@@ -427,7 +427,7 @@ class XgjTdApi(TdApi):
             self.frontid = data["FrontID"]
             self.sessionid = data["SessionID"]
             self.login_status = True
-            self.gateway.write_log("交易服务器登录成功")
+            self.gateway.write_log("交易伺服器登入成功")
 
             # Confirm settlement
             req = {
@@ -439,7 +439,7 @@ class XgjTdApi(TdApi):
         else:
             self.login_failed = True
 
-            self.gateway.write_error("交易服务器登录失败", error)
+            self.gateway.write_error("交易伺服器登入失敗", error)
 
     def onRspOrderInsert(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
@@ -462,11 +462,11 @@ class XgjTdApi(TdApi):
         )
         self.gateway.on_order(order)
 
-        self.gateway.write_error("交易委托失败", error)
+        self.gateway.write_error("交易委託失敗", error)
 
     def onRspOrderAction(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
-        self.gateway.write_error("交易撤单失败", error)
+        self.gateway.write_error("交易撤單失敗", error)
 
     def onRspQueryMaxOrderVolume(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
@@ -476,7 +476,7 @@ class XgjTdApi(TdApi):
         """
         Callback of settlment info confimation.
         """
-        self.gateway.write_log("结算信息确认成功")
+        self.gateway.write_log("結算資訊確認成功")
 
         self.reqid += 1
         self.reqQryInstrument({}, self.reqid)
@@ -578,7 +578,7 @@ class XgjTdApi(TdApi):
             symbol_size_map[contract.symbol] = contract.size
 
         if last:
-            self.gateway.write_log("合约信息查询成功")
+            self.gateway.write_log("合約資訊查詢成功")
 
             for data in self.order_data:
                 self.onRtnOrder(data)

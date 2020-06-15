@@ -8,7 +8,7 @@ from vnpy.app.algo_trading import AlgoTemplate
 class DmaAlgo(AlgoTemplate):
     """"""
 
-    display_name = "DMA 直接委托"
+    display_name = "DMA 直接委託"
 
     default_setting = {
         "vt_symbol": "",

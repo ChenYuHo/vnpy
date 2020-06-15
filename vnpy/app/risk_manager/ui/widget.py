@@ -19,11 +19,11 @@ class RiskManager(QtWidgets.QDialog):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("交易风控")
+        self.setWindowTitle("交易風控")
 
         # Create widgets
         self.active_combo = QtWidgets.QComboBox()
-        self.active_combo.addItems(["停止", "启动"])
+        self.active_combo.addItems(["停止", "啟動"])
 
         self.flow_limit_spin = RiskManagerSpinBox()
         self.flow_clear_spin = RiskManagerSpinBox()
@@ -32,18 +32,18 @@ class RiskManager(QtWidgets.QDialog):
         self.active_limit_spin = RiskManagerSpinBox()
         self.cancel_limit_spin = RiskManagerSpinBox()
 
-        save_button = QtWidgets.QPushButton("保存")
+        save_button = QtWidgets.QPushButton("儲存")
         save_button.clicked.connect(self.save_setting)
 
         # Form layout
         form = QtWidgets.QFormLayout()
-        form.addRow("风控运行状态", self.active_combo)
-        form.addRow("委托流控上限（笔）", self.flow_limit_spin)
-        form.addRow("委托流控清空（秒）", self.flow_clear_spin)
-        form.addRow("单笔委托上限（数量）", self.size_limit_spin)
-        form.addRow("总成交上限（笔）", self.trade_limit_spin)
-        form.addRow("活动委托上限（笔）", self.active_limit_spin)
-        form.addRow("合约撤单上限（笔）", self.cancel_limit_spin)
+        form.addRow("風控執行狀態", self.active_combo)
+        form.addRow("委託流控上限（筆）", self.flow_limit_spin)
+        form.addRow("委託流控清空（秒）", self.flow_clear_spin)
+        form.addRow("單筆委託上限（數量）", self.size_limit_spin)
+        form.addRow("總成交上限（筆）", self.trade_limit_spin)
+        form.addRow("活動委託上限（筆）", self.active_limit_spin)
+        form.addRow("合約撤單上限（筆）", self.cancel_limit_spin)
         form.addRow(save_button)
 
         self.setLayout(form)
@@ -55,7 +55,7 @@ class RiskManager(QtWidgets.QDialog):
     def save_setting(self):
         """"""
         active_text = self.active_combo.currentText()
-        if active_text == "启动":
+        if active_text == "啟動":
             active = True
         else:
             active = False

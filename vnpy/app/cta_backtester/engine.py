@@ -45,14 +45,14 @@ class BacktesterEngine(BaseEngine):
 
     def init_engine(self):
         """"""
-        self.write_log("初始化CTA回测引擎")
+        self.write_log("初始化CTA回測引擎")
 
         self.backtesting_engine = BacktestingEngine()
         # Redirect log from backtesting engine outside.
         self.backtesting_engine.output = self.write_log
 
         self.load_strategy_class()
-        self.write_log("策略文件加载完成")
+        self.write_log("策略檔案載入完成")
 
         self.init_rqdata()
 
@@ -62,7 +62,7 @@ class BacktesterEngine(BaseEngine):
         """
         result = rqdata_client.init()
         if result:
-            self.write_log("RQData数据接口初始化成功")
+            self.write_log("RQData資料介面初始化成功")
 
     def write_log(self, msg: str):
         """"""
@@ -112,14 +112,14 @@ class BacktesterEngine(BaseEngine):
                 if (isinstance(value, type) and issubclass(value, CtaTemplate) and value is not CtaTemplate):
                     self.classes[value.__name__] = value
         except:  # noqa
-            msg = f"策略文件{module_name}加载失败，触发异常：\n{traceback.format_exc()}"
+            msg = f"策略檔案{module_name}載入失敗，觸發異常：\n{traceback.format_exc()}"
             self.write_log(msg)
 
     def reload_strategy_class(self):
         """"""
         self.classes.clear()
         self.load_strategy_class()
-        self.write_log("策略文件重载刷新完成")
+        self.write_log("策略檔案過載重新整理完成")
 
     def get_strategy_class_names(self):
         """"""
@@ -194,7 +194,7 @@ class BacktesterEngine(BaseEngine):
         setting: dict
     ):
         if self.thread:
-            self.write_log("已有任务在运行中，请等待完成")
+            self.write_log("已有任務在執行中，請等待完成")
             return False
 
         self.write_log("-" * 40)
@@ -254,9 +254,9 @@ class BacktesterEngine(BaseEngine):
     ):
         """"""
         if use_ga:
-            self.write_log("开始遗传算法参数优化")
+            self.write_log("開始遺傳演算法引數優化")
         else:
-            self.write_log("开始多进程参数优化")
+            self.write_log("開始多程序引數優化")
 
         self.result_values = None
 
@@ -295,7 +295,7 @@ class BacktesterEngine(BaseEngine):
 
         # Clear thread object handler.
         self.thread = None
-        self.write_log("多进程参数优化完成")
+        self.write_log("多程序引數優化完成")
 
         # Put optimization done event
         event = Event(EVENT_BACKTESTER_OPTIMIZATION_FINISHED)
@@ -318,7 +318,7 @@ class BacktesterEngine(BaseEngine):
         use_ga: bool
     ):
         if self.thread:
-            self.write_log("已有任务在运行中，请等待完成")
+            self.write_log("已有任務在執行中，請等待完成")
             return False
 
         self.write_log("-" * 40)
@@ -354,12 +354,12 @@ class BacktesterEngine(BaseEngine):
         """
         Query bar data from RQData.
         """
-        self.write_log(f"{vt_symbol}-{interval}开始下载历史数据")
+        self.write_log(f"{vt_symbol}-{interval}開始下載歷史資料")
 
         try:
             symbol, exchange = extract_vt_symbol(vt_symbol)
         except ValueError:
-            self.write_log(f"{vt_symbol}解析失败，请检查交易所后缀")
+            self.write_log(f"{vt_symbol}解析失敗，請檢查交易所字尾")
             self.thread = None
             return
 
@@ -385,11 +385,11 @@ class BacktesterEngine(BaseEngine):
 
             if data:
                 database_manager.save_bar_data(data)
-                self.write_log(f"{vt_symbol}-{interval}历史数据下载完成")
+                self.write_log(f"{vt_symbol}-{interval}歷史資料下載完成")
             else:
-                self.write_log(f"数据下载失败，无法获取{vt_symbol}的历史数据")
+                self.write_log(f"資料下載失敗，無法獲取{vt_symbol}的歷史資料")
         except Exception:
-            msg = f"数据下载失败，触发异常：\n{traceback.format_exc()}"
+            msg = f"資料下載失敗，觸發異常：\n{traceback.format_exc()}"
             self.write_log(msg)
 
         # Clear thread object handler.
@@ -403,7 +403,7 @@ class BacktesterEngine(BaseEngine):
         end: datetime
     ):
         if self.thread:
-            self.write_log("已有任务在运行中，请等待完成")
+            self.write_log("已有任務在執行中，請等待完成")
             return False
 
         self.write_log("-" * 40)

@@ -1,5 +1,5 @@
 """
-Gate.io 期货接口
+Gate.io 期貨介面
 """
 import hashlib
 import hmac
@@ -52,9 +52,9 @@ class GateiosGateway(BaseGateway):
     default_setting = {
         "API Key": "",
         "Secret Key": "",
-        "服务器": ["REAL", "TESTNET"],
+        "伺服器": ["REAL", "TESTNET"],
         "代理地址": "",
-        "代理端口": "",
+        "代理埠": "",
     }
 
     exchanges = [Exchange.GATEIO]
@@ -71,9 +71,9 @@ class GateiosGateway(BaseGateway):
         """"""
         key = setting["API Key"]
         secret = setting["Secret Key"]
-        server = setting["服务器"]
+        server = setting["伺服器"]
         proxy_host = setting["代理地址"]
-        proxy_port = setting["代理端口"]
+        proxy_port = setting["代理埠"]
 
         if proxy_port.isdigit():
             proxy_port = int(proxy_port)
@@ -190,7 +190,7 @@ class GateiosRestApi(RestClient):
 
         self.start(3)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
     def query_account(self):
         """"""
@@ -249,12 +249,12 @@ class GateiosRestApi(RestClient):
         )
 
         if resp.status_code // 100 != 2:
-            msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+            msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
             self.gateway.write_log(msg)
         else:
             data = resp.json()
             if not data:
-                msg = f"获取历史数据为空"
+                msg = f"獲取歷史資料為空"
 
             for d in data:
                 bar = BarData(
@@ -274,7 +274,7 @@ class GateiosRestApi(RestClient):
             begin = generate_datetime(data[0]["t"])
             end = generate_datetime(data[-1]["t"])
 
-            msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+            msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
 
             self.gateway.write_log(msg)
 
@@ -322,7 +322,7 @@ class GateiosRestApi(RestClient):
         """"""
         sys_orderid = self.order_manager.get_sys_orderid(req.orderid)
         if not sys_orderid:
-            self.write_log("撤单失败，找不到对应系统委托号{}".format(req.orderid))
+            self.write_log("撤單失敗，找不到對應系統委託號{}".format(req.orderid))
             return
 
         self.add_request(
@@ -396,7 +396,7 @@ class GateiosRestApi(RestClient):
             )
             self.order_manager.on_order(order)
 
-        self.gateway.write_log(f"{order.symbol}合约委托信息查询成功")
+        self.gateway.write_log(f"{order.symbol}合約委託資訊查詢成功")
 
     def on_query_contract(self, data, request):  # type: (dict, Request)->None
         """"""
@@ -417,7 +417,7 @@ class GateiosRestApi(RestClient):
             )
             self.gateway.on_contract(contract)
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
         # Connect websocket api after account id and contract symbols collected
         self.ws_api.connect(
@@ -444,7 +444,7 @@ class GateiosRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"委托失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"委託失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -466,13 +466,13 @@ class GateiosRestApi(RestClient):
         if data["status"] == "error":
             error_code = data["err_code"]
             error_msg = data["err_msg"]
-            self.gateway.write_log(f"撤单失败，错误代码：{error_code}，信息：{error_msg}")
+            self.gateway.write_log(f"撤單失敗，錯誤程式碼：{error_code}，資訊：{error_msg}")
 
     def on_cancel_order_failed(self, status_code: str, request: Request):
         """
         Callback when canceling order failed on server.
         """
-        msg = f"撤单失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"撤單失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
 
@@ -520,7 +520,7 @@ class GateiosWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("Websocket API连接成功")
+        self.gateway.write_log("Websocket API連線成功")
 
         for symbol in self.symbols:
             for channel in [
@@ -563,7 +563,7 @@ class GateiosWebsocketApi(WebsocketClient):
 
     def on_disconnected(self):
         """"""
-        self.gateway.write_log("Websocket API连接断开")
+        self.gateway.write_log("Websocket API連線斷開")
 
     def on_packet(self, packet: Dict):
         """"""
@@ -574,7 +574,7 @@ class GateiosWebsocketApi(WebsocketClient):
         error = packet["error"]
 
         if error:
-            self.gateway.write_log("Websocket API报错：%s" % error)
+            self.gateway.write_log("Websocket API報錯：%s" % error)
             return
 
         if channel == "futures.tickers" and event == "update":
@@ -588,7 +588,7 @@ class GateiosWebsocketApi(WebsocketClient):
 
     def on_error(self, exception_type: type, exception_value: Exception, tb):
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(self.exception_detail(

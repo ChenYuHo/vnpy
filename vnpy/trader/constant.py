@@ -11,7 +11,7 @@ class Direction(Enum):
     """
     LONG = "多"
     SHORT = "空"
-    NET = "净"
+    NET = "淨"
 
 
 class Offset(Enum):
@@ -19,7 +19,7 @@ class Offset(Enum):
     Offset of order/trade.
     """
     NONE = ""
-    OPEN = "开"
+    OPEN = "開"
     CLOSE = "平"
     CLOSETODAY = "平今"
     CLOSEYESTERDAY = "平昨"
@@ -33,8 +33,8 @@ class Status(Enum):
     NOTTRADED = "未成交"
     PARTTRADED = "部分成交"
     ALLTRADED = "全部成交"
-    CANCELLED = "已撤销"
-    REJECTED = "拒单"
+    CANCELLED = "已撤銷"
+    REJECTED = "拒單"
 
 
 class Product(Enum):
@@ -42,15 +42,15 @@ class Product(Enum):
     Product class.
     """
     EQUITY = "股票"
-    FUTURES = "期货"
-    OPTION = "期权"
-    INDEX = "指数"
-    FOREX = "外汇"
-    SPOT = "现货"
+    FUTURES = "期貨"
+    OPTION = "期權"
+    INDEX = "指數"
+    FOREX = "外匯"
+    SPOT = "現貨"
     ETF = "ETF"
-    BOND = "债券"
-    WARRANT = "权证"
-    SPREAD = "价差"
+    BOND = "債券"
+    WARRANT = "權證"
+    SPREAD = "價差"
     FUND = "基金"
 
 
@@ -58,20 +58,20 @@ class OrderType(Enum):
     """
     Order type.
     """
-    LIMIT = "限价"
-    MARKET = "市价"
+    LIMIT = "限價"
+    MARKET = "市價"
     STOP = "STOP"
     FAK = "FAK"
     FOK = "FOK"
-    RFQ = "询价"
+    RFQ = "詢價"
 
 
 class OptionType(Enum):
     """
     Option type.
     """
-    CALL = "看涨期权"
-    PUT = "看跌期权"
+    CALL = "看漲期權"
+    PUT = "看跌期權"
 
 
 class Exchange(Enum):

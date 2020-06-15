@@ -17,7 +17,7 @@
 /**
  * @file    spk_times.h
  *
- * 日期/时间函数的头文件
+ * 日期/時間函式的標頭檔案
  *
  * @version $Id$
  * @since   2004.4.26
@@ -46,11 +46,11 @@ extern "C" {
 
 
 /* ===================================================================
- * 常量定义
+ * 常量定義
  * =================================================================== */
 
 /*
- * 日期/时间格式定义
+ * 日期/時間格式定義
  */
 #define     STIME_FORMAT_DATE                   "%Y%m%d"
 #define     STIME_FORMAT_FORMATTED_DATE         "%Y-%m-%d"
@@ -64,7 +64,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 跨平台兼容处理
+ * 跨平臺相容處理
  * =================================================================== */
 
 #if defined (__WINDOWS__) || defined (__MINGW__)
@@ -92,44 +92,44 @@ int         __SPK_WIN32_gettimeofday(STimevalT *tv, STimezoneT *tz);
 
 
 /* ===================================================================
- * 函数声明
+ * 函式宣告
  * =================================================================== */
 
 /*
- * 格式化日期/时间
+ * 格式化日期/時間
  */
 char*       STime_FormatTime(char *pBuf, const struct tm *pTm,
                     const char *pFormat);
 
 /*
- * 根据给定的格式解析时间字符串
+ * 根據給定的格式解析時間字串
  */
 struct tm*  STime_ParseTime(struct tm *pTm, const char *pTimeStr,
                     const char *pFormat);
 
 /*
- * 校验字符串是否是有效的日期型字符串
+ * 校驗字串是否是有效的日期型字串
  */
 BOOL        STime_IsValidDate(const char *pStr, const char *pFormat);
 
 /*
- * 校验是否是有效的日期型整数 (YYYYMMDD)
+ * 校驗是否是有效的日期型整數 (YYYYMMDD)
  */
 BOOL        STime_IsValidIntDate(int32 date);
 
 /*
- * 返回 timeval 结构体大小
+ * 返回 timeval 結構體大小
  */
 int32       __STime_GetTimevalStructSize();
 /* -------------------------           */
 
 
 /* ===================================================================
- * 宏代码定义
+ * 巨集程式碼定義
  * =================================================================== */
 
 /**
- * 校验 timeval 结构体大小是否匹配 (用于检查跨平台兼容性的场景)
+ * 校驗 timeval 結構體大小是否匹配 (用於檢查跨平臺相容性的場景)
  */
 #define SPK_ASSERT_TIMEVAL_STRUCT_SIZE()                    \
         SLOG_ASSERT2((int32) sizeof(STimevalT) == \
@@ -140,11 +140,11 @@ int32       __STime_GetTimevalStructSize();
 
 
 /**
- * 返回相差的微秒数
+ * 返回相差的微秒數
  *
- * @param   pTv1    开始时间
- * @param   pTv2    结束时间
- * @return  相差的微秒数
+ * @param   pTv1    開始時間
+ * @param   pTv2    結束時間
+ * @return  相差的微秒數
  */
 #define __STIME_DiffTimevalMicrosecond(P_TV1, P_TV2)        \
         ( (int64) ((P_TV2)->tv_sec - (P_TV1)->tv_sec) * 1000000 \
@@ -157,12 +157,12 @@ int32       __STime_GetTimevalStructSize();
  * =================================================================== */
 
 /**
- * 转换并返回tm结构的时间
+ * 轉換並返回tm結構的時間
  *
  * @param       unixSecs    number of seconds since 1970-01-01 00:00:00 +0000 (UTC)
- * @param[out]  pTm         用于输出当前时间的数据缓存
- * @param       timeZone    相对于标准时间的时区差, 例如北京时间的时区为 8
- * @return      tm结构的时间
+ * @param[out]  pTm         用於輸出當前時間的資料快取
+ * @param       timeZone    相對於標準時間的時區差, 例如北京時間的時區為 8
+ * @return      tm結構的時間
  * @see         http://www.cnblogs.com/westfly/p/5139645.html
  */
 static __inline struct tm*
@@ -205,12 +205,12 @@ __STime_FastSecondToDate2(const int64 unixSecs, struct tm *pResult,
 
 
 /**
- * 转换并返回tm结构的时间
+ * 轉換並返回tm結構的時間
  *
  * @param       unixSecs    number of seconds since 1970-01-01 00:00:00 +0000 (UTC)
- * @param[out]  pTm         用于输出当前时间的数据缓存
- * @param       timeZone    相对于标准时间的时区差, 例如北京时间的时区为 8
- * @return      tm结构的时间
+ * @param[out]  pTm         用於輸出當前時間的資料快取
+ * @param       timeZone    相對於標準時間的時區差, 例如北京時間的時區為 8
+ * @return      tm結構的時間
  * @see         http://www.cnblogs.com/westfly/p/5139645.html
  */
 static __inline struct tm*
@@ -220,11 +220,11 @@ __STime_FastSecondToDate(const int64 unixSecs, struct tm *pResult) {
 
 
 /**
- * 转换并返回tm结构的时间
+ * 轉換並返回tm結構的時間
  *
  * @param       unixSecs    number of seconds since 1970-01-01 00:00:00 +0000 (UTC)
- * @param[out]  pTm         用于输出当前时间的数据缓存
- * @return      tm结构的时间
+ * @param[out]  pTm         用於輸出當前時間的資料快取
+ * @return      tm結構的時間
  */
 static __inline struct tm*
 __STime_LocaltimeR(const time_t *pUnixSecs, struct tm *pResult) {
@@ -233,7 +233,7 @@ __STime_LocaltimeR(const time_t *pUnixSecs, struct tm *pResult) {
 
 
 /**
- * 返回当前系统时间
+ * 返回當前系統時間
  *
  * @return  time_t
  * @see     time()
@@ -245,10 +245,10 @@ STime_GetSysTime() {
 
 
 /**
- * 返回tm结构的当前时间
+ * 返回tm結構的當前時間
  *
- * @param[out]  pOutTm  <struct tm *> 用于输出当前时间的数据缓存
- * @return      当前时间 (struct tm *)
+ * @param[out]  pOutTm  <struct tm *> 用於輸出當前時間的資料快取
+ * @return      當前時間 (struct tm *)
  */
 static __inline struct tm*
 STime_GetCurrentTm(struct tm *pOutTm) {
@@ -257,11 +257,11 @@ STime_GetCurrentTm(struct tm *pOutTm) {
 
 
 /**
- * 转换并返回tm结构的时间
+ * 轉換並返回tm結構的時間
  *
- * @param[out]  pOutTm      <struct tm *> 用于输出当前时间的数据缓存
+ * @param[out]  pOutTm      <struct tm *> 用於輸出當前時間的資料快取
  * @param       unixSecs    number of seconds since 1970-01-01 00:00:00 +0000 (UTC)
- * @return      tm结构的时间
+ * @return      tm結構的時間
  */
 static __inline struct tm*
 STime_GetTmBySeconds(struct tm *pOutTm, int64 unixSecs) {
@@ -270,10 +270,10 @@ STime_GetTmBySeconds(struct tm *pOutTm, int64 unixSecs) {
 
 
 /**
- * 返回微秒级的当前时间
+ * 返回微秒級的當前時間
  *
- * @param[out]  pTv     用于输出当前时间的数据缓存
- * @return      微秒级时间
+ * @param[out]  pTv     用於輸出當前時間的資料快取
+ * @return      微秒級時間
  * @see         gettimeofday()
  */
 static __inline STimevalT*
@@ -286,10 +286,10 @@ STime_GetTimeOfDay(STimevalT *pTv) {
 
 
 /**
- * 返回微秒级的当前时间
+ * 返回微秒級的當前時間
  *
- * @param[out]  pTv     用于输出当前时间的数据缓存
- * @return      微秒级时间
+ * @param[out]  pTv     用於輸出當前時間的資料快取
+ * @return      微秒級時間
  * @see         gettimeofday()
  */
 static __inline STimeval32T*
@@ -307,10 +307,10 @@ STime_GetTimeOfDay32(STimeval32T *pTv) {
 
 
 /**
- * 返回纳秒级的当前时间
+ * 返回納秒級的當前時間
  *
- * @param[out]  pTs     用于输出当前时间的数据缓存
- * @return      纳秒级时间
+ * @param[out]  pTs     用於輸出當前時間的資料快取
+ * @return      納秒級時間
  * @see         clock_gettime()
  */
 static __inline STimespecT*
@@ -329,9 +329,9 @@ STime_GetClockTime(STimespecT *pTs) {
 
 
 /**
- * 返回毫秒级的当前时间
+ * 返回毫秒級的當前時間
  *
- * @return  相对与UTC 1970年1月1日零时的毫秒数
+ * @return  相對與UTC 1970年1月1日零時的毫秒數
  */
 static __inline int64
 STime_GetMillisecondsTime() {
@@ -343,11 +343,11 @@ STime_GetMillisecondsTime() {
 
 
 /**
- * 返回相差的毫秒数
+ * 返回相差的毫秒數
  *
- * @param   pTv1    开始时间
- * @param   pTv2    结束时间
- * @return  相差的毫秒数
+ * @param   pTv1    開始時間
+ * @param   pTv2    結束時間
+ * @return  相差的毫秒數
  */
 static __inline int64
 STime_DiffMillisecond(const STimevalT *pTv1, const STimevalT *pTv2) {
@@ -363,11 +363,11 @@ STime_DiffMillisecond(const STimevalT *pTv1, const STimevalT *pTv2) {
 
 
 /**
- * 返回相差的毫秒数
+ * 返回相差的毫秒數
  *
- * @param   pTv1    开始时间
- * @param   pTv2    结束时间
- * @return  相差的毫秒数
+ * @param   pTv1    開始時間
+ * @param   pTv2    結束時間
+ * @return  相差的毫秒數
  */
 static __inline int64
 STime_DiffMillisecond32(const STimeval32T *pTv1, const STimeval32T *pTv2) {
@@ -383,11 +383,11 @@ STime_DiffMillisecond32(const STimeval32T *pTv1, const STimeval32T *pTv2) {
 
 
 /**
- * 返回相差的毫秒数 (浮点数值)
+ * 返回相差的毫秒數 (浮點數值)
  *
- * @param   pTv1    开始时间
- * @param   pTv2    结束时间
- * @return  相差的毫秒数
+ * @param   pTv1    開始時間
+ * @param   pTv2    結束時間
+ * @return  相差的毫秒數
  */
 static __inline double
 STime_DiffMillisecondFloat(const STimevalT *pTv1, const STimevalT *pTv2) {
@@ -403,11 +403,11 @@ STime_DiffMillisecondFloat(const STimevalT *pTv1, const STimevalT *pTv2) {
 
 
 /**
- * 返回相差的毫秒数 (浮点数值)
+ * 返回相差的毫秒數 (浮點數值)
  *
- * @param   pTv1    开始时间
- * @param   pTv2    结束时间
- * @return  相差的毫秒数
+ * @param   pTv1    開始時間
+ * @param   pTv2    結束時間
+ * @return  相差的毫秒數
  */
 static __inline double
 STime_DiffMillisecondFloat32(const STimeval32T *pTv1, const STimeval32T *pTv2) {
@@ -423,11 +423,11 @@ STime_DiffMillisecondFloat32(const STimeval32T *pTv1, const STimeval32T *pTv2) {
 
 
 /**
- * 返回相差的微秒数
+ * 返回相差的微秒數
  *
- * @param   pTv1    开始时间
- * @param   pTv2    结束时间
- * @return  相差的微秒数
+ * @param   pTv1    開始時間
+ * @param   pTv2    結束時間
+ * @return  相差的微秒數
  */
 static __inline int64
 STime_DiffMicrosecond(const STimevalT *pTv1, const STimevalT *pTv2) {
@@ -437,11 +437,11 @@ STime_DiffMicrosecond(const STimevalT *pTv1, const STimevalT *pTv2) {
 
 
 /**
- * 返回相差的微秒数
+ * 返回相差的微秒數
  *
- * @param   pTv1    开始时间
- * @param   pTv2    结束时间
- * @return  相差的微秒数
+ * @param   pTv1    開始時間
+ * @param   pTv2    結束時間
+ * @return  相差的微秒數
  */
 static __inline int64
 STime_DiffMicrosecond32(const STimeval32T *pTv1, const STimeval32T *pTv2) {
@@ -451,11 +451,11 @@ STime_DiffMicrosecond32(const STimeval32T *pTv1, const STimeval32T *pTv2) {
 
 
 /**
- * 返回相差的纳秒数
+ * 返回相差的納秒數
  *
- * @param   pTs1    开始时间
- * @param   pTs2    结束时间
- * @return  相差的纳秒数
+ * @param   pTs1    開始時間
+ * @param   pTs2    結束時間
+ * @return  相差的納秒數
  */
 static __inline int64
 STime_DiffTimespecNs(const STimespecT *pTs1, const STimespecT *pTs2) {
@@ -471,11 +471,11 @@ STime_DiffTimespecNs(const STimespecT *pTs1, const STimespecT *pTs2) {
 
 
 /**
- * 返回相差的微秒数
+ * 返回相差的微秒數
  *
- * @param   pTs1    开始时间
- * @param   pTs2    结束时间
- * @return  相差的微秒数
+ * @param   pTs1    開始時間
+ * @param   pTs2    結束時間
+ * @return  相差的微秒數
  */
 static __inline int64
 STime_DiffTimespecUs(const STimespecT *pTs1, const STimespecT *pTs2) {
@@ -491,11 +491,11 @@ STime_DiffTimespecUs(const STimespecT *pTs1, const STimespecT *pTs2) {
 
 
 /**
- * 返回相差的毫秒数
+ * 返回相差的毫秒數
  *
- * @param   pTs1    开始时间
- * @param   pTs2    结束时间
- * @return  相差的毫秒数
+ * @param   pTs1    開始時間
+ * @param   pTs2    結束時間
+ * @return  相差的毫秒數
  */
 static __inline int64
 STime_DiffTimespecMs(const STimespecT *pTs1, const STimespecT *pTs2) {
@@ -511,10 +511,10 @@ STime_DiffTimespecMs(const STimespecT *pTs1, const STimespecT *pTs2) {
 
 
 /**
- * 判断是否闰年
+ * 判斷是否閏年
  *
  * @param   年份
- * @return  TRUE: 闰年； FALSE: 不是闰年
+ * @return  TRUE: 閏年； FALSE: 不是閏年
  */
 static __inline BOOL
 STime_IsLeapYear(int32 iYear){
@@ -524,11 +524,11 @@ STime_IsLeapYear(int32 iYear){
 
 
 /**
- * 返回指定月份的自然日天数
+ * 返回指定月份的自然日天數
  *
  * @param   iYearMonth      指定月份(YYYYMM)
- * @return  >0  自然日天数
- *          <=0 失败
+ * @return  >0  自然日天數
+ *          <=0 失敗
  */
 static __inline int32
 STime_GetMonthDays(int32 year, int32 month) {
@@ -579,9 +579,9 @@ STime_GetMonthOfTm(const struct tm *pTm) {
 
 
 /**
- * 返回日期(本月第几日)
+ * 返回日期(本月第幾日)
  *
- * @return  本月第几日
+ * @return  本月第幾日
  */
 static __inline int32
 STime_GetDayOfTm(const struct tm *pTm) {
@@ -591,9 +591,9 @@ STime_GetDayOfTm(const struct tm *pTm) {
 
 
 /**
- * 返回小时数
+ * 返回小時數
  *
- * @return  小时数
+ * @return  小時數
  */
 static __inline int32
 STime_GetHourOfTm(const struct tm *pTm) {
@@ -603,9 +603,9 @@ STime_GetHourOfTm(const struct tm *pTm) {
 
 
 /**
- * 返回分钟数
+ * 返回分鐘數
  *
- * @return  分钟数
+ * @return  分鐘數
  */
 static __inline int32
 STime_GetMinuteOfTm(const struct tm *pTm) {
@@ -615,9 +615,9 @@ STime_GetMinuteOfTm(const struct tm *pTm) {
 
 
 /**
- * 返回秒数
+ * 返回秒數
  *
- * @return  秒数
+ * @return  秒數
  */
 static __inline int32
 STime_GetSecondOfTm(const struct tm *pTm) {
@@ -651,10 +651,10 @@ STime_GetMonthOfIntDate(int32 iDate) {
 
 
 /**
- * 返回日期(本月第几日)
+ * 返回日期(本月第幾日)
  *
  * @param   iDate   YYYYMMDD 格式的整型日期
- * @return  本月第几日
+ * @return  本月第幾日
  */
 static __inline int32
 STime_GetDayOfIntDate(int32 iDate) {
@@ -663,10 +663,10 @@ STime_GetDayOfIntDate(int32 iDate) {
 
 
 /**
- * 返回小时数
+ * 返回小時數
  *
- * @param   iTime   HHMMSS 格式的整型时间
- * @return  小时数
+ * @param   iTime   HHMMSS 格式的整型時間
+ * @return  小時數
  */
 static __inline int32
 STime_GetHourOfIntTime(int32 iTime) {
@@ -675,10 +675,10 @@ STime_GetHourOfIntTime(int32 iTime) {
 
 
 /**
- * 返回分钟数
+ * 返回分鐘數
  *
- * @param   iTime   HHMMSS 格式的整型时间
- * @return  分钟数
+ * @param   iTime   HHMMSS 格式的整型時間
+ * @return  分鐘數
  */
 static __inline int32
 STime_GetMinuteOfIntTime(int32 iTime) {
@@ -687,10 +687,10 @@ STime_GetMinuteOfIntTime(int32 iTime) {
 
 
 /**
- * 返回秒数
+ * 返回秒數
  *
- * @param   iTime   HHMMSS 格式的整型时间
- * @return  秒数
+ * @param   iTime   HHMMSS 格式的整型時間
+ * @return  秒數
  */
 static __inline int32
 STime_GetSecondOfIntTime(int32 iTime) {
@@ -699,10 +699,10 @@ STime_GetSecondOfIntTime(int32 iTime) {
 
 
 /**
- * 返回小时数
+ * 返回小時數
  *
- * @param   iTime   HHMMSSsss 格式的整型时间
- * @return  小时数
+ * @param   iTime   HHMMSSsss 格式的整型時間
+ * @return  小時數
  */
 static __inline int32
 STime_GetHourOfIntTimeMs(int32 iTime) {
@@ -711,10 +711,10 @@ STime_GetHourOfIntTimeMs(int32 iTime) {
 
 
 /**
- * 返回分钟数
+ * 返回分鐘數
  *
- * @param   iTime   HHMMSSsss 格式的整型时间
- * @return  分钟数
+ * @param   iTime   HHMMSSsss 格式的整型時間
+ * @return  分鐘數
  */
 static __inline int32
 STime_GetMinuteOfIntTimeMs(int32 iTime) {
@@ -723,10 +723,10 @@ STime_GetMinuteOfIntTimeMs(int32 iTime) {
 
 
 /**
- * 返回秒数
+ * 返回秒數
  *
- * @param   iTime   HHMMSSsss 格式的整型时间
- * @return  秒数
+ * @param   iTime   HHMMSSsss 格式的整型時間
+ * @return  秒數
  */
 static __inline int32
 STime_GetSecondOfIntTimeMs(int32 iTime) {
@@ -735,10 +735,10 @@ STime_GetSecondOfIntTimeMs(int32 iTime) {
 
 
 /**
- * 返回毫秒数
+ * 返回毫秒數
  *
- * @param   iTime   HHMMSSsss 格式的整型时间
- * @return  毫秒数
+ * @param   iTime   HHMMSSsss 格式的整型時間
+ * @return  毫秒數
  */
 static __inline int32
 STime_GetMillisecondOfIntTimeMs(int32 iTime) {
@@ -747,11 +747,11 @@ STime_GetMillisecondOfIntTimeMs(int32 iTime) {
 
 
 /**
- * 计算两个整型日期值之间相差的天数
+ * 計算兩個整型日期值之間相差的天數
  *
- * @param   beginDate   起始时间 (YYYYMMDD)
- * @param   endDate     结束时间 (YYYYMMDD)
- * @return  相差的天数
+ * @param   beginDate   起始時間 (YYYYMMDD)
+ * @param   endDate     結束時間 (YYYYMMDD)
+ * @return  相差的天數
  */
 static __inline int32
 STime_DiffIntDays(int32 iBeginDate, int32 iEndDate) {
@@ -791,11 +791,11 @@ STime_DiffIntDays(int32 iBeginDate, int32 iEndDate) {
 
 
 /**
- * 计算两个整型时间值之间相差的秒数
+ * 計算兩個整型時間值之間相差的秒數
  *
- * @param   beginTime   起始时间 (HHMMSS)
- * @param   endTime     结束时间 (HHMMSS)
- * @return  相差的秒数
+ * @param   beginTime   起始時間 (HHMMSS)
+ * @param   endTime     結束時間 (HHMMSS)
+ * @return  相差的秒數
  */
 static __inline int32
 STime_DiffIntTime(int32 beginTime, int32 endTime) {
@@ -815,11 +815,11 @@ STime_DiffIntTime(int32 beginTime, int32 endTime) {
 
 
 /**
- * 计算两个整型时间值之间相差的毫秒数
+ * 計算兩個整型時間值之間相差的毫秒數
  *
- * @param   beginTime   起始时间 (HHMMSSsss)
- * @param   endTime     结束时间 (HHMMSSsss)
- * @return  相差的毫秒数
+ * @param   beginTime   起始時間 (HHMMSSsss)
+ * @param   endTime     結束時間 (HHMMSSsss)
+ * @return  相差的毫秒數
  */
 static __inline int32
 STime_DiffIntTimeMs(int32 beginTimeMs, int32 endTimeMs) {
@@ -839,11 +839,11 @@ STime_DiffIntTimeMs(int32 beginTimeMs, int32 endTimeMs) {
 
 
 /**
- * 格式化时间为yyyymmdd格式的日期字符串
+ * 格式化時間為yyyymmdd格式的日期字串
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTm     tm 结构
- * @return      yyyymmdd格式的日期字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTm     tm 結構
+ * @return      yyyymmdd格式的日期字串
  */
 static __inline char*
 STime_FormatTmToDate(char *pBuf, const struct tm *pTm) {
@@ -855,11 +855,11 @@ STime_FormatTmToDate(char *pBuf, const struct tm *pTm) {
 
 
 /**
- * 格式化时间为yyyy-mm-dd格式的日期字符串
+ * 格式化時間為yyyy-mm-dd格式的日期字串
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTm     tm 结构
- * @return      yyyy-mm-dd格式的日期字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTm     tm 結構
+ * @return      yyyy-mm-dd格式的日期字串
  */
 static __inline char*
 STime_FormatTmToDate2(char *pBuf, const struct tm *pTm) {
@@ -871,11 +871,11 @@ STime_FormatTmToDate2(char *pBuf, const struct tm *pTm) {
 
 
 /**
- * 格式化时间为yyyy*mm*dd格式的日期字符串
+ * 格式化時間為yyyy*mm*dd格式的日期字串
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTm     tm 结构
- * @return      yyyy*mm*dd格式的日期字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTm     tm 結構
+ * @return      yyyy*mm*dd格式的日期字串
  */
 static __inline char*
 STime_FormatTmToDate3(char *pBuf, const struct tm *pTm, char delimChar) {
@@ -889,11 +889,11 @@ STime_FormatTmToDate3(char *pBuf, const struct tm *pTm, char delimChar) {
 
 
 /**
- * 格式化时间为hhmmss格式的时间字符串
+ * 格式化時間為hhmmss格式的時間字串
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTm     tm 结构
- * @return      hhmmss格式的时间字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTm     tm 結構
+ * @return      hhmmss格式的時間字串
  */
 static __inline char*
 STime_FormatTmToTime(char *pBuf, const struct tm *pTm) {
@@ -905,11 +905,11 @@ STime_FormatTmToTime(char *pBuf, const struct tm *pTm) {
 
 
 /**
- * 格式化时间为hh:mm:ss格式的时间字符串
+ * 格式化時間為hh:mm:ss格式的時間字串
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTm     tm 结构
- * @return      hh:mm:ss格式的时间字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTm     tm 結構
+ * @return      hh:mm:ss格式的時間字串
  */
 static __inline char*
 STime_FormatTmToTime2(char *pBuf, const struct tm *pTm) {
@@ -921,11 +921,11 @@ STime_FormatTmToTime2(char *pBuf, const struct tm *pTm) {
 
 
 /**
- * 格式化时间为hh*mm*ss格式的时间字符串
+ * 格式化時間為hh*mm*ss格式的時間字串
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTm     tm 结构
- * @return      hh*mm*ss格式的时间字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTm     tm 結構
+ * @return      hh*mm*ss格式的時間字串
  */
 static __inline char*
 STime_FormatTmToTime3(char *pBuf, const struct tm *pTm, char delimChar) {
@@ -939,11 +939,11 @@ STime_FormatTmToTime3(char *pBuf, const struct tm *pTm, char delimChar) {
 
 
 /**
- * 格式化时间为YYYYMMDD-HH:mm:SS格式的17位日期字符串
+ * 格式化時間為YYYYMMDD-HH:mm:SS格式的17位日期字串
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTm     tm 结构
- * @return      YYYYMMDD-HH:mm:SS格式的17位日期字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTm     tm 結構
+ * @return      YYYYMMDD-HH:mm:SS格式的17位日期字串
  */
 static __inline char*
 STime_FormatTmToTimestamp(char *pBuf, const struct tm *pTm) {
@@ -960,11 +960,11 @@ STime_FormatTmToTimestamp(char *pBuf, const struct tm *pTm) {
 
 
 /**
- * 格式化时间为形如"YYYYMMDD-HH:mm:SS"的17位时间戳字符串返回
+ * 格式化時間為形如"YYYYMMDD-HH:mm:SS"的17位時間戳字串返回
  *
- * @param[out]  pBuf        缓存区指针
+ * @param[out]  pBuf        快取區指標
  * @param       unixSecs    number of seconds since 1970-01-01 00:00:00 +0000 (UTC)
- * @return      形如"YYYYMMDD-HH:mm:SS"的17位时间戳字符串
+ * @return      形如"YYYYMMDD-HH:mm:SS"的17位時間戳字串
  */
 static __inline char*
 STime_FormatUnixTimestamp(char *pBuf, int64 unixSecs) {
@@ -986,11 +986,11 @@ STime_FormatUnixTimestamp(char *pBuf, int64 unixSecs) {
 
 
 /**
- * 格式化时间为形如"YYYYMMDD-HH:mm:SS"的17位时间戳字符串返回
+ * 格式化時間為形如"YYYYMMDD-HH:mm:SS"的17位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTv     待格式化的时间
- * @return      形如"YYYYMMDD-HH:mm:SS"的17位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTv     待格式化的時間
+ * @return      形如"YYYYMMDD-HH:mm:SS"的17位時間戳字串
  */
 static __inline char*
 STime_FormatTimevalSecs(char *pBuf, const STimevalT *pTv) {
@@ -1012,11 +1012,11 @@ STime_FormatTimevalSecs(char *pBuf, const STimevalT *pTv) {
 
 
 /**
- * 格式化时间为形如"YYYYMMDD-HH:mm:SS.sss"的21位时间戳字符串返回
+ * 格式化時間為形如"YYYYMMDD-HH:mm:SS.sss"的21位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTv     待格式化的时间
- * @return      形如"YYYYMMDD-HH:mm:SS.sss"的21位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTv     待格式化的時間
+ * @return      形如"YYYYMMDD-HH:mm:SS.sss"的21位時間戳字串
  */
 static __inline char*
 STime_FormatTimevalMs(char *pBuf, const STimevalT *pTv) {
@@ -1039,11 +1039,11 @@ STime_FormatTimevalMs(char *pBuf, const STimevalT *pTv) {
 
 
 /**
- * 格式化时间为形如"YYYYMMDD-HH:mm:SS.ssss"的22位时间戳字符串返回
+ * 格式化時間為形如"YYYYMMDD-HH:mm:SS.ssss"的22位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTv     待格式化的时间
- * @return      形如"YYYYMMDD-HH:mm:SS.ssss"的22位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTv     待格式化的時間
+ * @return      形如"YYYYMMDD-HH:mm:SS.ssss"的22位時間戳字串
  */
 static __inline char*
 STime_FormatTimevalMs4(char *pBuf, const STimevalT *pTv) {
@@ -1066,11 +1066,11 @@ STime_FormatTimevalMs4(char *pBuf, const STimevalT *pTv) {
 
 
 /**
- * 格式化时间为形如"YYYYMMDD-HH:mm:SS.sss"的21位时间戳字符串返回
+ * 格式化時間為形如"YYYYMMDD-HH:mm:SS.sss"的21位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTs     待格式化的时间
- * @return      形如"YYYYMMDD-HH:mm:SS.sss"的21位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTs     待格式化的時間
+ * @return      形如"YYYYMMDD-HH:mm:SS.sss"的21位時間戳字串
  */
 static __inline char*
 STime_FormatTimespecMs(char *pBuf, const STimespecT *pTs) {
@@ -1093,11 +1093,11 @@ STime_FormatTimespecMs(char *pBuf, const STimespecT *pTs) {
 
 
 /**
- * 格式化时间为形如"YYYYMMDD-HH:mm:SS.ssss"的22位时间戳字符串返回
+ * 格式化時間為形如"YYYYMMDD-HH:mm:SS.ssss"的22位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @param       pTs     待格式化的时间
- * @return      形如"YYYYMMDD-HH:mm:SS.ssss"的22位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @param       pTs     待格式化的時間
+ * @return      形如"YYYYMMDD-HH:mm:SS.ssss"的22位時間戳字串
  */
 static __inline char*
 STime_FormatTimespecMs4(char *pBuf, const STimespecT *pTs) {
@@ -1120,10 +1120,10 @@ STime_FormatTimespecMs4(char *pBuf, const STimespecT *pTs) {
 
 
 /**
- * 返回当前时间, 以形如"YYYYMMDD-HH:mm:SS"的17位时间戳字符串返回
+ * 返回當前時間, 以形如"YYYYMMDD-HH:mm:SS"的17位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @return      形如"YYYYMMDD-HH:mm:SS"的17位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @return      形如"YYYYMMDD-HH:mm:SS"的17位時間戳字串
  */
 static __inline char*
 STime_GetFormattedTimestamp(char *pBuf) {
@@ -1135,10 +1135,10 @@ STime_GetFormattedTimestamp(char *pBuf) {
 
 
 /**
- * 返回当前时间, 以形如"YYYYMMDD-HH:mm:SS.sss"的21位时间戳字符串返回
+ * 返回當前時間, 以形如"YYYYMMDD-HH:mm:SS.sss"的21位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @return      形如"YYYYMMDD-HH:mm:SS.sss"的21位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @return      形如"YYYYMMDD-HH:mm:SS.sss"的21位時間戳字串
  */
 static __inline char*
 STime_GetFormattedTimestampMs(char *pBuf) {
@@ -1150,10 +1150,10 @@ STime_GetFormattedTimestampMs(char *pBuf) {
 
 
 /**
- * 返回当前时间, 以形如"YYYYMMDD-HH:mm:SS.ssss"的2s位时间戳字符串返回
+ * 返回當前時間, 以形如"YYYYMMDD-HH:mm:SS.ssss"的2s位時間戳字串返回
  *
- * @param[out]  pBuf    缓存区指针
- * @return      形如"YYYYMMDD-HH:mm:SS.ssss"的22位时间戳字符串
+ * @param[out]  pBuf    快取區指標
+ * @return      形如"YYYYMMDD-HH:mm:SS.ssss"的22位時間戳字串
  */
 static __inline char*
 STime_GetFormattedTimestampMs4(char *pBuf) {
@@ -1165,9 +1165,9 @@ STime_GetFormattedTimestampMs4(char *pBuf) {
 
 
 /**
- * 转换日期为yyyymmdd格式的int型日期值
+ * 轉換日期為yyyymmdd格式的int型日期值
  *
- * @param[in]   tm1     tm 结构
+ * @param[in]   tm1     tm 結構
  * @return      yyyymmdd格式的int型日期值
  */
 static __inline int32
@@ -1179,10 +1179,10 @@ STime_GetIntDateFromTm(const struct tm *pTm) {
 
 
 /**
- * 转换日期为hhmmss格式的int型时间值
+ * 轉換日期為hhmmss格式的int型時間值
  *
- * @param[in]   tm1     tm 结构
- * @return      hhmmss格式的int型时间值
+ * @param[in]   tm1     tm 結構
+ * @return      hhmmss格式的int型時間值
  */
 static __inline int32
 STime_GetIntTimeFromTm(const struct tm *pTm) {
@@ -1192,12 +1192,12 @@ STime_GetIntTimeFromTm(const struct tm *pTm) {
 
 
 /**
- * 转换INT型日期/时间到 tm 结构
+ * 轉換INT型日期/時間到 tm 結構
  *
- * @param[out]  pTm     <struct tm *> tm 结构
+ * @param[out]  pTm     <struct tm *> tm 結構
  * @param       iDate   yyyymmdd格式的int型日期值
- * @param       iTime   hhmmss格式的int型时间值
- * @return      tm 结构
+ * @param       iTime   hhmmss格式的int型時間值
+ * @return      tm 結構
  */
 static __inline struct tm*
 STime_ConvertIntToTm(struct tm *pOutTm, int32 iDate, int32 iTime) {
@@ -1221,11 +1221,11 @@ STime_ConvertIntToTm(struct tm *pOutTm, int32 iDate, int32 iTime) {
 
 
 /**
- * 转换INT型日期/时间为日历时间
+ * 轉換INT型日期/時間為日曆時間
  *
  * @param   iDate   yyyymmdd格式的int型日期值
- * @param   iTime   hhmmss格式的int型时间值
- * @return  日历时间, 即到UTC 1970年1月1日零时的秒数
+ * @param   iTime   hhmmss格式的int型時間值
+ * @return  日曆時間, 即到UTC 1970年1月1日零時的秒數
  */
 static __inline int64
 STime_ConvertIntToSeconds(int32 iDate, int32 iTime) {
@@ -1237,9 +1237,9 @@ STime_ConvertIntToSeconds(int32 iDate, int32 iTime) {
 
 
 /**
- * 返回当前日期的整数表示(YYYYMMDD)
+ * 返回當前日期的整數表示(YYYYMMDD)
  *
- * @return  int32 当前日期, 格式为YYYYMMDD
+ * @return  int32 當前日期, 格式為YYYYMMDD
  */
 static __inline int32
 STime_GetIntDate() {
@@ -1249,9 +1249,9 @@ STime_GetIntDate() {
 
 
 /**
- * 返回当前时间的整数表示(HHMMSS)
+ * 返回當前時間的整數表示(HHMMSS)
  *
- * @return  int32 当前时间, 格式为HHMMSS
+ * @return  int32 當前時間, 格式為HHMMSS
  */
 static __inline int32
 STime_GetIntTime() {
@@ -1261,9 +1261,9 @@ STime_GetIntTime() {
 
 
 /**
- * 返回当前时间的整数表示(HHMMSSsss)
+ * 返回當前時間的整數表示(HHMMSSsss)
  *
- * @return  int32 当前时间(毫秒), 格式为HHMMSSsss
+ * @return  int32 當前時間(毫秒), 格式為HHMMSSsss
  */
 static __inline int32
 STime_GetIntTimeMs() {
@@ -1278,10 +1278,10 @@ STime_GetIntTimeMs() {
 
 
 /**
- * 返回当前日期的整数表示(YYYYMMDD)
+ * 返回當前日期的整數表示(YYYYMMDD)
  *
- * @param   time    日历时间, 即到UTC 1970年1月1日零时的秒数
- * @return  int32 当前日期, 格式为YYYYMMDD
+ * @param   time    日曆時間, 即到UTC 1970年1月1日零時的秒數
+ * @return  int32 當前日期, 格式為YYYYMMDD
  */
 static __inline int32
 STime_GetIntDateFromSeconds(int64 time) {
@@ -1291,10 +1291,10 @@ STime_GetIntDateFromSeconds(int64 time) {
 
 
 /**
- * 返回当前时间的整数表示(HHMMSS)
+ * 返回當前時間的整數表示(HHMMSS)
  *
- * @param   time    日历时间, 即到UTC 1970年1月1日零时的秒数
- * @return  int32 当前时间(秒), 格式为HHMMSS
+ * @param   time    日曆時間, 即到UTC 1970年1月1日零時的秒數
+ * @return  int32 當前時間(秒), 格式為HHMMSS
  */
 static __inline int32
 STime_GetIntTimeFromSeconds(int64 time) {
@@ -1304,10 +1304,10 @@ STime_GetIntTimeFromSeconds(int64 time) {
 
 
 /**
- * 返回精度为毫秒的UTC相对时间
+ * 返回精度為毫秒的UTC相對時間
  *
- * @param   pTv     当前时间
- * @return  相对与UTC 1970年1月1日零时的毫秒数
+ * @param   pTv     當前時間
+ * @return  相對與UTC 1970年1月1日零時的毫秒數
  */
 static __inline int64
 STime_GetMillisecondsFromTimeval(const STimevalT *pTv) {
@@ -1317,10 +1317,10 @@ STime_GetMillisecondsFromTimeval(const STimevalT *pTv) {
 
 
 /**
- * 返回精度为毫秒的UTC相对时间
+ * 返回精度為毫秒的UTC相對時間
  *
- * @param   pTv     当前时间
- * @return  相对与UTC 1970年1月1日零时的毫秒数
+ * @param   pTv     當前時間
+ * @return  相對與UTC 1970年1月1日零時的毫秒數
  */
 static __inline int64
 STime_GetMillisecondsFromTimeval32(const STimeval32T *pTv) {
@@ -1330,10 +1330,10 @@ STime_GetMillisecondsFromTimeval32(const STimeval32T *pTv) {
 
 
 /**
- * 返回当前日期的整数表示(YYYYMMDD)
+ * 返回當前日期的整數表示(YYYYMMDD)
  *
- * @param   pTv     当前时间
- * @return  int32 当前日期, 格式为YYYYMMDD
+ * @param   pTv     當前時間
+ * @return  int32 當前日期, 格式為YYYYMMDD
  */
 static __inline int32
 STime_GetIntDateFromTimeval(const STimevalT *pTv) {
@@ -1347,10 +1347,10 @@ STime_GetIntDateFromTimeval(const STimevalT *pTv) {
 
 
 /**
- * 返回当前日期的整数表示(YYYYMMDD)
+ * 返回當前日期的整數表示(YYYYMMDD)
  *
- * @param   pTv     当前时间
- * @return  int32 当前日期, 格式为YYYYMMDD
+ * @param   pTv     當前時間
+ * @return  int32 當前日期, 格式為YYYYMMDD
  */
 static __inline int32
 STime_GetIntDateFromTimeval32(const STimeval32T *pTv) {
@@ -1364,10 +1364,10 @@ STime_GetIntDateFromTimeval32(const STimeval32T *pTv) {
 
 
 /**
- * 返回当前时间的整数表示(秒, HHMMSS)
+ * 返回當前時間的整數表示(秒, HHMMSS)
  *
- * @param   pTv     当前时间
- * @return  int32 当前时间(秒), 格式为HHMMSS
+ * @param   pTv     當前時間
+ * @return  int32 當前時間(秒), 格式為HHMMSS
  */
 static __inline int32
 STime_GetIntTimeFromTimeval(const STimevalT *pTv) {
@@ -1381,10 +1381,10 @@ STime_GetIntTimeFromTimeval(const STimevalT *pTv) {
 
 
 /**
- * 返回当前时间的整数表示(秒, HHMMSS)
+ * 返回當前時間的整數表示(秒, HHMMSS)
  *
- * @param   pTv     当前时间
- * @return  int32 当前时间(秒), 格式为HHMMSS
+ * @param   pTv     當前時間
+ * @return  int32 當前時間(秒), 格式為HHMMSS
  */
 static __inline int32
 STime_GetIntTimeFromTimeval32(const STimeval32T *pTv) {
@@ -1398,10 +1398,10 @@ STime_GetIntTimeFromTimeval32(const STimeval32T *pTv) {
 
 
 /**
- * 返回当前时间的整数表示(毫秒, HHMMSSsss)
+ * 返回當前時間的整數表示(毫秒, HHMMSSsss)
  *
- * @param   pTv     当前时间
- * @return  int32 当前时间(毫秒), 格式为HHMMSSsss
+ * @param   pTv     當前時間
+ * @return  int32 當前時間(毫秒), 格式為HHMMSSsss
  */
 static __inline int32
 STime_GetIntTimeMsFromTimeval(const STimevalT *pTv) {
@@ -1415,10 +1415,10 @@ STime_GetIntTimeMsFromTimeval(const STimevalT *pTv) {
 
 
 /**
- * 返回当前时间的整数表示(毫秒, HHMMSSsss)
+ * 返回當前時間的整數表示(毫秒, HHMMSSsss)
  *
- * @param   pTv     当前时间
- * @return  int32 当前时间(毫秒), 格式为HHMMSSsss
+ * @param   pTv     當前時間
+ * @return  int32 當前時間(毫秒), 格式為HHMMSSsss
  */
 static __inline int32
 STime_GetIntTimeMsFromTimeval32(const STimeval32T *pTv) {
@@ -1432,10 +1432,10 @@ STime_GetIntTimeMsFromTimeval32(const STimeval32T *pTv) {
 
 
 /**
- * 返回当前时间戳的整数表示(YYYYMMDDHHMMSSsss)
+ * 返回當前時間戳的整數表示(YYYYMMDDHHMMSSsss)
  *
- * @param   pTv     当前时间
- * @return  int64 当前时间, 格式为YYYYMMDDHHMMSSsss
+ * @param   pTv     當前時間
+ * @return  int64 當前時間, 格式為YYYYMMDDHHMMSSsss
  */
 static __inline int64
 STime_GetIntTimestampFromTimeval(const STimevalT *pTv) {
@@ -1450,10 +1450,10 @@ STime_GetIntTimestampFromTimeval(const STimevalT *pTv) {
 
 
 /**
- * 返回当前时间戳的整数表示(YYYYMMDDHHMMSSsss)
+ * 返回當前時間戳的整數表示(YYYYMMDDHHMMSSsss)
  *
- * @param   pTv     当前时间
- * @return  int64 当前时间, 格式为YYYYMMDDHHMMSSsss
+ * @param   pTv     當前時間
+ * @return  int64 當前時間, 格式為YYYYMMDDHHMMSSsss
  */
 static __inline int64
 STime_GetIntTimestampFromTimeval32(const STimeval32T *pTv) {
@@ -1468,11 +1468,11 @@ STime_GetIntTimestampFromTimeval32(const STimeval32T *pTv) {
 
 
 /**
- * 输出当前时间戳的整数表示
+ * 輸出當前時間戳的整數表示
  *
- * @param       pTv         当前时间
- * @param[out]  pOutDate    输出当前日期, 格式为YYYYMMDD
- * @param[out]  pOutTimeMs  输出当前时间(毫秒), 格式为HHMMSSsss
+ * @param       pTv         當前時間
+ * @param[out]  pOutDate    輸出當前日期, 格式為YYYYMMDD
+ * @param[out]  pOutTimeMs  輸出當前時間(毫秒), 格式為HHMMSSsss
  */
 static __inline void
 STime_GetIntTimestamp2FromTimeval(const STimevalT *pTv, int32 *pOutDate,
@@ -1488,11 +1488,11 @@ STime_GetIntTimestamp2FromTimeval(const STimevalT *pTv, int32 *pOutDate,
 
 
 /**
- * 输出当前时间戳的整数表示
+ * 輸出當前時間戳的整數表示
  *
- * @param       pTv         当前时间
- * @param[out]  pOutDate    输出当前日期, 格式为YYYYMMDD
- * @param[out]  pOutTimeMs  输出当前时间(毫秒), 格式为HHMMSSsss
+ * @param       pTv         當前時間
+ * @param[out]  pOutDate    輸出當前日期, 格式為YYYYMMDD
+ * @param[out]  pOutTimeMs  輸出當前時間(毫秒), 格式為HHMMSSsss
  */
 static __inline void
 STime_GetIntTimestamp2FromTimeval32(const STimeval32T *pTv, int32 *pOutDate,
@@ -1508,10 +1508,10 @@ STime_GetIntTimestamp2FromTimeval32(const STimeval32T *pTv, int32 *pOutDate,
 
 
 /**
- * 返回当前日期的整数表示(YYYYMMDD)
+ * 返回當前日期的整數表示(YYYYMMDD)
  *
- * @param   pTs     当前时间
- * @return  int32 当前日期, 格式为YYYYMMDD
+ * @param   pTs     當前時間
+ * @return  int32 當前日期, 格式為YYYYMMDD
  */
 static __inline int32
 STime_GetIntDateFromTimespec(const STimespecT *pTs) {
@@ -1525,10 +1525,10 @@ STime_GetIntDateFromTimespec(const STimespecT *pTs) {
 
 
 /**
- * 返回当前时间的整数表示(秒, HHMMSS)
+ * 返回當前時間的整數表示(秒, HHMMSS)
  *
- * @param   pTs     当前时间
- * @return  int32 当前时间(秒), 格式为HHMMSS
+ * @param   pTs     當前時間
+ * @return  int32 當前時間(秒), 格式為HHMMSS
  */
 static __inline int32
 STime_GetIntTimeFromTimespec(const STimespecT *pTs) {
@@ -1542,10 +1542,10 @@ STime_GetIntTimeFromTimespec(const STimespecT *pTs) {
 
 
 /**
- * 返回当前时间的整数表示(毫秒, HHMMSSsss)
+ * 返回當前時間的整數表示(毫秒, HHMMSSsss)
  *
- * @param   pTs     当前时间
- * @return  int32 当前时间(毫秒), 格式为HHMMSSsss
+ * @param   pTs     當前時間
+ * @return  int32 當前時間(毫秒), 格式為HHMMSSsss
  */
 static __inline int32
 STime_GetIntTimeMsFromTimespec(const STimespecT *pTs) {
@@ -1560,10 +1560,10 @@ STime_GetIntTimeMsFromTimespec(const STimespecT *pTs) {
 
 
 /**
- * 返回当前时间戳的整数表示(YYYYMMDDHHMMSSsss)
+ * 返回當前時間戳的整數表示(YYYYMMDDHHMMSSsss)
  *
- * @param   pTs     当前时间
- * @return  int64 当前时间, 格式为YYYYMMDDHHMMSSsss
+ * @param   pTs     當前時間
+ * @return  int64 當前時間, 格式為YYYYMMDDHHMMSSsss
  */
 static __inline int64
 STime_GetIntTimestampFromTimespec(const STimespecT *pTs) {
@@ -1578,11 +1578,11 @@ STime_GetIntTimestampFromTimespec(const STimespecT *pTs) {
 
 
 /**
- * 输出当前时间戳的整数表示
+ * 輸出當前時間戳的整數表示
  *
- * @param       pTs         当前时间
- * @param[out]  pOutDate    输出当前日期, 格式为YYYYMMDD
- * @param[out]  pOutTimeMs  输出当前时间(毫秒), 格式为HHMMSSsss
+ * @param       pTs         當前時間
+ * @param[out]  pOutDate    輸出當前日期, 格式為YYYYMMDD
+ * @param[out]  pOutTimeMs  輸出當前時間(毫秒), 格式為HHMMSSsss
  */
 static __inline void
 STime_GetIntTimestampFromTimespec2(const STimespecT *pTs, int32 *pOutDate,

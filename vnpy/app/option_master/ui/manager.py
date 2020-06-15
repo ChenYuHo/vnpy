@@ -89,14 +89,14 @@ class AlgoDirectionCombo(QtWidgets.QComboBox):
         super().__init__()
 
         self.addItems([
-            "双向",
+            "雙向",
             "做多",
             "做空"
         ])
 
     def get_value(self) -> Dict[str, bool]:
         """"""
-        if self.currentText() == "双向":
+        if self.currentText() == "雙向":
             value = {
                 "long_allowed": True,
                 "short_allowed": True
@@ -199,24 +199,24 @@ class ElectronicEyeMonitor(QtWidgets.QTableWidget):
     signal_trade = QtCore.pyqtSignal(Event)
 
     headers: List[Dict] = [
-        {"name": "bid_volume", "display": "买量", "cell": BidCell},
-        {"name": "bid_price", "display": "买价", "cell": BidCell},
-        {"name": "ask_price", "display": "卖价", "cell": AskCell},
-        {"name": "ask_volume", "display": "卖量", "cell": AskCell},
-        {"name": "algo_bid_price", "display": "目标\n买价", "cell": BidCell},
-        {"name": "algo_ask_price", "display": "目标\n卖价", "cell": AskCell},
-        {"name": "algo_spread", "display": "价差", "cell": MonitorCell},
-        {"name": "ref_price", "display": "理论价", "cell": MonitorCell},
-        {"name": "pricing_impv", "display": "定价\n隐波", "cell": MonitorCell},
-        {"name": "net_pos", "display": "净持仓", "cell": PosCell},
+        {"name": "bid_volume", "display": "買量", "cell": BidCell},
+        {"name": "bid_price", "display": "買價", "cell": BidCell},
+        {"name": "ask_price", "display": "賣價", "cell": AskCell},
+        {"name": "ask_volume", "display": "賣量", "cell": AskCell},
+        {"name": "algo_bid_price", "display": "目標\n買價", "cell": BidCell},
+        {"name": "algo_ask_price", "display": "目標\n賣價", "cell": AskCell},
+        {"name": "algo_spread", "display": "價差", "cell": MonitorCell},
+        {"name": "ref_price", "display": "理論價", "cell": MonitorCell},
+        {"name": "pricing_impv", "display": "定價\n隱波", "cell": MonitorCell},
+        {"name": "net_pos", "display": "淨持倉", "cell": PosCell},
 
-        {"name": "price_spread", "display": "价格\n价差", "cell": AlgoDoubleSpinBox},
-        {"name": "volatility_spread", "display": "隐波\n价差", "cell": AlgoDoubleSpinBox},
-        {"name": "max_pos", "display": "持仓\n范围", "cell": AlgoPositiveSpinBox},
-        {"name": "target_pos", "display": "目标\n持仓", "cell": AlgoSpinBox},
-        {"name": "max_order_size", "display": "最大\n委托", "cell": AlgoPositiveSpinBox},
+        {"name": "price_spread", "display": "價格\n價差", "cell": AlgoDoubleSpinBox},
+        {"name": "volatility_spread", "display": "隱波\n價差", "cell": AlgoDoubleSpinBox},
+        {"name": "max_pos", "display": "持倉\n範圍", "cell": AlgoPositiveSpinBox},
+        {"name": "target_pos", "display": "目標\n持倉", "cell": AlgoSpinBox},
+        {"name": "max_order_size", "display": "最大\n委託", "cell": AlgoPositiveSpinBox},
         {"name": "direction", "display": "方向", "cell": AlgoDirectionCombo},
-        {"name": "pricing_active", "display": "定价", "cell": AlgoPricingButton},
+        {"name": "pricing_active", "display": "定價", "cell": AlgoPricingButton},
         {"name": "trading_active", "display": "交易", "cell": AlgoTradingButton},
 
     ]
@@ -240,7 +240,7 @@ class ElectronicEyeMonitor(QtWidgets.QTableWidget):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("电子眼")
+        self.setWindowTitle("電子眼")
         self.verticalHeader().setVisible(False)
         self.setEditTriggers(self.NoEditTriggers)
 
@@ -258,7 +258,7 @@ class ElectronicEyeMonitor(QtWidgets.QTableWidget):
         call_labels = [d["display"] for d in self.headers]
         put_labels = copy(call_labels)
         put_labels.reverse()
-        labels = call_labels + ["行权价"] + put_labels
+        labels = call_labels + ["行權價"] + put_labels
         self.setHorizontalHeaderLabels(labels)
 
         # Init cells
@@ -519,7 +519,7 @@ class ElectronicEyeManager(QtWidgets.QWidget):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("期权电子眼")
+        self.setWindowTitle("期權電子眼")
 
         self.algo_monitor = ElectronicEyeMonitor(self.option_engine, self.portfolio_name)
 
@@ -527,7 +527,7 @@ class ElectronicEyeManager(QtWidgets.QWidget):
         self.log_monitor.setReadOnly(True)
         self.log_monitor.setMaximumWidth(400)
 
-        stop_pricing_button = QtWidgets.QPushButton("停止定价")
+        stop_pricing_button = QtWidgets.QPushButton("停止定價")
         stop_pricing_button.clicked.connect(self.stop_pricing_for_all)
 
         stop_trading_button = QtWidgets.QPushButton("停止交易")
@@ -540,39 +540,39 @@ class ElectronicEyeManager(QtWidgets.QWidget):
         self.target_pos_spin = AlgoSpinBox()
         self.max_pos_spin = AlgoPositiveSpinBox()
 
-        price_spread_button = QtWidgets.QPushButton("设置")
+        price_spread_button = QtWidgets.QPushButton("設定")
         price_spread_button.clicked.connect(self.set_price_spread_for_all)
 
-        volatility_spread_button = QtWidgets.QPushButton("设置")
+        volatility_spread_button = QtWidgets.QPushButton("設定")
         volatility_spread_button.clicked.connect(self.set_volatility_spread_for_all)
 
-        direction_button = QtWidgets.QPushButton("设置")
+        direction_button = QtWidgets.QPushButton("設定")
         direction_button.clicked.connect(self.set_direction_for_all)
 
-        max_order_size_button = QtWidgets.QPushButton("设置")
+        max_order_size_button = QtWidgets.QPushButton("設定")
         max_order_size_button.clicked.connect(self.set_max_order_size_for_all)
 
-        target_pos_button = QtWidgets.QPushButton("设置")
+        target_pos_button = QtWidgets.QPushButton("設定")
         target_pos_button.clicked.connect(self.set_target_pos_for_all)
 
-        max_pos_button = QtWidgets.QPushButton("设置")
+        max_pos_button = QtWidgets.QPushButton("設定")
         max_pos_button.clicked.connect(self.set_max_pos_for_all)
 
         QLabel = QtWidgets.QLabel
         grid = QtWidgets.QGridLayout()
-        grid.addWidget(QLabel("价格价差"), 0, 0)
+        grid.addWidget(QLabel("價格價差"), 0, 0)
         grid.addWidget(self.price_spread_spin, 0, 1)
         grid.addWidget(price_spread_button, 0, 2)
-        grid.addWidget(QLabel("隐波价差"), 1, 0)
+        grid.addWidget(QLabel("隱波價差"), 1, 0)
         grid.addWidget(self.volatility_spread_spin, 1, 1)
         grid.addWidget(volatility_spread_button, 1, 2)
-        grid.addWidget(QLabel("持仓上限"), 2, 0)
+        grid.addWidget(QLabel("持倉上限"), 2, 0)
         grid.addWidget(self.max_pos_spin, 2, 1)
         grid.addWidget(max_pos_button, 2, 2)
-        grid.addWidget(QLabel("目标持仓"), 3, 0)
+        grid.addWidget(QLabel("目標持倉"), 3, 0)
         grid.addWidget(self.target_pos_spin, 3, 1)
         grid.addWidget(target_pos_button, 3, 2)
-        grid.addWidget(QLabel("最大委托"), 4, 0)
+        grid.addWidget(QLabel("最大委託"), 4, 0)
         grid.addWidget(self.max_order_size_spin, 4, 1)
         grid.addWidget(max_order_size_button, 4, 2)
         grid.addWidget(QLabel("方向"), 5, 0)
@@ -716,7 +716,7 @@ class PricingVolatilityManager(QtWidgets.QWidget):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("波动率管理")
+        self.setWindowTitle("波動率管理")
 
         tab = QtWidgets.QTabWidget()
         vbox = QtWidgets.QVBoxLayout()
@@ -735,10 +735,10 @@ class PricingVolatilityManager(QtWidgets.QWidget):
             table.setColumnCount(4)
             table.setRowCount(len(chain.indexes))
             table.setHorizontalHeaderLabels([
-                "行权价",
-                "中值隐波",
-                "定价隐波",
-                "执行拟合"
+                "行權價",
+                "中值隱波",
+                "定價隱波",
+                "執行擬合"
             ])
             table.horizontalHeader().setSectionResizeMode(
                 QtWidgets.QHeaderView.Stretch
@@ -784,7 +784,7 @@ class PricingVolatilityManager(QtWidgets.QWidget):
             button_reset.clicked.connect(reset_func)
 
             fit_func = partial(self.fit_pricing_impv, chain_symbol=chain_symbol)
-            button_fit = QtWidgets.QPushButton("拟合")
+            button_fit = QtWidgets.QPushButton("擬合")
             button_fit.clicked.connect(fit_func)
 
             increase_func = partial(self.increase_pricing_impv, chain_symbol=chain_symbol)

@@ -65,11 +65,11 @@ class AlgoWidget(QtWidgets.QWidget):
             form.addRow(display_name, widget)
             self.widgets[field_name] = (widget, field_type)
 
-        start_algo_button = QtWidgets.QPushButton("启动算法")
+        start_algo_button = QtWidgets.QPushButton("啟動演算法")
         start_algo_button.clicked.connect(self.start_algo)
         form.addRow(start_algo_button)
 
-        load_csv_button = QtWidgets.QPushButton("CSV启动")
+        load_csv_button = QtWidgets.QPushButton("CSV啟動")
         load_csv_button.clicked.connect(self.load_csv)
         form.addRow(load_csv_button)
 
@@ -78,9 +78,9 @@ class AlgoWidget(QtWidgets.QWidget):
         form.addRow(QtWidgets.QLabel(""))
 
         self.setting_name_line = QtWidgets.QLineEdit()
-        form.addRow("配置名称", self.setting_name_line)
+        form.addRow("配置名稱", self.setting_name_line)
 
-        save_setting_button = QtWidgets.QPushButton("保存配置")
+        save_setting_button = QtWidgets.QPushButton("儲存配置")
         save_setting_button.clicked.connect(self.save_setting)
         form.addRow(save_setting_button)
 
@@ -98,7 +98,7 @@ class AlgoWidget(QtWidgets.QWidget):
         # Get csv file path from dialog
         path, type_ = QtWidgets.QFileDialog.getOpenFileName(
             self,
-            u"加载算法配置",
+            u"載入演算法配置",
             "",
             "CSV(*.csv)"
         )
@@ -116,8 +116,8 @@ class AlgoWidget(QtWidgets.QWidget):
             if field_name not in reader.fieldnames:
                 QtWidgets.QMessageBox.warning(
                     self,
-                    "字段缺失",
-                    f"CSV文件缺失算法{self.template_name}所需字段{field_name}"
+                    "欄位缺失",
+                    f"CSV檔案缺失演算法{self.template_name}所需欄位{field_name}"
                 )
                 return
 
@@ -143,8 +143,8 @@ class AlgoWidget(QtWidgets.QWidget):
                     except ValueError:
                         QtWidgets.QMessageBox.warning(
                             self,
-                            "参数错误",
-                            f"{field_name}参数类型应为{field_type}，请检查！"
+                            "引數錯誤",
+                            f"{field_name}引數型別應為{field_type}，請檢查！"
                         )
                         return
 
@@ -174,8 +174,8 @@ class AlgoWidget(QtWidgets.QWidget):
                     display_name = NAME_DISPLAY_MAP.get(field_name, field_name)
                     QtWidgets.QMessageBox.warning(
                         self,
-                        "参数错误",
-                        f"{display_name}参数类型应为{field_type}，请检查！"
+                        "引數錯誤",
+                        f"{display_name}引數型別應為{field_type}，請檢查！"
                     )
                     return None
 
@@ -247,9 +247,9 @@ class AlgoMonitor(QtWidgets.QTableWidget):
         """"""
         labels = [
             "",
-            "算法",
-            "参数",
-            "状态"
+            "演算法",
+            "引數",
+            "狀態"
         ]
         self.setColumnCount(len(labels))
         self.setHorizontalHeaderLabels(labels)
@@ -391,7 +391,7 @@ class SettingMonitor(QtWidgets.QTableWidget):
         labels = [
             "",
             "",
-            "名称",
+            "名稱",
             "配置"
         ]
         self.setColumnCount(len(labels))
@@ -494,8 +494,8 @@ class LogMonitor(QtWidgets.QTableWidget):
     def init_ui(self):
         """"""
         labels = [
-            "时间",
-            "信息"
+            "時間",
+            "資訊"
         ]
         self.setColumnCount(len(labels))
         self.setHorizontalHeaderLabels(labels)
@@ -550,14 +550,14 @@ class AlgoManager(QtWidgets.QWidget):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("算法交易")
+        self.setWindowTitle("演算法交易")
 
         # Left side control widgets
         self.template_combo = QtWidgets.QComboBox()
         self.template_combo.currentIndexChanged.connect(self.show_algo_widget)
 
         form = QtWidgets.QFormLayout()
-        form.addRow("算法", self.template_combo)
+        form.addRow("演算法", self.template_combo)
         widget = QtWidgets.QWidget()
         widget.setLayout(form)
 
@@ -590,12 +590,12 @@ class AlgoManager(QtWidgets.QWidget):
             self.algo_engine, self.event_engine
         )
         tab1 = QtWidgets.QTabWidget()
-        tab1.addTab(active_algo_monitor, "执行中")
-        tab1.addTab(inactive_algo_monitor, "已结束")
+        tab1.addTab(active_algo_monitor, "執行中")
+        tab1.addTab(inactive_algo_monitor, "已結束")
 
         log_monitor = LogMonitor(self.event_engine)
         tab2 = QtWidgets.QTabWidget()
-        tab2.addTab(log_monitor, "日志")
+        tab2.addTab(log_monitor, "日誌")
 
         setting_monitor = SettingMonitor(self.algo_engine, self.event_engine)
         setting_monitor.use_signal.connect(self.use_setting)

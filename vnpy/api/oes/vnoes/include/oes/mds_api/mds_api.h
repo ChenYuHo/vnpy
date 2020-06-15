@@ -17,102 +17,102 @@
 /**
  * @file    mds_api.h
  *
- * MDS（行情数据服务系统）接口库
+ * MDS（行情資料服務系統）介面庫
  *
  * @version 0.8.13      2016/10/24
  * @version 0.12        2016/11/30
- *          - 重构错误号定义, 使错误号从1000开始
+ *          - 重構錯誤號定義, 使錯誤號從1000開始
  *          - 增加 MdsApi_GetErrorMsg 和 MdsApi_GetErrorMsg2 方法
- *          - 在登录报文中增加协议版本号信息, 并在登录时校验协议版本号的兼容性
+ *          - 在登入報文中增加協議版本號資訊, 並在登入時校驗協議版本號的相容性
  * @version 0.12.1      2016/12/21
- *          - 查询接口重命名
+ *          - 查詢介面重新命名
  *              - MdsApi_QryMktDataSnapshot -> MdsApi_QueryMktDataSnapshot
  *              - MdsApi_QrySecurityStatus -> MdsApi_QuerySecurityStatus
  *              - MdsApi_QryTrdSessionStatus -> MdsApi_QueryTrdSessionStatus
- *          - 删除 MdsApi_IsBusinessError 接口, 查询接口不再返回小于 -1000 的错误
- *          - 查询接口返回值变更:
- *              - 无数据返回 NEG(ENOENT)
- *              - 查询被服务器拒绝返回 NEG(EINVAL), 具体错误信息通过日志打印
- *          - 微调mds_api日志打印格式
+ *          - 刪除 MdsApi_IsBusinessError 介面, 查詢介面不再返回小於 -1000 的錯誤
+ *          - 查詢介面返回值變更:
+ *              - 無資料返回 NEG(ENOENT)
+ *              - 查詢被伺服器拒絕返回 NEG(EINVAL), 具體錯誤資訊通過日誌列印
+ *          - 微調mds_api日誌列印格式
  * @version 0.12.3      2017/1/8
- *          - 精简API依赖的头文件, 并最小化API发布包中的头文件数量
- *          - 重命名 protocol_parser/errors/mds_protocol_errors.h -> errors/mds_errors.h
- *          - 添加辅助实现实时行情订阅功能的接口
+ *          - 精簡API依賴的標頭檔案, 並最小化API釋出包中的標頭檔案數量
+ *          - 重新命名 protocol_parser/errors/mds_protocol_errors.h -> errors/mds_errors.h
+ *          - 新增輔助實現實時行情訂閱功能的介面
  *              - MdsApi_ResubscribeMarketData
  *              - MdsHelper_ClearSubscribeRequestEntries
  *              - MdsHelper_AddSubscribeRequestEntry
  * @version 0.12.6.3    2017/03/24
- *          - 增加mds_api.h中的头文件引用, api使用者不在需要显式引用sutil库的头文件
+ *          - 增加mds_api.h中的標頭檔案引用, api使用者不在需要顯式引用sutil庫的標頭檔案
  * @version 0.12.8      2017/04/20
- *          - 重命名 MdsApi_SubscribeMarketData -> MdsApi_SyncSubscribeOnLogon
- *          - 重命名 MdsApi_ResubscribeMarketData -> MdsApi_SubscribeMarketData
- *          - 添加辅助的行情订阅接口
+ *          - 重新命名 MdsApi_SubscribeMarketData -> MdsApi_SyncSubscribeOnLogon
+ *          - 重新命名 MdsApi_ResubscribeMarketData -> MdsApi_SubscribeMarketData
+ *          - 新增輔助的行情訂閱介面
  *              - MdsApi_SubscribeByString
  *              - MdsApi_SubscribeByStringAndPrefixes
  *              - MdsHelper_SetSubscribeRequestMode
  *              - MdsHelper_SetSubscribeRequestTickType
  *              - MdsHelper_SetSubscribeRequestDataTypes
  * @version 0.15.3.3    2017/08/20
- *          - 新增接口 '重置线程级别的日志记录器名称 (MdsApi_ResetThreadLoggerName)',
- *            以支持为当前线程设置独立的日志文件
+ *          - 新增介面 '重置執行緒級別的日誌記錄器名稱 (MdsApi_ResetThreadLoggerName)',
+ *            以支援為當前執行緒設定獨立的日誌檔案
  * @version 0.15.4      2017/08/21
- *          - 新增接口 '获取API的发行版本号 (MdsApi_GetApiVersion)'
+ *          - 新增介面 '獲取API的發行版本號 (MdsApi_GetApiVersion)'
  * @version 0.15.4.1    2017/09/25
- *          - 服务器端删除了对JSON等通信协议等支持, 改为只支持二进制协议
+ *          - 伺服器端刪除了對JSON等通訊協議等支援, 改為只支援二進位制協議
  * @version 0.15.5      2017/11/11
- *          - 调整接口 MdsApi_InitAll, 以支持同时初始化多个组播通道
+ *          - 調整介面 MdsApi_InitAll, 以支援同時初始化多個組播通道
  * @version 0.15.5.1    2017/11/17
- *          - 增加 MdsApi_IsValidTcpChannel、MdsApi_IsValidUdpChannel 等接口, 用于判断通道是否已经连接且有效
+ *          - 增加 MdsApi_IsValidTcpChannel、MdsApi_IsValidUdpChannel 等介面, 用於判斷通道是否已經連線且有效
  * @version 0.15.5.2    2018/01/29
- *          - 增加 MdsApi_GetLastRecvTime、MdsApi_GetLastSendTime 接口, 用于获取通道最新发送/接受消息的时间
- *          - 登录失败时, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ *          - 增加 MdsApi_GetLastRecvTime、MdsApi_GetLastSendTime 介面, 用於獲取通道最新發送/接受訊息的時間
+ *          - 登入失敗時, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  * @version 0.15.5.3    2018/01/24
- *          - 调整接口 MdsApi_InitAll, 增加一个函数参数 (pUdpTick2AddrKey), 以支持分别订阅逐笔成交和逐笔委托的行情组播
+ *          - 調整介面 MdsApi_InitAll, 增加一個函式引數 (pUdpTick2AddrKey), 以支援分別訂閱逐筆成交和逐筆委託的行情組播
  * @version 0.15.5.9    2018/05/05
- *          - 增加可以处理压缩过的消息的 WaitOnMsg 接口:
+ *          - 增加可以處理壓縮過的訊息的 WaitOnMsg 介面:
  *              - MdsApi_WaitOnMsgCompressible
  *              - MdsApi_WaitOnTcpChannelGroupCompressible
- *              - 与不带 Compressible 后缀的接口相比, 带 Compressible 后缀的接口会自动检测和处理压缩过的消息,
- *                但也会因此带来微小的性能损失。如果对延迟不是极端敏感的话, 可以直接使用带 Compressible 后缀的接
- *                口, 以方便兼容不同的模式。
+ *              - 與不帶 Compressible 字尾的介面相比, 帶 Compressible 字尾的介面會自動檢測和處理壓縮過的訊息,
+ *                但也會因此帶來微小的效能損失。如果對延遲不是極端敏感的話, 可以直接使用帶 Compressible 字尾的接
+ *                口, 以方便相容不同的模式。
  * @version 0.15.5.12   2018/06/21
- *          - 增加 MdsApi_HasMoreCachedData 接口, 用于返回已经接收到但尚未被回调函数处理的缓存数据长度
+ *          - 增加 MdsApi_HasMoreCachedData 介面, 用於返回已經接收到但尚未被回撥函式處理的快取資料長度
  * @version 0.15.5.16   2018/08/23
- *          - 重构 SubscribeByString 接口
- *              - 支持订阅所有产品的行情或不订阅任何产品的行情
- *              - 支持通过 .SH 或 .SZ 后缀为证券代码指定其所属的交易所
- *              - 添加 MdsHelper_SetTickTypeOnSubscribeByString 接口, 以设置SubscribeByString默认使用的数据模式 (TickType)
- *              - 增量订阅时, 允许不指定 dataType (小于0) 而继承之前订阅的数据类型
+ *          - 重構 SubscribeByString 介面
+ *              - 支援訂閱所有產品的行情或不訂閱任何產品的行情
+ *              - 支援通過 .SH 或 .SZ 字尾為證券程式碼指定其所屬的交易所
+ *              - 新增 MdsHelper_SetTickTypeOnSubscribeByString 介面, 以設定SubscribeByString預設使用的資料模式 (TickType)
+ *              - 增量訂閱時, 允許不指定 dataType (小於0) 而繼承之前訂閱的資料型別
  * @version 0.15.6      2018/03/21
- *          - 增加设置当前线程登录用户名/登录密码的接口
+ *          - 增加設定當前執行緒登入使用者名稱/登入密碼的介面
  *              - MdsApi_SetThreadUsername
  *              - MdsApi_SetThreadPassword
- *          - 增加返回最近一次API调用失败的错误号的接口
+ *          - 增加返回最近一次API呼叫失敗的錯誤號的介面
  *              - MdsApi_GetLastError
  *              - MdsApi_SetLastError
  * @version 0.15.7.6    2018/11/03
- *          - 增加查询证券(股票/债券/基金)静态信息的接口
+ *          - 增加查詢證券(股票/債券/基金)靜態資訊的介面
  *              - MdsApi_QueryStockStaticInfo
  * @version 0.15.7.6_RC2 2018/11/11
- *          - 添加批量查询行情快照接口
+ *          - 新增批量查詢行情快照介面
  *              - MdsApi_QuerySnapshotList
- *          - 增加 MdsApi_InitAllByCfgStruct 接口
+ *          - 增加 MdsApi_InitAllByCfgStruct 介面
  * @version 0.15.9_I9   2019/04/15
- *          - 增加修改客户端登录密码接口
+ *          - 增加修改客戶端登入密碼介面
  *              - MdsApi_SendChangePasswordReq
- *          - 增加设置/获取客户端自定义的本地IP/MAC地址的接口
+ *          - 增加設定/獲取客戶端自定義的本地IP/MAC地址的介面
  *              - MdsApi_SetCustomizedIp
  *              - MdsApi_GetCustomizedIp
  *              - MdsApi_SetCustomizedMac
  *              - MdsApi_GetCustomizedMac
- *          - 增加设置/获取客户端自定义的设备序列号的接口
+ *          - 增加設定/獲取客戶端自定義的裝置序列號的介面
  *              - MdsApi_SetCustomizedDriverId
  *              - MdsApi_GetCustomizedDriverId
- *          - 重新实现登录接口 (接口MdsApi_Logon)
- *              - 增加采集IP、MAC等信息, 增强安全性处理
- *          - 调整L2逐笔数据的行情组播频道
- *              - 划分为两个频道, 按照频道号混合推送逐笔成交和逐笔委托, 取代之前逐笔成交/逐笔委托分别推送的方式
- *              - API及配置文件保持兼容, 但频道内容发生了变化
+ *          - 重新實現登入介面 (介面MdsApi_Logon)
+ *              - 增加採集IP、MAC等資訊, 增強安全性處理
+ *          - 調整L2逐筆資料的行情組播頻道
+ *              - 劃分為兩個頻道, 按照頻道號混合推送逐筆成交和逐筆委託, 取代之前逐筆成交/逐筆委託分別推送的方式
+ *              - API及配置檔案保持相容, 但頻道內容發生了變化
  *
  * @since   2016/03/02
  */
@@ -127,7 +127,7 @@
 #include    <sutil/net/spk_general_client_define.h>
 #include    <sutil/platform/spk_platforms.h>
 
-/* 为了方便外部使用而额外引入的头文件 *
+/* 為了方便外部使用而額外引入的標頭檔案 *
 #include    <sutil/time/spk_times.h>
 #include    <sutil/logger/spk_log.h>
 */
@@ -139,154 +139,154 @@ extern "C" {
 
 
 /* ===================================================================
- * 常量定义
+ * 常量定義
  * =================================================================== */
 
-/** 默认的主配置区段名称 */
+/** 預設的主配置區段名稱 */
 #define MDSAPI_CFG_DEFAULT_SECTION              "mds_client"
-/** 默认的日志配置区段名称 */
+/** 預設的日誌配置區段名稱 */
 #define MDSAPI_CFG_DEFAULT_SECTION_LOGGER       "log"
-/** 默认的TCP行情订阅服务配置项名称 */
+/** 預設的TCP行情訂閱服務配置項名稱 */
 #define MDSAPI_CFG_DEFAULT_KEY_TCP_ADDR         "tcpServer"
-/** 默认的行情查询服务配置项名称 */
+/** 預設的行情查詢服務配置項名稱 */
 #define MDSAPI_CFG_DEFAULT_KEY_QRY_ADDR         "qryServer"
 
-/** UDP行情订阅服务配置项名称 (L1快照/指数/期权) */
+/** UDP行情訂閱服務配置項名稱 (L1快照/指數/期權) */
 #define MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR_L1      "udpServer.L1"
-/** UDP行情订阅服务配置项名称 (L2快照) */
+/** UDP行情訂閱服務配置項名稱 (L2快照) */
 #define MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR_L2      "udpServer.L2"
 
- /** UDP行情订阅服务配置项名称 (L2逐笔-频道1) */
+ /** UDP行情訂閱服務配置項名稱 (L2逐筆-頻道1) */
  #define MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR_TICK1  "udpServer.Tick1"
- /** UDP行情订阅服务配置项名称 (L2逐笔-频道1) */
+ /** UDP行情訂閱服務配置項名稱 (L2逐筆-頻道1) */
  #define MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR_TICK2  "udpServer.Tick2"
 
-/** UDP行情订阅服务配置项名称 (L2逐笔成交) @deprecated 已废弃, 效果等同于L2逐笔-频道1 */
+/** UDP行情訂閱服務配置項名稱 (L2逐筆成交) @deprecated 已廢棄, 效果等同於L2逐筆-頻道1 */
 #define MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR_TICK_TRADE          \
         "udpServer.TickTrade"
-/** UDP行情订阅服务配置项名称 (L2逐笔委托) @deprecated 已废弃, 效果等同于L2逐笔-频道2 */
+/** UDP行情訂閱服務配置項名稱 (L2逐筆委託) @deprecated 已廢棄, 效果等同於L2逐筆-頻道2 */
 #define MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR_TICK_ORDER          \
         "udpServer.TickOrder"
 
-/** 默认的UDP行情订阅服务配置项名称 */
+/** 預設的UDP行情訂閱服務配置項名稱 */
 #define MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR                     \
         MDSAPI_CFG_DEFAULT_KEY_UDP_ADDR_L1
 
-/** 默认的心跳间隔 (30 秒) */
+/** 預設的心跳間隔 (30 秒) */
 #define MDSAPI_DEFAULT_HEARTBEAT_INTERVAL                   \
         GENERAL_CLI_DEFAULT_HEARTBEAT_INTERVAL
-/** 默认的UDP连接的心跳间隔 (30 秒) */
+/** 預設的UDP連線的心跳間隔 (30 秒) */
 #define MDSAPI_DEFAULT_UDP_HEARTBEAT_INTERVAL               \
         GENERAL_CLI_DEFAULT_UDP_HEARTBEAT_INTERVAL
 
-/** 默认的证券代码列表等字符串分隔符 */
+/** 預設的證券程式碼列表等字串分隔符 */
 #define MDSAPI_DEFAULT_STRING_DELIM                         \
         ",;| \t\r\n"
 /* -------------------------           */
 
 
 /* ===================================================================
- * 常量定义, 枚举类型定义
+ * 常量定義, 列舉型別定義
  * =================================================================== */
 
 /**
- * 通道类型定义
+ * 通道型別定義
  */
 typedef enum _eMdsApiChannelType {
-    MDSAPI_CHANNEL_TYPE_TCP         = 11,       /**< TCP行情订阅通道 */
-    MDSAPI_CHANNEL_TYPE_UDP         = 12,       /**< UDP行情组播通道 */
-    MDSAPI_CHANNEL_TYPE_QUERY       = 13        /**< 行情查询通道 */
+    MDSAPI_CHANNEL_TYPE_TCP         = 11,       /**< TCP行情訂閱通道 */
+    MDSAPI_CHANNEL_TYPE_UDP         = 12,       /**< UDP行情組播通道 */
+    MDSAPI_CHANNEL_TYPE_QUERY       = 13        /**< 行情查詢通道 */
 } eMdsApiChannelTypeT;
 /* -------------------------           */
 
 
 /* ===================================================================
- * 结构体定义
+ * 結構體定義
  * =================================================================== */
 
 /**
- * 客户端会话信息（连接通道信息）定义
+ * 客戶端會話資訊（連線通道資訊）定義
  */
 typedef SGeneralClientChannelT      MdsApiSessionInfoT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_MDSAPI_SESSION_INFO             \
         NULLOBJ_GENERAL_CLIENT_CHANNEL
 /* -------------------------           */
 
 
 /**
- * 客户端会话的连接通道组定义（多个连接通道的集合）
+ * 客戶端會話的連線通道組定義（多個連線通道的集合）
  */
 typedef SGeneralClientChannelGroupT MdsApiChannelGroupT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_MDSAPI_CHANNEL_GROUP            \
         NULLOBJ_GENERAL_CLIENT_CHANNEL_GROUP
 /* -------------------------           */
 
 
 /**
- * Socket URI地址信息
+ * Socket URI地址資訊
  */
 typedef SGeneralClientAddrInfoT     MdsApiAddrInfoT;
 
 
-/* 结构体初始化值定义 */
+/* 結構體初始化值定義 */
 #define NULLOBJ_MDSAPI_ADDR_INFO                \
         NULLOBJ_GENERAL_CLIENT_ADDR_INFO
 /* -------------------------           */
 
 
 /**
- * 远程主机配置信息
+ * 遠端主機配置資訊
  */
 typedef SGeneralClientRemoteCfgT    MdsApiRemoteCfgT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_MDSAPI_REMOTE_CFG               \
         NULLOBJ_GENERAL_CLIENT_REMOTE_CFG
 /* -------------------------           */
 
 
 /**
- * MDS行情订阅信息配置
+ * MDS行情訂閱資訊配置
  */
 typedef MdsMktDataRequestReqBufT    MdsApiSubscribeInfoT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_MDSAPI_SUBSCRIBE_INFO           \
         NULLOBJ_MDS_MKT_DATA_REQUEST_REQ_BUF
 /* -------------------------           */
 
 
 /**
- * 完整的MDS客户端配置信息
+ * 完整的MDS客戶端配置資訊
  */
 typedef struct _MdsApiClientCfg {
-    MdsApiRemoteCfgT        tcpChannelCfg;      /**< TCP行情订阅服务配置 */
-    MdsApiRemoteCfgT        qryChannelCfg;      /**< 行情查询服务配置 */
+    MdsApiRemoteCfgT        tcpChannelCfg;      /**< TCP行情訂閱服務配置 */
+    MdsApiRemoteCfgT        qryChannelCfg;      /**< 行情查詢服務配置 */
 
-    MdsApiRemoteCfgT        udpL1ChannelCfg;    /**< L1快照行情组播服务配置 */
-    MdsApiRemoteCfgT        udpL2ChannelCfg;    /**< L2快照行情组播服务配置 */
+    MdsApiRemoteCfgT        udpL1ChannelCfg;    /**< L1快照行情組播服務配置 */
+    MdsApiRemoteCfgT        udpL2ChannelCfg;    /**< L2快照行情組播服務配置 */
     union {
-        MdsApiRemoteCfgT    udpTick1ChannelCfg; /**< L2逐笔数据(频道1)组播服务配置 */
-        MdsApiRemoteCfgT    udpTradeChannelCfg; /**< @deprecated 已废弃, 为了保持兼容而暂时保留 */
+        MdsApiRemoteCfgT    udpTick1ChannelCfg; /**< L2逐筆資料(頻道1)組播服務配置 */
+        MdsApiRemoteCfgT    udpTradeChannelCfg; /**< @deprecated 已廢棄, 為了保持相容而暫時保留 */
     };
     union {
-        MdsApiRemoteCfgT    udpTick2ChannelCfg; /**< L2逐笔数据(频道2)组播服务配置 */
-        MdsApiRemoteCfgT    udpOrderChannelCfg; /**< @deprecated 已废弃, 为了保持兼容而暂时保留 */
+        MdsApiRemoteCfgT    udpTick2ChannelCfg; /**< L2逐筆資料(頻道2)組播服務配置 */
+        MdsApiRemoteCfgT    udpOrderChannelCfg; /**< @deprecated 已廢棄, 為了保持相容而暫時保留 */
     };
 
-    MdsApiSubscribeInfoT    subscribeInfo;      /**< TCP行情的行情订阅信息 */
+    MdsApiSubscribeInfoT    subscribeInfo;      /**< TCP行情的行情訂閱資訊 */
 } MdsApiClientCfgT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_MDSAPI_CLIENT_CFG               \
         {NULLOBJ_MDSAPI_REMOTE_CFG}, \
         {NULLOBJ_MDSAPI_REMOTE_CFG}, \
@@ -299,28 +299,28 @@ typedef struct _MdsApiClientCfg {
 
 
 /**
- * MDS客户端运行时环境
+ * MDS客戶端執行時環境
  */
 typedef struct _MdsApiClientEnv {
-    MdsApiSessionInfoT      tcpChannel;         /**< TCP行情订阅通道的会话信息 */
-    MdsApiSessionInfoT      qryChannel;         /**< 行情查询通道的会话信息 */
+    MdsApiSessionInfoT      tcpChannel;         /**< TCP行情訂閱通道的會話資訊 */
+    MdsApiSessionInfoT      qryChannel;         /**< 行情查詢通道的會話資訊 */
 
-    MdsApiSessionInfoT      udpL1Channel;       /**< L1快照行情组播通道的会话信息 */
-    MdsApiSessionInfoT      udpL2Channel;       /**< L2快照行情组播通道的会话信息 */
+    MdsApiSessionInfoT      udpL1Channel;       /**< L1快照行情組播通道的會話資訊 */
+    MdsApiSessionInfoT      udpL2Channel;       /**< L2快照行情組播通道的會話資訊 */
     union {
-        MdsApiSessionInfoT  udpTick1Channel;    /**< L2逐笔数据(频道1)组播通道的会话信息 */
-        MdsApiSessionInfoT  udpTradeChannel;    /**< @deprecated 已废弃, 为了保持兼容而暂时保留 */
+        MdsApiSessionInfoT  udpTick1Channel;    /**< L2逐筆資料(頻道1)組播通道的會話資訊 */
+        MdsApiSessionInfoT  udpTradeChannel;    /**< @deprecated 已廢棄, 為了保持相容而暫時保留 */
     };
     union {
-        MdsApiSessionInfoT  udpTick2Channel;    /**< L2逐笔数据(频道2)组播通道的会话信息 */
-        MdsApiSessionInfoT  udpOrderChannel;    /**< @deprecated 已废弃, 为了保持兼容而暂时保留 */
+        MdsApiSessionInfoT  udpTick2Channel;    /**< L2逐筆資料(頻道2)組播通道的會話資訊 */
+        MdsApiSessionInfoT  udpOrderChannel;    /**< @deprecated 已廢棄, 為了保持相容而暫時保留 */
     };
 
-    MdsApiChannelGroupT     udpChannelGroup;    /**< 用于管理多个行情组播会话的通道组信息 */
+    MdsApiChannelGroupT     udpChannelGroup;    /**< 用於管理多個行情組播會話的通道組資訊 */
 } MdsApiClientEnvT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_MDSAPI_CLIENT_ENV               \
         {NULLOBJ_MDSAPI_SESSION_INFO}, \
         {NULLOBJ_MDSAPI_SESSION_INFO}, \
@@ -333,17 +333,17 @@ typedef struct _MdsApiClientEnv {
 
 
 /* ===================================================================
- * 回调函数的函数原型定义
+ * 回撥函式的函式原型定義
  * =================================================================== */
 
 /**
- * 对接收到的消息进行消息处理的回调函数的函数原型定义
+ * 對接收到的訊息進行訊息處理的回撥函式的函式原型定義
  *
- * @param   pSessionInfo        会话信息
- * @param   pMsgHead            消息头
- * @param   pMsgBody            消息体数据
- * @param   pCallbackParams     外部传入的参数
- * @return  大于等于0, 成功；小于0, 失败（错误号）
+ * @param   pSessionInfo        會話資訊
+ * @param   pMsgHead            訊息頭
+ * @param   pMsgBody            訊息體資料
+ * @param   pCallbackParams     外部傳入的引數
+ * @return  大於等於0, 成功；小於0, 失敗（錯誤號）
  *
  * @see     eMdsMsgTypeT
  */
@@ -356,14 +356,14 @@ typedef int32   (*F_MDSAPI_ONMSG_T) (
 
 
 /**
- * 查询消息处理对应的回调函数的函数原型定义
+ * 查詢訊息處理對應的回撥函式的函式原型定義
  *
- * @param   pSessionInfo        会话信息
- * @param   pMsgHead            消息头
- * @param   pMsgBody            消息体数据
- * @param   pQryCursor          指示查询进度的游标
- * @param   pCallbackParams     外部传入的参数
- * @return  大于等于0, 成功；小于0, 失败（错误号）
+ * @param   pSessionInfo        會話資訊
+ * @param   pMsgHead            訊息頭
+ * @param   pMsgBody            訊息體資料
+ * @param   pQryCursor          指示查詢進度的遊標
+ * @param   pCallbackParams     外部傳入的引數
+ * @return  大於等於0, 成功；小於0, 失敗（錯誤號）
  *
  * @see     eMdsMsgTypeT
  */
@@ -377,29 +377,29 @@ typedef int32   (*F_MDSAPI_ON_QRY_MSG_T) (
 
 
 /* ===================================================================
- * 基于TCP协议的行情服务接口函数声明
+ * 基於TCP協議的行情服務介面函式宣告
  * =================================================================== */
 
 /*
- * 连接并登录到行情服务器
+ * 連線並登入到行情伺服器
  *
- * @param[out]  pOutSessionInfo 输出会话信息
- * @param       channelType     通道类型
+ * @param[out]  pOutSessionInfo 輸出會話資訊
+ * @param       channelType     通道型別
  * @param       pUri            URI地址 (e.g. tcp://127.0.0.1:5100)
- * @param       pUsername       用户名
- * @param       pPassword       密码
- * @param       heartBtInt      心跳间隔,单位为秒
- * @param       pSocketOptions  套接字参数 (为空, 则会使用默认参数)
+ * @param       pUsername       使用者名稱
+ * @param       pPassword       密碼
+ * @param       heartBtInt      心跳間隔,單位為秒
+ * @param       pSocketOptions  套接字引數 (為空, 則會使用預設引數)
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  */
 BOOL    MdsApi_Logon(
                 MdsApiSessionInfoT *pOutSessionInfo,
@@ -411,32 +411,32 @@ BOOL    MdsApi_Logon(
                 const SSocketOptionConfigT *pSocketOptions);
 
 /*
- * 连接并登录到行情服务集群 (基于复制集的高可用集群)
+ * 連線並登入到行情服務叢集 (基於複製集的高可用叢集)
  *
- * - 待解析的地址列表可是以空格、逗号或分号分割的地址列表字符串
+ * - 待解析的地址列表可是以空格、逗號或分號分割的地址列表字串
  *   - e.g. "tcp://127.0.0.1:5100, tcp://192.168.0.11:5100"
- * - 同时也可以在每个地址之前, 为其指定对应的主机编号
+ * - 同時也可以在每個地址之前, 為其指定對應的主機編號
  *   - e.g. "2 tcp://192.168.0.12:5100, 1 tcp://192.168.0.11:5100,
  *          3 tcp://192.168.0.13:5100"
  *
- * @param[out]  pOutSessionInfo 输出会话信息
- * @param       channelType     通道类型
- * @param       pUriList        主机地址列表 (以空格、逗号或分号分割的地址列表字符串)
- * @param       pUsername       用户名
- * @param       pPassword       密码
- * @param       heartBtInt      心跳间隔,单位为秒
- * @param       pSocketOptions  套接字参数 (为空, 则会使用默认参数)
+ * @param[out]  pOutSessionInfo 輸出會話資訊
+ * @param       channelType     通道型別
+ * @param       pUriList        主機地址列表 (以空格、逗號或分號分割的地址列表字串)
+ * @param       pUsername       使用者名稱
+ * @param       pPassword       密碼
+ * @param       heartBtInt      心跳間隔,單位為秒
+ * @param       pSocketOptions  套接字引數 (為空, 則會使用預設引數)
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  */
 BOOL    MdsApi_LogonReplicaSet(
                 MdsApiSessionInfoT *pOutSessionInfo,
@@ -448,32 +448,32 @@ BOOL    MdsApi_LogonReplicaSet(
                 const SSocketOptionConfigT *pSocketOptions);
 
 /*
- * 连接并登录到行情服务集群 (基于对等节点的行情集群)
+ * 連線並登入到行情服務叢集 (基於對等節點的行情叢集)
  *
- * - 待解析的地址列表可是以空格、逗号或分号分割的地址列表字符串
+ * - 待解析的地址列表可是以空格、逗號或分號分割的地址列表字串
  *   - e.g. "tcp://127.0.0.1:5100, tcp://192.168.0.11:5100"
- * - 同时也可以在每个地址之前, 为其指定对应的主机编号
+ * - 同時也可以在每個地址之前, 為其指定對應的主機編號
  *   - e.g. "2 tcp://192.168.0.12:5100, 1 tcp://192.168.0.11:5100,
  *          3 tcp://192.168.0.13:5100"
  *
- * @param[out]  pOutSessionInfo 输出会话信息
- * @param       channelType     通道类型
- * @param       pUriList        主机地址列表 (以空格、逗号或分号分割的地址列表字符串)
- * @param       pUsername       用户名
- * @param       pPassword       密码
- * @param       heartBtInt      心跳间隔,单位为秒
- * @param       pSocketOptions  套接字参数 (为空, 则会使用默认参数)
+ * @param[out]  pOutSessionInfo 輸出會話資訊
+ * @param       channelType     通道型別
+ * @param       pUriList        主機地址列表 (以空格、逗號或分號分割的地址列表字串)
+ * @param       pUsername       使用者名稱
+ * @param       pPassword       密碼
+ * @param       heartBtInt      心跳間隔,單位為秒
+ * @param       pSocketOptions  套接字引數 (為空, 則會使用預設引數)
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  */
 BOOL    MdsApi_LogonPeerNodes(
                 MdsApiSessionInfoT *pOutSessionInfo,
@@ -485,12 +485,12 @@ BOOL    MdsApi_LogonPeerNodes(
                 const SSocketOptionConfigT *pSocketOptions);
 
 /*
- * 发送证券行情订阅消息, 并同步等待应答消息的返回 (仅适用于连接建立后的初次订阅)
+ * 傳送證券行情訂閱訊息, 並同步等待應答訊息的返回 (僅適用於連線建立後的初次訂閱)
  *
- * @param   pTcpChannel         会话信息
- * @param   pMktDataRequestReq  行情订阅请求信息
- * @param   pEntries            产品订阅列表
- * @return  TRUE 成功; FALSE 失败
+ * @param   pTcpChannel         會話資訊
+ * @param   pMktDataRequestReq  行情訂閱請求資訊
+ * @param   pEntries            產品訂閱列表
+ * @return  TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_SyncSubscribeOnLogon(
                 MdsApiSessionInfoT *pSessionInfo,
@@ -498,12 +498,12 @@ BOOL    MdsApi_SyncSubscribeOnLogon(
                 const MdsMktDataRequestEntryT *pEntries);
 
 /*
- * 以异步的方式发送证券行情实时订阅请求, 以重新订阅、追加订阅或删除订阅行情数据
+ * 以非同步的方式傳送證券行情實時訂閱請求, 以重新訂閱、追加訂閱或刪除訂閱行情資料
  *
- * @param   pTcpChannel         会话信息
- * @param   pMktDataRequestReq  行情订阅请求信息
- * @param   pEntries            产品订阅列表
- * @return  TRUE 成功; FALSE 失败
+ * @param   pTcpChannel         會話資訊
+ * @param   pMktDataRequestReq  行情訂閱請求資訊
+ * @param   pEntries            產品訂閱列表
+ * @return  TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_SubscribeMarketData(
                 MdsApiSessionInfoT *pSessionInfo,
@@ -511,29 +511,29 @@ BOOL    MdsApi_SubscribeMarketData(
                 const MdsMktDataRequestEntryT *pEntries);
 
 /*
- * 直接根据字符串形式的证券代码列表订阅行情信息
+ * 直接根據字串形式的證券程式碼列表訂閱行情資訊
  *
- * @note    为兼容之前的版本, 该接口无法指定 tickType 订阅参数, 默认会按照 tickType=0 的模式订阅行情。
- *          可以通过 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 接口为其指定
- *          tickType 参数, 后续的 SubscribeByString 调用都会使用该 tickType 参数。
+ * @note    為相容之前的版本, 該介面無法指定 tickType 訂閱引數, 預設會按照 tickType=0 的模式訂閱行情。
+ *          可以通過 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 介面為其指定
+ *          tickType 引數, 後續的 SubscribeByString 呼叫都會使用該 tickType 引數。
  *
- * @param   pTcpChannel         会话信息
- * @param   pSecurityListStr    证券代码列表字符串
- *                              - 证券代码支持以 .SH 或 .SZ 为后缀来指定其所属的交易所
- *                              - 空字符串 "", 表示不订阅任何产品的行情
- *                              - 空指针 NULL, 表示订阅所有产品的行情
- * @param   pDelim              证券代码列表的分隔符 (e.g. ",;| \t")
- *                              - 如果为空, 则使用默认的分隔符:
+ * @param   pTcpChannel         會話資訊
+ * @param   pSecurityListStr    證券程式碼列表字串
+ *                              - 證券程式碼支援以 .SH 或 .SZ 為字尾來指定其所屬的交易所
+ *                              - 空字串 "", 表示不訂閱任何產品的行情
+ *                              - 空指標 NULL, 表示訂閱所有產品的行情
+ * @param   pDelim              證券程式碼列表的分隔符 (e.g. ",;| \t")
+ *                              - 如果為空, 則使用預設的分隔符:
  *                                ',' 或 ';' 或 '|' 或 ' ' 或 '\t'
- * @param   exchangeId          证券代码所属的交易所代码 (如果证券代码没有 .SH 或 .SZ 后缀的话)
- * @param   mdProductType       行情类别 (股票(基金、债券)/指数/期权)
- * @param   subMode             订阅模式 (重新订阅/追加订阅/删除订阅)
- * @param   dataTypes           订阅的数据种类 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
+ * @param   exchangeId          證券程式碼所屬的交易所程式碼 (如果證券程式碼沒有 .SH 或 .SZ 字尾的話)
+ * @param   mdProductType       行情類別 (股票(基金、債券)/指數/期權)
+ * @param   subMode             訂閱模式 (重新訂閱/追加訂閱/刪除訂閱)
+ * @param   dataTypes           訂閱的資料種類 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_BEST_ORDERS
  *                              | MDS_SUB_DATA_TYPE_L2_TRADE)
  *                              @see eMdsSubscribeDataTypeT
- * @return  TRUE 成功; FALSE 失败
+ * @return  TRUE 成功; FALSE 失敗
  *
  * @see     MdsHelper_SetTickTypeOnSubscribeByString
  */
@@ -547,27 +547,27 @@ BOOL    MdsApi_SubscribeByString(
                 int32 dataTypes);
 
 /*
- * 根据字符串指针数组形式的证券代码列表订阅行情信息
+ * 根據字串指標陣列形式的證券程式碼列表訂閱行情資訊
  *
- * @note    为兼容之前的版本, 该接口无法指定 tickType 订阅参数, 默认会按照 tickType=0 的模式订阅行情。
- *          可以通过 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 接口为其指定
- *          tickType 参数, 后续的 SubscribeByString 调用都会使用该 tickType 参数。
+ * @note    為相容之前的版本, 該介面無法指定 tickType 訂閱引數, 預設會按照 tickType=0 的模式訂閱行情。
+ *          可以通過 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 介面為其指定
+ *          tickType 引數, 後續的 SubscribeByString 呼叫都會使用該 tickType 引數。
  *
- * @param   pTcpChannel         会话信息
- * @param   ppSecurityArray     证券代码列表的指针数组
- *                              - 证券代码支持以 .SH 或 .SZ 为后缀来指定其所属的交易所
- *                              - 空数组 (指针非空, 但 securityCount == 0), 表示不订阅任何产品的行情
- *                              - 空指针 NULL, 表示订阅所有产品的行情
- * @param   securityCount       证券代码数量
- * @param   exchangeId          证券代码所属的交易所代码 (如果证券代码没有 .SH 或 .SZ 后缀的话)
- * @param   mdProductType       行情类别 (股票(基金、债券)/指数/期权)
- * @param   subMode             订阅模式 (重新订阅/追加订阅/删除订阅)
- * @param   dataTypes           订阅的数据种类 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
+ * @param   pTcpChannel         會話資訊
+ * @param   ppSecurityArray     證券程式碼列表的指標陣列
+ *                              - 證券程式碼支援以 .SH 或 .SZ 為字尾來指定其所屬的交易所
+ *                              - 空陣列 (指標非空, 但 securityCount == 0), 表示不訂閱任何產品的行情
+ *                              - 空指標 NULL, 表示訂閱所有產品的行情
+ * @param   securityCount       證券程式碼數量
+ * @param   exchangeId          證券程式碼所屬的交易所程式碼 (如果證券程式碼沒有 .SH 或 .SZ 字尾的話)
+ * @param   mdProductType       行情類別 (股票(基金、債券)/指數/期權)
+ * @param   subMode             訂閱模式 (重新訂閱/追加訂閱/刪除訂閱)
+ * @param   dataTypes           訂閱的資料種類 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_BEST_ORDERS
  *                              | MDS_SUB_DATA_TYPE_L2_TRADE)
  *                              @see eMdsSubscribeDataTypeT
- * @return  TRUE 成功; FALSE 失败
+ * @return  TRUE 成功; FALSE 失敗
  *
  * @see     MdsHelper_SetTickTypeOnSubscribeByString
  */
@@ -581,49 +581,49 @@ BOOL    MdsApi_SubscribeByString2(
                 int32 dataTypes);
 
 /*
- * 直接根据字符串形式的证券代码列表和证券代码前缀列表订阅行情信息
+ * 直接根據字串形式的證券程式碼列表和證券程式碼字首列表訂閱行情資訊
  *
- * @note    为兼容之前的版本, 该接口无法指定 tickType 订阅参数, 默认会按照 tickType=0 的模式订阅行情。
- *          可以通过 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 接口为其指定
- *          tickType 参数, 后续的 SubscribeByString 调用都会使用该 tickType 参数。
+ * @note    為相容之前的版本, 該介面無法指定 tickType 訂閱引數, 預設會按照 tickType=0 的模式訂閱行情。
+ *          可以通過 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 介面為其指定
+ *          tickType 引數, 後續的 SubscribeByString 呼叫都會使用該 tickType 引數。
  *
- * @param   pTcpChannel         会话信息
- * @param   pSecurityListStr    证券代码列表字符串
- *                              - 证券代码支持以 .SH 或 .SZ 为后缀来指定其所属的交易所
- *                              - 空字符串 "", 表示不订阅任何产品的行情
- *                              - 空指针 NULL, 表示订阅所有产品的行情
- * @param   pDelim              证券代码列表的分隔符 (e.g. ",;| \t")
- *                              - 如果为空, 则使用默认的分隔符:
+ * @param   pTcpChannel         會話資訊
+ * @param   pSecurityListStr    證券程式碼列表字串
+ *                              - 證券程式碼支援以 .SH 或 .SZ 為字尾來指定其所屬的交易所
+ *                              - 空字串 "", 表示不訂閱任何產品的行情
+ *                              - 空指標 NULL, 表示訂閱所有產品的行情
+ * @param   pDelim              證券程式碼列表的分隔符 (e.g. ",;| \t")
+ *                              - 如果為空, 則使用預設的分隔符:
  *                                ',' 或 ';' 或 '|' 或 ' ' 或 '\t'
- * @param   pSseCodePrefixes    以逗号或空格分隔的上海证券代码前缀列表, e.g.
- *                              - "6, 300, 301" 将匹配证券代码列表中所有以 '6' 或 '300'
- *                                或 '301' 起始的证券代码
- *                              - 若为NULL或空字符串, 则不会匹配任何证券代码
- *                              - 上海证券代码前缀参考:
- *                                  - "009, 01, 02, "               //国债
- *                                  - "10, 11, 12, 13, 18, 19, "    //债券 (企业债、可转债等)
- *                                  - "20, "                        //债券 (回购)
+ * @param   pSseCodePrefixes    以逗號或空格分隔的上海證券程式碼字首列表, e.g.
+ *                              - "6, 300, 301" 將匹配證券程式碼列表中所有以 '6' 或 '300'
+ *                                或 '301' 起始的證券程式碼
+ *                              - 若為NULL或空字串, 則不會匹配任何證券程式碼
+ *                              - 上海證券程式碼字首參考:
+ *                                  - "009, 01, 02, "               //國債
+ *                                  - "10, 11, 12, 13, 18, 19, "    //債券 (企業債、可轉債等)
+ *                                  - "20, "                        //債券 (回購)
  *                                  - "5, "                         //基金
  *                                  - "6, "                         //A股
- *                                  - "000"                         //指数
- * @param   pSzseCodePrefixes   以逗号或空格分隔的深圳证券代码前缀列表
- *                              - 若为NULL或空字符串, 则不会匹配任何证券代码
- *                              - 证券代码前缀可以和上海相同, 此时匹配的证券代码会同时对上海
- *                                和深圳两个市场进行订阅
- *                              - 深圳证券代码前缀参考:
+ *                                  - "000"                         //指數
+ * @param   pSzseCodePrefixes   以逗號或空格分隔的深圳證券程式碼字首列表
+ *                              - 若為NULL或空字串, 則不會匹配任何證券程式碼
+ *                              - 證券程式碼字首可以和上海相同, 此時匹配的證券程式碼會同時對上海
+ *                                和深圳兩個市場進行訂閱
+ *                              - 深圳證券程式碼字首參考:
  *                                  - "00, "                        //股票
- *                                  - "10, 11, 12, 13, "            //债券
+ *                                  - "10, 11, 12, 13, "            //債券
  *                                  - "15, 16, 17, 18, "            //基金
- *                                  - "30, "                        //创业板
- *                                  - "39"                          //指数
- * @param   mdProductType       行情类别 (股票(基金、债券)/指数/期权)
- * @param   subMode             订阅模式 (重新订阅/追加订阅/删除订阅)
- * @param   dataTypes           订阅的数据种类 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
+ *                                  - "30, "                        //創業板
+ *                                  - "39"                          //指數
+ * @param   mdProductType       行情類別 (股票(基金、債券)/指數/期權)
+ * @param   subMode             訂閱模式 (重新訂閱/追加訂閱/刪除訂閱)
+ * @param   dataTypes           訂閱的資料種類 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_BEST_ORDERS
  *                              | MDS_SUB_DATA_TYPE_L2_TRADE)
  *                              @see eMdsSubscribeDataTypeT
- * @return  TRUE 成功; FALSE 失败
+ * @return  TRUE 成功; FALSE 失敗
  *
  * @see     MdsHelper_SetTickTypeOnSubscribeByString
  */
@@ -638,47 +638,47 @@ BOOL    MdsApi_SubscribeByStringAndPrefixes(
                 int32 dataTypes);
 
 /*
- * 根据字符串指针数组形式的证券代码列表以及证券代码前缀列表订阅行情信息
+ * 根據字串指標陣列形式的證券程式碼列表以及證券程式碼字首列表訂閱行情資訊
  *
- * @note    为兼容之前的版本, 该接口无法指定 tickType 订阅参数, 默认会按照 tickType=0 的模式订阅行情。
- *          可以通过 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 接口为其指定
- *          tickType 参数, 后续的 SubscribeByString 调用都会使用该 tickType 参数。
+ * @note    為相容之前的版本, 該介面無法指定 tickType 訂閱引數, 預設會按照 tickType=0 的模式訂閱行情。
+ *          可以通過 <code>MdsHelper_SetTickTypeOnSubscribeByString</code> 介面為其指定
+ *          tickType 引數, 後續的 SubscribeByString 呼叫都會使用該 tickType 引數。
  *
- * @param   pTcpChannel         会话信息
- * @param   ppSecurityArray     证券代码列表的指针数组
- *                              - 证券代码支持以 .SH 或 .SZ 为后缀来指定其所属的交易所
- *                              - 空字符串 "", 表示不订阅任何产品的行情
- *                              - 空指针 NULL, 表示订阅所有产品的行情
- * @param   securityCount       证券代码数量
- * @param   pSseCodePrefixes    以逗号或空格分隔的上海证券代码前缀列表, e.g.
- *                              - "6, 300, 301" 将匹配证券代码列表中所有以 '6' 或 '300'
- *                                或 '301' 起始的证券代码
- *                              - 若为NULL或空字符串, 则不会匹配任何证券代码
- *                              - 上海证券代码前缀参考:
- *                                  - "009, 01, 02, "               //国债
- *                                  - "10, 11, 12, 13, 18, 19, "    //债券 (企业债、可转债等)
- *                                  - "20, "                        //债券 (回购)
+ * @param   pTcpChannel         會話資訊
+ * @param   ppSecurityArray     證券程式碼列表的指標陣列
+ *                              - 證券程式碼支援以 .SH 或 .SZ 為字尾來指定其所屬的交易所
+ *                              - 空字串 "", 表示不訂閱任何產品的行情
+ *                              - 空指標 NULL, 表示訂閱所有產品的行情
+ * @param   securityCount       證券程式碼數量
+ * @param   pSseCodePrefixes    以逗號或空格分隔的上海證券程式碼字首列表, e.g.
+ *                              - "6, 300, 301" 將匹配證券程式碼列表中所有以 '6' 或 '300'
+ *                                或 '301' 起始的證券程式碼
+ *                              - 若為NULL或空字串, 則不會匹配任何證券程式碼
+ *                              - 上海證券程式碼字首參考:
+ *                                  - "009, 01, 02, "               //國債
+ *                                  - "10, 11, 12, 13, 18, 19, "    //債券 (企業債、可轉債等)
+ *                                  - "20, "                        //債券 (回購)
  *                                  - "5, "                         //基金
  *                                  - "6, "                         //A股
- *                                  - "000"                         //指数
- * @param   pSzseCodePrefixes   以逗号或空格分隔的深圳证券代码前缀列表
- *                              - 若为NULL或空字符串, 则不会匹配任何证券代码
- *                              - 证券代码前缀可以和上海相同, 此时匹配的证券代码会同时对上海
- *                                和深圳两个市场进行订阅
- *                              - 深圳证券代码前缀参考:
+ *                                  - "000"                         //指數
+ * @param   pSzseCodePrefixes   以逗號或空格分隔的深圳證券程式碼字首列表
+ *                              - 若為NULL或空字串, 則不會匹配任何證券程式碼
+ *                              - 證券程式碼字首可以和上海相同, 此時匹配的證券程式碼會同時對上海
+ *                                和深圳兩個市場進行訂閱
+ *                              - 深圳證券程式碼字首參考:
  *                                  - "00, "                        //股票
- *                                  - "10, 11, 12, 13, "            //债券
+ *                                  - "10, 11, 12, 13, "            //債券
  *                                  - "15, 16, 17, 18, "            //基金
- *                                  - "30, "                        //创业板
- *                                  - "39"                          //指数
- * @param   mdProductType       行情类别 (股票(基金、债券)/指数/期权)
- * @param   subMode             订阅模式 (重新订阅/追加订阅/删除订阅)
- * @param   dataTypes           订阅的数据种类 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
+ *                                  - "30, "                        //創業板
+ *                                  - "39"                          //指數
+ * @param   mdProductType       行情類別 (股票(基金、債券)/指數/期權)
+ * @param   subMode             訂閱模式 (重新訂閱/追加訂閱/刪除訂閱)
+ * @param   dataTypes           訂閱的資料種類 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_BEST_ORDERS
  *                              | MDS_SUB_DATA_TYPE_L2_TRADE)
  *                              @see eMdsSubscribeDataTypeT
- * @return  TRUE 成功; FALSE 失败
+ * @return  TRUE 成功; FALSE 失敗
  *
  * @see     MdsHelper_SetTickTypeOnSubscribeByString
  */
@@ -693,21 +693,21 @@ BOOL    MdsApi_SubscribeByStringAndPrefixes2(
                 int32 dataTypes);
 
 /*
- * 发送心跳消息
+ * 傳送心跳訊息
  *
- * @param   pSessionInfo        会话信息
- * @return  TRUE 成功; FALSE 失败
+ * @param   pSessionInfo        會話資訊
+ * @return  TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_SendHeartbeat(
                 MdsApiSessionInfoT *pSessionInfo);
 
 /*
- * 发送测试请求消息
+ * 傳送測試請求訊息
  *
- * @param   pSessionInfo        会话信息
- * @param   pTestReqId          测试请求标识符 (C32, 可以为空)
- * @param   testReqIdSize       测试请求标识符的长度
- * @return  TRUE 成功; FALSE 失败
+ * @param   pSessionInfo        會話資訊
+ * @param   pTestReqId          測試請求識別符號 (C32, 可以為空)
+ * @param   testReqIdSize       測試請求識別符號的長度
+ * @return  TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_SendTestRequest(
                 MdsApiSessionInfoT *pSessionInfo,
@@ -715,38 +715,38 @@ BOOL    MdsApi_SendTestRequest(
                 int32 testReqIdSize);
 
 /*
- * 发送注销消息
+ * 傳送登出訊息
  *
- * @param   pSessionInfo        会话信息
- * @param   isDestory           发送注销消息后是否立即释放相关资源
- * @return  TRUE 成功; FALSE 失败
+ * @param   pSessionInfo        會話資訊
+ * @param   isDestory           傳送登出訊息後是否立即釋放相關資源
+ * @return  TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_Logout(
                 MdsApiSessionInfoT *pSessionInfo,
                 BOOL isDestory);
 
 /*
- * 直接断开与服务器的连接并释放会话数据
+ * 直接斷開與伺服器的連線並釋放會話資料
  *
- * @param   pSessionInfo        会话信息
+ * @param   pSessionInfo        會話資訊
  */
 void    MdsApi_Destory(
                 MdsApiSessionInfoT *pSessionInfo);
 
 /*
- * 阻塞接收MDS行情消息, 并调用回调函数进行消息处理
- * 阻塞等待直到完整的消息接收完成或超时
+ * 阻塞接收MDS行情訊息, 並呼叫回撥函式進行訊息處理
+ * 阻塞等待直到完整的訊息接收完成或超時
  *
- * @param   pTcpChannel         会话信息
- * @param   timeoutMs           超时时间(毫秒)
- * @param   pOnMsgCallback      进行消息处理的回调函数
- * @param   pCallbackParams     回调函数的参数
- * @return  大于等于0, 成功 (返回回调函数的返回值);
- *          小于0, 失败 (负的错误号)
+ * @param   pTcpChannel         會話資訊
+ * @param   timeoutMs           超時時間(毫秒)
+ * @param   pOnMsgCallback      進行訊息處理的回撥函式
+ * @param   pCallbackParams     回撥函式的引數
+ * @return  大於等於0, 成功 (返回回撥函式的返回值);
+ *          小於0, 失敗 (負的錯誤號)
  *
- * @exception   NEG(ETIMEDOUT)  超时
- * @exception   NEG(EPIPE)      连接已破裂
- * @exception   Others          由read()系统调用或回调函数pOnMsgCallback返回的错误
+ * @exception   NEG(ETIMEDOUT)  超時
+ * @exception   NEG(EPIPE)      連線已破裂
+ * @exception   Others          由read()系統呼叫或回撥函式pOnMsgCallback返回的錯誤
  */
 int32   MdsApi_WaitOnMsg(
                 MdsApiSessionInfoT *pTcpChannel,
@@ -755,22 +755,22 @@ int32   MdsApi_WaitOnMsg(
                 void *pCallbackParams);
 
 /*
- * 阻塞接收MDS行情消息, 并调用回调函数进行消息处理 (可以处理压缩过的消息)
+ * 阻塞接收MDS行情訊息, 並呼叫回撥函式進行訊息處理 (可以處理壓縮過的訊息)
  *
- * - 与不带 Compressible 后缀的接口相比, 带 Compressible 后缀的接口会自动检测和处理压缩过的
- *   消息, 但也会因此带来微小的性能损失。
- * - 如果对延迟不是极端敏感的话, 可以直接使用带 Compressible 后缀的接口, 以方便兼容不同的模式。
+ * - 與不帶 Compressible 字尾的介面相比, 帶 Compressible 字尾的介面會自動檢測和處理壓縮過的
+ *   訊息, 但也會因此帶來微小的效能損失。
+ * - 如果對延遲不是極端敏感的話, 可以直接使用帶 Compressible 字尾的介面, 以方便相容不同的模式。
  *
- * @param   pTcpChannel         会话信息
- * @param   timeoutMs           超时时间(毫秒)
- * @param   pOnMsgCallback      进行消息处理的回调函数
- * @param   pCallbackParams     回调函数的参数
- * @return  大于等于0, 成功 (返回回调函数的返回值);
- *          小于0, 失败 (负的错误号)
+ * @param   pTcpChannel         會話資訊
+ * @param   timeoutMs           超時時間(毫秒)
+ * @param   pOnMsgCallback      進行訊息處理的回撥函式
+ * @param   pCallbackParams     回撥函式的引數
+ * @return  大於等於0, 成功 (返回回撥函式的返回值);
+ *          小於0, 失敗 (負的錯誤號)
  *
- * @exception   NEG(ETIMEDOUT)  超时
- * @exception   NEG(EPIPE)      连接已破裂
- * @exception   Others          由read()系统调用或回调函数pOnMsgCallback返回的错误
+ * @exception   NEG(ETIMEDOUT)  超時
+ * @exception   NEG(EPIPE)      連線已破裂
+ * @exception   Others          由read()系統呼叫或回撥函式pOnMsgCallback返回的錯誤
  */
 int32   MdsApi_WaitOnMsgCompressible(
                 MdsApiSessionInfoT *pTcpChannel,
@@ -781,28 +781,28 @@ int32   MdsApi_WaitOnMsgCompressible(
 
 
 /* ===================================================================
- * 查询接口函数声明
+ * 查詢介面函式宣告
  * =================================================================== */
 
 /*
- * 获取API的发行版本号
+ * 獲取API的發行版本號
  *
- * @return  API的发行版本号 (如: "0.15.3")
+ * @return  API的發行版本號 (如: "0.15.3")
  */
 const char *
         MdsApi_GetApiVersion();
 
 /*
- * 查询证券行情快照
+ * 查詢證券行情快照
  *
- * @param       pQryChannel     会话信息
- * @param       exchangeId      交易所代码
- * @param       mdProductType   行情类别
- * @param       instrId         产品代码
- * @param[out]  pRspBuf         用于输出查询结果的应答数据缓存
- * @retval      =0              查询成功
- * @retval      <0              查询失败 (负的错误号)
- * @exception   NEG(ENOENT)     未检索到待查询的数据
+ * @param       pQryChannel     會話資訊
+ * @param       exchangeId      交易所程式碼
+ * @param       mdProductType   行情類別
+ * @param       instrId         產品程式碼
+ * @param[out]  pRspBuf         用於輸出查詢結果的應答資料快取
+ * @retval      =0              查詢成功
+ * @retval      <0              查詢失敗 (負的錯誤號)
+ * @exception   NEG(ENOENT)     未檢索到待查詢的資料
  *
  * @see         eMdsExchangeIdT
  * @see         eMdsMdProductTypeT
@@ -815,16 +815,16 @@ int32   MdsApi_QueryMktDataSnapshot(
                 MdsMktDataSnapshotT *pRspBuf);
 
 /*
- * 查询(深圳)证券实时状态
+ * 查詢(深圳)證券實時狀態
  *
- * @param       pQryChannel     会话信息
- * @param       exchangeId      交易所代码
- * @param       mdProductType   行情类别
- * @param       instrId         产品代码
- * @param[out]  pRspBuf         用于输出查询结果的应答数据缓存
- * @retval      =0              查询成功
- * @retval      <0              查询失败 (负的错误号)
- * @exception   NEG(ENOENT)     未检索到待查询的数据
+ * @param       pQryChannel     會話資訊
+ * @param       exchangeId      交易所程式碼
+ * @param       mdProductType   行情類別
+ * @param       instrId         產品程式碼
+ * @param[out]  pRspBuf         用於輸出查詢結果的應答資料快取
+ * @retval      =0              查詢成功
+ * @retval      <0              查詢失敗 (負的錯誤號)
+ * @exception   NEG(ENOENT)     未檢索到待查詢的資料
  *
  * @see         eMdsExchangeIdT
  * @see         eMdsMdProductTypeT
@@ -837,16 +837,16 @@ int32   MdsApi_QuerySecurityStatus(
                 MdsSecurityStatusMsgT *pRspBuf);
 
 /*
- * 查询(上证)市场状态
+ * 查詢(上證)市場狀態
  *
- * @param       pQryChannel     会话信息
- * @param       exchangeId      交易所代码
- * @param       mdProductType   行情类别
- * @param       instrId         产品代码
- * @param[out]  pRspBuf         用于输出查询结果的应答数据缓存
- * @retval      =0              查询成功
- * @retval      <0              查询失败 (负的错误号)
- * @exception   NEG(ENOENT)     未检索到待查询的数据
+ * @param       pQryChannel     會話資訊
+ * @param       exchangeId      交易所程式碼
+ * @param       mdProductType   行情類別
+ * @param       instrId         產品程式碼
+ * @param[out]  pRspBuf         用於輸出查詢結果的應答資料快取
+ * @retval      =0              查詢成功
+ * @retval      <0              查詢失敗 (負的錯誤號)
+ * @exception   NEG(ENOENT)     未檢索到待查詢的資料
  *
  * @see         eMdsExchangeIdT
  * @see         eMdsMdProductTypeT
@@ -858,16 +858,16 @@ int32   MdsApi_QueryTrdSessionStatus(
                 MdsTradingSessionStatusMsgT *pRspBuf);
 
 /*
- * 批量查询证券(股票/债券/基金)静态信息
+ * 批量查詢證券(股票/債券/基金)靜態資訊
  *
- * @param   pQryChannel         会话信息
- * @param   pQryFilter          查询过滤条件
- *                              - 传空指针或者将过滤条件初始化为0，将查询所有数据
- * @param   pQryMsgCallback     进行消息处理的回调函数
- *                              - 消息体的数据类型为 <code>MdsStockStaticInfoT</code>
- * @param   pCallbackParams     回调函数的参数
- * @retval  >=0                 成功查询到的记录数
- * @retval  <0                  失败 (负的错误号)
+ * @param   pQryChannel         會話資訊
+ * @param   pQryFilter          查詢過濾條件
+ *                              - 傳空指標或者將過濾條件初始化為0，將查詢所有資料
+ * @param   pQryMsgCallback     進行訊息處理的回撥函式
+ *                              - 訊息體的資料型別為 <code>MdsStockStaticInfoT</code>
+ * @param   pCallbackParams     回撥函式的引數
+ * @retval  >=0                 成功查詢到的記錄數
+ * @retval  <0                  失敗 (負的錯誤號)
  *
  * @see     MdsStockStaticInfoT
  */
@@ -878,22 +878,22 @@ int32   MdsApi_QueryStockStaticInfo(
                 void *pCallbackParams);
 
 /*
- * 批量查询行情快照
+ * 批量查詢行情快照
  *
- * @param   pQryChannel         会话信息
- * @param   pSecurityListStr    证券代码列表字符串 (证券代码的最大数量限制为 200)
- *                              - 证券代码支持以 .SH 或 .SZ 为后缀来指定其所属的交易所
- *                              - 空字符串 "" 或 NULL, 表示查询所有产品的行情 (不包括指数和期权)
- * @param   pDelim              证券代码列表的分隔符 (e.g. ",;| \t")
- *                              - 如果为空, 则使用默认的分隔符:
+ * @param   pQryChannel         會話資訊
+ * @param   pSecurityListStr    證券程式碼列表字串 (證券程式碼的最大數量限制為 200)
+ *                              - 證券程式碼支援以 .SH 或 .SZ 為字尾來指定其所屬的交易所
+ *                              - 空字串 "" 或 NULL, 表示查詢所有產品的行情 (不包括指數和期權)
+ * @param   pDelim              證券程式碼列表的分隔符 (e.g. ",;| \t")
+ *                              - 如果為空, 則使用預設的分隔符:
  *                                ',' 或 ';' 或 '|' 或 ' ' 或 '\t'
- * @param   pQryFilter          查询过滤条件
- *                              - 传空指针或者将过滤条件初始化为0，代表过滤条件不生效
- * @param   pQryMsgCallback     进行消息处理的回调函数
- *                              - 消息体的数据类型为 <code>MdsL1SnapshotT</code>
- * @param   pCallbackParams     回调函数的参数
- * @retval  >=0                 成功查询到的记录数
- * @retval  <0                  失败 (负的错误号)
+ * @param   pQryFilter          查詢過濾條件
+ *                              - 傳空指標或者將過濾條件初始化為0，代表過濾條件不生效
+ * @param   pQryMsgCallback     進行訊息處理的回撥函式
+ *                              - 訊息體的資料型別為 <code>MdsL1SnapshotT</code>
+ * @param   pCallbackParams     回撥函式的引數
+ * @retval  >=0                 成功查詢到的記錄數
+ * @retval  <0                  失敗 (負的錯誤號)
  *
  * @see     MdsL1SnapshotT
  */
@@ -906,20 +906,20 @@ int32   MdsApi_QuerySnapshotList(
                 void *pCallbackParams);
 
 /*
- * 批量查询行情快照 (根据字符串指针数组形式的证券代码列表)
+ * 批量查詢行情快照 (根據字串指標陣列形式的證券程式碼列表)
  *
- * @param   pQryChannel         会话信息
- * @param   ppSecurityArray     证券代码列表的指针数组 (证券代码的最大数量限制为 200)
- *                              - 证券代码支持以 .SH 或 .SZ 为后缀来指定其所属的交易所
- *                              - 空指针NULL或代码数量为0, 表示查询所有产品的行情 (不包括指数和期权)
- * @param   securityCount       证券代码数量
- * @param   pQryFilter          查询过滤条件
- *                              - 传空指针或者将过滤条件初始化为0，代表过滤条件不生效
- * @param   pQryMsgCallback     进行消息处理的回调函数
- *                              - 消息体的数据类型为 <code>MdsL1SnapshotT</code>
- * @param   pCallbackParams     回调函数的参数
- * @retval  >=0                 成功查询到的记录数
- * @retval  <0                  失败 (负的错误号)
+ * @param   pQryChannel         會話資訊
+ * @param   ppSecurityArray     證券程式碼列表的指標陣列 (證券程式碼的最大數量限制為 200)
+ *                              - 證券程式碼支援以 .SH 或 .SZ 為字尾來指定其所屬的交易所
+ *                              - 空指標NULL或程式碼數量為0, 表示查詢所有產品的行情 (不包括指數和期權)
+ * @param   securityCount       證券程式碼數量
+ * @param   pQryFilter          查詢過濾條件
+ *                              - 傳空指標或者將過濾條件初始化為0，代表過濾條件不生效
+ * @param   pQryMsgCallback     進行訊息處理的回撥函式
+ *                              - 訊息體的資料型別為 <code>MdsL1SnapshotT</code>
+ * @param   pCallbackParams     回撥函式的引數
+ * @retval  >=0                 成功查詢到的記錄數
+ * @retval  <0                  失敗 (負的錯誤號)
  *
  * @see     MdsL1SnapshotT
  */
@@ -934,25 +934,25 @@ int32   MdsApi_QuerySnapshotList2(
 
 
 /* ===================================================================
- * 密码修改指令接口函数声明
+ * 密碼修改指令介面函式宣告
  * =================================================================== */
 
 /*
- * 发送密码修改请求 (修改客户端登录密码)
- * 密码修改请求通过查询通道发送到MDS服务器, 并将采用同步请求/应答的方式直接返回处理结果
+ * 傳送密碼修改請求 (修改客戶端登入密碼)
+ * 密碼修改請求通過查詢通道傳送到MDS伺服器, 並將採用同步請求/應答的方式直接返回處理結果
  *
- * @param       pQryChannel     会话信息
+ * @param       pQryChannel     會話資訊
  * @param[in]   pChangePasswordReq
- *                              待发送的密码修改请求
+ *                              待發送的密碼修改請求
  * @param[out]  pOutChangePasswordRsp
- *                              用于输出测试请求应答的缓存区
+ *                              用於輸出測試請求應答的快取區
  * @retval      0               成功
- * @retval      <0              API调用失败 (负的错误号)
- * @retval      >0              服务端业务处理失败 (MDS错误号)
+ * @retval      <0              API呼叫失敗 (負的錯誤號)
+ * @retval      >0              服務端業務處理失敗 (MDS錯誤號)
  *
- * @exception   NEG(EINVAL)     传入参数非法
- * @exception   NEG(EPIPE)      连接已破裂
- * @exception   NEG(Others)     由send()系统调用返回的错误
+ * @exception   NEG(EINVAL)     傳入引數非法
+ * @exception   NEG(EPIPE)      連線已破裂
+ * @exception   NEG(Others)     由send()系統呼叫返回的錯誤
  */
 int32   MdsApi_SendChangePasswordReq(
                 MdsApiSessionInfoT *pQryChannel,
@@ -962,16 +962,16 @@ int32   MdsApi_SendChangePasswordReq(
 
 
 /* ===================================================================
- * 基于UDP协议的行情服务接口函数声明
+ * 基於UDP協議的行情服務介面函式宣告
  * =================================================================== */
 
 /*
- * 建立与行情服务器的UDP(组播)连接
+ * 建立與行情伺服器的UDP(組播)連線
  *
- * @param[out]  pOutSessionInfo 输出会话信息
+ * @param[out]  pOutSessionInfo 輸出會話資訊
  * @param       pUri            URI地址 (e.g. udp-mcast://239.1.150.100:5300)
- * @param       pSocketOptions  套接字参数 (为空, 则会使用默认参数)
- * @return      TRUE 成功; FALSE 失败
+ * @param       pSocketOptions  套接字引數 (為空, 則會使用預設引數)
+ * @return      TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_ConnectToUdpMcast(
                 MdsApiSessionInfoT *pOutSessionInfo,
@@ -979,19 +979,19 @@ BOOL    MdsApi_ConnectToUdpMcast(
                 const SSocketOptionConfigT *pSocketOptions);
 
 /*
- * 阻塞接收MDS-UDP行情消息, 并调用回调函数进行消息处理
- * 阻塞等待直到完整的消息接收完成或超时
+ * 阻塞接收MDS-UDP行情訊息, 並呼叫回撥函式進行訊息處理
+ * 阻塞等待直到完整的訊息接收完成或超時
  *
- * @param       pUdpChannel     会话信息
- * @param       timeoutMs       超时时间(毫秒)
- * @param       pOnMsgCallback  进行消息处理的回调函数
- * @param       pCallbackParams 回调函数的参数
- * @return      大于等于0, 成功 (返回回调函数的返回值);
- *              小于0, 失败 (负的错误号)
+ * @param       pUdpChannel     會話資訊
+ * @param       timeoutMs       超時時間(毫秒)
+ * @param       pOnMsgCallback  進行訊息處理的回撥函式
+ * @param       pCallbackParams 回撥函式的引數
+ * @return      大於等於0, 成功 (返回回撥函式的返回值);
+ *              小於0, 失敗 (負的錯誤號)
  *
- * @exception   NEG(ETIMEDOUT)  超时
- * @exception   NEG(EPIPE)      连接已破裂
- * @exception   Others          由read()系统调用或回调函数pOnMsgCallback返回的错误
+ * @exception   NEG(ETIMEDOUT)  超時
+ * @exception   NEG(EPIPE)      連線已破裂
+ * @exception   Others          由read()系統呼叫或回撥函式pOnMsgCallback返回的錯誤
  */
 int32   MdsApi_WaitOnUdpMsg(
                 MdsApiSessionInfoT *pUdpChannel,
@@ -1002,35 +1002,35 @@ int32   MdsApi_WaitOnUdpMsg(
 
 
 /* ===================================================================
- * 完整的行情客户端环境的统一初始化和析构接口声明
+ * 完整的行情客戶端環境的統一初始化和析構介面宣告
  * =================================================================== */
 
 /*
- * 完整的初始化行情客户端环境
+ * 完整的初始化行情客戶端環境
  *
- * @param[out]  pOutCliEnv      输出行情客户端环境信息
- * @param       pCfgFile        配置文件路径
- * @param       pLoggerSection  日志记录器的配置区段名称
- * @param       pCfgSection     行情客户端配置区段名称
- * @param       pTcpAddrKey     TCP行情订阅地址的配置项关键字 (为空或配置项未设置则不连接)
- * @param       pQryAddrKey     行情查询服务地址的配置项关键字 (为空或配置项未设置则不连接)
- * @param       pUdpL1AddrKey   L1快照行情组播地址的配置项关键字 (为空或配置项未设置则不连接)
- * @param       pUdpL2AddrKey   L2快照行情组播地址的配置项关键字 (为空或配置项未设置则不连接)
+ * @param[out]  pOutCliEnv      輸出行情客戶端環境資訊
+ * @param       pCfgFile        配置檔案路徑
+ * @param       pLoggerSection  日誌記錄器的配置區段名稱
+ * @param       pCfgSection     行情客戶端配置區段名稱
+ * @param       pTcpAddrKey     TCP行情訂閱地址的配置項關鍵字 (為空或配置項未設定則不連線)
+ * @param       pQryAddrKey     行情查詢服務地址的配置項關鍵字 (為空或配置項未設定則不連線)
+ * @param       pUdpL1AddrKey   L1快照行情組播地址的配置項關鍵字 (為空或配置項未設定則不連線)
+ * @param       pUdpL2AddrKey   L2快照行情組播地址的配置項關鍵字 (為空或配置項未設定則不連線)
  * @param       pUdpTick1AddrKey
- *                              L2逐笔数据(频道1)组播地址的配置项关键字 (为空或配置项未设置则不连接)
+ *                              L2逐筆資料(頻道1)組播地址的配置項關鍵字 (為空或配置項未設定則不連線)
  * @param       pUdpTick2AddrKey
- *                              L2逐笔数据(频道2)组播地址的配置项关键字 (为空或配置项未设置则不连接)
+ *                              L2逐筆資料(頻道2)組播地址的配置項關鍵字 (為空或配置項未設定則不連線)
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  *
  * @see         MdsApi_InitAllByConvention
  * @see         MdsApi_InitAllByCfgStruct
@@ -1048,21 +1048,21 @@ BOOL    MdsApi_InitAll(
                 const char *pUdpTick2AddrKey);
 
 /*
- * 按照默认的配置名称, 完整的初始化行情客户端环境
+ * 按照預設的配置名稱, 完整的初始化行情客戶端環境
  *
- * @param[out]  pOutCliEnv      输出行情客户端环境信息
- * @param       pCfgFile        配置文件路径
+ * @param[out]  pOutCliEnv      輸出行情客戶端環境資訊
+ * @param       pCfgFile        配置檔案路徑
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  *
  * @see         MdsApi_InitAll
  * @see         MdsApi_InitAllByCfgStruct
@@ -1072,25 +1072,25 @@ BOOL    MdsApi_InitAllByConvention(
                 const char *pCfgFile);
 
 /*
- * 按照配置信息结构体, 初始化客户端环境
+ * 按照配置資訊結構體, 初始化客戶端環境
  *
- * @note        与 MdsApi_InitAll 和 MdsApi_InitAllByConvention 接口有一处不同,
- *              MdsApi_InitAllByCfgStruct 接口不会自动初始化日志记录器, 需要在外面
- *              显式的调用 MdsApi_InitLogger 来初始化API的日志记录器
+ * @note        與 MdsApi_InitAll 和 MdsApi_InitAllByConvention 介面有一處不同,
+ *              MdsApi_InitAllByCfgStruct 介面不會自動初始化日誌記錄器, 需要在外面
+ *              顯式的呼叫 MdsApi_InitLogger 來初始化API的日誌記錄器
  *
- * @param[out]  pOutCliEnv      输出行情客户端环境信息
- * @param       pClientCfg      配置信息结构体
+ * @param[out]  pOutCliEnv      輸出行情客戶端環境資訊
+ * @param       pClientCfg      配置資訊結構體
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  *
  * @see         MdsApi_InitAll
  * @see         MdsApi_InitAllByConvention
@@ -1100,18 +1100,18 @@ BOOL    MdsApi_InitAllByCfgStruct(
                 const MdsApiClientCfgT *pClientCfg);
 
 /*
- * 注销并关闭所有的行情客户端会话
+ * 登出並關閉所有的行情客戶端會話
  *
- * @param[out]  pCliEnv         行情客户端环境信息
- * @param       isDestory       是否立即释放相关资源
- * @return      TRUE 成功; FALSE 失败
+ * @param[out]  pCliEnv         行情客戶端環境資訊
+ * @param       isDestory       是否立即釋放相關資源
+ * @return      TRUE 成功; FALSE 失敗
  */
 void    MdsApi_LogoutAll(MdsApiClientEnvT *pCliEnv, BOOL isDestory);
 
 /*
- * 直接断开与服务器的连接并释放会话数据
+ * 直接斷開與伺服器的連線並釋放會話資料
  *
- * @param[out]  pCliEnv         行情客户端环境信息
+ * @param[out]  pCliEnv         行情客戶端環境資訊
  */
 void    MdsApi_DestoryAll(
                 MdsApiClientEnvT *pCliEnv);
@@ -1119,47 +1119,47 @@ void    MdsApi_DestoryAll(
 
 
 /* ===================================================================
- * 基于配置文件的辅助接口函数声明
+ * 基於配置檔案的輔助介面函式宣告
  * =================================================================== */
 
 /*
- * 初始化日志记录器
+ * 初始化日誌記錄器
  *
- * @param       pCfgFile        配置文件路径
- * @param       pLoggerSection  日志记录器的配置区段名称(为空则使用默认值)
- * @return      TRUE 成功; FALSE 失败
+ * @param       pCfgFile        配置檔案路徑
+ * @param       pLoggerSection  日誌記錄器的配置區段名稱(為空則使用預設值)
+ * @return      TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_InitLogger(
                 const char *pCfgFile,
                 const char *pLoggerSection);
 
 /*
- * 重置线程级别的日志记录器名称
+ * 重置執行緒級別的日誌記錄器名稱
  *
- * @param   pLogSystemName  线程级别的日志系统名称
- * @return  TRUE 成功; FALSE 失败
+ * @param   pLogSystemName  執行緒級別的日誌系統名稱
+ * @return  TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_ResetThreadLoggerName(
                 const char *pLogSystemName);
 
 /*
- * 初始化基于TCP协议的行情订阅通道 (包括完整的配置解析、连接建立、登录和行情订阅过程)
+ * 初始化基於TCP協議的行情訂閱通道 (包括完整的配置解析、連線建立、登入和行情訂閱過程)
  *
- * @param[out]  pTcpChannel     TCP行情订阅通道的会话信息
- * @param       pCfgFile        配置文件路径
- * @param       pCfgSection     行情客户端配置区段名称(为空则使用默认值)
- * @param       pAddrKey        地址列表的配置项关键字(为空则使用默认值)
+ * @param[out]  pTcpChannel     TCP行情訂閱通道的會話資訊
+ * @param       pCfgFile        配置檔案路徑
+ * @param       pCfgSection     行情客戶端配置區段名稱(為空則使用預設值)
+ * @param       pAddrKey        地址列表的配置項關鍵字(為空則使用預設值)
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  */
 BOOL    MdsApi_InitTcpChannel(
                 MdsApiSessionInfoT *pTcpChannel,
@@ -1168,22 +1168,22 @@ BOOL    MdsApi_InitTcpChannel(
                 const char *pAddrKey);
 
 /*
- * 初始化基于TCP协议的行情订阅通道 (包括完整的连接建立、登录和行情订阅过程)
+ * 初始化基於TCP協議的行情訂閱通道 (包括完整的連線建立、登入和行情訂閱過程)
  *
- * @param[out]  pTcpChannel     TCP行情订阅通道的会话信息
- * @param       pRemoteCfg      远程主机配置信息
- * @param       pSubscribeInfo  行情订阅配置信息
+ * @param[out]  pTcpChannel     TCP行情訂閱通道的會話資訊
+ * @param       pRemoteCfg      遠端主機配置資訊
+ * @param       pSubscribeInfo  行情訂閱配置資訊
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  */
 BOOL    MdsApi_InitTcpChannel2(
                 MdsApiSessionInfoT *pTcpChannel,
@@ -1191,23 +1191,23 @@ BOOL    MdsApi_InitTcpChannel2(
                 const MdsApiSubscribeInfoT *pSubscribeInfo);
 
 /*
- * 初始化行情查询通道 (包括完整的配置解析、连接建立和登录过程)
+ * 初始化行情查詢通道 (包括完整的配置解析、連線建立和登入過程)
  *
- * @param[out]  pQryChannel     行情查询通道的会话信息
- * @param       pCfgFile        配置文件路径
- * @param       pCfgSection     行情客户端配置区段名称(为空则使用默认值)
- * @param       pAddrKey        地址列表的配置项关键字(为空则使用默认值)
+ * @param[out]  pQryChannel     行情查詢通道的會話資訊
+ * @param       pCfgFile        配置檔案路徑
+ * @param       pCfgSection     行情客戶端配置區段名稱(為空則使用預設值)
+ * @param       pAddrKey        地址列表的配置項關鍵字(為空則使用預設值)
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  */
 BOOL    MdsApi_InitQryChannel(
                 MdsApiSessionInfoT *pQryChannel,
@@ -1216,39 +1216,39 @@ BOOL    MdsApi_InitQryChannel(
                 const char *pAddrKey);
 
 /*
- * 初始化行情查询通道 (包括完整的连接建立和登录过程)
+ * 初始化行情查詢通道 (包括完整的連線建立和登入過程)
  *
- * @param[out]  pQryChannel     行情查询通道的会话信息
- * @param       pRemoteCfg      远程主机配置信息
+ * @param[out]  pQryChannel     行情查詢通道的會話資訊
+ * @param       pRemoteCfg      遠端主機配置資訊
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ECONNREFUSED    连接失败
- * @exception   ETIMEDOUT       连接超时
- * @exception   EACCES          用户名或密码错误
- * @exception   EMLINK          连接数量超过限制
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   ESRCH           登录节点非主节点
- * @exception   EFAULT          其他业务错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ECONNREFUSED    連線失敗
+ * @exception   ETIMEDOUT       連線超時
+ * @exception   EACCES          使用者名稱或密碼錯誤
+ * @exception   EMLINK          連線數量超過限制
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   ESRCH           登入節點非主節點
+ * @exception   EFAULT          其他業務錯誤
  */
 BOOL    MdsApi_InitQryChannel2(
                 MdsApiSessionInfoT *pQryChannel,
                 const MdsApiRemoteCfgT *pRemoteCfg);
 
 /*
- * 初始化基于UDP协议的行情订阅通道 (包括完整的配置解析和连接建立过程)
+ * 初始化基於UDP協議的行情訂閱通道 (包括完整的配置解析和連線建立過程)
  *
- * @param[out]  pUdpChannel     UDP行情订阅通道的会话信息
- * @param       pCfgFile        配置文件路径
- * @param       pCfgSection     行情客户端配置区段名称(为空则使用默认值)
- * @param       pAddrKey        地址列表的配置项关键字(为空则使用默认值)
+ * @param[out]  pUdpChannel     UDP行情訂閱通道的會話資訊
+ * @param       pCfgFile        配置檔案路徑
+ * @param       pCfgSection     行情客戶端配置區段名稱(為空則使用預設值)
+ * @param       pAddrKey        地址列表的配置項關鍵字(為空則使用預設值)
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   Others          由系统调用返回的错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   Others          由系統呼叫返回的錯誤
  */
 BOOL    MdsApi_InitUdpChannel(
                 MdsApiSessionInfoT *pUdpChannel,
@@ -1257,34 +1257,34 @@ BOOL    MdsApi_InitUdpChannel(
                 const char *pAddrKey);
 
 /*
- * 初始化基于UDP协议的行情订阅通道 (包括完整的连接建立过程)
+ * 初始化基於UDP協議的行情訂閱通道 (包括完整的連線建立過程)
  *
- * @param[out]  pUdpChannel     UDP行情订阅通道的会话信息
- * @param       pRemoteCfg      远程主机配置信息
+ * @param[out]  pUdpChannel     UDP行情訂閱通道的會話資訊
+ * @param       pRemoteCfg      遠端主機配置資訊
  * @retval      TRUE            成功
- * @retval      FALSE           失败。此时 errno 将被设置, 可以通过 errno/SPK_GET_ERRNO() 获取到具体失败原因
+ * @retval      FALSE           失敗。此時 errno 將被設定, 可以通過 errno/SPK_GET_ERRNO() 獲取到具體失敗原因
  *
- * @exception   EINVAL          配置异常或传入参数非法
- * @exception   ENOENT          地址列表中没有找到有效的节点配置
- * @exception   Others          由系统调用返回的错误
+ * @exception   EINVAL          配置異常或傳入引數非法
+ * @exception   ENOENT          地址列表中沒有找到有效的節點配置
+ * @exception   Others          由系統呼叫返回的錯誤
  */
 BOOL    MdsApi_InitUdpChannel2(
                 MdsApiSessionInfoT *pUdpChannel,
                 const MdsApiRemoteCfgT *pRemoteCfg);
 
 /*
- * 解析服务器地址列表字符串
+ * 解析伺服器地址列表字串
  *
- * - 待解析的地址列表可是以空格、逗号或分号分割的地址列表字符串
+ * - 待解析的地址列表可是以空格、逗號或分號分割的地址列表字串
  *   - e.g. "tcp://127.0.0.1:5100, tcp://192.168.0.11:5100"
- * - 同时也可以在每个地址之前, 为其指定对应的主机编号
+ * - 同時也可以在每個地址之前, 為其指定對應的主機編號
  *   - e.g. "2 tcp://192.168.0.12:5100, 1 tcp://192.168.0.11:5100,
  *          3 tcp://192.168.0.13:5100"
  *
- * @param       pUriList        主机地址列表 (以空格、逗号或分号分割的地址列表字符串)
- * @param[out]  pOutAddrList    用于输出解析后的地址信息的地址信息数组
- * @param       addrListLength  地址信息列表的数组长度
- * @return      大于等于0, 解析得到的地址数量; 小于0, 解析失败
+ * @param       pUriList        主機地址列表 (以空格、逗號或分號分割的地址列表字串)
+ * @param[out]  pOutAddrList    用於輸出解析後的地址資訊的地址資訊陣列
+ * @param       addrListLength  地址資訊列表的陣列長度
+ * @return      大於等於0, 解析得到的地址數量; 小於0, 解析失敗
  */
 int32   MdsApi_ParseAddrListString(
                 const char *pUriList,
@@ -1292,14 +1292,14 @@ int32   MdsApi_ParseAddrListString(
                 int32 addrListLength);
 
 /*
- * 解析客户端配置文件
+ * 解析客戶端配置檔案
  *
- * @param       pCfgFile        配置文件路径
- * @param       pSection        配置区段名称
- * @param       pAddrKey        地址列表的配置项关键字
- * @param[out]  pOutRemoteCfg   输出远程主机配置信息
- * @param[out]  pOutSubscribeInfo   输出行情订阅信息
- * @return      TRUE 成功; FALSE 失败
+ * @param       pCfgFile        配置檔案路徑
+ * @param       pSection        配置區段名稱
+ * @param       pAddrKey        地址列表的配置項關鍵字
+ * @param[out]  pOutRemoteCfg   輸出遠端主機配置資訊
+ * @param[out]  pOutSubscribeInfo   輸出行情訂閱資訊
+ * @return      TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_ParseConfigFromFile(
                 const char *pCfgFile,
@@ -1309,11 +1309,11 @@ BOOL    MdsApi_ParseConfigFromFile(
                 MdsApiSubscribeInfoT *pOutSubscribeInfo);
 
 /*
- * 按照默认的配置名称, 从配置文件中解析所有配置信息
+ * 按照預設的配置名稱, 從配置檔案中解析所有配置資訊
  *
- * @param       pCfgFile        配置文件路径
- * @param[out]  pOutApiCfg      输出远程主机配置信息
- * @return      TRUE 成功; FALSE 失败
+ * @param       pCfgFile        配置檔案路徑
+ * @param[out]  pOutApiCfg      輸出遠端主機配置資訊
+ * @return      TRUE 成功; FALSE 失敗
  */
 BOOL    MdsApi_ParseAllConfig(
                 const char *pCfgFile,
@@ -1322,62 +1322,62 @@ BOOL    MdsApi_ParseAllConfig(
 
 
 /* ===================================================================
- * 用于同时接收多个连接通道数据的通道组接口函数
+ * 用於同時接收多個連線通道資料的通道組介面函式
  * =================================================================== */
 
 /*
- * 初始化(重置)通道组信息 (用于同时接收多个连接通道的数据)
+ * 初始化(重置)通道組資訊 (用於同時接收多個連線通道的資料)
  *
- * @param[in,out]   pChannelGroup   通道组信息
- * @return          TRUE, 成功; FALSE 失败
+ * @param[in,out]   pChannelGroup   通道組資訊
+ * @return          TRUE, 成功; FALSE 失敗
  */
 BOOL    MdsApi_InitChannelGroup(
                 MdsApiChannelGroupT *pChannelGroup);
 
 /*
- * 销毁通道组信息 (同时关闭通道组下的所有连接)
+ * 銷燬通道組資訊 (同時關閉通道組下的所有連線)
  *
- * @param       pChannelGroup   通道组信息
- * @return      TRUE, 成功; FALSE 失败
+ * @param       pChannelGroup   通道組資訊
+ * @return      TRUE, 成功; FALSE 失敗
  */
 BOOL    MdsApi_DestoryChannelGroup(
                 MdsApiChannelGroupT *pChannelGroup);
 
 /*
- * 将连接信息添加到通道组
+ * 將連線資訊新增到通道組
  *
- * @note        在检测通道组下各连接的I/O事件时, 是从后向前进行扫描的, 所以建议将更
- *              活跃的连接添加到其它连接的后面
+ * @note        在檢測通道組下各連線的I/O事件時, 是從後向前進行掃描的, 所以建議將更
+ *              活躍的連線新增到其它連線的後面
  *
- * @param       pChannelGroup   通道组信息
- * @param       pChannel        连接信息
- * @return      TRUE, 成功; FALSE 失败
+ * @param       pChannelGroup   通道組資訊
+ * @param       pChannel        連線資訊
+ * @return      TRUE, 成功; FALSE 失敗
  */
 BOOL    MdsApi_AddToChannelGroup(
                 MdsApiChannelGroupT *pChannelGroup,
                 MdsApiSessionInfoT *pChannel);
 
 /*
- * 从通道组中删除连接
+ * 從通道組中刪除連線
  *
- * @param       pChannelGroup   通道组信息
- * @param       pTargetChannel  待删除连接的连接信息
- * @return      TRUE, 成功; FALSE 失败
+ * @param       pChannelGroup   通道組資訊
+ * @param       pTargetChannel  待刪除連線的連線資訊
+ * @return      TRUE, 成功; FALSE 失敗
  */
 BOOL    MdsApi_DeleteFromChannelGroup(
                 MdsApiChannelGroupT *pChannelGroup,
                 MdsApiSessionInfoT *pTargetChanne);
 
 /*
- * 获取通道组中指定下标的连接信息
+ * 獲取通道組中指定下標的連線資訊
  *
- * @param       pChannelGroup   通道组信息
- * @param       index           下标位置 (如果小于0, 则表示按照先后顺序而非下标位置进行返回)
- *                              -  0, 返回 0 号下标位置所对应的会话信息
- *                              - -1, 返回通道组下第一个有效的会话信息
- *                              - -2, 返回通道组下第二个有效的会话信息
- *                              - INT_MIN, 如果超出了通道组的有效会话数量, 则返回最后一个有效的会话信息
- * @return      连接信息
+ * @param       pChannelGroup   通道組資訊
+ * @param       index           下標位置 (如果小於0, 則表示按照先後順序而非下標位置進行返回)
+ *                              -  0, 返回 0 號下標位置所對應的會話資訊
+ *                              - -1, 返回通道組下第一個有效的會話資訊
+ *                              - -2, 返回通道組下第二個有效的會話資訊
+ *                              - INT_MIN, 如果超出了通道組的有效會話數量, 則返回最後一個有效的會話資訊
+ * @return      連線資訊
  */
 MdsApiSessionInfoT *
         MdsApi_GetFromChannelGroup(
@@ -1385,11 +1385,11 @@ MdsApiSessionInfoT *
                 int32 index);
 
 /*
- * 获取通道组中与指定Socket描述符相匹配的连接信息
+ * 獲取通道組中與指定Socket描述符相匹配的連線資訊
  *
- * @param       pChannelGroup   通道组信息
+ * @param       pChannelGroup   通道組資訊
  * @param       socketFd        Socket描述符
- * @return      连接信息
+ * @return      連線資訊
  */
 MdsApiSessionInfoT *
         MdsApi_GetFromChannelGroupBySocket(
@@ -1397,12 +1397,12 @@ MdsApiSessionInfoT *
                 SPK_SOCKET socketFd);
 
 /*
- * 遍历通道组下的所有通道信息并执行回调函数
+ * 遍歷通道組下的所有通道資訊並執行回撥函式
  *
- * @param       pChannelGroup   通道组信息
- * @param       fnCallback      待执行的回调函数
- * @param       pParams         回调函数的参数
- * @return      0, 成功; 小于 0, errno 取负
+ * @param       pChannelGroup   通道組資訊
+ * @param       fnCallback      待執行的回撥函式
+ * @param       pParams         回撥函式的引數
+ * @return      0, 成功; 小於 0, errno 取負
  */
 int32   MdsApi_ForeachInChannelGroup(
                 MdsApiChannelGroupT *pChannelGroup,
@@ -1410,21 +1410,21 @@ int32   MdsApi_ForeachInChannelGroup(
                 void *pParams);
 
 /*
- * 检测TCP通道组下各连接通道的读事件, 并调用回调函数进行消息处理
+ * 檢測TCP通道組下各連線通道的讀事件, 並呼叫回撥函式進行訊息處理
  *
- * @param       pChannelGroup   通道组信息
- * @param       timeoutMs       超时时间(毫秒)
- * @param       pOnMsgCallback  进行消息处理的回调函数
- * @param       pCallbackParams 回调函数的参数
- * @param[out]  ppFailed        返回处理失败时所对应的连接信息
- *                              - 允许为空, 为空则忽略该参数
- *                              - 当因为超时(一定时间内没有数据)而返回时, 该参数的值为空
- * @return      大于等于0, 成功 (返回回调函数的返回值);
- *              小于0, 失败 (负的错误号)
+ * @param       pChannelGroup   通道組資訊
+ * @param       timeoutMs       超時時間(毫秒)
+ * @param       pOnMsgCallback  進行訊息處理的回撥函式
+ * @param       pCallbackParams 回撥函式的引數
+ * @param[out]  ppFailed        返回處理失敗時所對應的連線資訊
+ *                              - 允許為空, 為空則忽略該引數
+ *                              - 當因為超時(一定時間內沒有資料)而返回時, 該引數的值為空
+ * @return      大於等於0, 成功 (返回回撥函式的返回值);
+ *              小於0, 失敗 (負的錯誤號)
  *
- * @exception   NEG(ETIMEDOUT)  超时
- * @exception   NEG(EPIPE)      连接已破裂
- * @exception   Others          由select/read系统调用或回调函数返回的错误
+ * @exception   NEG(ETIMEDOUT)  超時
+ * @exception   NEG(EPIPE)      連線已破裂
+ * @exception   Others          由select/read系統呼叫或回撥函式返回的錯誤
  */
 int32   MdsApi_WaitOnTcpChannelGroup(
                 MdsApiChannelGroupT *pChannelGroup,
@@ -1434,25 +1434,25 @@ int32   MdsApi_WaitOnTcpChannelGroup(
                 MdsApiSessionInfoT **ppFailed);
 
 /*
- * 检测TCP通道组下各连接通道的读事件, 并调用回调函数进行消息处理 (可以处理压缩过的消息)
+ * 檢測TCP通道組下各連線通道的讀事件, 並呼叫回撥函式進行訊息處理 (可以處理壓縮過的訊息)
  *
- * - 与不带 Compressible 后缀的接口相比, 带 Compressible 后缀的接口会自动检测和处理压缩过的
- *   消息, 但也会因此带来微小的性能损失。
- * - 如果对延迟不是极端敏感的话, 可以直接使用带 Compressible 后缀的接口, 以方便兼容不同的模式。
+ * - 與不帶 Compressible 字尾的介面相比, 帶 Compressible 字尾的介面會自動檢測和處理壓縮過的
+ *   訊息, 但也會因此帶來微小的效能損失。
+ * - 如果對延遲不是極端敏感的話, 可以直接使用帶 Compressible 字尾的介面, 以方便相容不同的模式。
  *
- * @param       pChannelGroup   通道组信息
- * @param       timeoutMs       超时时间(毫秒)
- * @param       pOnMsgCallback  进行消息处理的回调函数
- * @param       pCallbackParams 回调函数的参数
- * @param[out]  ppFailed        返回处理失败时所对应的连接信息
- *                              - 允许为空, 为空则忽略该参数
- *                              - 当因为超时(一定时间内没有数据)而返回时, 该参数的值为空
- * @return      大于等于0, 成功 (返回回调函数的返回值);
- *              小于0, 失败 (负的错误号)
+ * @param       pChannelGroup   通道組資訊
+ * @param       timeoutMs       超時時間(毫秒)
+ * @param       pOnMsgCallback  進行訊息處理的回撥函式
+ * @param       pCallbackParams 回撥函式的引數
+ * @param[out]  ppFailed        返回處理失敗時所對應的連線資訊
+ *                              - 允許為空, 為空則忽略該引數
+ *                              - 當因為超時(一定時間內沒有資料)而返回時, 該引數的值為空
+ * @return      大於等於0, 成功 (返回回撥函式的返回值);
+ *              小於0, 失敗 (負的錯誤號)
  *
- * @exception   NEG(ETIMEDOUT)  超时
- * @exception   NEG(EPIPE)      连接已破裂
- * @exception   Others          由select/read系统调用或回调函数返回的错误
+ * @exception   NEG(ETIMEDOUT)  超時
+ * @exception   NEG(EPIPE)      連線已破裂
+ * @exception   Others          由select/read系統呼叫或回撥函式返回的錯誤
  */
 int32   MdsApi_WaitOnTcpChannelGroupCompressible(
                 MdsApiChannelGroupT *pChannelGroup,
@@ -1462,21 +1462,21 @@ int32   MdsApi_WaitOnTcpChannelGroupCompressible(
                 MdsApiSessionInfoT **ppFailed);
 
 /*
- * 检测UDP通道组下各连接通道的读事件, 并调用回调函数进行消息处理
+ * 檢測UDP通道組下各連線通道的讀事件, 並呼叫回撥函式進行訊息處理
  *
- * @param       pChannelGroup   通道组信息
- * @param       timeoutMs       超时时间(毫秒)
- * @param       pOnMsgCallback  进行消息处理的回调函数
- * @param       pCallbackParams 回调函数的参数
- * @param[out]  ppFailed        返回处理失败时所对应的连接信息
- *                              - 允许为空, 为空则忽略该参数
- *                              - 当因为超时(一定时间内没有数据)而返回时, 该参数的值为空
- * @return      大于等于0, 成功 (返回回调函数的返回值);
- *              小于0, 失败 (负的错误号)
+ * @param       pChannelGroup   通道組資訊
+ * @param       timeoutMs       超時時間(毫秒)
+ * @param       pOnMsgCallback  進行訊息處理的回撥函式
+ * @param       pCallbackParams 回撥函式的引數
+ * @param[out]  ppFailed        返回處理失敗時所對應的連線資訊
+ *                              - 允許為空, 為空則忽略該引數
+ *                              - 當因為超時(一定時間內沒有資料)而返回時, 該引數的值為空
+ * @return      大於等於0, 成功 (返回回撥函式的返回值);
+ *              小於0, 失敗 (負的錯誤號)
  *
- * @exception   NEG(ETIMEDOUT)  超时
- * @exception   NEG(EPIPE)      连接已破裂
- * @exception   Others          由select/read系统调用或回调函数返回的错误
+ * @exception   NEG(ETIMEDOUT)  超時
+ * @exception   NEG(EPIPE)      連線已破裂
+ * @exception   Others          由select/read系統呼叫或回撥函式返回的錯誤
  */
 int32   MdsApi_WaitOnUdpChannelGroup(
                 MdsApiChannelGroupT *pChannelGroup,
@@ -1488,182 +1488,182 @@ int32   MdsApi_WaitOnUdpChannelGroup(
 
 
 /* ===================================================================
- * 错误处理等辅助函数
+ * 錯誤處理等輔助函式
  * =================================================================== */
 
 /*
- * 设置当前线程登录MDS时使用的登录用户名
- * 不设置或者参数为空的话, 登录时会尝试使用配置文件中的配置
+ * 設定當前執行緒登入MDS時使用的登入使用者名稱
+ * 不設定或者引數為空的話, 登入時會嘗試使用配置檔案中的配置
  *
- * @param   pUsername           登录用户名
+ * @param   pUsername           登入使用者名稱
  */
 void    MdsApi_SetThreadUsername(
                 const char *pUsername);
 
 /*
- * 返回当前线程登录MDS时使用的登录用户名
+ * 返回當前執行緒登入MDS時使用的登入使用者名稱
  *
- * @return  登录用户名
+ * @return  登入使用者名稱
  */
 const char *
         MdsApi_GetThreadUsername();
 
 /*
- * 设置当前线程登录MDS时使用的登录密码
- * 不设置或者参数为空的话, 登录时会尝试使用配置文件中的配置
+ * 設定當前執行緒登入MDS時使用的登入密碼
+ * 不設定或者引數為空的話, 登入時會嘗試使用配置檔案中的配置
  *
- * @param   pPassword           登录密码
- *                              - 支持通过密码前缀指定密码类型, 如 md5:PASSWORD, txt:PASSWORD
+ * @param   pPassword           登入密碼
+ *                              - 支援通過密碼字首指定密碼型別, 如 md5:PASSWORD, txt:PASSWORD
  */
 void    MdsApi_SetThreadPassword(
                 const char *pPassword);
 
 /*
- * 设置客户端自定义的本地IP地址
+ * 設定客戶端自定義的本地IP地址
  *
- * @param   pIpStr              点分十进制的IP地址字符串
- * @return  TRUE 设置成功; FALSE 设置失败 (参数格式错误)
+ * @param   pIpStr              點分十進位制的IP地址字串
+ * @return  TRUE 設定成功; FALSE 設定失敗 (引數格式錯誤)
  */
 BOOL    MdsApi_SetCustomizedIp(
                 const char *pIpStr);
 
 /*
- * 设置客户端自定义的本地MAC地址
+ * 設定客戶端自定義的本地MAC地址
  *
- * @param   pMacStr             MAC地址字符串 (MAC地址格式 45:38:56:89:78:5A)
- * @return  TRUE 设置成功; FALSE 设置失败 (参数格式错误)
+ * @param   pMacStr             MAC地址字串 (MAC地址格式 45:38:56:89:78:5A)
+ * @return  TRUE 設定成功; FALSE 設定失敗 (引數格式錯誤)
  */
 BOOL    MdsApi_SetCustomizedMac(
                 const char *pMacStr);
 
 /*
- * 获取客户端自定义的本地IP
+ * 獲取客戶端自定義的本地IP
  *
- * @return  客户端自定义的本地IP
+ * @return  客戶端自定義的本地IP
  */
 const char *
         MdsApi_GetCustomizedIp();
 
 /*
- * 获取客户端自定义的本地MAC
+ * 獲取客戶端自定義的本地MAC
  *
- * @return  客户端自定义的本地MAC
+ * @return  客戶端自定義的本地MAC
  */
 const char *
         MdsApi_GetCustomizedMac();
 
 /*
- * 设置客户端自定义的本地设备序列号
+ * 設定客戶端自定義的本地裝置序列號
  *
- * @param   pDriverId           设备序列号字符串
- * @return  TRUE 设置成功; FALSE 设置失败 (参数格式错误)
+ * @param   pDriverId           裝置序列號字串
+ * @return  TRUE 設定成功; FALSE 設定失敗 (引數格式錯誤)
  */
 BOOL    MdsApi_SetCustomizedDriverId(
                 const char *pDriverId);
 
 /*
- * 获取客户端自定义的本地设备序列号
+ * 獲取客戶端自定義的本地裝置序列號
  *
- * @return  客户端自定义的本地设备序列号
+ * @return  客戶端自定義的本地裝置序列號
  */
 const char *
         MdsApi_GetCustomizedDriverId();
 
 /*
- * 获取通道最新接受消息时间
+ * 獲取通道最新接受訊息時間
  *
- * @param   pSessionInfo        会话信息
- * @return  通道最新接受消息时间(单位: 秒)
+ * @param   pSessionInfo        會話資訊
+ * @return  通道最新接受訊息時間(單位: 秒)
  */
 int64   MdsApi_GetLastRecvTime(
                 const MdsApiSessionInfoT *pSessionInfo);
 
 /*
- * 获取通道最新发送消息时间
+ * 獲取通道最新發送訊息時間
  *
- * @param   pSessionInfo        会话信息
- * @return  通道最新发送消息时间(单位: 秒)
+ * @param   pSessionInfo        會話資訊
+ * @return  通道最新發送訊息時間(單位: 秒)
  */
 int64   MdsApi_GetLastSendTime(
                 const MdsApiSessionInfoT *pSessionInfo);
 
 /*
- * 返回行情订阅通道是否还有更多已接收但尚未回调处理完成的数据
+ * 返回行情訂閱通道是否還有更多已接收但尚未回撥處理完成的資料
  *
- * @param   pTcpChannel         会话信息
- * @return  已接收到但尚未处理完成的数据长度
- * @note    当在回调函数里面调用时, 该接口返回的数据长度是包含本次回调数据的
+ * @param   pTcpChannel         會話資訊
+ * @return  已接收到但尚未處理完成的資料長度
+ * @note    當在回撥函式裡面呼叫時, 該介面返回的資料長度是包含本次回撥資料的
  */
 int32   MdsApi_HasMoreCachedData(
                 const MdsApiSessionInfoT *pTcpChannel);
 
 /*
- * 返回基于TCP协议的行情订阅通道是否已经连接且有效
+ * 返回基於TCP協議的行情訂閱通道是否已經連線且有效
  *
- * @param   pTcpChannel         会话信息
- * @return  TRUE 已连接; FALSE 未连接或连接无效
+ * @param   pTcpChannel         會話資訊
+ * @return  TRUE 已連線; FALSE 未連線或連線無效
  */
 BOOL    MdsApi_IsValidTcpChannel(
                 const MdsApiSessionInfoT *pTcpChannel);
 
 /*
- * 返回行情查询通道是否已经连接且有效
+ * 返回行情查詢通道是否已經連線且有效
  *
- * @param   pQryChannel         会话信息
- * @return  TRUE 已连接; FALSE 未连接或连接无效
+ * @param   pQryChannel         會話資訊
+ * @return  TRUE 已連線; FALSE 未連線或連線無效
  */
 BOOL    MdsApi_IsValidQryChannel(
                 const MdsApiSessionInfoT *pQryChannel);
 
 /*
- * 返回基于UDP协议的行情组播通道是否已经连接且有效
+ * 返回基於UDP協議的行情組播通道是否已經連線且有效
  *
- * @param   pUdpChannel         会话信息
- * @return  TRUE 已连接; FALSE 未连接或连接无效
+ * @param   pUdpChannel         會話資訊
+ * @return  TRUE 已連線; FALSE 未連線或連線無效
  */
 BOOL    MdsApi_IsValidUdpChannel(
                 const MdsApiSessionInfoT *pUdpChannel);
 
 /*
- * 返回通道组是否已经连接
+ * 返回通道組是否已經連線
  *
- * @param   pChannelGroup       通道组信息
- * @return  TRUE 已连接; FALSE 未连接或连接无效
+ * @param   pChannelGroup       通道組資訊
+ * @return  TRUE 已連線; FALSE 未連線或連線無效
  */
 BOOL    MdsApi_IsValidChannelGroup(
                 const MdsApiChannelGroupT *pChannelGroup);
 
 /*
- * 返回当前线程最近一次API调用失败的错误号
+ * 返回當前執行緒最近一次API呼叫失敗的錯誤號
  *
- * @return  错误号
+ * @return  錯誤號
  */
 int32   MdsApi_GetLastError();
 
 /*
- * 设置当前线程的API错误号
+ * 設定當前執行緒的API錯誤號
  *
- * @param   errCode             错误号
+ * @param   errCode             錯誤號
  */
 void    MdsApi_SetLastError(
                 int32 errCode);
 
 /*
- * 返回错误号对应的错误信息
+ * 返回錯誤號對應的錯誤資訊
  *
- * @param   errCode             错误号
- * @return  错误号对应的错误信息
+ * @param   errCode             錯誤號
+ * @return  錯誤號對應的錯誤資訊
  */
 const char *
         MdsApi_GetErrorMsg(
                 int32 errCode);
 
 /*
- * 返回消息头中的状态码所对应的错误信息
+ * 返回訊息頭中的狀態碼所對應的錯誤資訊
  *
- * @param   status              状态码
- * @param   detailStatus        明细状态码
- * @return  状态码所对应的错误信息
+ * @param   status              狀態碼
+ * @param   detailStatus        明細狀態碼
+ * @return  狀態碼所對應的錯誤資訊
  */
 const char *
         MdsApi_GetErrorMsg2(
@@ -1673,16 +1673,16 @@ const char *
 
 
 /* ===================================================================
- * 辅助的订阅请求信息维护函数
+ * 輔助的訂閱請求資訊維護函式
  * =================================================================== */
 
 /*
- * 设置SubscribeByString接口默认使用的数据模式 (TickType)
+ * 設定SubscribeByString介面預設使用的資料模式 (TickType)
  *
- * 为兼容之前的版本, SubscribeByString 系列的接口无法指定 tickType 订阅参数。
- * 可以通过该接口为其指定 tickType 参数, 后续的 SubscribeByString 调用都会使用该 tickType 参数。
+ * 為相容之前的版本, SubscribeByString 系列的介面無法指定 tickType 訂閱引數。
+ * 可以通過該介面為其指定 tickType 引數, 後續的 SubscribeByString 呼叫都會使用該 tickType 引數。
  *
- * @param   tickType            数据模式 (TickType) @see eMdsSubscribedTickTypeT
+ * @param   tickType            資料模式 (TickType) @see eMdsSubscribedTickTypeT
  *
  * @see     MdsApi_SubscribeByString
  * @see     MdsApi_SubscribeByString2
@@ -1693,38 +1693,38 @@ void    MdsHelper_SetTickTypeOnSubscribeByString(
                 eMdsSubscribedTickTypeT tickType);
 
 /*
- * 清空订阅信息中的产品列表
+ * 清空訂閱資訊中的產品列表
  *
- * @param   pSubscribeInfo      订阅信息
+ * @param   pSubscribeInfo      訂閱資訊
  */
 void    MdsHelper_ClearSubscribeRequestEntries(
                 MdsApiSubscribeInfoT *pSubscribeInfo);
 
 /*
- * 设置订阅模式
+ * 設定訂閱模式
  *
- * @param   pSubscribeInfo      订阅信息
- * @param   subMode             订阅模式 @see eMdsSubscribeModeT
+ * @param   pSubscribeInfo      訂閱資訊
+ * @param   subMode             訂閱模式 @see eMdsSubscribeModeT
  */
 void    MdsHelper_SetSubscribeRequestMode(
                 MdsApiSubscribeInfoT *pSubscribeInfo,
                 eMdsSubscribeModeT subMode);
 
 /*
- * 设置数据模式 (TickType)
+ * 設定資料模式 (TickType)
  *
- * @param   pSubscribeInfo      订阅信息
- * @param   tickType            数据模式 (TickType) @see eMdsSubscribedTickTypeT
+ * @param   pSubscribeInfo      訂閱資訊
+ * @param   tickType            資料模式 (TickType) @see eMdsSubscribedTickTypeT
  */
 void    MdsHelper_SetSubscribeRequestTickType(
                 MdsApiSubscribeInfoT *pSubscribeInfo,
                 eMdsSubscribedTickTypeT tickType);
 
 /*
- * 设置订阅的数据种类
+ * 設定訂閱的資料種類
  *
- * @param   pSubscribeInfo      订阅信息
- * @param   dataTypes           订阅的数据种类 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
+ * @param   pSubscribeInfo      訂閱資訊
+ * @param   dataTypes           訂閱的資料種類 (e.g. MDS_SUB_DATA_TYPE_L1_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_SNAPSHOT
  *                              | MDS_SUB_DATA_TYPE_L2_BEST_ORDERS
  *                              | MDS_SUB_DATA_TYPE_L2_TRADE)
@@ -1735,20 +1735,20 @@ void    MdsHelper_SetSubscribeRequestDataTypes(
                 int32 dataTypes);
 
 /*
- * 设置指定市场和证券类型的订阅标志
+ * 設定指定市場和證券型別的訂閱標誌
  *
- * @param   pSubscribeInfo      订阅信息
- * @param   exchangeId          交易所代码  @see eMdsExchangeIdT
+ * @param   pSubscribeInfo      訂閱資訊
+ * @param   exchangeId          交易所程式碼  @see eMdsExchangeIdT
  *                              - MDS_EXCH_SSE, 上交所
  *                              - MDS_EXCH_SZSE, 深交所
- * @param   mdProductType       行情类别  @see eMdsMdProductTypeT
- *                              - MDS_MD_PRODUCT_TYPE_STOCK, 股票（含债券、基金等现货产品）
- *                              - MDS_MD_PRODUCT_TYPE_INDEX, 指数
- *                              - MDS_MD_PRODUCT_TYPE_OPTION, 期权（衍生品）
- * @param   subFlag             订阅标志 @see eMdsMktSubscribeFlagT
- *                              -  0: (Default) 根据订阅列表订阅产品行情
- *                              -  1: (All) 订阅该市场和证券类型下的所有产品行情
- *                              -  2: (Disable) 禁用该市场下的所有产品行情
+ * @param   mdProductType       行情類別  @see eMdsMdProductTypeT
+ *                              - MDS_MD_PRODUCT_TYPE_STOCK, 股票（含債券、基金等現貨產品）
+ *                              - MDS_MD_PRODUCT_TYPE_INDEX, 指數
+ *                              - MDS_MD_PRODUCT_TYPE_OPTION, 期權（衍生品）
+ * @param   subFlag             訂閱標誌 @see eMdsMktSubscribeFlagT
+ *                              -  0: (Default) 根據訂閱列表訂閱產品行情
+ *                              -  1: (All) 訂閱該市場和證券型別下的所有產品行情
+ *                              -  2: (Disable) 禁用該市場下的所有產品行情
  */
 void    MdsHelper_SetSubscribeRequestSubFlag(
                 MdsApiSubscribeInfoT *pSubscribeInfo,
@@ -1757,19 +1757,19 @@ void    MdsHelper_SetSubscribeRequestSubFlag(
                 eMdsMktSubscribeFlagT subFlag);
 
 /*
- * 添加待订阅产品到订阅信息中
+ * 新增待訂閱產品到訂閱資訊中
  *
- * @param   pSubscribeInfo      订阅信息
- * @param   exchangeId          交易所代码  @see eMdsExchangeIdT
+ * @param   pSubscribeInfo      訂閱資訊
+ * @param   exchangeId          交易所程式碼  @see eMdsExchangeIdT
  *                              - MDS_EXCH_SSE, 上交所
  *                              - MDS_EXCH_SZSE, 深交所
- * @param   mdProductType       行情类别  @see eMdsMdProductTypeT
- *                              - MDS_MD_PRODUCT_TYPE_STOCK, 股票（含债券、基金等现货产品）
- *                              - MDS_MD_PRODUCT_TYPE_INDEX, 指数
- *                              - MDS_MD_PRODUCT_TYPE_OPTION, 期权（衍生品）
- * @param   securityId          证券代码 (转换为整型数值的证券代码)
- * @return  大于等于0, 成功 (返回已添加到订阅列表中的产品数量);
- *          小于0, 失败 (负的错误号)
+ * @param   mdProductType       行情類別  @see eMdsMdProductTypeT
+ *                              - MDS_MD_PRODUCT_TYPE_STOCK, 股票（含債券、基金等現貨產品）
+ *                              - MDS_MD_PRODUCT_TYPE_INDEX, 指數
+ *                              - MDS_MD_PRODUCT_TYPE_OPTION, 期權（衍生品）
+ * @param   securityId          證券程式碼 (轉換為整型數值的證券程式碼)
+ * @return  大於等於0, 成功 (返回已新增到訂閱列表中的產品數量);
+ *          小於0, 失敗 (負的錯誤號)
  */
 int32   MdsHelper_AddSubscribeRequestEntry(
                 MdsApiSubscribeInfoT *pSubscribeInfo,

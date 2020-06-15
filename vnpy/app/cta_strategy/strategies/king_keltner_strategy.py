@@ -13,7 +13,7 @@ from vnpy.app.cta_strategy import (
 class KingKeltnerStrategy(CtaTemplate):
     """"""
 
-    author = '用Python的交易员'
+    author = '用Python的交易員'
 
     kk_length = 11
     kk_dev = 1.6
@@ -50,7 +50,7 @@ class KingKeltnerStrategy(CtaTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

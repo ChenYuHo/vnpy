@@ -325,7 +325,7 @@ class DeribitWebsocketApi(WebsocketClient):
         """
         Callback when websocket is connected successfully.
         """
-        self.gateway.write_log("服务器连接成功")
+        self.gateway.write_log("伺服器連線成功")
 
         self.get_access_token()
         self.query_instrument()
@@ -334,7 +334,7 @@ class DeribitWebsocketApi(WebsocketClient):
         """
         Callback when websocket connection is lost.
         """
-        self.gateway.write_log("服务器连接断开")
+        self.gateway.write_log("伺服器連線斷開")
 
     def on_packet(self, packet: dict):
         """
@@ -359,7 +359,7 @@ class DeribitWebsocketApi(WebsocketClient):
         data = packet["result"]
         self.access_token = data["access_token"]
 
-        self.gateway.write_log("服务器登录成功")
+        self.gateway.write_log("伺服器登入成功")
 
         self.query_position()
         self.query_account()
@@ -412,7 +412,7 @@ class DeribitWebsocketApi(WebsocketClient):
 
             self.gateway.on_contract(contract)
 
-        self.gateway.write_log(f"{currency}合约信息查询成功")
+        self.gateway.write_log(f"{currency}合約資訊查詢成功")
 
     def on_query_position(self, packet: dict):
         """"""
@@ -430,7 +430,7 @@ class DeribitWebsocketApi(WebsocketClient):
             )
             self.gateway.on_position(position)
 
-        self.gateway.write_log(f"{currency}持仓查询成功")
+        self.gateway.write_log(f"{currency}持倉查詢成功")
 
     def on_query_account(self, packet: dict):
         """"""
@@ -445,7 +445,7 @@ class DeribitWebsocketApi(WebsocketClient):
         )
         self.gateway.on_account(account)
 
-        self.gateway.write_log(f"{currency}资金查询成功")
+        self.gateway.write_log(f"{currency}資金查詢成功")
 
     def on_query_order(self, packet: dict):
         """"""
@@ -455,7 +455,7 @@ class DeribitWebsocketApi(WebsocketClient):
         for d in data:
             self.on_order(d)
 
-        self.gateway.write_log(f"{currency}委托查询成功")
+        self.gateway.write_log(f"{currency}委託查詢成功")
 
     def on_send_order(self, packet: dict):
         """"""
@@ -468,7 +468,7 @@ class DeribitWebsocketApi(WebsocketClient):
         code = error["code"]
 
         self.gateway.write_log(
-            f"委托失败，代码：{code}，类型：{msg}，原因：{reason}"
+            f"委託失敗，程式碼：{code}，型別：{msg}，原因：{reason}"
         )
 
         order = self.reqid_order_map[packet["id"]]

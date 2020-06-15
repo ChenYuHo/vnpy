@@ -243,7 +243,7 @@ class BitfinexRestApi(RestClient):
         self.init(REST_HOST, proxy_host, proxy_port)
         self.start(session)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
         self.query_contract()
 
     def query_contract(self):
@@ -270,13 +270,13 @@ class BitfinexRestApi(RestClient):
             )
             self.gateway.on_contract(contract)
 
-        self.gateway.write_log("账户资金查询成功")
+        self.gateway.write_log("賬戶資金查詢成功")
 
     def on_failed(self, status_code: int, request: Request):
         """
         Callback to handle request failed.
         """
-        msg = f"请求失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"請求失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_error(
@@ -285,7 +285,7 @@ class BitfinexRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -319,13 +319,13 @@ class BitfinexRestApi(RestClient):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空，开始时间：{start_time}"
+                    msg = f"獲取歷史資料為空，開始時間：{start_time}"
                     break
 
                 buf = []
@@ -351,7 +351,7 @@ class BitfinexRestApi(RestClient):
 
                 begin = buf[0].datetime
                 end = buf[-1].datetime
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Break if total data count less than 5000 (latest date collected)
@@ -485,12 +485,12 @@ class BitfinexWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("Websocket API连接成功")
+        self.gateway.write_log("Websocket API連線成功")
         self.authenticate()
 
     def on_disconnected(self):
         """"""
-        self.gateway.write_log("Websocket API连接断开")
+        self.gateway.write_log("Websocket API連線斷開")
 
     def on_packet(self, packet: dict):
         """"""
@@ -652,13 +652,13 @@ class BitfinexWebsocketApi(WebsocketClient):
         if name == "ws":
             for l in info:
                 self.on_wallet(l)
-            self.gateway.write_log("账户资金获取成功")
+            self.gateway.write_log("賬戶資金獲取成功")
         elif name == "wu":
             self.on_wallet(info)
         elif name == "os":
             for l in info:
                 self.on_order(l)
-            self.gateway.write_log("活动委托获取成功")
+            self.gateway.write_log("活動委託獲取成功")
         elif name in ["on", "ou", "oc"]:
             self.on_order(info)
         elif name == "te":
@@ -668,7 +668,7 @@ class BitfinexWebsocketApi(WebsocketClient):
 
     def on_error(self, exception_type: type, exception_value: Exception, tb):
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -746,7 +746,7 @@ class BitfinexWebsocketApi(WebsocketClient):
         # Filter cancel of non-existing order
         orderid = str(data[2])
         if orderid == "None":
-            self.gateway.write_log("撤单失败，委托不存在")
+            self.gateway.write_log("撤單失敗，委託不存在")
             return
 
         if data[6] > 0:
@@ -769,7 +769,7 @@ class BitfinexWebsocketApi(WebsocketClient):
 
         self.gateway.on_order(copy(order))
 
-        self.gateway.write_log(f"委托拒单：{error_info}")
+        self.gateway.write_log(f"委託拒單：{error_info}")
 
     def on_order(self, data):
         """"""

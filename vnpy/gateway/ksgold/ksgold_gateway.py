@@ -90,11 +90,11 @@ class KsgoldGateway(BaseGateway):
     """
 
     default_setting = {
-        "用户名": "",
-        "密码": "",
-        "交易服务器": "",
-        "行情服务器": "",
-        "账号类型": ["银行账号", "黄金账号"]
+        "使用者名稱": "",
+        "密碼": "",
+        "交易伺服器": "",
+        "行情伺服器": "",
+        "賬號型別": ["銀行賬號", "黃金賬號"]
     }
 
     exchanges = [Exchange.SGE]
@@ -108,13 +108,13 @@ class KsgoldGateway(BaseGateway):
 
     def connect(self, setting: dict) -> None:
         """"""
-        userid = setting["用户名"]
-        password = setting["密码"]
-        accout_type = setting["账号类型"]
-        td_address = setting["交易服务器"]
-        md_address = setting["行情服务器"]
+        userid = setting["使用者名稱"]
+        password = setting["密碼"]
+        accout_type = setting["賬號型別"]
+        td_address = setting["交易伺服器"]
+        md_address = setting["行情伺服器"]
 
-        if accout_type == "银行账号":
+        if accout_type == "銀行賬號":
             login_type = 1
         else:
             login_type = 2
@@ -165,7 +165,7 @@ class KsgoldGateway(BaseGateway):
         """"""
         error_id = error["ErrorID"]
         error_msg = error["ErrorMsg"]
-        msg = f"{msg}，代码：{error_id}，信息：{error_msg}"
+        msg = f"{msg}，程式碼：{error_id}，資訊：{error_msg}"
         self.write_log(msg)
 
     def process_timer_event(self, event) -> None:
@@ -210,7 +210,7 @@ class KsgoldMdApi(MdApi):
         """
         Callback when front server is connected.
         """
-        self.gateway.write_log("行情服务器连接成功")
+        self.gateway.write_log("行情伺服器連線成功")
         self.login()
 
     def onFrontDisconnected(self, reason: int) -> None:
@@ -218,7 +218,7 @@ class KsgoldMdApi(MdApi):
         Callback when front server is disconnected.
         """
         self.login_status = False
-        self.gateway.write_log(f"行情服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"行情伺服器連線斷開，原因{reason}")
 
     def onRspUserLogin(
         self,
@@ -232,18 +232,18 @@ class KsgoldMdApi(MdApi):
         """
         if not error["ErrorID"]:
             self.login_status = True
-            self.gateway.write_log("行情服务器登录成功")
+            self.gateway.write_log("行情伺服器登入成功")
 
             for symbol in self.subscribed:
                 self.subscribeMarketData(symbol)
         else:
-            self.gateway.write_error("行情服务器登录失败", error)
+            self.gateway.write_error("行情伺服器登入失敗", error)
 
     def onRspError(self, error: dict, reqid: int, last: bool) -> None:
         """
         Callback when error occured.
         """
-        self.gateway.write_error("行情接口报错", error)
+        self.gateway.write_error("行情介面報錯", error)
 
     def onRspSubMarketData(
         self,
@@ -256,7 +256,7 @@ class KsgoldMdApi(MdApi):
         if not error or not error["ErrorID"]:
             return
 
-        self.gateway.write_error("行情订阅失败", error)
+        self.gateway.write_error("行情訂閱失敗", error)
 
     def onRtnDepthMarketData(self, data: dict) -> None:
         """
@@ -406,13 +406,13 @@ class KsgoldTdApi(TdApi):
 
     def onFrontConnected(self, result: int) -> None:
         """"""
-        self.gateway.write_log("交易服务器连接成功")
+        self.gateway.write_log("交易伺服器連線成功")
         self.login()
 
     def onFrontDisconnected(self, reason: int) -> None:
         """"""
         self.login_status = False
-        self.gateway.write_log(f"交易服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"交易伺服器連線斷開，原因{reason}")
 
     def onRspUserLogin(
         self,
@@ -428,7 +428,7 @@ class KsgoldTdApi(TdApi):
             self.seat_no = data["SeatNo"]
             self.trade_code = data["TradeCode"]
             self.login_status = True
-            self.gateway.write_log("交易服务器登录成功")
+            self.gateway.write_log("交易伺服器登入成功")
 
             while True:
                 self.reqid += 1
@@ -441,7 +441,7 @@ class KsgoldTdApi(TdApi):
         else:
             self.login_failed = True
 
-            self.gateway.write_error("交易服务器登录失败", error)
+            self.gateway.write_error("交易伺服器登入失敗", error)
 
     def onRspOrderInsert(
         self,
@@ -474,7 +474,7 @@ class KsgoldTdApi(TdApi):
         )
         self.gateway.on_order(order)
 
-        self.gateway.write_error("交易委托失败", error)
+        self.gateway.write_error("交易委託失敗", error)
 
     def onRspOrderAction(
         self,
@@ -484,7 +484,7 @@ class KsgoldTdApi(TdApi):
         last: bool
     ) -> None:
         """"""
-        self.gateway.write_error("交易撤单失败", error)
+        self.gateway.write_error("交易撤單失敗", error)
 
     def onRspQueryMaxOrderVolume(
         self,
@@ -511,7 +511,7 @@ class KsgoldTdApi(TdApi):
             if error_id == 10001:
                 return
             else:
-                self.gateway.write_log(f"查询持仓失败，信息{error_msg}")
+                self.gateway.write_log(f"查詢持倉失敗，資訊{error_msg}")
                 return
 
         # Long pos
@@ -590,7 +590,7 @@ class KsgoldTdApi(TdApi):
         symbol_market_map[contract.symbol] = data["MarketID"]
 
         if last:
-            self.gateway.write_log("合约信息查询成功")
+            self.gateway.write_log("合約資訊查詢成功")
 
             for data in self.order_data:
                 self.onRtnOrder(data)
@@ -719,7 +719,7 @@ class KsgoldTdApi(TdApi):
         Send new order.
         """
         if req.offset not in OFFSET_VT2KSGOLD:
-            self.gateway.write_log("请选择开平方向")
+            self.gateway.write_log("請選擇開平方向")
             return ""
 
         self.order_ref += 1

@@ -1,28 +1,28 @@
 ﻿# Swordfish-MDS API    {#mainpage}
 
-箭鱼行情数据服务系统API使用说明
+箭魚行情資料服務系統API使用說明
 
 
 ---
 ### Quick Start
 
-#### 1.1 示例代码
+#### 1.1 示例程式碼
 
-- 参见 mds_api/samples 目录下的样例文件
-	- 配置文件样例 <mds_client_sample.conf>
-	- 行情接收与打印的代码样例 <mds_client_sample.c>
-	- 行情订阅与接收的代码样例 <mds_subscribe_sample.c>
-	- 用于样例代码编译的 <Makefile.sample>
+- 參見 mds_api/samples 目錄下的樣例檔案
+	- 配置檔案樣例 <mds_client_sample.conf>
+	- 行情接收與列印的程式碼樣例 <mds_client_sample.c>
+	- 行情訂閱與接收的程式碼樣例 <mds_subscribe_sample.c>
+	- 用於樣例程式碼編譯的 <Makefile.sample>
 
-mds_subscribe_sample.c 摘录如下：
+mds_subscribe_sample.c 摘錄如下：
 ~~~{.c}
 
 /**
- * 通过证券代码列表, 重新订阅行情数据 (根据代码后缀区分所属市场, 如果没有指定后缀, 则默认为上证股票)
+ * 通過證券程式碼列表, 重新訂閱行情資料 (根據程式碼字尾區分所屬市場, 如果沒有指定字尾, 則預設為上證股票)
  *
- * @param   pTcpChannel         会话信息
- * @param   pCodeListString     证券代码列表字符串 (以空格或逗号/分号/竖线分割的字符串)
- * @return  TRUE 成功; FALSE 失败
+ * @param   pTcpChannel         會話資訊
+ * @param   pCodeListString     證券程式碼列表字串 (以空格或逗號/分號/豎線分割的字串)
+ * @return  TRUE 成功; FALSE 失敗
  */
 static BOOL
 MdsApiSample_ResubscribeByCodePostfix(MdsApiSessionInfoT *pTcpChannel,
@@ -37,13 +37,13 @@ MdsApiSample_ResubscribeByCodePostfix(MdsApiSessionInfoT *pTcpChannel,
 
 
 /**
- * 进行消息处理的回调函数
+ * 進行訊息處理的回撥函式
  *
- * @param   pSessionInfo    会话信息
- * @param   pMsgHead        消息头
- * @param   pMsgBody        消息体数据
- * @param   pCallbackParams 外部传入的参数
- * @return  大于等于0，成功；小于0，失败（错误号）
+ * @param   pSessionInfo    會話資訊
+ * @param   pMsgHead        訊息頭
+ * @param   pMsgBody        訊息體資料
+ * @param   pCallbackParams 外部傳入的引數
+ * @return  大於等於0，成功；小於0，失敗（錯誤號）
  */
 static int32
 MdsApiSample_HandleMsg(MdsApiSessionInfoT *pSessionInfo,
@@ -51,13 +51,13 @@ MdsApiSample_HandleMsg(MdsApiSessionInfoT *pSessionInfo,
     MdsMktRspMsgBodyT   *pRspMsg = (MdsMktRspMsgBodyT *) pMsgBody;
 
     /*
-     * 根据消息类型对行情消息进行处理
+     * 根據訊息型別對行情訊息進行處理
      */
     switch (pMsgHead->msgId) {
     case MDS_MSGTYPE_L2_MARKET_DATA_SNAPSHOT:
     case MDS_MSGTYPE_L2_BEST_ORDERS_SNAPSHOT:
-        /* 处理Level2快照行情消息 */
-        printf("... 接收到Level2快照行情消息 (exchId[%hhu], instrId[%d])\n",
+        /* 處理Level2快照行情訊息 */
+        printf("... 接收到Level2快照行情訊息 (exchId[%hhu], instrId[%d])\n",
                 pRspMsg->mktDataSnapshot.head.exchId,
                 pRspMsg->mktDataSnapshot.head.instrId);
         break;
@@ -73,37 +73,37 @@ MdsApiSample_HandleMsg(MdsApiSessionInfoT *pSessionInfo,
 
 int
 main(int argc, char *argv[]) {
-    /* 配置文件 */
+    /* 配置檔案 */
     static const char   THE_CONFIG_FILE_NAME[] = "mds_client_sample.conf";
-    /* 尝试等待行情消息到达的超时时间 (毫秒) */
+    /* 嘗試等待行情訊息到達的超時時間 (毫秒) */
     static const int32  THE_TIMEOUT_MS = 1000;
 
     MdsApiClientEnvT    cliEnv = {NULLOBJ_MDSAPI_CLIENT_ENV};
     int32               ret = 0;
 
-    /* 初始化客户端环境 (配置文件参见: mds_client_sample.conf) */
+    /* 初始化客戶端環境 (配置檔案參見: mds_client_sample.conf) */
     if (! MdsApi_InitAllByConvention(&cliEnv, THE_CONFIG_FILE_NAME)) {
         return -1;
     }
 
-    /* 根据证券代码列表重新订阅行情 (根据代码后缀区分所属市场) */
+    /* 根據證券程式碼列表重新訂閱行情 (根據程式碼字尾區分所屬市場) */
     if (! MdsApiSample_ResubscribeByCodePostfix(&cliEnv.tcpChannel,
             "600000.SH, 600001.SH, 000001.SZ, 0000002.SZ")) {
         goto ON_ERROR;
     }
 
     while (1) {
-        /* 等待行情消息到达, 并通过回调函数对消息进行处理 */
+        /* 等待行情訊息到達, 並通過回撥函式對訊息進行處理 */
         ret = MdsApi_WaitOnMsg(&cliEnv.tcpChannel, THE_TIMEOUT_MS,
                 MdsApiSample_HandleMsg, NULL);
         if (unlikely(ret < 0)) {
             if (likely(SPK_IS_NEG_ETIMEDOUT(ret))) {
-                /* 执行超时检查 (检查会话是否已超时) */
+                /* 執行超時檢查 (檢查會話是否已超時) */
                 continue;
             }
 
             if (SPK_IS_NEG_EPIPE(ret)) {
-                /* 连接已断开 */
+                /* 連線已斷開 */
             }
             goto ON_ERROR;
         }
@@ -120,75 +120,75 @@ ON_ERROR:
 ~~~
 
 
-#### 1.2 示例代码的编译和运行
+#### 1.2 示例程式碼的編譯和執行
 
-1. 进入样例代码目录
+1. 進入樣例程式碼目錄
 	- ``cd mds_libs-xxx/include/mds_api/samples/``
 
-2. 编译代码
+2. 編譯程式碼
 	- ``make -f Makefile.sample``
 
-3. 修改配置文件，确认服务地址、用户名等正确
+3. 修改配置檔案，確認服務地址、使用者名稱等正確
 	- ``vi mds_client_sample.conf``
 
-4. 运行样例程序
+4. 執行樣例程式
 	- ``./mds_subscribe_sample``
 	- ``./mds_client_sample``
 
 
 ---
-### 版本升级指引及修改历史
+### 版本升級指引及修改歷史
 
-- 版本升级指引参见 <@ref update_guide>
-- 版本修改历史参见 <@ref changelog>
-
-
----
-### 常见问题
-
-- 价格和金额单位
-	- MDS中的所有价格均为`int32`类型的整型数值，单位精确到元后四位, 即: 1元=10000
-	- MDS中的所有金额均为`int64`类型的整型数值，单位精确到元后四位, 即: 1元=10000
-
-- 份额单位
-	- MDS中的所有委托数量、成交数量等份额单位均为`int32`或`int64`类型的整型数值，不带小数位
-	- **注意:** 上海债券的份额单位是 <b>'手'</b>，而不是 '张'，与其它不同
-
-- MDS中的行情时间(updateTime)是交易所时间吗？
-	- 是的，该时间来源于交易所，是行情数据的生成时间或者上游发送时间（如果采集不到行情生成时间的话）
+- 版本升級指引參見 <@ref update_guide>
+- 版本修改歷史參見 <@ref changelog>
 
 
 ---
-### MDS错误码表
+### 常見問題
 
-| 错误码 | 错误说明                            |
+- 價格和金額單位
+	- MDS中的所有價格均為`int32`型別的整型數值，單位精確到元后四位, 即: 1元=10000
+	- MDS中的所有金額均為`int64`型別的整型數值，單位精確到元后四位, 即: 1元=10000
+
+- 份額單位
+	- MDS中的所有委託數量、成交數量等份額單位均為`int32`或`int64`型別的整型數值，不帶小數位
+	- **注意:** 上海債券的份額單位是 <b>'手'</b>，而不是 '張'，與其它不同
+
+- MDS中的行情時間(updateTime)是交易所時間嗎？
+	- 是的，該時間來源於交易所，是行情資料的生成時間或者上游傳送時間（如果採集不到行情生成時間的話）
+
+
+---
+### MDS錯誤碼錶
+
+| 錯誤碼 | 錯誤說明                            |
 | :---- | :--------------------------------- |
-| 1001  | 报文格式错误                       |
-| 1002  | 当前主机不是主节点                  |
-| 1003  | 主存库操作失败                     |
-| 1004  | 因状态等基础数据不匹配，无法更新数据   |
-| 1005  | 协议版本不兼容                     |
-| 1006  | 数据不存在                         |
-| 1007  | 非服务开放时间                     |
-| 1008  | 非法的定位游标                     |
-| 1009  | 非法的客户端登录用户名称             |
-| 1010  | 非法的证券代码                     |
-| 1011  | 非法的客户代码                     |
-| 1012  | 非法的客户端类型                    |
-| 1013  | 客户端已被禁用                     |
-| 1014  | 客户端密码不正确                    |
-| 1015  | 客户端重复登录                     |
-| 1016  | 客户端连接数量过多                  |
-| 1017  | 客户端未经授权操作他人账户           |
-| 1018  | 数据超出修改范围                    |
-| 1019  | 非法的应用系统名称                  |
-| 1020  | 查询条件不匹配                     |
-| 1021  | 客户端ip/mac地址格式错误            |
-| 1022  | 尚不支持或尚未开通此业务             |
-| 1029  | 密码未改变                         |
-| 1031  | 非法的加密类型                     |
-| 1033  | 无可用节点                         |
-| 1034  | 密码强度不足                       |
-| 1035  | 非法的产品类型                     |
-| 1036  | 未通过黑白名单检查                 |
-| 1301  | 行情订阅失败                       |
+| 1001  | 報文格式錯誤                       |
+| 1002  | 當前主機不是主節點                  |
+| 1003  | 主存庫操作失敗                     |
+| 1004  | 因狀態等基礎資料不匹配，無法更新資料   |
+| 1005  | 協議版本不相容                     |
+| 1006  | 資料不存在                         |
+| 1007  | 非服務開放時間                     |
+| 1008  | 非法的定位遊標                     |
+| 1009  | 非法的客戶端登入使用者名稱稱             |
+| 1010  | 非法的證券程式碼                     |
+| 1011  | 非法的客戶程式碼                     |
+| 1012  | 非法的客戶端型別                    |
+| 1013  | 客戶端已被禁用                     |
+| 1014  | 客戶端密碼不正確                    |
+| 1015  | 客戶端重複登入                     |
+| 1016  | 客戶端連線數量過多                  |
+| 1017  | 客戶端未經授權操作他人賬戶           |
+| 1018  | 資料超出修改範圍                    |
+| 1019  | 非法的應用系統名稱                  |
+| 1020  | 查詢條件不匹配                     |
+| 1021  | 客戶端ip/mac地址格式錯誤            |
+| 1022  | 尚不支援或尚未開通此業務             |
+| 1029  | 密碼未改變                         |
+| 1031  | 非法的加密型別                     |
+| 1033  | 無可用節點                         |
+| 1034  | 密碼強度不足                       |
+| 1035  | 非法的產品型別                     |
+| 1036  | 未通過黑白名單檢查                 |
+| 1301  | 行情訂閱失敗                       |

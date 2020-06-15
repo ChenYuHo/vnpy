@@ -102,10 +102,10 @@ class BybitGateway(BaseGateway):
     default_setting: Dict[str, str] = {
         "ID": "",
         "Secret": "",
-        "服务器": ["REAL", "TESTNET"],
-        "合约模式": ["反向", "正向"],
+        "伺服器": ["REAL", "TESTNET"],
+        "合約模式": ["反向", "正向"],
         "代理地址": "",
-        "代理端口": "",
+        "代理埠": "",
     }
 
     exchanges: List[Exchange] = [Exchange.BYBIT]
@@ -122,11 +122,11 @@ class BybitGateway(BaseGateway):
         """"""
         key = setting["ID"]
         secret = setting["Secret"]
-        server = setting["服务器"]
+        server = setting["伺服器"]
         proxy_host = setting["代理地址"]
-        proxy_port = setting["代理端口"]
+        proxy_port = setting["代理埠"]
 
-        if setting["合约模式"] == "正向":
+        if setting["合約模式"] == "正向":
             usdt_base = True
         else:
             usdt_base = False
@@ -254,7 +254,7 @@ class BybitRestApi(RestClient):
             self.init(TESTNET_REST_HOST, proxy_host, proxy_port)
 
         self.start(3)
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
         self.query_contract()
         self.query_order()
@@ -303,7 +303,7 @@ class BybitRestApi(RestClient):
         data = request.response.json()
         error_msg = data["ret_msg"]
         error_code = data["ret_code"]
-        msg = f"委托失败，错误代码:{error_code},  错误信息：{error_msg}"
+        msg = f"委託失敗，錯誤程式碼:{error_code},  錯誤資訊：{error_msg}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -326,7 +326,7 @@ class BybitRestApi(RestClient):
 
     def on_send_order(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error("委托下单", data):
+        if self.check_error("委託下單", data):
             return
 
     def cancel_order(self, req: CancelRequest) -> Request:
@@ -359,7 +359,7 @@ class BybitRestApi(RestClient):
 
     def on_cancel_order(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error("委托下单", data):
+        if self.check_error("委託下單", data):
             return
 
     def on_failed(self, status_code: int, request: Request):
@@ -371,7 +371,7 @@ class BybitRestApi(RestClient):
         error_msg = data["ret_msg"]
         error_code = data["ret_code"]
 
-        msg = f"请求失败，状态码：{request.status}，错误代码：{error_code}, 信息：{error_msg}"
+        msg = f"請求失敗，狀態碼：{request.status}，錯誤程式碼：{error_code}, 資訊：{error_msg}"
 
         self.gateway.write_log(msg)
 
@@ -385,7 +385,7 @@ class BybitRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -394,7 +394,7 @@ class BybitRestApi(RestClient):
 
     def on_query_position(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error("查询持仓", data):
+        if self.check_error("查詢持倉", data):
             return
 
         for d in data["result"]:
@@ -424,7 +424,7 @@ class BybitRestApi(RestClient):
 
     def on_query_contract(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error("查询合约", data):
+        if self.check_error("查詢合約", data):
             return
 
         for d in data["result"]:
@@ -445,13 +445,13 @@ class BybitRestApi(RestClient):
             )
             self.gateway.on_contract(contract)
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
         self.query_position()
         self.query_account()
 
     def on_query_account(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error("查询账号", data):
+        if self.check_error("查詢賬號", data):
             return
 
         for key, value in data["result"].items():
@@ -465,7 +465,7 @@ class BybitRestApi(RestClient):
 
     def on_query_order(self, data: dict, request: Request):
         """"""
-        if self.check_error("查询委托", data):
+        if self.check_error("查詢委託", data):
             return
 
         params = request.params
@@ -473,11 +473,11 @@ class BybitRestApi(RestClient):
 
         result = data["result"]
         if not result:
-            self.gateway.write_log(f"{symbol}委托信息查询成功")
+            self.gateway.write_log(f"{symbol}委託資訊查詢成功")
             return
 
         if not result["data"]:
-            self.gateway.write_log(f"{symbol}委托信息查询成功")
+            self.gateway.write_log(f"{symbol}委託資訊查詢成功")
             return
 
         for d in result["data"]:
@@ -503,7 +503,7 @@ class BybitRestApi(RestClient):
         if result["current_page"] != result["last_page"]:
             self.query_order(result["current_page"] + 1)
         else:
-            self.gateway.write_log(f"{symbol}委托信息查询成功")
+            self.gateway.write_log(f"{symbol}委託資訊查詢成功")
 
     def query_contract(self) -> Request:
         """"""
@@ -518,7 +518,7 @@ class BybitRestApi(RestClient):
         if data["ret_code"]:
             error_code = data["ret_code"]
             error_msg = data["ret_msg"]
-            msg = f"{name}失败，错误代码：{error_code}，信息：{error_msg}"
+            msg = f"{name}失敗，錯誤程式碼：{error_code}，資訊：{error_msg}"
             self.gateway.write_log(msg)
             return True
 
@@ -601,7 +601,7 @@ class BybitRestApi(RestClient):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
@@ -610,12 +610,12 @@ class BybitRestApi(RestClient):
                 ret_code = data["ret_code"]
                 if ret_code:
                     ret_msg = data["ret_msg"]
-                    msg = f"获取历史数据出错，错误信息：{ret_msg}"
+                    msg = f"獲取歷史資料出錯，錯誤資訊：{ret_msg}"
                     self.gateway.write_log(msg)
                     break
 
                 if not data["result"]:
-                    msg = f"获取历史数据为空，开始时间：{start_time}，数量：{count}"
+                    msg = f"獲取歷史資料為空，開始時間：{start_time}，數量：{count}"
                     self.gateway.write_log(msg)
                     break
 
@@ -642,7 +642,7 @@ class BybitRestApi(RestClient):
 
                 begin = buf[0].datetime
                 end = buf[-1].datetime
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Break if last data collected
@@ -703,7 +703,7 @@ class BybitPublicWebsocketApi(WebsocketClient):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("行情Websocket API连接成功")
+        self.gateway.write_log("行情Websocket API連線成功")
 
         if self.subscribed:
             for req in self.subscribed.values():
@@ -711,7 +711,7 @@ class BybitPublicWebsocketApi(WebsocketClient):
 
     def on_disconnected(self) -> None:
         """"""
-        self.gateway.write_log("行情Websocket API连接断开")
+        self.gateway.write_log("行情Websocket API連線斷開")
 
     def subscribe(self, req: SubscribeRequest) -> None:
         """
@@ -765,7 +765,7 @@ class BybitPublicWebsocketApi(WebsocketClient):
         tb
     ) -> None:
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(self.exception_detail(
@@ -958,12 +958,12 @@ class BybitPrivateWebsocketApi(WebsocketClient):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("交易Websocket API连接成功")
+        self.gateway.write_log("交易Websocket API連線成功")
         self.login()
 
     def on_disconnected(self) -> None:
         """"""
-        self.gateway.write_log("交易Websocket API连接断开")
+        self.gateway.write_log("交易Websocket API連線斷開")
 
     def on_packet(self, packet: dict) -> None:
         """"""
@@ -983,7 +983,7 @@ class BybitPrivateWebsocketApi(WebsocketClient):
         tb
     ) -> None:
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(self.exception_detail(
@@ -993,7 +993,7 @@ class BybitPrivateWebsocketApi(WebsocketClient):
         """"""
         success = packet.get("success", False)
         if success:
-            self.gateway.write_log("交易Websocket API登录成功")
+            self.gateway.write_log("交易Websocket API登入成功")
 
             self.subscribe_topic("order", self.on_order)
             self.subscribe_topic("execution", self.on_trade)
@@ -1002,7 +1002,7 @@ class BybitPrivateWebsocketApi(WebsocketClient):
             if self.usdt_base:
                 self.subscribe_topic("wallet", self.on_account)
         else:
-            self.gateway.write_log("交易Websocket API登录失败")
+            self.gateway.write_log("交易Websocket API登入失敗")
 
     def on_account(self, packet: dict) -> None:
         """"""

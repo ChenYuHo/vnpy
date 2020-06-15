@@ -17,7 +17,7 @@
 /**
  * @file    spk_log_instance.h
  *
- * 日志记录器实例管理接口的头文件 (非线程安全)
+ * 日誌記錄器例項管理介面的標頭檔案 (非執行緒安全)
  *
  * @version $Id$
  * @since   2005.10.31
@@ -40,16 +40,16 @@ extern "C" {
 
 
 /* ===================================================================
- * 结构体定义
+ * 結構體定義
  * =================================================================== */
 
 /**
- * 日志记录器定义
+ * 日誌記錄器定義
  */
 typedef struct _SLogAppender {
-    /** 日志模式 */
+    /** 日誌模式 */
     const SLogModeT     *pLogMode;
-    /** 日志登记函数 */
+    /** 日誌登記函式 */
     void                (*fnLogger) (
                         const struct _SLogAppender *pLogAppender,
                         const char *pLogFile,
@@ -57,29 +57,29 @@ typedef struct _SLogAppender {
                         const char *pMsg,
                         int32 msgLength);
 
-    void                *pShmAddr;              /**< 异步日志队列的共享内存地址 */
-    void                *pQueueAccessor;        /**< 异步日志队列的存取器指针 */
+    void                *pShmAddr;              /**< 非同步日誌佇列的共享記憶體地址 */
+    void                *pQueueAccessor;        /**< 非同步日誌佇列的存取器指標 */
 
-    int8                minLogLevel;            /**< 日志登记的起始级别 */
-    int8                maxLogLevel;            /**< 日志登记的最高级别 */
-    uint8               appenderType;           /**< 日志记录器类型 */
-    uint8               isAsyncLog;             /**< 是否是异步日志 */
+    int8                minLogLevel;            /**< 日誌登記的起始級別 */
+    int8                maxLogLevel;            /**< 日誌登記的最高級別 */
+    uint8               appenderType;           /**< 日誌記錄器型別 */
+    uint8               isAsyncLog;             /**< 是否是非同步日誌 */
 
-    int32               maxFileLength;          /**< 日志文件最大长度 */
-    int32               maxBackupCount;         /**< 日志文件最大备份数 */
+    int32               maxFileLength;          /**< 日誌檔案最大長度 */
+    int32               maxBackupCount;         /**< 日誌檔案最大備份數 */
 
-    int32               appenderIndex;          /**< 日志记录器序号 */
-    int32               asyncQueueSize;         /**< 异步日志的消息队列大小 */
-    int32               asyncQueueShmId;        /**< 异步日志的共享内存ID (0 表示使用默认值) */
+    int32               appenderIndex;          /**< 日誌記錄器序號 */
+    int32               asyncQueueSize;         /**< 非同步日誌的訊息佇列大小 */
+    int32               asyncQueueShmId;        /**< 非同步日誌的共享記憶體ID (0 表示使用預設值) */
 
-    /** 日志配置区段名称 */
+    /** 日誌配置區段名稱 */
     char                logSection[SLOGCFG_MAX_SECTION_LENGTH];
-    /** 日志文件名称 */
+    /** 日誌檔名稱 */
     char                logFile[SPK_MAX_PATH_LEN];
 } SLogAppenderT;
 
 
-/* 结构体初始化值定义 */
+/* 結構體初始化值定義 */
 #define NULLOBJ_LOG_APPENDER                    \
         0, 0, \
         0, 0, \
@@ -91,23 +91,23 @@ typedef struct _SLogAppender {
 
 
 /* ===================================================================
- * 普通的日志记录器(非异步日志)函数声明
+ * 普通的日誌記錄器(非非同步日誌)函式宣告
  * =================================================================== */
 
-/* 根据配置文件初始化日志实例 */
+/* 根據配置檔案初始化日誌例項 */
 BOOL    SLog_InitLogger(
                 const char *pConfigFile,
                 const char *pRootSection,
                 const char *pLogSystemName);
 
-/* 根据配置文件初始化日志实例(可指定配置项名称) */
+/* 根據配置檔案初始化日誌例項(可指定配置項名稱) */
 BOOL    SLog_InitLoggerExceptive(
                 const char *pConfigFile,
                 const char *pRootSection,
                 const char *pRootCategoryField,
                 const char *pLogSystemName);
 
-/* 根据配置结构初始化日志实例 */
+/* 根據配置結構初始化日誌例項 */
 BOOL    SLog_BuildLogInstance(
                 const SLogCfgItemT *pLogConfigs,
                 int32 logConfigCount,
@@ -116,144 +116,144 @@ BOOL    SLog_BuildLogInstance(
                 const char *pLogSystemName,
                 const SLogLevelT *pAllowableMinLogLevel);
 
-/* 重新解析、应用日志配置 */
+/* 重新解析、應用日誌配置 */
 BOOL    SLog_RebuildLogInstance();
 
-/* 重新解析、应用日志配置 */
+/* 重新解析、應用日誌配置 */
 BOOL    SLog_RebuildLogInstance2(
                 const char *pLogSystemName);
 
-/* 重新解析、应用日志配置 */
+/* 重新解析、應用日誌配置 */
 BOOL    SLog_RebuildThreadInstance();
 
-/* 重新解析、应用日志配置 */
+/* 重新解析、應用日誌配置 */
 BOOL    SLog_RebuildThreadInstance2(
                 const char *pLogSystemName);
 
-/* 返回日志系统是否已初始化 */
+/* 返回日誌系統是否已初始化 */
 BOOL    SLog_IsInstanceInitialized();
 
-/* 返回日志系统名称 */
+/* 返回日誌系統名稱 */
 const char*
         SLog_GetLogSystemName();
 
-/* 设置日志系统名称 */
+/* 設定日誌系統名稱 */
 void    SLog_SetLogSystemName(
                 const char *pLogSystemName);
 
-/* 设置线程级别的日志系统名称 */
+/* 設定執行緒級別的日誌系統名稱 */
 void    SLog_SetThreadLogName(
                 const char *pLogSystemName);
 
-/* 返回最小日志登记级别 */
+/* 返回最小日誌登記級別 */
 const SLogLevelT*
         SLog_GetMinLogLevel();
 
-/* 设置最小日志登记级别 */
+/* 設定最小日誌登記級別 */
 void    SLog_SetMinLogLevel(
                 const SLogLevelT *pMinLogLevel);
 
-/* 返回日志记录器所对应的日志文件路径 */
+/* 返回日誌記錄器所對應的日誌檔案路徑 */
 const char*
         SLog_GetLogFile(
                 const SLogAppenderT *pAppender);
 
-/* 设置线程级别的最小日志登记级别 */
+/* 設定執行緒級別的最小日誌登記級別 */
 void    SLog_SetThreadMinLogLevel(
                 const SLogLevelT *pMinLogLevel);
 
-/* 返回最小日志登记级别的级别限定 (通过SetMinLogLevel设置的最小日志级别将不会低于该限定) */
+/* 返回最小日誌登記級別的級別限定 (通過SetMinLogLevel設定的最小日誌級別將不會低於該限定) */
 const SLogLevelT*
         SLog_GetMinLevelLimit();
 
-/* 设置最小日志登记级别的级别限定 (通过SetMinLogLevel设置的最小日志级别将不能低于该限定) */
+/* 設定最小日誌登記級別的級別限定 (通過SetMinLogLevel設定的最小日誌級別將不能低於該限定) */
 void    SLog_SetMinLevelLimit(
                 const SLogLevelT *pMinLogLevel);
 
-/* 判断指定的日志级别是否可用 */
+/* 判斷指定的日誌級別是否可用 */
 BOOL    SLog_IsLogLevelAble(
                 const SLogLevelT *pLevel);
 
-/* 返回日志屏蔽标志 */
+/* 返回日誌遮蔽標誌 */
 int32   SLog_GetLogMask();
 
-/* 设置日志屏蔽标志 */
+/* 設定日誌遮蔽標誌 */
 void    SLog_SetLogMask(int32 logMask);
 
-/* 重置日志屏蔽标志 */
+/* 重置日誌遮蔽標誌 */
 void    SLog_ResetLogMask();
 
-/* 关闭所有的日志屏蔽标志 (使能所有类型的日志输出) */
+/* 關閉所有的日誌遮蔽標誌 (使能所有型別的日誌輸出) */
 void    SLog_DisableAllMask();
 
-/* 关闭指定类型的日志屏蔽标志 (使能指定类型的日志输出) */
+/* 關閉指定型別的日誌遮蔽標誌 (使能指定型別的日誌輸出) */
 void    SLog_DisableSpecifyMask(int32 logMask);
 
-/* 开启所有的日志屏蔽标志 (屏蔽所有类型的日志输出) */
+/* 開啟所有的日誌遮蔽標誌 (遮蔽所有型別的日誌輸出) */
 void    SLog_EnableAllMask();
 
-/* 开启指定类型的日志屏蔽标志 (屏蔽指定类型的日志输出) */
+/* 開啟指定型別的日誌遮蔽標誌 (遮蔽指定型別的日誌輸出) */
 void    SLog_EnableSpecifyMask(int32 logMask);
 
-/* 返回日志记录器列表 */
+/* 返回日誌記錄器列表 */
 const SLogAppenderT*
         SLog_GetLogAppenderList();
 
-/* 返回指定位置的日志记录器 */
+/* 返回指定位置的日誌記錄器 */
 const SLogAppenderT*
         SLog_GetLogAppender(int32 index);
 
-/* 检索并返还与日志配置区段名称相匹配的日志记录器 */
+/* 檢索並返還與日誌配置區段名稱相匹配的日誌記錄器 */
 const SLogAppenderT*
         SLog_GetLogAppenderByName(const char *pSectionName);
 
-/* 返回日志记录器个数 */
+/* 返回日誌記錄器個數 */
 int32   SLog_GetLogAppenderCount();
 
-/* 返回原始日志配置项个数 */
+/* 返回原始日誌配置項個數 */
 int32   SLog_GetOriginalLogConfigItemsCount();
 
-/* 返回指定位置的原始日志配置项 */
+/* 返回指定位置的原始日誌配置項 */
 const SLogCfgItemT*
         SLog_GetOriginalLogConfigItem(int32 index);
 
-/* 返回默认的日志记录器 */
+/* 返回預設的日誌記錄器 */
 const SLogAppenderT*
         SLog_GetDefaultLogAppender();
 
-/* 打印日志配置信息 */
+/* 列印日誌配置資訊 */
 void    SLog_PrintLogInstanceInfo(FILE *fp);
 /* -------------------------           */
 
 
 /* ===================================================================
- * 异步日志相关的函数声明
+ * 非同步日誌相關的函式宣告
  * =================================================================== */
 
-/* 创建所有异步日志使用的共享内存队列 */
+/* 建立所有非同步日誌使用的共享記憶體佇列 */
 BOOL    SLog_CreateAsyncLogQueues();
 
-/* 创建所有异步日志使用的共享内存队列 */
+/* 建立所有非同步日誌使用的共享記憶體佇列 */
 BOOL    SLog_ReleaseAsyncLogQueues();
 
-/* 激活所有的异步日志记录器 */
+/* 啟用所有的非同步日誌記錄器 */
 BOOL    SLog_EnableAsyncLogAppenders();
 
-/* 激活指定的异步日志记录器 */
+/* 啟用指定的非同步日誌記錄器 */
 BOOL    SLog_EnableAsyncLogAppender(SLogAppenderT *pLogAppender);
 
-/* 禁用所有的异步日志记录器 (改为使用普通的日志文件模式) */
+/* 禁用所有的非同步日誌記錄器 (改為使用普通的日誌檔案模式) */
 BOOL    SLog_DisableAsyncLogAppenders();
 
-/* 禁用指定的异步日志记录器 (改为使用普通的日志文件模式, 并断开与日志队列的连接) */
+/* 禁用指定的非同步日誌記錄器 (改為使用普通的日誌檔案模式, 並斷開與日誌佇列的連線) */
 BOOL    SLog_DisableAsyncLogAppender(SLogAppenderT *pLogAppender);
 
-/* 禁用指定的异步日志记录器 (改为使用普通的日志文件模式) */
+/* 禁用指定的非同步日誌記錄器 (改為使用普通的日誌檔案模式) */
 BOOL    SLog_DisableAsyncLogAppender2(
                 SLogAppenderT *pLogAppender,
                 BOOL detachQueue);
 
-/* 创建并启动所有的异步日志记录器的文件写入线程 */
+/* 建立並啟動所有的非同步日誌記錄器的檔案寫入執行緒 */
 int32   SLog_StartAsyncLogWriterThreads(
                 volatile int32 *pNormalTerminatedFlag,
                 volatile int32 *pExceptionAbortedFlag,
@@ -262,10 +262,10 @@ int32   SLog_StartAsyncLogWriterThreads(
 
 
 /* ===================================================================
- * 隐含的接口函数声明, 外部不应直接使用这些接口, 而应该使用相应的宏接口
+ * 隱含的介面函式宣告, 外部不應直接使用這些介面, 而應該使用相應的巨集介面
  * =================================================================== */
 
-/* 日志登记处理实现声明 */
+/* 日誌登記處理實現宣告 */
 void    _SLog_LogImpl(
                 const char *pSrcFile,
                 int32 fileNameLength,
@@ -278,12 +278,12 @@ void    _SLog_LogImpl(
 
 
 /* ===================================================================
- * 隐含的接口函数声明, 外部不应直接使用这些接口, 而应该使用响应的宏接口
- * 为不支持变参宏的系统而设
+ * 隱含的介面函式宣告, 外部不應直接使用這些介面, 而應該使用響應的巨集介面
+ * 為不支援變參巨集的系統而設
  * =================================================================== */
 
 /*
- * 日志登记处理实现声明 (为不支持变参宏的系统而设)
+ * 日誌登記處理實現宣告 (為不支援變參巨集的系統而設)
  */
 void    _SLog_LogSimpleness(const char *fmt, ...);
 void    _SLog_LogFullSimpleness(SLogLevelT *level, const char *fmt, ...);

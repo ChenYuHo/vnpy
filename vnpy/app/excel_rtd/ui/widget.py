@@ -34,14 +34,14 @@ class RtdManager(QtWidgets.QWidget):
         self.client_line = QtWidgets.QLineEdit(str(client_path))
         self.client_line.setReadOnly(True)
 
-        copy_button = QtWidgets.QPushButton("复制")
+        copy_button = QtWidgets.QPushButton("複製")
         copy_button.clicked.connect(self.copy_client_path)
 
         self.log_monitor = QtWidgets.QTextEdit()
         self.log_monitor.setReadOnly(True)
 
         self.port_label = QtWidgets.QLabel(
-            "使用Socket端口：请求回应9001、广播推送9002"
+            "使用Socket埠：請求迴應9001、廣播推送9002"
         )
 
         hbox = QtWidgets.QHBoxLayout()

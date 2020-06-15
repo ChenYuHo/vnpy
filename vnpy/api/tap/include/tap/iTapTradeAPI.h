@@ -12,500 +12,500 @@
 #define TAP_DLLEXPORT
 #endif
 //TapTradeAPI.h
-//文件定义了TapTradeAPI提供给开发者的对外接口、函数和回调接口。
+//檔案定義了TapTradeAPI提供給開發者的對外介面、函式和回撥介面。
 
-//TapTradeAPI 的回调通知接口。
+//TapTradeAPI 的回撥通知介面。
 namespace ITapTrade
 {
     class ITapTradeAPINotify
     {
     public:
         /**
-        * @brief 连接成功回调通知
+        * @brief 連線成功回撥通知
         * @ingroup G_T_Login
         */
         virtual void TAP_CDECL OnConnect() = 0;
         /**
-        * @brief    系统登录过程回调。
-        * @details    此函数为Login()登录函数的回调，调用Login()成功后建立了链路连接，然后API将向服务器发送登录认证信息，
-        *            登录期间的数据发送情况和登录的回馈信息传递到此回调函数中。
-        * @param[in] errorCode 返回错误码,0表示成功。
-        * @param[in] loginRspInfo 登陆应答信息，如果errorCode!=0，则loginRspInfo=NULL。
-        * @attention    该回调返回成功，说明用户登录成功。但是不代表API准备完毕。
+        * @brief    系統登入過程回撥。
+        * @details    此函式為Login()登入函式的回撥，呼叫Login()成功後建立了鏈路連線，然後API將向伺服器傳送登入認證資訊，
+        *            登入期間的資料傳送情況和登入的回饋資訊傳遞到此回撥函式中。
+        * @param[in] errorCode 返回錯誤碼,0表示成功。
+        * @param[in] loginRspInfo 登陸應答資訊，如果errorCode!=0，則loginRspInfo=NULL。
+        * @attention    該回調返回成功，說明使用者登入成功。但是不代表API準備完畢。
         * @ingroup G_T_Login
         */
         virtual void TAP_CDECL OnRspLogin(ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPITradeLoginRspInfo *loginRspInfo) = 0;
         /**
-        * @brief    二次认证联系方式通知。
-        * @details    登录完成后，如果需要二次认证（9.2.7后台），会收到联系方式的通知，可以选择通知消息的一个联系方式（邮箱或者电话）
-        *            请求发送二次认证授权码（RequestVertificateCode）。
-        * @param[in] errorCode 返回错误码,0表示成功。如果账户没有绑定二次认证联系方式，则返回10016错误。
-        * @param[in] isLast,标识是否是最后一条联系信息。
-        * @param[in]  认证方式信息，如果errorCode!=0，则ContactInfo为空。
-        * @attention    该回调返回成功，说明需要二次认证，并且需要选择一个联系方式然后调用RequestVertificateCode。
+        * @brief    二次認證聯絡方式通知。
+        * @details    登入完成後，如果需要二次認證（9.2.7後臺），會收到聯絡方式的通知，可以選擇通知訊息的一個聯絡方式（郵箱或者電話）
+        *            請求傳送二次認證授權碼（RequestVertificateCode）。
+        * @param[in] errorCode 返回錯誤碼,0表示成功。如果賬戶沒有繫結二次認證聯絡方式，則返回10016錯誤。
+        * @param[in] isLast,標識是否是最後一條聯絡資訊。
+        * @param[in]  認證方式資訊，如果errorCode!=0，則ContactInfo為空。
+        * @attention    該回調返回成功，說明需要二次認證，並且需要選擇一個聯絡方式然後呼叫RequestVertificateCode。
         * @ingroup G_T_Login
         */
         virtual void TAP_CDECL OnRtnContactInfo(ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TAPISTR_40 ContactInfo) = 0;
 
         /**
-        * @brief    请求发送二次认证码应答。
-        * @details    请求获取二次认证授权码，后台发送邮件或者短信，并给出应答，包含发送序号以及认证码有效期。
+        * @brief    請求傳送二次認證碼應答。
+        * @details    請求獲取二次認證授權碼，後臺傳送郵件或者簡訊，並給出應答，包含傳送序號以及認證碼有效期。
         *            
-        * @param[in] sessionID 请求二次认证码会话ID。
-        * @param[in]  errorCode 如果没有绑定联系，返回10016错误.
-        * @param[in]  rsp二次认证码有效期，以秒返回，在二次认证有效期内，可以重复设置二次认证码，但是不能再重新申请二次认证码。
-        * @attention    该回调返回成功，说明需要二次认证，并且需要选择一个联系方式然后调用RequestVertificateCode。
+        * @param[in] sessionID 請求二次認證碼會話ID。
+        * @param[in]  errorCode 如果沒有繫結聯絡，返回10016錯誤.
+        * @param[in]  rsp二次認證碼有效期，以秒返回，在二次認證有效期內，可以重複設定二次認證碼，但是不能再重新申請二次認證碼。
+        * @attention    該回調返回成功，說明需要二次認證，並且需要選擇一個聯絡方式然後呼叫RequestVertificateCode。
         * @ingroup G_T_Login
         */
         virtual void TAP_CDECL OnRspRequestVertificateCode(ITapTrade::TAPIUINT32 sessionID,ITapTrade::TAPIINT32 errorCode, const TapAPIRequestVertificateCodeRsp *rsp) = 0;
 
         /**
-        * @brief    API到期提醒回调
-        * @details    此函数为Login()登录成功后，如果到期日与当前日期小于30天，则进行回调提醒。
-        * @param[in] date 返回API授权到期日。
-        * @param[in] days 返回还有几天授权到期。
-        * @attention    该函数回调，则说明授权在一个月之内到期。否则不产生该回调。
+        * @brief    API到期提醒回撥
+        * @details    此函式為Login()登入成功後，如果到期日與當前日期小於30天，則進行回撥提醒。
+        * @param[in] date 返回API授權到期日。
+        * @param[in] days 返回還有幾天授權到期。
+        * @attention    該函式回撥，則說明授權在一個月之內到期。否則不產生該回調。
         * @ingroup G_T_Login
         */
         virtual void TAP_CDECL OnExpriationDate(ITapTrade::TAPIDATE date, int days) = 0;
 
         /**
-        * @brief    通知用户API准备就绪。
-        * @details    只有用户回调收到此就绪通知时才能进行后续的各种行情数据查询操作。\n
-        *            此回调函数是API能否正常工作的标志。
-        * @attention 就绪后才可以进行后续正常操作
+        * @brief    通知使用者API準備就緒。
+        * @details    只有使用者回撥收到此就緒通知時才能進行後續的各種行情資料查詢操作。\n
+        *            此回撥函式是API能否正常工作的標誌。
+        * @attention 就緒後才可以進行後續正常操作
         * @ingroup G_T_Login
         */
         virtual void TAP_CDECL OnAPIReady(ITapTrade::TAPIINT32 errorCode) = 0;
         /**
-        * @brief    API和服务失去连接的回调
-        * @details    在API使用过程中主动或者被动与服务器服务失去连接后都会触发此回调通知用户与服务器的连接已经断开。
-        * @param[in] reasonCode 断开原因代码。
+        * @brief    API和服務失去連線的回撥
+        * @details    在API使用過程中主動或者被動與伺服器服務失去連線後都會觸發此回撥通知使用者與伺服器的連線已經斷開。
+        * @param[in] reasonCode 斷開原因程式碼。
         * @ingroup G_T_Disconnect
         */
         virtual void TAP_CDECL OnDisconnect(ITapTrade::TAPIINT32 reasonCode) = 0;
         /**
-        * @brief 通知用户密码修改结果
-        * @param[in] sessionID 修改密码的会话ID,和ChangePassword返回的会话ID对应。
-        * @param[in] errorCode 返回错误码，0表示成功。
+        * @brief 通知使用者密碼修改結果
+        * @param[in] sessionID 修改密碼的會話ID,和ChangePassword返回的會話ID對應。
+        * @param[in] errorCode 返回錯誤碼，0表示成功。
         * @ingroup G_T_UserInfo
         */
         virtual void TAP_CDECL OnRspChangePassword(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode) = 0;
 
         /**
-        * @brief 认证账户密码反馈
-        * @param[in] sessionID 修改密码的会话ID,和AuthPassword返回的会话ID对应。
-        * @param[in] errorCode 返回错误码，0表示成功。
+        * @brief 認證賬戶密碼反饋
+        * @param[in] sessionID 修改密碼的會話ID,和AuthPassword返回的會話ID對應。
+        * @param[in] errorCode 返回錯誤碼，0表示成功。
         * @ingroup G_T_UserInfo
         */
         virtual void TAP_CDECL OnRspAuthPassword(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode) = 0;
 
         /**
-        * @brief    返回系统交易日期和当天LME到期日
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info 指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    返回系統交易日期和當天LME到期日
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info 指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_UserRight
         */
 
         virtual void TAP_CDECL OnRspQryTradingDate(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPITradingCalendarQryRsp *info) = 0;
         /**
-        * @brief 设置用户预留信息反馈
-        * @param[in] sessionID 设置用户预留信息的会话ID
-        * @param[in] errorCode 返回错误码，0表示成功。
-        * @param[in] info 指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
-        * @note 该接口暂未实现
+        * @brief 設定使用者預留資訊反饋
+        * @param[in] sessionID 設定使用者預留資訊的會話ID
+        * @param[in] errorCode 返回錯誤碼，0表示成功。
+        * @param[in] info 指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
+        * @note 該介面暫未實現
         * @ingroup G_T_UserInfo
         */
         virtual void TAP_CDECL OnRspSetReservedInfo(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TAPISTR_50 info) = 0;
 
 
         /**
-        * @brief    返回用户信息
-        * @details    此回调接口向用户返回查询的资金账号的详细信息。用户有必要将得到的账号编号保存起来，然后在后续的函数调用中使用。
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast 标示是否是最后一批数据；
-        * @param[in] info 指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    返回使用者資訊
+        * @details    此回撥介面向用戶返回查詢的資金賬號的詳細資訊。使用者有必要將得到的賬號編號儲存起來，然後在後續的函式呼叫中使用。
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast 標示是否是最後一批資料；
+        * @param[in] info 指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_AccountInfo
         */
         virtual void TAP_CDECL OnRspQryAccount(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIUINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIAccountInfo *info) = 0;
         /**
-        * @brief 返回资金账户的资金信息
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回資金賬戶的資金資訊
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_AccountDetails
         */
         virtual void TAP_CDECL OnRspQryFund(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIFundData *info) = 0;
         /**
-        * @brief    用户资金变化通知
-        * @details    用户的委托成交后会引起资金数据的变化，因此需要向用户实时反馈。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @note 如果不关注此项内容，可以设定Login时的NoticeIgnoreFlag以屏蔽。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    使用者資金變化通知
+        * @details    使用者的委託成交後會引起資金資料的變化，因此需要向用戶實時反饋。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @note 如果不關注此項內容，可以設定Login時的NoticeIgnoreFlag以遮蔽。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_AccountDetails
         */
         virtual void TAP_CDECL OnRtnFund(const ITapTrade::TapAPIFundData *info) = 0;
         /**
-        * @brief 返回系统中的交易所信息
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回系統中的交易所資訊
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeSystem
         */
         virtual void TAP_CDECL OnRspQryExchange(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIExchangeInfo *info) = 0;
         /**
-        * @brief    返回系统中品种信息
-        * @details    此回调接口用于向用户返回得到的所有品种信息。
-        * @param[in] sessionID 请求的会话ID，和GetAllCommodities()函数返回对应；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    返回系統中品種資訊
+        * @details    此回撥介面用於向用戶返回得到的所有品種資訊。
+        * @param[in] sessionID 請求的會話ID，和GetAllCommodities()函式返回對應；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_Commodity
         */
         virtual void TAP_CDECL OnRspQryCommodity(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPICommodityInfo *info) = 0;
         /**
-        * @brief 返回系统中合约信息
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回系統中合約資訊
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_Contract
         */
         virtual void TAP_CDECL OnRspQryContract(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPITradeContractInfo *info) = 0;
         /**
-        * @brief    返回新增合约信息
-        * @details    向用户推送新的合约。主要用来处理在交易时间段中服务器添加了新合约时，向用户发送这个合约的信息。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    返回新增合約資訊
+        * @details    向用戶推送新的合約。主要用來處理在交易時間段中伺服器添加了新合約時，向用戶傳送這個合約的資訊。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_Contract
         */
         virtual void TAP_CDECL OnRtnContract(const ITapTrade::TapAPITradeContractInfo *info) = 0;
                 /**
-        * @brief    订单操作应答
-        * @details    下单、撤单、改单应答。下单都会有次应答回调，如果下单请求结构中没有填写合约或者资金账号，则仅返回错误号。
-                 * 撤单、改单错误由应答和OnRtnOrder，成功仅返回OnRtnOrder回调。
-                 * sessionID标识请求对应的sessionID，以便确定该笔应答对应的请求。
+        * @brief    訂單操作應答
+        * @details    下單、撤單、改單應答。下單都會有次應答回撥，如果下單請求結構中沒有填寫合約或者資金賬號，則僅返回錯誤號。
+                 * 撤單、改單錯誤由應答和OnRtnOrder，成功僅返回OnRtnOrder回撥。
+                 * sessionID標識請求對應的sessionID，以便確定該筆應答對應的請求。
                  * 
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info 订单应答具体类型，包含订单操作类型和订单信息指针。
-                 * 订单信息指针部分情况下可能为空，如果为空，可以通过SessiuonID找到对应请求获取请求类型。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info 訂單應答具體型別，包含訂單操作型別和訂單資訊指標。
+                 * 訂單資訊指標部分情況下可能為空，如果為空，可以通過SessiuonID找到對應請求獲取請求型別。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeActions
         */
         virtual void TAP_CDECL OnRspOrderAction(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIOrderActionRsp *info) = 0;
         /**
-        * @brief 返回新委托。新下的或者其他地方下的推送过来的。
-        * @details    服务器接收到客户下的委托内容后就会保存起来等待触发，同时向用户回馈一个
-        *            新委托信息说明服务器正确处理了用户的请求，返回的信息中包含了全部的委托信息，
-        *            同时有一个用来标示此委托的委托号。
-        * @param[in] info 指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @note 如果不关注此项内容，可以设定Login时的NoticeIgnoreFlag以屏蔽。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回新委託。新下的或者其他地方下的推送過來的。
+        * @details    伺服器接收到客戶下的委託內容後就會儲存起來等待觸發，同時向用戶回饋一個
+        *            新委託資訊說明伺服器正確處理了使用者的請求，返回的資訊中包含了全部的委託資訊，
+        *            同時有一個用來標示此委託的委託號。
+        * @param[in] info 指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @note 如果不關注此項內容，可以設定Login時的NoticeIgnoreFlag以遮蔽。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeActions
         */
         virtual void TAP_CDECL OnRtnOrder(const ITapTrade::TapAPIOrderInfoNotice *info) = 0;
         /**
-        * @brief    返回查询的委托信息
-        * @details    返回用户查询的委托的具体信息。
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast 标示是否是最后一批数据；
-        * @param[in] info 指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    返回查詢的委託資訊
+        * @details    返回使用者查詢的委託的具體資訊。
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast 標示是否是最後一批資料；
+        * @param[in] info 指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeInfo
         */
         virtual void TAP_CDECL OnRspQryOrder(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIOrderInfo *info) = 0;
         /**
-        * @brief 返回查询的委托变化流程信息
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码，当errorCode==0时，info指向返回的委托变化流程结构体，不然为NULL；
-        * @param[in] isLast 标示是否是最后一批数据；
-        * @param[in] info 返回的委托变化流程指针。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回查詢的委託變化流程資訊
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼，當errorCode==0時，info指向返回的委託變化流程結構體，不然為NULL；
+        * @param[in] isLast 標示是否是最後一批資料；
+        * @param[in] info 返回的委託變化流程指標。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeInfo
         */
         virtual void TAP_CDECL OnRspQryOrderProcess(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIOrderInfo *info) = 0;
         /**
-        * @brief 返回查询的成交信息
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回查詢的成交資訊
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeInfo
         */
         virtual void TAP_CDECL OnRspQryFill(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIFillInfo *info) = 0;
         /**
-        * @brief    推送来的成交信息
-        * @details    用户的委托成交后将向用户推送成交信息。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @note 如果不关注此项内容，可以设定Login时的NoticeIgnoreFlag以屏蔽。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    推送來的成交資訊
+        * @details    使用者的委託成交後將向用戶推送成交資訊。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @note 如果不關注此項內容，可以設定Login時的NoticeIgnoreFlag以遮蔽。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeActions
         */
         virtual void TAP_CDECL OnRtnFill(const ITapTrade::TapAPIFillInfo *info) = 0;
         /**
-        * @brief 返回查询的持仓
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回查詢的持倉
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeInfo
         */
         virtual void TAP_CDECL OnRspQryPosition(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIPositionInfo *info) = 0;
         /**
-        * @brief 持仓变化推送通知
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @note 如果不关注此项内容，可以设定Login时的NoticeIgnoreFlag以屏蔽。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 持倉變化推送通知
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @note 如果不關注此項內容，可以設定Login時的NoticeIgnoreFlag以遮蔽。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeActions
         */
         virtual void TAP_CDECL OnRtnPosition(const ITapTrade::TapAPIPositionInfo *info) = 0;
         /**
-        * @brief 返回查询的持仓汇总
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回查詢的持倉彙總
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeInfo
         */
         virtual void TAP_CDECL OnRspQryPositionSummary(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIPositionSummary *info) = 0;
         
         /**
-        * @brief 持仓汇总变化推送通知
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @note 如果不关注此项内容，可以设定Login时的NoticeIgnoreFlag以屏蔽。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 持倉彙總變化推送通知
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @note 如果不關注此項內容，可以設定Login時的NoticeIgnoreFlag以遮蔽。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeActions
         */
         virtual void TAP_CDECL OnRtnPositionSummary(const TapAPIPositionSummary *info) = 0;
         /**
-        * @brief 持仓盈亏通知
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @note 如果不关注此项内容，可以设定Login时的NoticeIgnoreFlag以屏蔽。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 持倉盈虧通知
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @note 如果不關注此項內容，可以設定Login時的NoticeIgnoreFlag以遮蔽。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeActions
         */
         virtual void TAP_CDECL OnRtnPositionProfit(const ITapTrade::TapAPIPositionProfitNotice *info) = 0;
 
 
         /**
-        * @brief 返回系统中的币种信息
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 返回系統中的幣種資訊
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_TradeSystem
         */
         virtual void TAP_CDECL OnRspQryCurrency(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPICurrencyInfo *info) = 0;
 
         /**
-        * @brief    交易消息通知
-        * @details    返回查询的用户资金状态信息。信息说明了用户的资金状态，用户需要仔细查看这些信息。
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据；
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    交易訊息通知
+        * @details    返回查詢的使用者資金狀態資訊。資訊說明了使用者的資金狀態，使用者需要仔細檢視這些資訊。
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料；
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_AccountDetails
         */
         virtual void TAP_CDECL OnRspQryTradeMessage(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPITradeMessage *info) = 0;
         /**
-        * @brief    交易消息通知
-        * @details    用户在交易过程中可能因为资金、持仓、平仓的状态变动使账户处于某些危险状态，或者某些重要的信息需要向用户通知。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief    交易訊息通知
+        * @details    使用者在交易過程中可能因為資金、持倉、平倉的狀態變動使賬戶處於某些危險狀態，或者某些重要的資訊需要向用戶通知。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_AccountDetails
         */
         virtual void TAP_CDECL OnRtnTradeMessage(const ITapTrade::TapAPITradeMessage *info) = 0;
         /**
-        * @brief 历史委托查询应答
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 歷史委託查詢應答
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HisInfo
         */
         virtual void TAP_CDECL OnRspQryHisOrder(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIHisOrderQryRsp *info) = 0;
         /**
-        * @brief 历史委托流程查询应答
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 歷史委託流程查詢應答
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HisInfo
         */
         virtual void TAP_CDECL OnRspQryHisOrderProcess(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIHisOrderProcessQryRsp *info) = 0;
         /**
-        * @brief 历史成交查询应答
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 歷史成交查詢應答
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HisInfo
         */
         virtual void TAP_CDECL OnRspQryHisMatch(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIHisMatchQryRsp *info) = 0;
         /**
-        * @brief 历史持仓查询应答
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 歷史持倉查詢應答
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HisInfo
         */
         virtual void TAP_CDECL OnRspQryHisPosition(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIHisPositionQryRsp *info) = 0;
         /**
-        * @brief 历史交割查询应答
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 歷史交割查詢應答
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HisInfo
         */
         virtual void TAP_CDECL OnRspQryHisDelivery(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIHisDeliveryQryRsp *info) = 0;
         /**
-        * @brief 资金调整查询应答
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] isLast     标示是否是最后一批数据
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 資金調整查詢應答
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] isLast     標示是否是最後一批資料
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HisInfo
         */
         virtual void TAP_CDECL OnRspQryAccountCashAdjust(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIAccountCashAdjustQryRsp *info) = 0;
         /**
-        * @brief 查询用户账单应答 Add:2013.12.11
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 查詢使用者賬單應答 Add:2013.12.11
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_Bill
         */
         virtual void TAP_CDECL OnRspQryBill(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIBillQryRsp *info) = 0;
         /**
-        * @brief 查询账户手续费计算参数 Add:2017.01.14
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 查詢賬戶手續費計算引數 Add:2017.01.14
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_Rent
         */
         virtual void TAP_CDECL OnRspQryAccountFeeRent(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIAccountFeeRentQryRsp *info) = 0;
         /**
-        * @brief 查询账户保证金计算参数 Add:2017.01.14
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 查詢賬戶保證金計算引數 Add:2017.01.14
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_Rent
         */
         virtual void TAP_CDECL OnRspQryAccountMarginRent(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, ITapTrade::TAPIYNFLAG isLast, const ITapTrade::TapAPIAccountMarginRentQryRsp *info) = 0;
 
         /**
-        * @brief 港交所做市商双边报价应答 Add:2017.08.29
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 港交所做市商雙邊報價應答 Add:2017.08.29
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HKMarket
         */
         virtual void TAP_CDECL OnRspHKMarketOrderInsert(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode,  const ITapTrade::TapAPIOrderMarketInsertRsp *info) = 0;
 
         /**
-        * @brief 港交所做市商双边撤单应答 Add:2017.08.29
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 港交所做市商雙邊撤單應答 Add:2017.08.29
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HKMarket
         */
         virtual void TAP_CDECL OnRspHKMarketOrderDelete(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIOrderMarketDeleteRsp *info) = 0;
 
         /**
-        * @brief 港交所询价通知 Add:2017.08.29
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 港交所詢價通知 Add:2017.08.29
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_HKMarket
         */
         virtual void TAP_CDECL OnHKMarketQuoteNotice( const ITapTrade::TapAPIOrderQuoteMarketNotice *info) = 0;
 
 
         /**
-        * @brief 订单删除应答 Add:2017.12.05
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 訂單刪除應答 Add:2017.12.05
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_LocalAction
         */
         virtual void TAP_CDECL OnRspOrderLocalRemove(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIOrderLocalRemoveRsp *info) = 0;
 
         /**
-        * @brief 订单录入应答 Add:2017.12.05
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 訂單錄入應答 Add:2017.12.05
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_LocalAction
         */
         virtual void TAP_CDECL OnRspOrderLocalInput(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIOrderLocalInputRsp *info) = 0;
 
         /**
-        * @brief 订单修改应答 Add:2017.12.05
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 訂單修改應答 Add:2017.12.05
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_LocalAction
         */
         virtual void TAP_CDECL OnRspOrderLocalModify(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIOrderLocalModifyRsp *info) = 0;
 
         /**
-        * @brief 订单转移应答 Add:2017.12.05
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 訂單轉移應答 Add:2017.12.05
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_LocalAction
         */
         virtual void TAP_CDECL OnRspOrderLocalTransfer(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIOrderLocalTransferRsp *info) = 0;
 
         /**
-        * @brief 成交录入应答 Add:2017.12.05
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 成交錄入應答 Add:2017.12.05
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_LocalAction
         */
         virtual void TAP_CDECL OnRspFillLocalInput(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIFillLocalInputRsp *info) = 0;
 
         /**
-        * @brief 订单删除应答 Add:2017.12.05
-        * @param[in] sessionID 请求的会话ID；
-        * @param[in] errorCode 错误码。0 表示成功。
-        * @param[in] info        指向返回的信息结构体。当errorCode不为0时，info为空。
-        * @attention 不要修改和删除info所指示的数据；函数调用结束，参数不再有效。
+        * @brief 訂單刪除應答 Add:2017.12.05
+        * @param[in] sessionID 請求的會話ID；
+        * @param[in] errorCode 錯誤碼。0 表示成功。
+        * @param[in] info        指向返回的資訊結構體。當errorCode不為0時，info為空。
+        * @attention 不要修改和刪除info所指示的資料；函式呼叫結束，引數不再有效。
         * @ingroup G_T_LocalAction
         */
         virtual void TAP_CDECL OnRspFillLocalRemove(ITapTrade::TAPIUINT32 sessionID, ITapTrade::TAPIINT32 errorCode, const ITapTrade::TapAPIFillLocalRemoveRsp *info) = 0;
@@ -516,113 +516,113 @@ namespace ITapTrade
 
 
 
-    //TapTradeAPI 对外功能接口。包含了用户可以调用的功能函数。
+    //TapTradeAPI 對外功能介面。包含了使用者可以呼叫的功能函式。
     class ITapTradeAPI
     {
     public:
         /**
-        * @brief    设置API的回调接口对象。
-        * @details    系统对API的通知将通过设置的回调对象通知给使用者。
-        *            ITapTradeAPINotify是API的回调接口，用户需要继承实现此接口类对象来完成用户需要的功能。
-        *            如果用户没有设置回调接口，则API不会向用户返回任何有用的信息。\n
-        *            ITapTradeAPINotify类的详细内容请查看TapTradeAPI.h 文件。
-        * @param[in] apiNotify 实现了ITapTradeAPINotify接口的对象指针。
+        * @brief    設定API的回撥介面物件。
+        * @details    系統對API的通知將通過設定的回撥物件通知給使用者。
+        *            ITapTradeAPINotify是API的回撥介面，使用者需要繼承實現此介面類物件來完成使用者需要的功能。
+        *            如果使用者沒有設定回撥介面，則API不會向用戶返回任何有用的資訊。\n
+        *            ITapTradeAPINotify類的詳細內容請檢視TapTradeAPI.h 檔案。
+        * @param[in] apiNotify 實現了ITapTradeAPINotify介面的物件指標。
         * @operationtype 同步操作
         * @ingroup G_T_Login
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL SetAPINotify(ITapTrade::ITapTradeAPINotify *pSpi) = 0;
         /**
-        * @brief 设置服务器的IP地址和端口。
+        * @brief 設定伺服器的IP地址和埠。
         * @param[in] IP   IP地址
-        * @param[in] port 端口号
+        * @param[in] port 埠號
         * @operationtype 同步操作
         * @ingroup G_T_Login
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL SetHostAddress(const ITapTrade::TAPICHAR *IP, ITapTrade::TAPIUINT16 port,bool bSSL=false) = 0;
         /**
-        * @brief    发起登录请求。API将先连接服务，建立链路，发起登录认证。
-        * @details    在使用函数前用户需要完成服务器的设置SetHostAddress()，并且创建TapAPITradeLoginAuth类型的用户信息，
-        *            并且需要设置好回调接口。\n
-        *            登录过程中建立连接的返回信息通过回调OnConnect返回给用户。\n
-        *            连接建立后的用户验证回馈信息通过回调OnLogin()返回给用户。\n
-        *            登录成功后API会自动进行API的初始化，API向服务器请求基础数据，查询完以后会通过回调OnAPIReady()
-        *            指示用户API初始化完成，可以进行后续的操作了。
-        * @param[in] loginAuth 登录验证信息结构指针。包含登录需要的验证信息。
-        * @retval 0 登录成功，API开始准备后台数据
-        * @retval 非0 错误码
-        * @operationtype 异步操作
-        * @note TapAPITradeLoginAuth中的NoticeIgnoreFlag用于标记是否忽略特定的通知回调。\n
-        *       例如：不需要接收OnRtnFund和OnRtnPositionProfit,可以这么设定：\n
+        * @brief    發起登入請求。API將先連線服務，建立鏈路，發起登入認證。
+        * @details    在使用函式前使用者需要完成伺服器的設定SetHostAddress()，並且建立TapAPITradeLoginAuth型別的使用者資訊，
+        *            並且需要設定好回撥介面。\n
+        *            登入過程中建立連線的返回資訊通過回撥OnConnect返回給使用者。\n
+        *            連線建立後的使用者驗證回饋資訊通過回撥OnLogin()返回給使用者。\n
+        *            登入成功後API會自動進行API的初始化，API向伺服器請求基礎資料，查詢完以後會通過回撥OnAPIReady()
+        *            指示使用者API初始化完成，可以進行後續的操作了。
+        * @param[in] loginAuth 登入驗證資訊結構指標。包含登入需要的驗證資訊。
+        * @retval 0 登入成功，API開始準備後臺資料
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
+        * @note TapAPITradeLoginAuth中的NoticeIgnoreFlag用於標記是否忽略特定的通知回撥。\n
+        *       例如：不需要接收OnRtnFund和OnRtnPositionProfit,可以這麼設定：\n
         *       NoticeIgnoreFlag = TAPI_NOTICE_IGNORE_FUND | TAPI_NOTICE_IGNORE_POSITIONPROFIT;
-        * @attention Login()函数调用成功只是代表于服务器建立了链路连接，只有回调OnLogin()的返回能指示用户是否成功登录了。
+        * @attention Login()函式呼叫成功只是代表於伺服器建立了鏈路連線，只有回撥OnLogin()的返回能指示使用者是否成功登入了。
         * @ingroup G_T_Login
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL Login(const ITapTrade::TapAPITradeLoginAuth *loginAuth) = 0;
 
         /**
-        * @brief    请求发送二次认证认证码
-        * @details    此函数需要9.2.7后台，根据回掉函数OnRtnContactInfo中的联系方式，选择其中一个请求二次认证吗，
-        *            收到正确应答后可以通过SetVertificateCode 设置二次认证授权码完成登陆过程。
-        * @param[out] sessionID本次请求的会话ID。
-        * @param[in]  ContractInfo,要接收二次认证吗的邮箱或者电话。
-        * @attention 该函数调用需要在登陆应答后返回10003错误，API会回调客户二次 认证的联系方式，用户选择其中一个联系方式（邮箱或者电话）请求二次认证。再通过设置二次认证授权码完成登陆。
+        * @brief    請求傳送二次認證認證碼
+        * @details    此函式需要9.2.7後臺，根據回掉函式OnRtnContactInfo中的聯絡方式，選擇其中一個請求二次認證嗎，
+        *            收到正確應答後可以通過SetVertificateCode 設定二次認證授權碼完成登陸過程。
+        * @param[out] sessionID本次請求的會話ID。
+        * @param[in]  ContractInfo,要接收二次認證嗎的郵箱或者電話。
+        * @attention 該函式呼叫需要在登陸應答後返回10003錯誤，API會回撥客戶二次 認證的聯絡方式，使用者選擇其中一個聯絡方式（郵箱或者電話）請求二次認證。再通過設定二次認證授權碼完成登陸。
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL RequestVertificateCode(ITapTrade::TAPIUINT32 *sessionID,ITapTrade::TAPISTR_40 ContactInfo) = 0;
         /**
-        * @brief    设置二次认证信息。
-        * @details    登录完成后，如果系统配置需要进行二次认证码输入，则登录后会提示需要进行二次认证。
-        *            此时调用该函数输入二次认证来完成登录。
-        *            登录完成后不允许再调用此函数。其他原因引起的登录失败也不能调用次函数，否则会返回对应的错误信息。
-        *            调用此接口后，会返回登录应答成功与否的标记，如果成功表示登录完成，可以等待OnAPIReady API完成回调。
-        *            如果超时，回调完成后API会主动断开链接，需要再次进行登录操作。
-        *            如果验证码错误，则可以再次调用此函数输入正确的验证码进行验证。
-        * @param[in] VertificateCode二次认证码。
-        * @retval 0 发送认证码成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    設定二次認證資訊。
+        * @details    登入完成後，如果系統配置需要進行二次認證碼輸入，則登入後會提示需要進行二次認證。
+        *            此時呼叫該函式輸入二次認證來完成登入。
+        *            登入完成後不允許再呼叫此函式。其他原因引起的登入失敗也不能呼叫次函式，否則會返回對應的錯誤資訊。
+        *            呼叫此介面後，會返回登入應答成功與否的標記，如果成功表示登入完成，可以等待OnAPIReady API完成回撥。
+        *            如果超時，回撥完成後API會主動斷開連結，需要再次進行登入操作。
+        *            如果驗證碼錯誤，則可以再次呼叫此函式輸入正確的驗證碼進行驗證。
+        * @param[in] VertificateCode二次認證碼。
+        * @retval 0 傳送認證碼成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_Login
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL SetVertificateCode(TAPISTR_10 VertificateCode) = 0;
         
         /**
-        * @brief    断开和服务器的链路连接。
-        * @details    调用函数后API将登出并断开与服务器的连接。
+        * @brief    斷開和伺服器的鏈路連線。
+        * @details    呼叫函式後API將登出並斷開與伺服器的連線。
         * @operationtype 同步操作
         * @ingroup G_T_Disconnect
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL Disconnect() = 0;
         /**
-        * @brief    修改密码。
-        * @details    成功后用户密码将被设置成newPassword。
-        * @param[out]    sessionID 返回此次修改密码的会话ID;
-        * @param[in]    req 请求修改密码的结构体指针
+        * @brief    修改密碼。
+        * @details    成功後用戶密碼將被設定成newPassword。
+        * @param[out]    sessionID 返回此次修改密碼的會話ID;
+        * @param[in]    req 請求修改密碼的結構體指標
         * @retval 0 成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_UserInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL ChangePassword(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIChangePasswordReq *req) = 0;
 
 
         /**
-        * @brief    认证密码。
-        * @details    交易员认证某个账户密码是否正确。
-        * @param[out]    sessionID 返回此次修改密码的会话ID;
-        * @param[in]    req 请求认证密码的结构体指针
+        * @brief    認證密碼。
+        * @details    交易員認證某個賬戶密碼是否正確。
+        * @param[out]    sessionID 返回此次修改密碼的會話ID;
+        * @param[in]    req 請求認證密碼的結構體指標
         * @retval 0 成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_UserInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL AuthPassword(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIAuthPasswordReq *req) = 0;
 
 
         /**
-        * @brief    判断登录用户是否具有某权限。
-        * @details    用户的权限在用户登录时已经传递给API，所以此函数执行的是本地的查询。
-        * @param[in] rightID 权限ID。
-        * @retval 0 不具有权限
-        * @retval 非0 具有权限
+        * @brief    判斷登入使用者是否具有某許可權。
+        * @details    使用者的許可權在使用者登入時已經傳遞給API，所以此函式執行的是本地的查詢。
+        * @param[in] rightID 許可權ID。
+        * @retval 0 不具有許可權
+        * @retval 非0 具有許可權
         * @operationtype 同步操作
         * @ingroup G_T_UserRight
         */
@@ -630,404 +630,404 @@ namespace ITapTrade
 
 
         /**
-        * @brief    查询系统日历。
-        * @details    获取当前交易日，上次结算日，LME到期日，和上日LME到期日
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
-        * @note 该接口暂未实现
+        * @brief    查詢系統日曆。
+        * @details    獲取當前交易日，上次結算日，LME到期日，和上日LME到期日
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
+        * @note 該介面暫未實現
         * @ingroup G_T_UserRight
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryTradingDate(ITapTrade::TAPIUINT32 *sessionID) = 0;
         /**
-        * @brief    设置用户预留信息。
-        * @details    用户可以设置一个长度为50以内的字符信息，下次登录后可以得到这个信息。
-        *            这个功能主要是用来让用户确认是自己的账号，主要是用来进行防伪。
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[in] info    预留信息字符串指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
-        * @note 该接口暂未实现
+        * @brief    設定使用者預留資訊。
+        * @details    使用者可以設定一個長度為50以內的字元資訊，下次登入後可以得到這個資訊。
+        *            這個功能主要是用來讓使用者確認是自己的賬號，主要是用來進行防偽。
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[in] info    預留資訊字串指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
+        * @note 該介面暫未實現
         * @ingroup G_T_UserInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL SetReservedInfo(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TAPISTR_50 info) = 0;
         /**
-        * @brief 查询用户下属的资金账号
-        * @details    TapAPIAccQryReq是包含资金账号结构的结构体，用户需要实例化此结构体，
-        *            但是不需要填写，这个结构体主要是用来提醒用户保存资金账号，资金账号
-        *            在后续的函数调用中很多函数都需要使用到。
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[in]    qryReq 查询用户下属的资金账号的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 查詢使用者下屬的資金賬號
+        * @details    TapAPIAccQryReq是包含資金賬號結構的結構體，使用者需要例項化此結構體，
+        *            但是不需要填寫，這個結構體主要是用來提醒使用者儲存資金賬號，資金賬號
+        *            在後續的函式呼叫中很多函式都需要使用到。
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[in]    qryReq 查詢使用者下屬的資金賬號的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_AccountInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryAccount(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIAccQryReq *qryReq) = 0;
         /**
-        * @brief    查询客户资金
-        * @details    TapAPIFundReq需要QryAccount()获取的资金账号。
-        *            函数的回调将返回资金账号的资金信息。\n
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in] qryReq    查询客户资金请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    查詢客戶資金
+        * @details    TapAPIFundReq需要QryAccount()獲取的資金賬號。
+        *            函式的回撥將返回資金賬號的資金資訊。\n
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in] qryReq    查詢客戶資金請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_AccountDetails
-        * @attention 每次登陆，该接口只能进行一次调用。建议初始化时调用一次，后续的通知通过OnRtnFund取得。
+        * @attention 每次登陸，該介面只能進行一次呼叫。建議初始化時呼叫一次，後續的通知通過OnRtnFund取得。
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryFund(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIFundReq *qryReq) = 0;
         /**
-        * @brief 查询交易系统交易所信息
-        * @param[out] sessionID 返回请求的会话ID;
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 查詢交易系統交易所資訊
+        * @param[out] sessionID 返回請求的會話ID;
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeSystem
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryExchange(ITapTrade::TAPIUINT32 *sessionID) = 0;
         /**
-        * @brief    查询系统品种信息
-        * @details    函数请求获取所有的品种信息。
-        * @param[out] sessionID 返回请求的会话ID;
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    查詢系統品種資訊
+        * @details    函式請求獲取所有的品種資訊。
+        * @param[out] sessionID 返回請求的會話ID;
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_Commodity
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryCommodity(ITapTrade::TAPIUINT32 *sessionID) = 0;
         /**
-        * @brief    查询系统中指定品种的合约信息
-        * @details    使用此函数前需要先Qrycommodity()取得品种信息，
-        *            然后选择需要的品种将信息填入TapAPICommodity结构体中完成查询请求。
-        *            或者TapAPICommodity不填，则返回所有信息。
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in] qryReq 查询系统中指定品种的合约信息请求的结构体指针;\n
-        *                    该参数各字段为可选字段，可以用以下方法查询：\n
-        *                    1.全部留空：查所有合约\n
-        *                    2.仅交易所编码有效：查该交易所下所有品种的合约\n
-        *                    3.交易所编码和品种类型有效：查该交易所下指定品种类型的合约\n
-        *                    4.交易所编码、品种类型和品种编码都有效：查该品种下的所有合约
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    查詢系統中指定品種的合約資訊
+        * @details    使用此函式前需要先Qrycommodity()取得品種資訊，
+        *            然後選擇需要的品種將資訊填入TapAPICommodity結構體中完成查詢請求。
+        *            或者TapAPICommodity不填，則返回所有資訊。
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in] qryReq 查詢系統中指定品種的合約資訊請求的結構體指標;\n
+        *                    該引數各欄位為可選欄位，可以用以下方法查詢：\n
+        *                    1.全部留空：查所有合約\n
+        *                    2.僅交易所編碼有效：查該交易所下所有品種的合約\n
+        *                    3.交易所編碼和品種型別有效：查該交易所下指定品種型別的合約\n
+        *                    4.交易所編碼、品種型別和品種編碼都有效：查該品種下的所有合約
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_Contract
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryContract(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPICommodity *qryReq) = 0;
 
         /**
-        * @brief    下单
-        * @details    用户下单的操作函数。
-        *            用户的下单操作会造成用户的资金、持仓、平仓、资金、风控标记等多种数据的变化，所以用户下的单成交后，
-        *            会有多个回调通知来向用户展示数据的变化。
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[out]    ClientOrderNo 返回客户本地委托号。
-        * @param[in]    order 新的委托
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    下單
+        * @details    使用者下單的操作函式。
+        *            使用者的下單操作會造成使用者的資金、持倉、平倉、資金、風控標記等多種資料的變化，所以使用者下的單成交後，
+        *            會有多個回撥通知來向用戶展示資料的變化。
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[out]    ClientOrderNo 返回客戶本地委託號。
+        * @param[in]    order 新的委託
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeActions
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL InsertOrder(ITapTrade::TAPIUINT32 *sessionID,ITapTrade::TAPISTR_50 *ClientOrderNo, const ITapTrade::TapAPINewOrder *order) = 0;
 
         /**
-        * @brief    撤单
-        * @details    用户委托没有完全成交之前撤销剩余的委托。
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[in]    order 撤销的委托
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    撤單
+        * @details    使用者委託沒有完全成交之前撤銷剩餘的委託。
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[in]    order 撤銷的委託
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeActions
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL CancelOrder(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIOrderCancelReq *order) = 0;
 
         /**
-        * @brief    改单
-        * @details    用户的委托没有完全成交之前可以进行改单操作来修改剩余的未成交的委托。\n
-        *            用户填写新的委托来修改原来的未成交的部分。报单的修改会对比已经成交的部分来扣除成交部分。
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[in]    order 修改的委托
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    改單
+        * @details    使用者的委託沒有完全成交之前可以進行改單操作來修改剩餘的未成交的委託。\n
+        *            使用者填寫新的委託來修改原來的未成交的部分。報單的修改會對比已經成交的部分來扣除成交部分。
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[in]    order 修改的委託
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeActions
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL AmendOrder(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIAmendOrder *order) = 0;
 
         /**
-        * @brief 订单激活
-        * @details 用户的埋单需要发送时需要进行激活。或者港交所已挂起的订单。
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[in]    order 要激活的订单
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 訂單啟用
+        * @details 使用者的埋單需要傳送時需要進行啟用。或者港交所已掛起的訂單。
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[in]    order 要啟用的訂單
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeActions
         */
         virtual TAPIINT32 TAP_CDECL ActivateOrder(TAPIUINT32 * sessionID, const TapAPIOrderActivateReq * order) = 0;
         
         /**
-        * @brief    查询委托信息
-        * @details    返回当前的委托信息，可以查询所有委托，也可以查询所有未结束的委托。\n
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    查詢委託資訊
+        * @details    返回當前的委託資訊，可以查詢所有委託，也可以查詢所有未結束的委託。\n
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeInfo
-        * @attention 每次登陆，该接口只能进行一次调用。建议初始化时调用一次，后续的通知通过OnRtnOrder取得。
+        * @attention 每次登陸，該介面只能進行一次呼叫。建議初始化時呼叫一次，後續的通知通過OnRtnOrder取得。
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryOrder(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIOrderQryReq *qryReq) = 0;
         /**
-        * @brief    查询委托变化流程
-        * @details    查询用户的委托的变化流程，查询将返回委托的每一次的变化。
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in] qryReq 委托流程查询信息结构体指针。
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    查詢委託變化流程
+        * @details    查詢使用者的委託的變化流程，查詢將返回委託的每一次的變化。
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in] qryReq 委託流程查詢資訊結構體指標。
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryOrderProcess(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIOrderProcessQryReq *qryReq) = 0;
         /**
-        * @brief 查询成交信息
-        * @details    查询系统中成交的信息。
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in] qryReq 成交查询信息结构体指针。
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 查詢成交資訊
+        * @details    查詢系統中成交的資訊。
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in] qryReq 成交查詢資訊結構體指標。
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeInfo
-        * @attention 每次登陆，该接口只能进行一次调用。建议初始化时调用一次，后续的通知通过OnRtnFill取得。
+        * @attention 每次登陸，該介面只能進行一次呼叫。建議初始化時呼叫一次，後續的通知通過OnRtnFill取得。
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryFill(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIFillQryReq *qryReq) = 0;
         /**
-        * @brief    查询用户持仓
-        * @details    查询用户的所有持仓信息。
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in] qryReq    查询用户持仓请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    查詢使用者持倉
+        * @details    查詢使用者的所有持倉資訊。
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in] qryReq    查詢使用者持倉請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeInfo
-        * @attention 每次登陆，该接口只能进行一次调用。建议初始化时调用一次，后续的通知通过OnRtnPosition取得。
+        * @attention 每次登陸，該介面只能進行一次呼叫。建議初始化時呼叫一次，後續的通知通過OnRtnPosition取得。
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryPosition(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIPositionQryReq *qryReq) = 0;
 
         /**
-        * @brief    查询用户持仓汇总
-        * @details    查询用户的所有持仓信息。
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in] qryReq    查询用户持仓请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief    查詢使用者持倉彙總
+        * @details    查詢使用者的所有持倉資訊。
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in] qryReq    查詢使用者持倉請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeInfo
-        * @attention 每次登陆，该接口只能进行一次调用。建议初始化时调用一次，后续的通知通过OnRtnPosition取得。
+        * @attention 每次登陸，該介面只能進行一次呼叫。建議初始化時呼叫一次，後續的通知通過OnRtnPosition取得。
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryPositionSummary(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIPositionQryReq *qryReq) = 0;
 
         /**
-        * @brief 获取交易所用币种的信息
-        * @param[out] sessionID 返回请求的会话ID;
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 獲取交易所用幣種的資訊
+        * @param[out] sessionID 返回請求的會話ID;
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_TradeSystem
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryCurrency(ITapTrade::TAPIUINT32 *sessionID) = 0;
         /**
-        * @brief 客户资金调整查询请求
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in]    Req    客户资金调整查询请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 客戶資金調整查詢請求
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in]    Req    客戶資金調整查詢請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HisInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryAccountCashAdjust(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIAccountCashAdjustQryReq *qryReq) = 0;
         /**
-        * @brief    获取交易或风控消息
-        * @details    此函数用来主动获取账号的交易或者风控消息。交易或者风控消息用来标识账号的状态。
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in] qryReq 获取交易或风控消息请求的结构体指针;
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
-        说明：易盛保留接口
+        * @brief    獲取交易或風控訊息
+        * @details    此函式用來主動獲取賬號的交易或者風控訊息。交易或者風控訊息用來標識賬號的狀態。
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in] qryReq 獲取交易或風控訊息請求的結構體指標;
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
+        說明：易盛保留介面
         * @ingroup G_T_AccountDetails
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryTradeMessage(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPITradeMessageReq *qryReq) = 0;
         /**
-        * @brief 查询用户账单
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[in]    qryReq    查询帐单请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 查詢使用者賬單
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[in]    qryReq    查詢帳單請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_Bill
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryBill(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIBillQryReq *qryReq) = 0;
         /**
-        * @brief 历史委托查询请求
-        * @param[out]    sessionID 返回请求的会话ID;
-        * @param[in]    Req    历史委托查询请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 歷史委託查詢請求
+        * @param[out]    sessionID 返回請求的會話ID;
+        * @param[in]    Req    歷史委託查詢請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HisInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryHisOrder(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIHisOrderQryReq *qryReq) = 0;
         /**
-        * @brief 历史委托流程查询请求
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in]    Req    历史委托流程查询请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 歷史委託流程查詢請求
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in]    Req    歷史委託流程查詢請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HisInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryHisOrderProcess(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIHisOrderProcessQryReq *qryReq) = 0;
         /**
-        * @brief 历史成交查询请求
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in]    Req    历史成交查询请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 歷史成交查詢請求
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in]    Req    歷史成交查詢請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HisInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryHisMatch(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIHisMatchQryReq *qryReq) = 0;
         /**
-        * @brief 历史持仓查询请求
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in]    Req    历史持仓查询请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 歷史持倉查詢請求
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in]    Req    歷史持倉查詢請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HisInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryHisPosition(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIHisPositionQryReq *qryReq) = 0;
         /**
-        * @brief 历史交割查询请求
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in]    Req    历史交割查询请求的结构体指针
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 歷史交割查詢請求
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in]    Req    歷史交割查詢請求的結構體指標
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HisInfo
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryHisDelivery(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIHisDeliveryQryReq *qryReq) = 0;
 
         /**
-        * @brief 客户手续费计算参数查询请求
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in]    Req    客户手续费计算参数查询请求结构
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 客戶手續費計算引數查詢請求
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in]    Req    客戶手續費計算引數查詢請求結構
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_Rent
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryAccountFeeRent(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIAccountFeeRentQryReq *qryReq) = 0;
         /**
-        * @brief 客户保证金计算参数查询请求
-        * @param[out] sessionID 返回请求的会话ID;
-        * @param[in]    Req    客户保证金计算参数查询请求结构
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 客戶保證金計算引數查詢請求
+        * @param[out] sessionID 返回請求的會話ID;
+        * @param[in]    Req    客戶保證金計算引數查詢請求結構
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_Rent
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL QryAccountMarginRent(ITapTrade::TAPIUINT32 *sessionID, const ITapTrade::TapAPIAccountMarginRentQryReq *qryReq) = 0;
         /**
-        * @brief 港交所做市商双边报价指令
-        * @param[out] sessionID 返回当前请求的SessionID;
-        * @param[out] ClientBuyOrderNo返回港交所双边报价中买单的客户本地委托号;
-        * @param[out] ClientSellOrderNo返回港交所双边报价中卖单的客户本地委托号;
-        * @param[in] order双边报价请求结构;
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 港交所做市商雙邊報價指令
+        * @param[out] sessionID 返回當前請求的SessionID;
+        * @param[out] ClientBuyOrderNo返回港交所雙邊報價中買單的客戶本地委託號;
+        * @param[out] ClientSellOrderNo返回港交所雙邊報價中賣單的客戶本地委託號;
+        * @param[in] order雙邊報價請求結構;
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HKMarket
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL InsertHKMarketOrder(TAPIUINT32 *sessionID, TAPISTR_50 *ClientBuyOrderNo, TAPISTR_50 *ClientSellOrderNo, const TapAPIOrderMarketInsertReq *order) = 0;
 
         /**
-        * @brief 港交所做市商双边撤单指令
-        * @param[out] sessionID 返回当前请求的sessionID。
-        * @param[in] order 港交所做市商撤单指令请求结构。 
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 港交所做市商雙邊撤單指令
+        * @param[out] sessionID 返回當前請求的sessionID。
+        * @param[in] order 港交所做市商撤單指令請求結構。 
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_HKMarket
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL CancelHKMarketOrder(TAPIUINT32 *sessionID, const TapAPIOrderMarketDeleteReq *order) = 0;
 
         /**
-        * @brief 订单删除指令
-        * @param[out] sessionID 返回当前请求的sessionID。
-        * @param[in] order 要订单删除的订单。
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 訂單刪除指令
+        * @param[out] sessionID 返回當前請求的sessionID。
+        * @param[in] order 要訂單刪除的訂單。
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_LocalActions
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL OrderLocalRemove(TAPIUINT32 *sessionID, const TapAPIOrderLocalRemoveReq *order) = 0;
         /**
-        * @brief 订单录入指令
-        * @param[out] sessionID 返回当前请求的sessionID。
-        * @param[in] order 订单录入请求信息。
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 訂單錄入指令
+        * @param[out] sessionID 返回當前請求的sessionID。
+        * @param[in] order 訂單錄入請求資訊。
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_LocalActions
         */
         virtual  ITapTrade::TAPIINT32 TAP_CDECL OrderLocalInput(TAPIUINT32 *sessionID, const TapAPIOrderLocalInputReq *order) = 0;
         /**
-        * @brief 订单修改指令
-        * @param[out] sessionID 返回当前请求的sessionID。
-        * @param[in] order 订单修改请求结构
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 訂單修改指令
+        * @param[out] sessionID 返回當前請求的sessionID。
+        * @param[in] order 訂單修改請求結構
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_LocalActions
         */
         virtual  ITapTrade::TAPIINT32 TAP_CDECL OrderLocalModify(TAPIUINT32 *sessionID, const TapAPIOrderLocalModifyReq *order) = 0;
         /**
-        * @brief  订单转移指令
-        * @param[out] sessionID 返回当前请求的sessionID。
-        * @param[in] 订单转移请求信息。
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief  訂單轉移指令
+        * @param[out] sessionID 返回當前請求的sessionID。
+        * @param[in] 訂單轉移請求資訊。
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_LocalActions
         */
         virtual  ITapTrade::TAPIINT32 TAP_CDECL OrderLocalTransfer(TAPIUINT32 *sessionID, const TapAPIOrderLocalTransferReq *order) = 0;
         /**
-        * @brief 成交录入指令
-        * @param[out] sessionID 返回当前请求的sessionID。
-        * @param[in] 要录入的成交信息
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 成交錄入指令
+        * @param[out] sessionID 返回當前請求的sessionID。
+        * @param[in] 要錄入的成交資訊
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_LocalActions
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL FillLocalInput(TAPIUINT32 *sessionID, const TapAPIFillLocalInputReq *fill) = 0;
         /**
-        * @brief 成交删除指令
-        * @param[out] sessionID 返回当前请求的sessionID。
-        * @param[in] 成交删除请求信息
-        * @retval 0 请求成功
-        * @retval 非0 错误码
-        * @operationtype 异步操作
+        * @brief 成交刪除指令
+        * @param[out] sessionID 返回當前請求的sessionID。
+        * @param[in] 成交刪除請求資訊
+        * @retval 0 請求成功
+        * @retval 非0 錯誤碼
+        * @operationtype 非同步操作
         * @ingroup G_T_LocalActions
         */
         virtual ITapTrade::TAPIINT32 TAP_CDECL FillLocalRemove(TAPIUINT32 *sessionID, const TapAPIFillLocalRemoveReq *fill) = 0;
     };
 };
 
-    //-----------------------------TapTradeAPI导出函数------------------------------------
+    //-----------------------------TapTradeAPI匯出函式------------------------------------
 
 
     #ifdef __cplusplus
@@ -1035,58 +1035,58 @@ namespace ITapTrade
     #endif // __cplusplus
 
     /**
-    * @brief    创建TapTradeAPI的接口对象。
-    * @details    创建整个交易API的接口
-    * @param[in] appInfo 应用程序相关信息。
-    * @param[in] iResult 创建接口的错误码。
-    * @retval NULL    创建失败，具体原因可通过输出参数iResult判断。
-    * @retval !NULL    实现了ITapTradeAPI接口的对象指针。
+    * @brief    建立TapTradeAPI的介面物件。
+    * @details    建立整個交易API的介面
+    * @param[in] appInfo 應用程式相關資訊。
+    * @param[in] iResult 建立介面的錯誤碼。
+    * @retval NULL    建立失敗，具體原因可通過輸出引數iResult判斷。
+    * @retval !NULL    實現了ITapTradeAPI介面的物件指標。
     * @ingroup G_T_API
     */
         TAP_DLLEXPORT ITapTrade::ITapTradeAPI *TAP_CDECL CreateITapTradeAPI(const ITapTrade::TapAPIApplicationInfo *appInfo, ITapTrade::TAPIINT32 &iResult);
     /**
-    * @brief    销毁通过CreateTapTradeAPI函数创建的ITapTradeAPI对象。
-    * @param[in] apiObj ITapTradeAPI对象指针。
+    * @brief    銷燬通過CreateTapTradeAPI函式建立的ITapTradeAPI物件。
+    * @param[in] apiObj ITapTradeAPI物件指標。
     * @ingroup G_T_API
     */
         TAP_DLLEXPORT void TAP_CDECL FreeITapTradeAPI(ITapTrade::ITapTradeAPI *apiObj);
     /**
-    * @brief    获取TapTradeAPI的版本信息
+    * @brief    獲取TapTradeAPI的版本資訊
     * @ingroup G_T_API
     */
         TAP_DLLEXPORT const ITapTrade::TAPICHAR *TAP_CDECL GetITapTradeAPIVersion();
     /**
-    * @brief    设置API自身保存数据目录
-    * @details    调用函数的同时会在path描述的目录下打开以年月日（格式TapTradeAPI[YYYYMMDD].log)命名的文件，\n
-    *            没有此文件的情况下会试图创建此文件。\n
-    *            文件中保存的数据为API接收到的重要数据和API的使用和错误日志。
-    * @param[in] path 目录。必须可用，目录符号Window下为”\\”或者”/”, Linux下为”/”。
+    * @brief    設定API自身儲存資料目錄
+    * @details    呼叫函式的同時會在path描述的目錄下開啟以年月日（格式TapTradeAPI[YYYYMMDD].log)命名的檔案，\n
+    *            沒有此檔案的情況下會試圖建立此檔案。\n
+    *            檔案中儲存的資料為API接收到的重要資料和API的使用和錯誤日誌。
+    * @param[in] path 目錄。必須可用，目錄符號Window下為”\\”或者”/”, Linux下為”/”。
     * @retval 0 成功
-    * @retval 非0 错误码
+    * @retval 非0 錯誤碼
     * @operationtype 同步操作
     * @ingroup G_T_LogConfig
     */
         TAP_DLLEXPORT ITapTrade::TAPIINT32 TAP_CDECL SetITapTradeAPIDataPath(const ITapTrade::TAPICHAR *path);
     /**
-    * @brief    设置API的日志级别
-    * @details    设定日志的输出级别，只有当实际日志级别与此处设定的级别相同或更高时，才会将日志写入SetTapTradeAPIDataPath()函数打开的日志文件。\n
-    * @param[in]    level 日志级别：\n
-    *                    APILOGLEVEL_NONE    ：不记录日志\n
-    *                    APILOGLEVEL_ERROR    ：记录Error日志\n
-    *                    APILOGLEVEL_WARNING    ：记录Error和Warning日志\n
-    *                    APILOGLEVEL_DEBUG    ：记录Error、Warning和Debug日志\n
-    * @retval 0 设定成功
-    * @retval 非0 错误码
+    * @brief    設定API的日誌級別
+    * @details    設定日誌的輸出級別，只有當實際日誌級別與此處設定的級別相同或更高時，才會將日誌寫入SetTapTradeAPIDataPath()函式開啟的日誌檔案。\n
+    * @param[in]    level 日誌級別：\n
+    *                    APILOGLEVEL_NONE    ：不記錄日誌\n
+    *                    APILOGLEVEL_ERROR    ：記錄Error日誌\n
+    *                    APILOGLEVEL_WARNING    ：記錄Error和Warning日誌\n
+    *                    APILOGLEVEL_DEBUG    ：記錄Error、Warning和Debug日誌\n
+    * @retval 0 設定成功
+    * @retval 非0 錯誤碼
     * @operationtype 同步操作
     * @ingroup G_T_LogConfig
     */
         TAP_DLLEXPORT ITapTrade::TAPIINT32 TAP_CDECL SetITapTradeAPILogLevel(ITapTrade::TAPILOGLEVEL level);
 
         /**
-        * @brief    根据错误码获取错误信息。在创建完API指针后即可调用，否则返回空值。
-        * @details    根据错误码可以获取到对应的错误信息，
-        * @param[in]    errorCode 错误码
-        * @retval 返回错误描述信息
+        * @brief    根據錯誤碼獲取錯誤資訊。在建立完API指標後即可呼叫，否則返回空值。
+        * @details    根據錯誤碼可以獲取到對應的錯誤資訊，
+        * @param[in]    errorCode 錯誤碼
+        * @retval 返回錯誤描述資訊
         * @operationtype 同步操作
         * @ingroup G_T_Error
         */

@@ -17,7 +17,7 @@
 /**
  * @file    cmnlib.h
  *
- * 宏函数定义 (common lib)
+ * 巨集函式定義 (common lib)
  *
  * @version $Id$
  * @since   2011/07/07
@@ -42,10 +42,10 @@
 
 
 /*
- * 平台特定的头文件
+ * 平臺特定的標頭檔案
  */
 #if ! defined (__APPLE__)
-/* 新版本MacOS下混合编译时该头文件会报编译错误 */
+/* 新版本MacOS下混合編譯時該標頭檔案會報編譯錯誤 */
 #   include <math.h>
 #endif
 
@@ -56,23 +56,23 @@ extern "C" {
 
 
 /* ===================================================================
- * 常量定义
+ * 常量定義
  * =================================================================== */
 
-/* 用于浮点数的精度偏差 */
+/* 用於浮點數的精度偏差 */
 #define SPK_FLOAT_WINDAGE               (0.0000001F)
-/* 用于浮点数舍入的精度偏差 */
+/* 用於浮點數舍入的精度偏差 */
 #define SPK_FLOAT_ROUNDING_WINDAGE      (0.5000001F)
 
-/* 用于浮点数的精度偏差 */
+/* 用於浮點數的精度偏差 */
 #define SPK_DOUBLE_WINDAGE              (0.0000000001)
-/* 用于浮点数舍入的精度偏差 */
+/* 用於浮點數舍入的精度偏差 */
 #define SPK_DOUBLE_ROUNDING_WINDAGE     (0.5000000001)
 /* -------------------------           */
 
 
 /* ===================================================================
- * 宏函数定义 (数学函数)
+ * 巨集函式定義 (數學函式)
  * =================================================================== */
 
 #undef  SPK_MIN
@@ -87,7 +87,7 @@ extern "C" {
 #undef  SPK_ABS
 #define SPK_ABS(x)                      ((x) >= 0 ? (x) : -(x))
 
-/* 若x大于等于0则返回x, 否则返回0 */
+/* 若x大於等於0則返回x, 否則返回0 */
 #undef  SPK_FLOOR_ZERO
 #define SPK_FLOOR_ZERO(x)               ((x) > 0 ? (x) : 0)
 
@@ -121,7 +121,7 @@ extern "C" {
 
 
 /*
- * 对浮点数进行乘法操作，并返回转换为整型数值后的结果
+ * 對浮點數進行乘法操作，並返回轉換為整型數值後的結果
  */
 #undef  SPK_FLOAT_TO_INT32
 #undef  SPK_FLOAT_TO_INT64
@@ -136,7 +136,7 @@ extern "C" {
 #define SPK_TO_DOUBLE                   SPK_SIGNED_TO_DOUBLE
 
 
-/* 对浮点数进行转换操作 (不考虑为负的情况) */
+/* 對浮點數進行轉換操作 (不考慮為負的情況) */
 #undef  SPK_UNSIGNED_FLOAT_TO_INT32
 #undef  SPK_UNSIGNED_FLOAT_TO_INT64
 #undef  SPK_UNSIGNED_DOUBLE_TO_INT32
@@ -159,7 +159,7 @@ extern "C" {
         ( ((double) (i) / (multiplier)) + SPK_DOUBLE_WINDAGE )
 
 
-/* 对浮点数进行转换操作 (支持负数) */
+/* 對浮點數進行轉換操作 (支援負數) */
 #undef  SPK_SIGNED_FLOAT_TO_INT32
 #undef  SPK_SIGNED_FLOAT_TO_INT64
 #undef  SPK_SIGNED_DOUBLE_TO_INT32
@@ -193,26 +193,26 @@ extern "C" {
 /* -------------------------           */
 
 
-/* 计算数组长度 */
+/* 計算陣列長度 */
 #undef  SPK_DIM
 #define SPK_DIM(x)                      (sizeof((x)) / sizeof((x)[0]))
 
-/* 若x小于等于0则返回v, 否则返回x */
+/* 若x小於等於0則返回v, 否則返回x */
 #undef  SPK_IF_ZERO
 #define SPK_IF_ZERO(x,v)                ((x) > 0 ? (x) : (v))
 
-/* 若x为负数则返回v, 否则返回x */
+/* 若x為負數則返回v, 否則返回x */
 #undef  SPK_IF_NEG
 #define SPK_IF_NEG(x,v)                 ((x) < 0 ? (v) : (x))
 
-/* 若x为非负数则返回v, 否则返回x */
+/* 若x為非負數則返回v, 否則返回x */
 #undef  SPK_IF_NONNEG
 #define SPK_IF_NONNEG(x,v)              ((x) < 0 ? (x) : (v))
 /* -------------------------           */
 
 
 /* ===================================================================
- * 宏函数定义 (字符处理)
+ * 巨集函式定義 (字元處理)
  * =================================================================== */
 
 #undef  SPK_ISASCII
@@ -300,7 +300,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 宏函数定义 (字节序转换)
+ * 巨集函式定義 (位元組序轉換)
  * =================================================================== */
 
 #undef  SPK_SWAP_INT16
@@ -348,11 +348,11 @@ extern "C" {
 
 
 /* ===================================================================
- * 宏函数定义 (位操作函数)
+ * 巨集函式定義 (位操作函式)
  * =================================================================== */
 
 /*
- * 测试相应位是否已设置
+ * 測試相應位是否已設定
  */
 #undef  SPK_BITS_ISSET
 #define SPK_BITS_ISSET(x, f)            ( ((x) & (f)) == (f) )
@@ -361,7 +361,7 @@ extern "C" {
 #define SPK_BITS_ISSET_ANY(x, f)        ( ((x) & (f)) != 0 )
 
 /*
- * 设置相应位
+ * 設定相應位
  */
 #undef  SPK_BITS_SET
 #define SPK_BITS_SET(x, f)              ( (x) | (f) )
@@ -370,7 +370,7 @@ extern "C" {
 #define SPK_BITS_SET_DIRECT(x, f)       ( (x) |= (f) )
 
 /*
- * 清除相应位
+ * 清除相應位
  */
 #undef  SPK_BITS_CLR
 #define SPK_BITS_CLR(x, f)              ( (x) & ~(f) )
@@ -393,13 +393,13 @@ extern "C" {
 
 
 /*
- * 测试相应位是否已设置
+ * 測試相應位是否已設定
  */
 #undef  SPK_BITS_ISSET_N
 #define SPK_BITS_ISSET_N(x, n)          ( ((x) & (1 << (n))) > 0 )
 
 /*
- * 设置相应位
+ * 設定相應位
  */
 #undef  SPK_BITS_SET_N
 #define SPK_BITS_SET_N(x, n)            ( (x) | (1 << (n)) )
@@ -408,7 +408,7 @@ extern "C" {
 #define SPK_BITS_SET_N_DIRECT(x, n)     ( (x) |= (1 << (n)) )
 
 /*
- * 清除相应位
+ * 清除相應位
  */
 #undef  SPK_BITS_CLR_N
 #define SPK_BITS_CLR_N(x, n)            ( (x) & ~(1 << (n)) )
@@ -419,30 +419,30 @@ extern "C" {
 
 
 /* ===================================================================
- * 宏函数定义 (指针判断)
+ * 巨集函式定義 (指標判斷)
  * =================================================================== */
 
 /*
- * 若x为空则返回v
+ * 若x為空則返回v
  */
 #undef  SPK_IF_NULL
 #define SPK_IF_NULL(x,v)                ((void*) (x) == (void*) 0 ? (v) : (x))
 
 /*
- * 若x为空则返回v, 不为空返回z
+ * 若x為空則返回v, 不為空返回z
  */
 #undef  SPK_SWITCH_NULL
 #define SPK_SWITCH_NULL(x,v,y)          ((void*) (x) == (void*) 0 ? (v) : (y))
 
 /*
- * 若字符串s为空则返回"NULL", 否则返回s
+ * 若字串s為空則返回"NULL", 否則返回s
  */
 #undef  SPK_SWITCH_NULL_STR
 #define SPK_SWITCH_NULL_STR(s)          \
         ((void*) (s) == (void*) 0 ? "NULL" : (s))
 
 /*
- * 若x为空则返回字符串"IS-NULL", 否则返回字符串"NOT-NULL"
+ * 若x為空則返回字串"IS-NULL", 否則返回字串"NOT-NULL"
  */
 #undef  SPK_ANNOUNCE_IS_NULL
 #define SPK_ANNOUNCE_IS_NULL(x)         \
@@ -451,11 +451,11 @@ extern "C" {
 
 
 /* ===================================================================
- * 忙等待方法定义
+ * 忙等待方法定義
  * =================================================================== */
 
 /*
- * 根据构建类型设置忙等待策略
+ * 根據構建型別設定忙等待策略
  */
 #if defined (__DEBUG)
 #   if ! defined (BUSY_YIELD_TO_SLEEP) && ! defined (NO_BUSY_YIELD_TO_SLEEP)
@@ -475,22 +475,22 @@ extern "C" {
 
 
 /*
- * 忙等待级别定义
+ * 忙等待級別定義
  */
 typedef enum _eSpkBusyPollLevel {
-    SPK_BUSY_POLL_LEVEL_BUSY_WAITING    = 0,    /* 忙等待级别-忙等待 */
-    SPK_BUSY_POLL_LEVEL_SCHED_YIELD     = 1,    /* 忙等待级别-让出CPU */
-    SPK_BUSY_POLL_LEVEL_SLEEP_YIELD     = 2,    /* 忙等待级别-以睡眠的方式让出CPU(睡眠1纳秒或1微秒) */
-    SPK_BUSY_POLL_LEVEL_SLEEP           = 3,    /* 忙等待级别-睡眠(睡眠1毫秒) */
+    SPK_BUSY_POLL_LEVEL_BUSY_WAITING    = 0,    /* 忙等待級別-忙等待 */
+    SPK_BUSY_POLL_LEVEL_SCHED_YIELD     = 1,    /* 忙等待級別-讓出CPU */
+    SPK_BUSY_POLL_LEVEL_SLEEP_YIELD     = 2,    /* 忙等待級別-以睡眠的方式讓出CPU(睡眠1納秒或1微秒) */
+    SPK_BUSY_POLL_LEVEL_SLEEP           = 3,    /* 忙等待級別-睡眠(睡眠1毫秒) */
     __MAX_SPK_BUSY_POLL_LEVEL           = 1000
 } eSpkBusyPollLevelT;
 /* -------------------------           */
 
 
 /*
- * 根据忙等待级别进行忙等待时的睡眠处理
+ * 根據忙等待級別進行忙等待時的睡眠處理
  *
- * @param   BUSY_POLL_LEVEL 忙等待级别定义 @see eSpkBusyPollLevelT
+ * @param   BUSY_POLL_LEVEL 忙等待級別定義 @see eSpkBusyPollLevelT
  */
 #undef  SPK_BUSY_POLL_YIELD
 #define SPK_BUSY_POLL_YIELD(BUSY_POLL_LEVEL)    \
@@ -511,7 +511,7 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /*
- * 用于忙等待时的睡眠处理
+ * 用於忙等待時的睡眠處理
  */
 #undef  SPK_BUSY_YIELD
 #if defined (BUSY_YIELD_TO_WAITING)
@@ -559,7 +559,7 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /*
- * 用于忙等待时的睡眠处理
+ * 用於忙等待時的睡眠處理
  */
 #undef  SPK_BUSY_SLEEP
 #define SPK_BUSY_SLEEP(LOOP_VAR)                \
@@ -582,7 +582,7 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /*
- * 忙等待, 直至条件不再成立
+ * 忙等待, 直至條件不再成立
  */
 #undef  SPK_BUSY_WAITING
 #define SPK_BUSY_WAITING(COND)                  \
@@ -595,7 +595,7 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /*
- * 忙等待, 直至条件不再成立
+ * 忙等待, 直至條件不再成立
  */
 #undef  SPK_BUSY_YIELD_WAITING
 #if defined (BUSY_YIELD_TO_WAITING)
@@ -618,7 +618,7 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /*
- * 忙等待, 直至条件不再成立
+ * 忙等待, 直至條件不再成立
  */
 #undef  SPK_BUSY_SLEEP_WAITING
 #define SPK_BUSY_SLEEP_WAITING(COND)            \
@@ -632,20 +632,20 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /* ===================================================================
- * 忙等待操作块定义
+ * 忙等待操作塊定義
  * =================================================================== */
 
 /*
- * 忙等待操作块
- * 忙等待, 直至条件不再成立
+ * 忙等待操作塊
+ * 忙等待, 直至條件不再成立
  *
- * <p>同步块由3个宏组成:<ul>
+ * <p>同步塊由3個巨集組成:<ul>
  * <li> ● _YIELD_WAITING_BEGIN </li>
  * <li> ● _YIELD_WAITING_ELSE </li>
  * <li> ● _YIELD_WAITING_END </li>
  * </ul></p>
  *
- * <p>忙等待操作块示例: <pre>
+ * <p>忙等待操作塊示例: <pre>
  *      _YIELD_WAITING_BEGIN(! isXxxCompleted) {
  *          // do something
  *          ...;
@@ -657,7 +657,7 @@ typedef enum _eSpkBusyPollLevel {
  *      _YIELD_WAITING_END();
  * </pre></p>
  *
- * @param   COND    忙等待的等待条件
+ * @param   COND    忙等待的等待條件
  */
 #if !defined (_YIELD_WAITING_BEGIN)
 #if defined (BUSY_YIELD_TO_WAITING)
@@ -735,16 +735,16 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /*
- * 忙等待操作块
- * 忙等待, 直至条件不再成立
+ * 忙等待操作塊
+ * 忙等待, 直至條件不再成立
  *
- * <p>同步块由3个宏组成:<ul>
+ * <p>同步塊由3個巨集組成:<ul>
  * <li> ● _SLEEP_WAITING_BEGIN </li>
  * <li> ● _SLEEP_WAITING_ELSE </li>
  * <li> ● _SLEEP_WAITING_END </li>
  * </ul></p>
  *
- * <p>忙等待操作块示例: <pre>
+ * <p>忙等待操作塊示例: <pre>
  *      _SLEEP_WAITING_BEGIN(! isXxxCompleted) {
  *          // do something
  *          ...;
@@ -756,7 +756,7 @@ typedef enum _eSpkBusyPollLevel {
  *      _SLEEP_WAITING_END();
  * </pre></p>
  *
- * @param   COND    忙等待的等待条件
+ * @param   COND    忙等待的等待條件
  */
 #if !defined (_SLEEP_WAITING_BEGIN)
 #   define  _SLEEP_WAITING_BEGIN(COND)          \
@@ -790,7 +790,7 @@ typedef enum _eSpkBusyPollLevel {
 
 
 /* ===================================================================
- * 检查是否需要使用 tcmalloc 或 jemalloc
+ * 檢查是否需要使用 tcmalloc 或 jemalloc
  * =================================================================== */
 
 #if defined (USE_TCMALLOC)

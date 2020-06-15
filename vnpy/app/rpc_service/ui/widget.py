@@ -22,11 +22,11 @@ class RpcManager(QtWidgets.QWidget):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("RPC服务")
+        self.setWindowTitle("RPC服務")
         self.setFixedWidth(900)
         self.setFixedHeight(500)
 
-        self.start_button = QtWidgets.QPushButton("启动")
+        self.start_button = QtWidgets.QPushButton("啟動")
         self.start_button.clicked.connect(self.start_server)
 
         self.stop_button = QtWidgets.QPushButton("停止")
@@ -48,8 +48,8 @@ class RpcManager(QtWidgets.QWidget):
         self.log_monitor.setReadOnly(True)
 
         form = QtWidgets.QFormLayout()
-        form.addRow("请求响应地址", self.rep_line)
-        form.addRow("事件广播地址", self.pub_line)
+        form.addRow("請求響應地址", self.rep_line)
+        form.addRow("事件廣播地址", self.pub_line)
 
         hbox = QtWidgets.QHBoxLayout()
         hbox.addLayout(form)

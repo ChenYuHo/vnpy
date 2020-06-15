@@ -14,7 +14,7 @@ from vnpy.app.cta_strategy import (
 class DualThrustStrategy(CtaTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     fixed_size = 1
     k1 = 0.4
@@ -56,7 +56,7 @@ class DualThrustStrategy(CtaTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

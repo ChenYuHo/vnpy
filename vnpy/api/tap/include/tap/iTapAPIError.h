@@ -3,7 +3,7 @@
 
 //=============================================================================
 /**
- *    \addtogroup G_ERR_INNER_API        ITapAPI内部返回的错误码定义。
+ *    \addtogroup G_ERR_INNER_API        ITapAPI內部返回的錯誤碼定義。
  *    @{
  */
 //=============================================================================
@@ -14,406 +14,406 @@ namespace ITapTrade
 
     //=============================================================================
     /**
-    *    \addtogroup G_ERR_LOGIN        登录过程错误
+    *    \addtogroup G_ERR_LOGIN        登入過程錯誤
     *    @{
     */
     //=============================================================================
-    //! 登录过程执行错误
+    //! 登入過程執行錯誤
     const int            TAPIERROR_LOGIN = 10001;
-    //! 登录用户不存在
+    //! 登入使用者不存在
     const int            TAPIERROR_LOGIN_USER = 10002;
-    //! 需要进行动态认证
+    //! 需要進行動態認證
     const int            TAPIERROR_LOGIN_DDA = 10003;
-    //! 登录用户未授权
+    //! 登入使用者未授權
     const int            TAPIERROR_LOGIN_LICENSE = 10004;
-    //! 登录模块不正确
+    //! 登入模組不正確
     const int            TAPIERROR_LOGIN_MODULE = 10005;
-    //! 需要强制修改密码
+    //! 需要強制修改密碼
     const int            TAPIERROR_LOGIN_FORCE = 10006;
-    //! 登录状态禁止登陆
+    //! 登入狀態禁止登陸
     const int            TAPIERROR_LOGIN_STATE = 10007;
-    //! 登录密码不正确
+    //! 登入密碼不正確
     const int            TAPIERROR_LOGIN_PASS = 10008;
-    //! 没有该模块登录权限
+    //! 沒有該模組登入許可權
     const int            TAPIERROR_LOGIN_RIGHT = 10009;
-    //! 登录数量超限
+    //! 登入數量超限
     const int            TAPIERROR_LOGIN_COUNT = 10010;
-    //! 登录用户不在服务器标识下可登录用户列表中
+    //! 登入使用者不在伺服器標識下可登入使用者列表中
     const int            TAPIERROR_LOGIN_NOTIN_SERVERFLAGUSRES = 10011;
-    //! 登录用户已被冻结
+    //! 登入使用者已被凍結
     const int            TAPIERROR_LOGIN_FREEZE = 10012;
-    //! 密码错误，用户冻结
+    //! 密碼錯誤，使用者凍結
     const int            TAPIERROR_LOGIN_TOFREEZE = 10013;
-    //! 客户状态不允许登录
+    //! 客戶狀態不允許登入
     const int            TAPIERROR_LOGIN_ACCOUNTSTATE = 10014;
-    //! 需要进行二次认证
+    //! 需要進行二次認證
     const int            TAPIERROR_LOGIN_SECCERTIFI = 10015;
 
-    //未绑定二次认证信息
+    //未繫結二次認證資訊
     const int          TAPIERROR_LOGIN_NOSECONDSET = 10016;
-    //不受信任的计算机登录
+    //不受信任的計算機登入
     const int          TAPIERROR_LOGIN_NOTURSTHOST = 10017;
-    //!    二次验证失败
+    //!    二次驗證失敗
     const int          TAPITAPIERROR_SECONDCERTIFICATION_FAIL = 14001;
-    //!    二次验证超时
+    //!    二次驗證超時
     const int          TAPITAPIERROR_SECONDCERTIFICATION_TIMEOVER = 14002;
 
     //=============================================================================
-    //! 数据库连接失败
+    //! 資料庫連線失敗
     const int            TAPIERROR_CONN_DATABASE = 11000;
-    //! 数据库操作失败
+    //! 資料庫操作失敗
     const int            TAPIERROR_OPER_DATABASE = 11001;
-    //! 不允许一对多
+    //! 不允許一對多
     const int            TAPIERROR_NEED_ONETOONE = 11002;
-    //! 删除失败-存在关联信息，
+    //! 刪除失敗-存在關聯資訊，
     const int            TAPIERROR_EXIST_RELATEINFO = 11003;
-    //! 删除分组失败-分组有下属或在操作员下属中
+    //! 刪除分組失敗-分組有下屬或在操作員下屬中
     const int            TAPIERROR_EXIST_RELATEINFOOFGROUP = 11004;
 
-    //! 登录用户密码修改失败-原始密码错误
+    //! 登入使用者密碼修改失敗-原始密碼錯誤
     const int            TAPIERROR_USERPASSWORD_MOD_SOURCE = 12001;
-    //! 登录用户密码修改失败-不能与前n次密码相同
+    //! 登入使用者密碼修改失敗-不能與前n次密碼相同
     const int            TAPIERROR_USERPASSWORD_MOD_SAME = 12002;
 
-    //! 登录用户密码修改失败-新密码不符合密码复杂度要求
+    //! 登入使用者密碼修改失敗-新密碼不符合密碼複雜度要求
     const int          TAPIERROR_USERPASSWORD_MOD_COMPLEXITY = 12003;
 
-    //! 一个币种组只能设置一个基币
+    //! 一個幣種組只能設定一個基幣
     const int            TAPIERROR_CURRENCY_ONLY_ONEBASE = 13001;
-    //! 基币只能是美元或港币
+    //! 基幣只能是美元或港幣
     const int            TAPIERROR_CURRENCY_ONLY_USDHKD = 13002;
 
 
     //=============================================================================
     /**
-    *    \addtogroup G_ERR_TRADE_SERVICE        交易服务错误代码定义
+    *    \addtogroup G_ERR_TRADE_SERVICE        交易服務錯誤程式碼定義
     *    @{
     */
     //=============================================================================
 
-    //! 资金账号不存在
+    //! 資金賬號不存在
     const int            TAPIERROR_ORDERINSERT_ACCOUNT = 60001;
-    //! 资金账号状态不正确
+    //! 資金賬號狀態不正確
     const int            TAPIERROR_ORDERINSERT_ACCOUNT_STATE = 60002;
-    //! 资金账号交易中心不一致
+    //! 資金賬號交易中心不一致
     const int            TAPIERROR_ORDERINSERT_TRADECENT_ERROR = 60003;
 
-    //! 下单无效的合约
+    //! 下單無效的合約
     const int            TAPIERROR_ORDERINSERT_CONTRACT = 60011;
-    //! LME未准备就绪
+    //! LME未準備就緒
     const int            TAPIERROR_ORDERINSERT_LME_NOTREADY = 60012;
-    //!不支持的下单类型
+    //!不支援的下單型別
     const int            TAPIERROR_ORDERINSERT_ERROR_ORDER_TYPE = 60013;
-    //!错误的埋单类型
+    //!錯誤的埋單型別
     const int            TAPIERROR_ORDERINSERT_READY_TYPE_ERROR = 60014;
-    //!不合法的委托类型
+    //!不合法的委託型別
     const int            TAPIERROR_ORDERINSERT_ORDER_TYPE_ERROR = 60015;
 
-    //! 客户权限禁止交易
+    //! 客戶許可權禁止交易
     const int            TAPIERROR_ORDER_NOTRADE_ACCOUNT = 60021;
-    //! 客户品种分组禁止交易
+    //! 客戶品種分組禁止交易
     const int            TAPIERROR_ORDER_NOTRADE_COM_GROUP = 60022;
-    //! 客户合约特设禁止交易
+    //! 客戶合約特設禁止交易
     const int            TAPIERROR_ORDER_NOTRADE_ACC_CONTRACT = 60023;
-    //! 系统权限禁止交易
+    //! 系統許可權禁止交易
     const int            TAPIERROR_ORDER_NOTRADE_SYSTEM = 60024;
-    //! 客户权限只可平仓
+    //! 客戶許可權只可平倉
     const int            TAPIERROR_ORDER_CLOSE_ACCOUNT = 60025;
-    //! 客户合约特设只可平仓
+    //! 客戶合約特設只可平倉
     const int            TAPIERROR_ORDER_CLOSE_ACC_CONTRACT = 60026;
-    //! 系统权限只可平仓
+    //! 系統許可權只可平倉
     const int            TAPIERROR_ORDER_CLOSE_SYSTEM = 60027;
-    //! 只可平仓提前天数限制只可平仓
+    //! 只可平倉提前天數限制只可平倉
     const int            TAPIERROR_ORDER_CLOSE_DAYS = 60028;
-    //! 客户品种风控权限禁止交易
+    //! 客戶品種風控許可權禁止交易
     const int            TAPIERROR_ORDER_NOTRADE_RISK = 60029;
-    //! 客户品种风控权限只可平仓
+    //! 客戶品種風控許可權只可平倉
     const int            TAPIERROR_ORDER_CLOSE_RISK = 60030;
 
-    //! 持仓量超过最大限制
+    //! 持倉量超過最大限制
     const int            TAPIERROR_ORDERINSERT_POSITIONMAX = 60031;
-    //! 下单超过单笔最大量
+    //! 下單超過單筆最大量
     const int            TAPIERROR_ORDERINSERT_ONCEMAX = 60032;
-    //! 下单合约无交易路由
+    //! 下單合約無交易路由
     const int            TAPIERROR_ORDERINSERT_TRADEROUTE = 60033;
-    //! 委托价格超出偏离范围
+    //! 委託價格超出偏離範圍
     const int            TAPIERROR_ORDER_IN_MOD_PRICE_ERROR = 60034;
-    //! 超过GiveUp最大持仓量
+    //! 超過GiveUp最大持倉量
     const int            TAPIERROR_ORDER_IN_GIVEUP_POS_MAX = 60035;
 
 
-    //! 未登录网关
+    //! 未登入閘道器
     const int          TAPIERROR_UPPERCHANNEL_NOT_LOGIN = 60041;
-    //! 未找到网关信息
+    //! 未找到閘道器資訊
     const int          TAPIERROR_UPPERCHANNEL_NOT_FOUND = 60042;
 
-    //! 下单资金不足
+    //! 下單資金不足
     const int            TAPIERROR_ORDERINSERT_NOTENOUGHFUND = 60051;
-    //! 手续费参数错误
+    //! 手續費引數錯誤
     const int            TAPIERROR_ORDERINSERT_FEE = 60052;
-    //! 保证金参数错误
+    //! 保證金引數錯誤
     const int            TAPIERROR_ORDERINSERT_MARGIN = 60053;
-    //! 总基币资金不足
+    //! 總基幣資金不足
     const int            TAPIERROR_ORDERINSERT_BASENOFUND = 60054;
 
-    //! 超过保证金额度
+    //! 超過保證金額度
     const int            TAPIERROR_ORDERINSERT_MARGINAMOUNT = 60055;
-    //! 总基币超过开仓比例限制
+    //! 總基幣超過開倉比例限制
     const int            TAPIERROR_ORDERINSERT_OPENRATIO = 60056;
-    //! 独立币种组超过开仓比例限制
+    //! 獨立幣種組超過開倉比例限制
     const int            TAPIERROR_ORDERINSERT_GROUP_OPENRATIO = 60057;
-    //! 风险阵列参数错误
+    //! 風險陣列引數錯誤
     const int            TAPIERROR_ORDERINSERT_RISKARRAY = 60058;
 
-    //! 撤单无此系统号
+    //! 撤單無此係統號
     const int          TAPIERROR_ORDERDELETE_NOT_SYSNO = 60061;
-    //! 此状态不允许撤单
+    //! 此狀態不允許撤單
     const int          TAPIERROR_ORDERDELETE_NOT_STATE = 60062;
-    //! 录单不允许撤单
+    //! 錄單不允許撤單
     const int          TAPIERROR_ORDERDELETE_NO_INPUT = 60063;
 
-    //! 此状态不允许改单
+    //! 此狀態不允許改單
     const int            TAPIERROR_ORDERMODIFY_NOT_STATE = 60071;
-    //! 人工单不允许改单
+    //! 人工單不允許改單
     const int            TAPIERROR_ORDERMODIFY_BACK_INPUT = 60072;
-    //! 风险报单不允许改单
+    //! 風險報單不允許改單
     const int            TAPIERROR_ORDERMODIFY_RISK_ORDER = 60073;
-    //! 成交量大于改单量
+    //! 成交量大於改單量
     const int            TAPIERROR_ORDERMODIFY_ERROR_QTY = 60074;
-    //! 预埋单不允许改单
+    //! 預埋單不允許改單
     const int            TAPIERROR_ORDERMODIFY_ERROR_READY = 60075;
 
-    //! 已删除报单不能转移
+    //! 已刪除報單不能轉移
     const int            TAPIERROR_ORDERINPUT_CANNOTMOVE = 60081;
 
-    //! 录单重复
+    //! 錄單重複
     const int            TAPIERROR_ORDERINPUT_REPEAT = 60091;
 
-    //! 合约行情价格修改失败
+    //! 合約行情價格修改失敗
     const int            TAPIERROR_CONTRACT_QUOTE = 60101;
 
-    //! 下单超过上手单笔最大量
+    //! 下單超過上手單筆最大量
     const int            TAPIERROR_UPPER_ONCEMAX = 60111;
-    //! 下单超过上手最大持仓量
+    //! 下單超過上手最大持倉量
     const int            TAPIERROR_UPPER_POSITIONMAX = 60112;
 
-    //! 开平方式错误
+    //! 開平方式錯誤
     const int            TAPIERROR_ORDERINSERT_CLOSEMODE = 60121;
-    //! 委托平仓持仓不足
+    //! 委託平倉持倉不足
     const int            TAPIERROR_CLOSE_ORDER = 60122;
-    //! 成交平仓失败
+    //! 成交平倉失敗
     const int            TAPIERROR_CLOSE_MATCH = 60123;
 
-    //! 未找到本地委托
+    //! 未找到本地委託
     const int            TAPIERROR_MOD_DEL_NO_ORDER = 60131;
-    //! 与网关断开连接
+    //! 與閘道器斷開連線
     const int            TAPIERROR_MOD_DEL_GATEWAY_DISCON = 60132;
 
-    //! 录单成交重复
+    //! 錄單成交重複
     const int            TAPIERROR_MATCHINPUT_REPEAT = 60141;
-    //! 录单成交未找到对应委托
+    //! 錄單成交未找到對應委託
     const int            TAPIERROR_MATCHINPUT_NO_ORDER = 60142;
-    //! 录单成交合约不存在
+    //! 錄單成交合約不存在
     const int            TAPIERROR_MATCHINPUT_NO_CONTRACT = 60143;
-    //! 录单成交参数错误
+    //! 錄單成交引數錯誤
     const int            TAPIERROR_MATCHINPUT_PARM_ERROR = 60144;
-    //! 录单成交委托状态错误
+    //! 錄單成交委託狀態錯誤
     const int            TAPIERROR_MATCHINPUT_OSTATE_ERROR = 60145;
 
-    //! 成交删除未找到成交
+    //! 成交刪除未找到成交
     const int            TAPIERROR_MATCHREMOVE_NO_MATCH = 60151;
-    //! 此状态成交不可删
+    //! 此狀態成交不可刪
     const int            TAPIERROR_MATCHREMOVE_STATE_ERROR = 60152;
 
-    //! 不允许录入此状态订单
+    //! 不允許錄入此狀態訂單
     const int            TAPIERROR_ORDERINPUT_STATE_ERROR = 60161;
-    //! 错误的修改订单请求
+    //! 錯誤的修改訂單請求
     const int            TAPIERROR_ORDERINPUT_MOD_ERROR = 60162;
-    //! 订单不可删，存在对应成交
+    //! 訂單不可刪，存在對應成交
     const int            TAPIERROR_ORDERREMOVE_ERROR = 60163;
-    //! 不合法的委托状态
+    //! 不合法的委託狀態
     const int            TAPIERROR_ORDERINPUT_MOD_STATE_ERROR = 60164;
-    //! 此状态不允许订单转移
+    //! 此狀態不允許訂單轉移
     const int            TAPIERROR_ORDEREXCHANGE_STATE_ERROR = 60165;
-    //! 订单不允许删除
+    //! 訂單不允許刪除
     const int            TAPIERROR_ORDERREMOVE_NOT_ERROR = 60166;
 
-    //! 做市商双边撤单未找到委托
+    //! 做市商雙邊撤單未找到委託
     const int            TAPIERROR_ORDERMARKET_DELETE_NOTFOUND = 60171;
-    //! 做市商双边撤单客户不一致
+    //! 做市商雙邊撤單客戶不一致
     const int            TAPIERROR_ORDERMARKET_DEL_ACCOUNT_NE = 60172;
-    //! 做市商双边撤单品种不一致
+    //! 做市商雙邊撤單品種不一致
     const int            TAPIERROR_ORDERMARKET_DEL_COMMODITY_NE = 60173;
-    //! 做市商双边撤单合约不一致
+    //! 做市商雙邊撤單合約不一致
     const int            TAPIERROR_ORDERMARKET_DEL_CONTRACT_NE = 60174;
-    //! 做市商双边撤单买卖方向相同
+    //! 做市商雙邊撤單買賣方向相同
     const int            TAPIERROR_ORDERMARKET_DEL_SIDE_EQ = 60175;
-    //! 做市商双边撤单买卖方向错误
+    //! 做市商雙邊撤單買賣方向錯誤
     const int            TAPIERROR_ORDERMARKET_DEL_SIDE_ERROR = 60176;
-    //! 做市商单边检查未通过
+    //! 做市商單邊檢查未通過
     const int            TAPIERROR_ORDERMARKET_OTHER_SIDE_ERROR = 60177;
 
-    //! 埋单激活失败，订单未找到
+    //! 埋單啟用失敗，訂單未找到
     const int            TAPIERROR_ORDERACTIVATE_NOTFOUND_ERROR = 60181;
-    //! 埋单激活失败，非有效状态
+    //! 埋單啟用失敗，非有效狀態
     const int            TAPIERROR_ORDERACTIVATE_STATE_ERROR = 60182;
     //=============================================================================
     /**
-    *    \addtogroup G_ERR_GATE_WAY        网关错误代码定义
+    *    \addtogroup G_ERR_GATE_WAY        閘道器錯誤程式碼定義
     *    @{
     */
     //=============================================================================
 
-    //! 网关未就绪，未连接上手
+    //! 閘道器未就緒，未連線上手
     const int            TAPIERROR_GW_NOT_READY = 80001;
-    //! 品种错误
+    //! 品種錯誤
     const int            TAPIERROR_GW_INVALID_COMMODITY = 80002;
-    //! 合约错误
+    //! 合約錯誤
     const int            TAPIERROR_GW_INVALID_CONTRACT = 80003;
-    //! 报单字段有误
+    //! 報單欄位有誤
     const int            TAPIERROR_GW_INVALID_FIELD = 80004;
-    //! 价格不合法
+    //! 價格不合法
     const int            TAPIERROR_GW_INVALID_PRICE = 80005;
-    //! 数量不合法
+    //! 數量不合法
     const int            TAPIERROR_GW_INVALID_VOLUME = 80006;
-    //! 报单类型不合法
+    //! 報單型別不合法
     const int            TAPIERROR_GW_INVALID_TYPE = 80007;
-    //! 委托模式不合法
+    //! 委託模式不合法
     const int            TAPIERROR_GW_INVALID_MODE = 80008;
-    //! 委托不存在（改单、撤单）
+    //! 委託不存在（改單、撤單）
     const int            TAPIERROR_GW_ORDER_NOT_EXIST = 80009;
-    //! 发送报单失败
+    //! 傳送報單失敗
     const int            TAPIERROR_GW_SEND_FAIL = 80010;
-    //! 被上手拒绝
+    //! 被上手拒絕
     const int            TAPIERROR_GW_REJ_BYUPPER = 80011;
 
     //=============================================================================
     /**
-    *    \addtogroup G_ERR_FRONT_SERVICE        前置返回错误
+    *    \addtogroup G_ERR_FRONT_SERVICE        前置返回錯誤
     *    @{
     */
     //=============================================================================
 
-    //! 前置不允许该模块登录
+    //! 前置不允許該模組登入
     const int            TAPIERROR_TRADEFRONT_MODULETYPEERR = 90001;
-    //! 一次请求太多数据
+    //! 一次請求太多資料
     const int            TAPIERROR_TRADEFRONT_TOOMANYDATA = 90002;
-    //! 前置没有所要数据
+    //! 前置沒有所要資料
     const int            TAPIERROR_TRADEFRONT_NODATA = 90003;
-    //! 所查询的操作员信息不存在
+    //! 所查詢的操作員資訊不存在
     const int            TAPIERROT_TRADEFRONT_NOUSER = 90004;
 
-    //! 前置与交易断开
+    //! 前置與交易斷開
     const int            TAPIERROR_TRADEFRONT_DISCONNECT_TRADE = 90011;
-    //! 前置与管理断开
+    //! 前置與管理斷開
     const int            TAPIERROR_TRADEFRONT_DISCONNECT_MANAGE = 90012;
 
-    //! 下属资金账号不存在
+    //! 下屬資金賬號不存在
     const int            TAPIERROR_TRADEFRONT_ACCOUNT = 90021;
-    //! 该操作员不允许交易
+    //! 該操作員不允許交易
     const int            TAPIERROR_TRADEFRONT_ORDER = 90022;
-    //! 查询频率过快
+    //! 查詢頻率過快
     const int            TAPIERROR_TRADEFRONT_FREQUENCY = 90023;
-    //! 该授权不予许登录
+    //! 該授權不予許登入
     const int            TAPIERROR_TRADEFRONT_RUFUSE = 90024;
-    //! 自成交验证不通过
+    //! 自成交驗證不通過
     const int            TAPIERROR_TRADEFRONT_SELFMATCH = 90025;
     
     const int TAPIERROR_SUCCEED                                            = 0;
-    //! 连接服务失败
+    //! 連線服務失敗
     const int TAPIERROR_ConnectFail                                        = -1;
-    //! 链路认证失败
+    //! 鏈路認證失敗
     const int TAPIERROR_LinkAuthFail                                       = -2;
-    //! 主机地址不可用
+    //! 主機地址不可用
     const int TAPIERROR_HostUnavailable                                    = -3;
-    //! 发送数据错误
+    //! 傳送資料錯誤
     const int TAPIERROR_SendDataError                                      = -4;
-    //! 测试编号不合法
+    //! 測試編號不合法
     const int TAPIERROR_TestIDError                                        = -5;
-    //! 没准备好测试网络
+    //! 沒準備好測試網路
     const int TAPIERROR_NotReadyTestNetwork                                = -6;
-    //! 当前网络测试还没结束
+    //! 當前網路測試還沒結束
     const int TAPIERROR_CurTestNotOver                                     = -7;
-    //! 没用可用的接入前置
+    //! 沒用可用的接入前置
     const int TAPIERROR_NOFrontAvailable                                   = -8;
-    //! 数据路径不可用
+    //! 資料路徑不可用
     const int TAPIERROR_DataPathAvaiable                                   = -9;
-    //! 重复登录
+    //! 重複登入
     const int TAPIERROR_RepeatLogin                                        = -10;
-    //! 内部错误    
+    //! 內部錯誤    
     const int TAPIERROR_InnerError                                         = -11;
-    //! 上一次请求还没有结束    
+    //! 上一次請求還沒有結束    
     const int TAPIERROR_LastReqNotFinish                                   = -12;
-    //! 输入参数非法    
+    //! 輸入引數非法    
     const int TAPIERROR_InputValueError                                    = -13;
-    //! 授权码不合法    
+    //! 授權碼不合法    
     const int TAPIERROR_AuthCode_Invalid                                   = -14;
-    //! 授权码超期    
+    //! 授權碼超期    
     const int TAPIERROR_AuthCode_Expired                                   = -15;
-    //! 授权码类型不匹配    
+    //! 授權碼型別不匹配    
     const int TAPIERROR_AuthCode_TypeNotMatch                              = -16;
-    //! API还没有准备好
+    //! API還沒有準備好
     const int TAPIERROR_API_NotReady                                       = -17;
-    //! UDP端口监听失败
+    //! UDP埠監聽失敗
     const int TAPIERROR_UDP_LISTEN_FAILED                                  = -18;
-    //! UDP正在监听
+    //! UDP正在監聽
     const int TAPIERROR_UDP_LISTENING                                      = -19;
-    //! 接口未实现
+    //! 介面未實現
     const int TAPIERROR_NotImplemented                                     = -20;
-    //! 每次登陆只允许调用一次
+    //! 每次登陸只允許呼叫一次
     const int TAPIERROR_CallOneTimeOnly                                        = -21;
-    //! 超过下单频率。
+    //! 超過下單頻率。
     const int TAPIERROR_ORDER_FREQUENCY                                        = -22;
-    //! 查询频率太快。
+    //! 查詢頻率太快。
     const int TAPIERROR_RENTQRY_TOOFAST                                        = -23;
 
-    //! 不符合调用条件。
+    //! 不符合呼叫條件。
     const int TAPIERROR_CALL_NOCONDITION                                    = -24;
 
 
-    //! 改单撤单时没有找到对应订单。
+    //! 改單撤單時沒有找到對應訂單。
     const int TAPIERROR_ORDER_NOTFOUND                                        = -25;
 
-    //! 日志路径为空。
+    //! 日誌路徑為空。
     const int TAPIERROR_LOGPATH_EMPTY                                        = -26;
-    //! 打开日志文件失败
+    //! 開啟日誌檔案失敗
     const int TAPIERROR_LOGPATH_FAILOPEN                                    = -27;
-    //! 没有交易员登录权限
+    //! 沒有交易員登入許可權
     const int TAPIERROR_RIGHT_TRADER = -28;
-    //! 没有订单录入或者成交录入
+    //! 沒有訂單錄入或者成交錄入
     const int TAPIERROR_RIGHT_ORDERINPUT = -29;
-    //! 没有订单修改和订单删除权限，成交删除权限
+    //! 沒有訂單修改和訂單刪除許可權，成交刪除許可權
     const int TAPIERROR_RIGHT_LOCALOPERATION = -30;
-    //! 没有订单转移权限
+    //! 沒有訂單轉移許可權
     const int TAPIERROR_RIGHT_ORDERTRANSFER = -31;
-    //! 成交录入时系统号为空
+    //! 成交錄入時系統號為空
     const int TAPIERROR_FILLINPUT_SYSTEMNO = -32;
-    //! 成交删除时成交号为空。
+    //! 成交刪除時成交號為空。
     const int TAPIERROR_FILLREMOVE_MATCHNO = -33;
 
-    //! 成交删除时没有找到对应的成交
+    //! 成交刪除時沒有找到對應的成交
     const int TAPIERROR_FILLREQMOVE_NOFUND = -34;
 
-    //! 订单修改时客户账号变动。
+    //! 訂單修改時客戶賬號變動。
     const int TAPIERROR_LOCALMODIFY_ACCOUNT = -35;
 
-    //! 订单转移时客户账号没有变动
+    //! 訂單轉移時客戶賬號沒有變動
     const int TAPIERROR_LOCALTRANSFER_ACCOUNT = -36;
 
-    //! 修改的电话密码位数不对或者包含特殊字符。
+    //! 修改的電話密碼位數不對或者包含特殊字元。
     const int TAPIERROR_INPUTERROR_PHONE = -37;
 
-    //!    未绑定的二次认证信息
+    //!    未繫結的二次認證資訊
     const int TAPIERROR_ERROR_CONTACT = -38;
 
-    //! 二次认证有效期内不能再申请二次认证码
+    //! 二次認證有效期內不能再申請二次認證碼
     const int TAPIERROR_ERROR_REJESTVERTIFICATE = -39;
 
-    //! 没有设置客户密码的权限。
+    //! 沒有設定客戶密碼的許可權。
     const int TAPIERROR_RIGHT_SETPASSWORD = -40;
-    //! 风险保单单客户无法撤销或更改
+    //! 風險保單單客戶無法撤銷或更改
     const int TAPIERROR_RISK_OPERERROR = -41;
-    //! 改单是客户账号填写与订单客户账号不一致
+    //! 改單是客戶賬號填寫與訂單客戶賬號不一致
     const int TAPIERROR_ORDER_MODACCOUNT = -42;
 
     /** @}*/
@@ -421,125 +421,125 @@ namespace ITapTrade
 
     //=============================================================================
     /**
-     *    \addtogroup G_ERR_INPUT_CHECK        输入参数检查错误
+     *    \addtogroup G_ERR_INPUT_CHECK        輸入引數檢查錯誤
      *    @{
      */
     //=============================================================================
-    //! 输入数据为NULL
+    //! 輸入資料為NULL
     const int TAPIERROR_INPUTERROR_NULL                                    = -10000;
-    //! 输入错误的:TAPIYNFLAG
+    //! 輸入錯誤的:TAPIYNFLAG
     const int TAPIERROR_INPUTERROR_TAPIYNFLAG                              = -10001;
-    //! 输入错误的:TAPILOGLEVEL
+    //! 輸入錯誤的:TAPILOGLEVEL
     const int TAPIERROR_INPUTERROR_TAPILOGLEVEL                            = -10002;
-    //! 输入错误的:TAPICommodityType
+    //! 輸入錯誤的:TAPICommodityType
     const int TAPIERROR_INPUTERROR_TAPICommodityType                       = -10003;
-    //! 输入错误的:TAPICallOrPutFlagType
+    //! 輸入錯誤的:TAPICallOrPutFlagType
     const int TAPIERROR_INPUTERROR_TAPICallOrPutFlagType                   = -10004;
-    //! 输入错误的:TAPIBucketDateFlag
+    //! 輸入錯誤的:TAPIBucketDateFlag
     const int TAPIERROR_INPUTERROR_TAPIBucketDateFlag                      = -11001;
-    //! 输入错误的:TAPIHisQuoteType
+    //! 輸入錯誤的:TAPIHisQuoteType
     const int TAPIERROR_INPUTERROR_TAPIHisQuoteType                        = -11002;
-    //! 输入错误的:TAPIAccountType
+    //! 輸入錯誤的:TAPIAccountType
     const int TAPIERROR_INPUTERROR_TAPIAccountType                         = -12001;
-    //! 输入错误的:TAPIUserTypeType
+    //! 輸入錯誤的:TAPIUserTypeType
     const int TAPIERROR_INPUTERROR_TAPIUserTypeType                        = -12002;
-    //! 输入错误的:TAPIAccountState
+    //! 輸入錯誤的:TAPIAccountState
     const int TAPIERROR_INPUTERROR_TAPIAccountState                        = -12003;
-    //! 输入错误的:TAPIAccountFamilyType
+    //! 輸入錯誤的:TAPIAccountFamilyType
     const int TAPIERROR_INPUTERROR_TAPIAccountFamilyType                   = -12004;
-    //! 输入错误的:TAPIOrderTypeType
+    //! 輸入錯誤的:TAPIOrderTypeType
     const int TAPIERROR_INPUTERROR_TAPIOrderTypeType                       = -12005;
-    //! 输入错误的:TAPIOrderSourceType
+    //! 輸入錯誤的:TAPIOrderSourceType
     const int TAPIERROR_INPUTERROR_TAPIOrderSourceType                     = -12006;
-    //! 输入错误的:TAPITimeInForceType
+    //! 輸入錯誤的:TAPITimeInForceType
     const int TAPIERROR_INPUTERROR_TAPITimeInForceType                     = -12007;
-    //! 输入错误的:TAPISideType
+    //! 輸入錯誤的:TAPISideType
     const int TAPIERROR_INPUTERROR_TAPISideType                            = -12008;
-    //! 输入错误的:TAPIPositionEffectType
+    //! 輸入錯誤的:TAPIPositionEffectType
     const int TAPIERROR_INPUTERROR_TAPIPositionEffectType                  = -12009;
-    //! 输入错误的:TAPIHedgeFlagType
+    //! 輸入錯誤的:TAPIHedgeFlagType
     const int TAPIERROR_INPUTERROR_TAPIHedgeFlagType                       = -12010;
-    //! 输入错误的:TAPIOrderStateType
+    //! 輸入錯誤的:TAPIOrderStateType
     const int TAPIERROR_INPUTERROR_TAPIOrderStateType                      = -12011;
-    //! 输入错误的:TAPICalculateModeType
+    //! 輸入錯誤的:TAPICalculateModeType
     const int TAPIERROR_INPUTERROR_TAPICalculateModeType                   = -12012;
-    //! 输入错误的:TAPIMatchSourceType
+    //! 輸入錯誤的:TAPIMatchSourceType
     const int TAPIERROR_INPUTERROR_TAPIMatchSourceType                     = -12013;
-    //! 输入错误的:TAPIOpenCloseModeType
+    //! 輸入錯誤的:TAPIOpenCloseModeType
     const int TAPIERROR_INPUTERROR_TAPIOpenCloseModeType                   = -12014;
-    //! 输入错误的:TAPIFutureAlgType
+    //! 輸入錯誤的:TAPIFutureAlgType
     const int TAPIERROR_INPUTERROR_TAPIFutureAlgType                       = -12015;
-    //! 输入错误的:TAPIOptionAlgType
+    //! 輸入錯誤的:TAPIOptionAlgType
     const int TAPIERROR_INPUTERROR_TAPIOptionAlgType                       = -12016;
-    //! 输入错误的:TAPIBankAccountLWFlagType
+    //! 輸入錯誤的:TAPIBankAccountLWFlagType
     const int TAPIERROR_INPUTERROR_TAPIBankAccountLWFlagType               = -12017;
-    //! 输入错误的:TAPIBankAccountStateType
+    //! 輸入錯誤的:TAPIBankAccountStateType
     const int TAPIERROR_INPUTERROR_TAPIBankAccountStateType                = -12018;
-    //! 输入错误的:TAPIBankAccountSwapStateType
+    //! 輸入錯誤的:TAPIBankAccountSwapStateType
     const int TAPIERROR_INPUTERROR_TAPIBankAccountSwapStateType            = -12019;
-    //! 输入错误的:TAPIBankAccountTransferStateType
+    //! 輸入錯誤的:TAPIBankAccountTransferStateType
     const int TAPIERROR_INPUTERROR_TAPIBankAccountTransferStateType        = -12020;
-    //! 输入错误的:TAPIMarginCalculateModeType
+    //! 輸入錯誤的:TAPIMarginCalculateModeType
     const int TAPIERROR_INPUTERROR_TAPIMarginCalculateModeType             = -12021;
-    //! 输入错误的:TAPIOptionMarginCalculateModeType
+    //! 輸入錯誤的:TAPIOptionMarginCalculateModeType
     const int TAPIERROR_INPUTERROR_TAPIOptionMarginCalculateModeType       = -12022;
-    //! 输入错误的:TAPICmbDirectType
+    //! 輸入錯誤的:TAPICmbDirectType
     const int TAPIERROR_INPUTERROR_TAPICmbDirectType                       = -12023;
-    //! 输入错误的:TAPIDeliveryModeType
+    //! 輸入錯誤的:TAPIDeliveryModeType
     const int TAPIERROR_INPUTERROR_TAPIDeliveryModeType                    = -12024;
-    //! 输入错误的:TAPIContractTypeType
+    //! 輸入錯誤的:TAPIContractTypeType
     const int TAPIERROR_INPUTERROR_TAPIContractTypeType                    = -12025;
-    //! 输入错误的:TAPIPartyTypeType
+    //! 輸入錯誤的:TAPIPartyTypeType
     const int TAPIERROR_INPUTERROR_TAPIPartyTypeType                       = -12026;
-    //! 输入错误的:TAPIPartyCertificateTypeType
+    //! 輸入錯誤的:TAPIPartyCertificateTypeType
     const int TAPIERROR_INPUTERROR_TAPIPartyCertificateTypeType            = -12027;
-    //! 输入错误的:TAPIMsgReceiverType
+    //! 輸入錯誤的:TAPIMsgReceiverType
     const int TAPIERROR_INPUTERROR_TAPIMsgReceiverType                     = -12028;
-    //! 输入错误的:TAPIMsgTypeType
+    //! 輸入錯誤的:TAPIMsgTypeType
     const int TAPIERROR_INPUTERROR_TAPIMsgTypeType                         = -12029;
-    //! 输入错误的:TAPIMsgLevelType
+    //! 輸入錯誤的:TAPIMsgLevelType
     const int TAPIERROR_INPUTERROR_TAPIMsgLevelType                        = -12030;
-    //! 输入错误的:TAPITransferDirectType
+    //! 輸入錯誤的:TAPITransferDirectType
     const int TAPIERROR_INPUTERROR_TAPITransferDirectType                  = -12031;
-    //! 输入错误的:TAPITransferStateType
+    //! 輸入錯誤的:TAPITransferStateType
     const int TAPIERROR_INPUTERROR_TAPITransferStateType                   = -12032;
-    //! 输入错误的:TAPITransferTypeType
+    //! 輸入錯誤的:TAPITransferTypeType
     const int TAPIERROR_INPUTERROR_TAPITransferTypeType                    = -12033;
-    //! 输入错误的:TAPITransferDeviceIDType
+    //! 輸入錯誤的:TAPITransferDeviceIDType
     const int TAPIERROR_INPUTERROR_TAPITransferDeviceIDType                = -12034;
-    //! 输入错误的:TAPITacticsTypeType
+    //! 輸入錯誤的:TAPITacticsTypeType
     const int TAPIERROR_INPUTERROR_TAPITacticsTypeType                     = -12035;
-    //! 输入错误的:TAPIORDERACT
+    //! 輸入錯誤的:TAPIORDERACT
     const int TAPIERROR_INPUTERROR_TAPIORDERACT                            = -12036;
-    //! 输入错误的:TAPIBillTypeType
+    //! 輸入錯誤的:TAPIBillTypeType
     const int TAPIERROR_INPUTERROR_TAPIBillTypeType                        = -12037;
-    //! 输入错误的:TAPIBillFileTypeType
+    //! 輸入錯誤的:TAPIBillFileTypeType
     const int TAPIERROR_INPUTERROR_TAPIBillFileTypeType                    = -12038;
-    //! 输入错误的:TAPIOFFFlagType
+    //! 輸入錯誤的:TAPIOFFFlagType
     const int TAPIERROR_INPUTERROR_TAPIOFFFlagType                         = -12039;
-    //! 输入错误的:TAPICashAdjustTypeType
+    //! 輸入錯誤的:TAPICashAdjustTypeType
     const int TAPIERROR_INPUTERROR_TAPICashAdjustTypeType                  = -12040;
-    //! 输入错误的:TAPITriggerConditionType
+    //! 輸入錯誤的:TAPITriggerConditionType
     const int TAPIERROR_INPUTERROR_TAPITriggerConditionType                = -12041;
-    //! 输入错误的:TAPITriggerPriceTypeType
+    //! 輸入錯誤的:TAPITriggerPriceTypeType
     const int TAPIERROR_INPUTERROR_TAPITriggerPriceTypeType                = -12042;
-    //! 输入错误的:TAPITradingStateType 
+    //! 輸入錯誤的:TAPITradingStateType 
     const int TAPIERROR_INPUTERROR_TAPITradingStateType                    = -12043;
-    //! 输入错误的:TAPIMarketLevelType 
+    //! 輸入錯誤的:TAPIMarketLevelType 
     const int TAPIERROR_INPUTERROR_TAPIMarketLevelType                     = -12044;
-    //! 输入错误的:TAPIOrderQryTypeType 
+    //! 輸入錯誤的:TAPIOrderQryTypeType 
     const int TAPIERROR_INPUTERROR_TAPIOrderQryTypeType                    = -12045;
-    //! 输入错误的: ClientID，ClientID包含特殊字符。
+    //! 輸入錯誤的: ClientID，ClientID包含特殊字元。
     const int TAPIERROR_INPUTERROR_TAPIClientID                            = -12046;
-    //! 历史行情查询参数不合法
+    //! 歷史行情查詢引數不合法
     const int TAPIERROR_INPUTERROR_QryHisQuoteParam                        = -13001;
-    //! 价格和数量中包含NAN或者INF不合法的数值
+    //! 價格和數量中包含NAN或者INF不合法的數值
     const int TAPIERROR_INPUTERROR_TAPIIncludeNAN                            = -13002;
-    //! 输入错误的到期日
+    //! 輸入錯誤的到期日
     const  int TAPIERROR_INPUTERROR_TAPIExpireTime                            = -12047;
-    //! 错误的密码类型
+    //! 錯誤的密碼型別
     const int TAPIERROR_INPUTERROR_TAPIPasswordType                            = -12048;
-        //! 错误的结算数据类型
+        //! 錯誤的結算資料型別
         const int TAPIERROR_INPUTERROR_TAPISettleFlagType                                               =-12049;
 
 
@@ -547,33 +547,33 @@ namespace ITapTrade
 
     //=============================================================================
     /**
-     *    \addtogroup G_ERR_DISCONNECT_REASON    网络断开错误代码定义
+     *    \addtogroup G_ERR_DISCONNECT_REASON    網路斷開錯誤程式碼定義
      *    @{
      */
     //=============================================================================
-    //! 主动断开
+    //! 主動斷開
     const int TAPIERROR_DISCONNECT_CLOSE_INIT                              = 1;
-    //! 被动断开
+    //! 被動斷開
     const int TAPIERROR_DISCONNECT_CLOSE_PASS                              = 2;
-    //! 读错误
+    //! 讀錯誤
     const int TAPIERROR_DISCONNECT_READ_ERROR                              = 3;
-    //! 写错误
+    //! 寫錯誤
     const int TAPIERROR_DISCONNECT_WRITE_ERROR                             = 4;
-    //! 缓冲区满
+    //! 緩衝區滿
     const int TAPIERROR_DISCONNECT_BUF_FULL                                = 5;
-    //! 异步操作错误
+    //! 非同步操作錯誤
     const int TAPIERROR_DISCONNECT_IOCP_ERROR                              = 6;
-    //! 解析数据错误
+    //! 解析資料錯誤
     const int TAPIERROR_DISCONNECT_PARSE_ERROR                             = 7;
-    //! 连接超时
+    //! 連線超時
     const int TAPIERROR_DISCONNECT_CONNECT_TIMEOUT                         = 8;
-    //! 初始化失败
+    //! 初始化失敗
     const int TAPIERROR_DISCONNECT_INIT_ERROR                              = 9;
-    //! 已经连接
+    //! 已經連線
     const int TAPIERROR_DISCONNECT_HAS_CONNECTED                           = 10;
-    //! 工作线程已结束
+    //! 工作執行緒已結束
     const int TAPIERROR_DISCONNECT_HAS_EXIT                                = 11;
-    //! 操作正在进行，请稍后重试
+    //! 操作正在進行，請稍後重試
     const int TAPIERROR_DISCONNECT_TRY_LATER                               = 12;
 
     /** @}*/

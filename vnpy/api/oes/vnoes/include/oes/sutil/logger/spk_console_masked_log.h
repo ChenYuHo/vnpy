@@ -17,8 +17,8 @@
 /**
  * @file    spk_console_masked_log.h
  *
- * 屏蔽控制台日志的日志处理程序的头文件
- * 通过设置日志屏蔽标志来阻止登记控制台类型的日志
+ * 遮蔽控制檯日誌的日誌處理程式的標頭檔案
+ * 通過設定日誌遮蔽標誌來阻止登記控制檯型別的日誌
  *
  * @version $Id$
  * @since   2008.8.14
@@ -36,8 +36,8 @@
 
 
 /*
- * 日志屏蔽标志
- * 编译时可通过指定 SLOG_MASK 宏定制
+ * 日誌遮蔽標誌
+ * 編譯時可通過指定 SLOG_MASK 巨集定製
  */
 #undef      SLOG_MASK_FLAG
 #define     SLOG_MASK_FLAG          SLOG_TYPE_CONSOLE

@@ -9,7 +9,7 @@ class ScriptTraderApp(BaseApp):
     app_name = APP_NAME
     app_module = __module__
     app_path = Path(__file__).parent
-    display_name = "脚本策略"
+    display_name = "指令碼策略"
     engine_class = ScriptEngine
     widget_name = "ScriptManager"
     icon_name = "script.ico"

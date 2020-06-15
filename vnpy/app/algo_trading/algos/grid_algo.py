@@ -8,7 +8,7 @@ import math
 class GridAlgo(AlgoTemplate):
     """"""
 
-    display_name = "Grid 网格"
+    display_name = "Grid 網格"
 
     default_setting = {
         "vt_symbol": "",

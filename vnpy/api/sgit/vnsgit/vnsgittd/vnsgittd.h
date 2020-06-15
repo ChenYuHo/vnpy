@@ -169,7 +169,7 @@ public:
 	///        0x2003 �յ�������
 	virtual void OnFrontDisconnected(int nReason);
 
-	///������ʱ���档����ʱ��δ�յ�����ʱ���÷��������á�
+	///������ʱ���檔����ʱ��δ�յ�����ʱ���÷��������á�
 	///@param nTimeLapse �����ϴν��ձ��ĵ�ʱ��
 	virtual void OnHeartBeatWarning(int nTimeLapse);
 

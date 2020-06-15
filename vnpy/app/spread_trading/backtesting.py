@@ -121,13 +121,13 @@ class BacktestingEngine:
 
     def load_data(self):
         """"""
-        self.output("开始加载历史数据")
+        self.output("開始載入歷史資料")
 
         if not self.end:
             self.end = datetime.now()
 
         if self.start >= self.end:
-            self.output("起始日期必须小于结束日期")
+            self.output("起始日期必須小於結束日期")
             return
 
         if self.mode == BacktestingMode.BAR:
@@ -145,7 +145,7 @@ class BacktestingEngine:
                 self.end
             )
 
-        self.output(f"历史数据加载完成，数据量：{len(self.history_data)}")
+        self.output(f"歷史資料載入完成，資料量：{len(self.history_data)}")
 
     def run_backtesting(self):
         """"""
@@ -174,20 +174,20 @@ class BacktestingEngine:
 
         self.strategy.on_start()
         self.strategy.trading = True
-        self.output("开始回放历史数据")
+        self.output("開始回放歷史資料")
 
         # Use the rest of history data for running backtesting
         for data in self.history_data[ix:]:
             func(data)
 
-        self.output("历史数据回放结束")
+        self.output("歷史資料回放結束")
 
     def calculate_result(self):
         """"""
-        self.output("开始计算逐日盯市盈亏")
+        self.output("開始計算逐日盯市盈虧")
 
         if not self.trades:
-            self.output("成交记录为空，无法计算")
+            self.output("成交記錄為空，無法計算")
             return
 
         # Add trade data into daily reuslt.
@@ -221,12 +221,12 @@ class BacktestingEngine:
 
         self.daily_df = DataFrame.from_dict(results).set_index("date")
 
-        self.output("逐日盯市盈亏计算完成")
+        self.output("逐日盯市盈虧計算完成")
         return self.daily_df
 
     def calculate_statistics(self, df: DataFrame = None, output=True):
         """"""
-        self.output("开始计算策略统计指标")
+        self.output("開始計算策略統計指標")
 
         # Check DataFrame input exterior
         if df is None:
@@ -316,36 +316,36 @@ class BacktestingEngine:
         # Output
         if output:
             self.output("-" * 30)
-            self.output(f"首个交易日：\t{start_date}")
-            self.output(f"最后交易日：\t{end_date}")
+            self.output(f"首個交易日：\t{start_date}")
+            self.output(f"最後交易日：\t{end_date}")
 
-            self.output(f"总交易日：\t{total_days}")
+            self.output(f"總交易日：\t{total_days}")
             self.output(f"盈利交易日：\t{profit_days}")
-            self.output(f"亏损交易日：\t{loss_days}")
+            self.output(f"虧損交易日：\t{loss_days}")
 
-            self.output(f"起始资金：\t{self.capital:,.2f}")
-            self.output(f"结束资金：\t{end_balance:,.2f}")
+            self.output(f"起始資金：\t{self.capital:,.2f}")
+            self.output(f"結束資金：\t{end_balance:,.2f}")
 
-            self.output(f"总收益率：\t{total_return:,.2f}%")
+            self.output(f"總收益率：\t{total_return:,.2f}%")
             self.output(f"年化收益：\t{annual_return:,.2f}%")
             self.output(f"最大回撤: \t{max_drawdown:,.2f}")
             self.output(f"百分比最大回撤: {max_ddpercent:,.2f}%")
-            self.output(f"最长回撤天数: \t{max_drawdown_duration}")
+            self.output(f"最長回撤天數: \t{max_drawdown_duration}")
 
-            self.output(f"总盈亏：\t{total_net_pnl:,.2f}")
-            self.output(f"总手续费：\t{total_commission:,.2f}")
-            self.output(f"总滑点：\t{total_slippage:,.2f}")
-            self.output(f"总成交金额：\t{total_turnover:,.2f}")
-            self.output(f"总成交笔数：\t{total_trade_count}")
+            self.output(f"總盈虧：\t{total_net_pnl:,.2f}")
+            self.output(f"總手續費：\t{total_commission:,.2f}")
+            self.output(f"總滑點：\t{total_slippage:,.2f}")
+            self.output(f"總成交金額：\t{total_turnover:,.2f}")
+            self.output(f"總成交筆數：\t{total_trade_count}")
 
-            self.output(f"日均盈亏：\t{daily_net_pnl:,.2f}")
-            self.output(f"日均手续费：\t{daily_commission:,.2f}")
-            self.output(f"日均滑点：\t{daily_slippage:,.2f}")
-            self.output(f"日均成交金额：\t{daily_turnover:,.2f}")
-            self.output(f"日均成交笔数：\t{daily_trade_count}")
+            self.output(f"日均盈虧：\t{daily_net_pnl:,.2f}")
+            self.output(f"日均手續費：\t{daily_commission:,.2f}")
+            self.output(f"日均滑點：\t{daily_slippage:,.2f}")
+            self.output(f"日均成交金額：\t{daily_turnover:,.2f}")
+            self.output(f"日均成交筆數：\t{daily_trade_count}")
 
             self.output(f"日均收益率：\t{daily_return:,.2f}%")
-            self.output(f"收益标准差：\t{return_std:,.2f}%")
+            self.output(f"收益標準差：\t{return_std:,.2f}%")
             self.output(f"Sharpe Ratio：\t{sharpe_ratio:,.2f}")
             self.output(f"收益回撤比：\t{return_drawdown_ratio:,.2f}")
 

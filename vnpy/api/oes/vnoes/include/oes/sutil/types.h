@@ -17,7 +17,7 @@
 /**
  * @file    types.h
  *
- * 公共类型定义
+ * 公共型別定義
  *
  * @version $Id$
  * @since   2011/07/07
@@ -29,7 +29,7 @@
 
 
 /* ===================================================================
- * 平台类型检测
+ * 平臺型別檢測
  * =================================================================== */
 
 #if defined (__LINUX__) || defined (__linux__) || defined (__KERNEL__) \
@@ -178,11 +178,11 @@ extern "C" {
 
 
 /* ===================================================================
- * 平台相关的预编译宏设置
+ * 平臺相關的預編譯巨集設定
  * =================================================================== */
 
 /*
- * 64位整型类型检测
+ * 64位整型型別檢測
  */
 #if ! defined(__SPK_INT64_TYPE)
 #   if defined (_WIN32) || defined (__WINDOWS__) || defined (__vms)
@@ -260,7 +260,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 数据类型定义
+ * 資料型別定義
  * =================================================================== */
 
 #if ! defined (SPK_HAVE_INTEGER_TYPES)
@@ -286,7 +286,7 @@ extern "C" {
 
 
 /*
- * NULL 定义
+ * NULL 定義
  */
 #if ! defined (NULL)
 #   ifdef __cplusplus
@@ -299,7 +299,7 @@ extern "C" {
 
 
 /*
- * BOOL 类型定义
+ * BOOL 型別定義
  */
 #if ! defined (BOOL) && ! defined (__WINDOWS__)
 #   define BOOL                         int
@@ -316,7 +316,7 @@ extern "C" {
 
 
 /*
- * LLONG_MAX (为了在非C99环境下同样可用)
+ * LLONG_MAX (為了在非C99環境下同樣可用)
  */
 #if ! defined (LLONG_MAX)
 #   define LLONG_MAX                    (9223372036854775807LL)
@@ -330,7 +330,7 @@ extern "C" {
 
 
 /* ===================================================================
- * ERRNO 定义
+ * ERRNO 定義
  * =================================================================== */
 
 #if (defined (__WINDOWS__) || defined (__MINGW__)) && ! defined (__CYGWIN__)
@@ -445,7 +445,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 为兼容多平台而做的类型定义
+ * 為相容多平臺而做的型別定義
  * =================================================================== */
 
 #if defined (__WINDOWS__) || defined (__MINGW__)
@@ -464,7 +464,7 @@ extern "C" {
         /* Defined for x86 processors */
 #       define  __SPK_TIMEVAL_TIME_T    long
 #   else
-        /* 如果需要使用 VS2010 编译 32 位应用, 需要指定预编译宏: _USE_32BIT_TIME_T */
+        /* 如果需要使用 VS2010 編譯 32 位應用, 需要指定預編譯巨集: _USE_32BIT_TIME_T */
 #       define  __SPK_TIMEVAL_TIME_T    time_t
 #   endif
 
@@ -582,16 +582,16 @@ extern "C" {
 
 
 /* ===================================================================
- * 用于CPU缓存行填充的宏定义
+ * 用於CPU快取行填充的巨集定義
  * =================================================================== */
 
-/* CPU缓存行大小 */
+/* CPU快取行大小 */
 #ifndef SPK_CACHE_LINE_SIZE
 #   define  SPK_CACHE_LINE_SIZE         (64)
 #endif
 
 #if ! defined(NO_CACHE_LINE_PADDING)
-/* 声明CPU缓存行填充字段的宏定义 */
+/* 宣告CPU快取行填充欄位的巨集定義 */
 #   define  __SPK_CACHE_LINE_PADDING(VARNAME)           \
             int64   __##VARNAME##_1; \
             int64   __##VARNAME##_2; \
@@ -601,7 +601,7 @@ extern "C" {
             int64   __##VARNAME##_6; \
             int64   __##VARNAME##_7
 
-/* CPU缓存行填充字段的初始值定义 */
+/* CPU快取行填充欄位的初始值定義 */
 #   define  __NULLOBJ_SPK_CACHE_LINE_PADDING            \
             0, 0, 0, 0, 0, 0, 0,
 
@@ -646,7 +646,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 常用缓存区长度定义
+ * 常用快取區長度定義
  * =================================================================== */
 
 /* FD_SETSIZE */
@@ -658,17 +658,17 @@ extern "C" {
 #   endif
 #endif
 
-/* 最大文本块长度 */
+/* 最大文字塊長度 */
 #ifndef SPK_MAX_BLOCK_SIZE
 #   define SPK_MAX_BLOCK_SIZE           (8192)
 #endif
 
-/* 最大单行文本长度 */
+/* 最大單行文字長度 */
 #ifndef SPK_MAX_LINE_SIZE
 #   define SPK_MAX_LINE_SIZE            (1024)
 #endif
 
-/* 最大路径长度 */
+/* 最大路徑長度 */
 #ifndef SPK_MAX_PATH_LEN
 #   define SPK_MAX_PATH_LEN             (256)
 #   define SPK_MAX_PATH_LEN_LONG        (512)

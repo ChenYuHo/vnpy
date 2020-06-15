@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
-///@author 中泰证券股份有限公司
+///@author 中泰證券股份有限公司
 ///@file xtp_trader_api.h
-///@brief 定义客户端交易接口
+///@brief 定義客戶端交易介面
 /////////////////////////////////////////////////////////////////////////
 
 #ifndef _XTP_TRADER_API_H_
@@ -26,9 +26,9 @@
 /*!
 * \class XTP::API::TraderSpi
 *
-* \brief 交易接口响应类
+* \brief 交易介面響應類
 *
-* \author 中泰证券股份有限公司
+* \author 中泰證券股份有限公司
 * \date 十月 2015
 */
 namespace XTP {
@@ -38,208 +38,208 @@ namespace XTP {
 		{
 		public:
 
-			///当客户端的某个连接与交易后台通信连接断开时，该方法被调用。
-			///@param reason 错误原因，请与错误代码表对应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 用户主动调用logout导致的断线，不会触发此函数。api不会自动重连，当断线发生时，请用户自行选择后续操作，可以在此函数中调用Login重新登录，并更新session_id，此时用户收到的数据跟断线之前是连续的
+			///當客戶端的某個連線與交易後臺通訊連線斷開時，該方法被呼叫。
+			///@param reason 錯誤原因，請與錯誤程式碼表對應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 使用者主動呼叫logout導致的斷線，不會觸發此函式。api不會自動重連，當斷線發生時，請使用者自行選擇後續操作，可以在此函式中呼叫Login重新登入，並更新session_id，此時使用者收到的資料跟斷線之前是連續的
 			virtual void OnDisconnected(uint64_t session_id, int reason) {};
 
-			///错误应答
-			///@param error_info 当服务器响应发生错误时的具体的错误代码和错误信息,当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@remark 此函数只有在服务器发生错误时才会调用，一般无需用户处理
+			///錯誤應答
+			///@param error_info 當伺服器響應發生錯誤時的具體的錯誤程式碼和錯誤資訊,當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@remark 此函式只有在伺服器發生錯誤時才會呼叫，一般無需使用者處理
 			virtual void OnError(XTPRI *error_info) {};
 
-			///报单通知
-			///@param order_info 订单响应具体信息，用户可以通过order_info.order_xtp_id来管理订单，通过GetClientIDByXTPID() == client_id来过滤自己的订单，order_info.qty_left字段在订单为未成交、部成、全成、废单状态时，表示此订单还没有成交的数量，在部撤、全撤状态时，表示此订单被撤的数量。order_info.order_cancel_xtp_id为其所对应的撤单ID，不为0时表示此单被撤成功
-			///@param error_info 订单被拒绝或者发生错误时错误代码和错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 每次订单状态更新时，都会被调用，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线，在订单未成交、全部成交、全部撤单、部分撤单、已拒绝这些状态时会有响应，对于部分成交的情况，请由订单的成交回报来自行确认。所有登录了此用户的客户端都将收到此用户的订单响应
+			///報單通知
+			///@param order_info 訂單響應具體資訊，使用者可以通過order_info.order_xtp_id來管理訂單，通過GetClientIDByXTPID() == client_id來過濾自己的訂單，order_info.qty_left欄位在訂單為未成交、部成、全成、廢單狀態時，表示此訂單還沒有成交的數量，在部撤、全撤狀態時，表示此訂單被撤的數量。order_info.order_cancel_xtp_id為其所對應的撤單ID，不為0時表示此單被撤成功
+			///@param error_info 訂單被拒絕或者發生錯誤時錯誤程式碼和錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 每次訂單狀態更新時，都會被呼叫，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線，在訂單未成交、全部成交、全部撤單、部分撤單、已拒絕這些狀態時會有響應，對於部分成交的情況，請由訂單的成交回報來自行確認。所有登入了此使用者的客戶端都將收到此使用者的訂單響應
 			virtual void OnOrderEvent(XTPOrderInfo *order_info, XTPRI *error_info, uint64_t session_id) {};
 
 			///成交通知
-			///@param trade_info 成交回报的具体信息，用户可以通过trade_info.order_xtp_id来管理订单，通过GetClientIDByXTPID() == client_id来过滤自己的订单。对于上交所，exec_id可以唯一标识一笔成交。当发现2笔成交回报拥有相同的exec_id，则可以认为此笔交易自成交了。对于深交所，exec_id是唯一的，暂时无此判断机制。report_index+market字段可以组成唯一标识表示成交回报。
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 订单有成交发生的时候，会被调用，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线。所有登录了此用户的客户端都将收到此用户的成交回报。相关订单为部成状态，需要用户通过成交回报的成交数量来确定，OnOrderEvent()不会推送部成状态。
+			///@param trade_info 成交回報的具體資訊，使用者可以通過trade_info.order_xtp_id來管理訂單，通過GetClientIDByXTPID() == client_id來過濾自己的訂單。對於上交所，exec_id可以唯一標識一筆成交。當發現2筆成交回報擁有相同的exec_id，則可以認為此筆交易自成交了。對於深交所，exec_id是唯一的，暫時無此判斷機制。report_index+market欄位可以組成唯一標識表示成交回報。
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 訂單有成交發生的時候，會被呼叫，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線。所有登入了此使用者的客戶端都將收到此使用者的成交回報。相關訂單為部成狀態，需要使用者通過成交回報的成交數量來確定，OnOrderEvent()不會推送部成狀態。
 			virtual void OnTradeEvent(XTPTradeReport *trade_info, uint64_t session_id) {};
 
-			///撤单出错响应
-			///@param cancel_info 撤单具体信息，包括撤单的order_cancel_xtp_id和待撤单的order_xtp_id
-			///@param error_info 撤单被拒绝或者发生错误时错误代码和错误信息，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 此响应只会在撤单发生错误时被回调
+			///撤單出錯響應
+			///@param cancel_info 撤單具體資訊，包括撤單的order_cancel_xtp_id和待撤單的order_xtp_id
+			///@param error_info 撤單被拒絕或者發生錯誤時錯誤程式碼和錯誤資訊，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 此響應只會在撤單發生錯誤時被回撥
 			virtual void OnCancelOrderError(XTPOrderCancelInfo *cancel_info, XTPRI *error_info, uint64_t session_id) {};
 
-			///请求查询报单响应
-			///@param order_info 查询到的一个报单
-			///@param error_info 查询报单时发生错误时，返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 由于支持分时段查询，一个查询请求可能对应多个响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢報單響應
+			///@param order_info 查詢到的一個報單
+			///@param error_info 查詢報單時發生錯誤時，返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 由於支援分時段查詢，一個查詢請求可能對應多個響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryOrder(XTPQueryOrderRsp *order_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询成交响应
-			///@param trade_info 查询到的一个成交回报
-			///@param error_info 查询成交回报发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 由于支持分时段查询，一个查询请求可能对应多个响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢成交響應
+			///@param trade_info 查詢到的一個成交回報
+			///@param error_info 查詢成交回報發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 由於支援分時段查詢，一個查詢請求可能對應多個響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryTrade(XTPQueryTradeRsp *trade_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询投资者持仓响应
-			///@param position 查询到的一只股票的持仓情况
-			///@param error_info 查询账户持仓发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 由于用户可能持有多个股票，一个查询请求可能对应多个响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢投資者持倉響應
+			///@param position 查詢到的一隻股票的持倉情況
+			///@param error_info 查詢賬戶持倉發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 由於使用者可能持有多個股票，一個查詢請求可能對應多個響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryPosition(XTPQueryStkPositionRsp *position, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询资金账户响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param asset 查询到的资金账户情况
-			///@param error_info 查询资金账户发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢資金賬戶響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param asset 查詢到的資金賬戶情況
+			///@param error_info 查詢資金賬戶發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryAsset(XTPQueryAssetRsp *asset, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询分级基金信息响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param fund_info 查询到的分级基金情况
-			///@param error_info 查询分级基金发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢分級基金資訊響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param fund_info 查詢到的分級基金情況
+			///@param error_info 查詢分級基金髮生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryStructuredFund(XTPStructuredFundInfo *fund_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询资金划拨订单响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param fund_transfer_info 查询到的资金账户情况
-			///@param error_info 查询资金账户发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢資金劃撥訂單響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param fund_transfer_info 查詢到的資金賬戶情況
+			///@param error_info 查詢資金賬戶發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryFundTransfer(XTPFundTransferNotice *fund_transfer_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///资金划拨通知
-			///@param fund_transfer_info 资金划拨通知的具体信息，用户可以通过fund_transfer_info.serial_id来管理订单，通过GetClientIDByXTPID() == client_id来过滤自己的订单。
-			///@param error_info 资金划拨订单被拒绝或者发生错误时错误代码和错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误。当资金划拨方向为一号两中心节点之间划拨，且error_info.error_id=11000384时，error_info.error_msg为结点中可用于划拨的资金（以整数为准），用户需进行stringToInt的转化，可据此填写合适的资金，再次发起划拨请求
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 当资金划拨订单有状态变化的时候，会被调用，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线。所有登录了此用户的客户端都将收到此用户的资金划拨通知。
+			///資金劃撥通知
+			///@param fund_transfer_info 資金劃撥通知的具體資訊，使用者可以通過fund_transfer_info.serial_id來管理訂單，通過GetClientIDByXTPID() == client_id來過濾自己的訂單。
+			///@param error_info 資金劃撥訂單被拒絕或者發生錯誤時錯誤程式碼和錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤。當資金劃撥方向為一號兩中心節點之間劃撥，且error_info.error_id=11000384時，error_info.error_msg為結點中可用於劃撥的資金（以整數為準），使用者需進行stringToInt的轉化，可據此填寫合適的資金，再次發起劃撥請求
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 當資金劃撥訂單有狀態變化的時候，會被呼叫，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線。所有登入了此使用者的客戶端都將收到此使用者的資金劃撥通知。
 			virtual void OnFundTransfer(XTPFundTransferNotice *fund_transfer_info, XTPRI *error_info, uint64_t session_id) {};
 
-			///请求查询ETF清单文件的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param etf_info 查询到的ETF清单文件情况
-			///@param error_info 查询ETF清单文件发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢ETF清單檔案的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param etf_info 查詢到的ETF清單檔案情況
+			///@param error_info 查詢ETF清單檔案發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryETF(XTPQueryETFBaseRsp *etf_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询ETF股票篮的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param etf_component_info 查询到的ETF合约的相关成分股信息
-			///@param error_info 查询ETF股票篮发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢ETF股票籃的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param etf_component_info 查詢到的ETF合約的相關成分股資訊
+			///@param error_info 查詢ETF股票籃發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryETFBasket(XTPQueryETFComponentRsp *etf_component_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询今日新股申购信息列表的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param ipo_info 查询到的今日新股申购的一只股票信息
-			///@param error_info 查询今日新股申购信息列表发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢今日新股申購資訊列表的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param ipo_info 查詢到的今日新股申購的一隻股票資訊
+			///@param error_info 查詢今日新股申購資訊列表發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryIPOInfoList(XTPQueryIPOTickerRsp *ipo_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询用户新股申购额度信息的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param quota_info 查询到的用户某个市场的今日新股申购额度信息
-			///@param error_info 查查询用户新股申购额度信息发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢使用者新股申購額度資訊的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param quota_info 查詢到的使用者某個市場的今日新股申購額度資訊
+			///@param error_info 查查詢使用者新股申購額度資訊發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryIPOQuotaInfo(XTPQueryIPOQuotaRsp *quota_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询期权合约的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param option_info 查询到的期权合约情况
-			///@param error_info 查询期权合约发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢期權合約的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param option_info 查詢到的期權合約情況
+			///@param error_info 查詢期權合約發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryOptionAuctionInfo(XTPQueryOptionAuctionInfoRsp *option_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///融资融券业务中现金直接还款的响应
-			///@param cash_repay_info 现金直接还款通知的具体信息，用户可以通过cash_repay_info.xtp_id来管理订单，通过GetClientIDByXTPID() == client_id来过滤自己的订单。
-			///@param error_info 现金还款发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///融資融券業務中現金直接還款的響應
+			///@param cash_repay_info 現金直接還款通知的具體資訊，使用者可以通過cash_repay_info.xtp_id來管理訂單，通過GetClientIDByXTPID() == client_id來過濾自己的訂單。
+			///@param error_info 現金還款發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnCreditCashRepay(XTPCrdCashRepayRsp *cash_repay_info, XTPRI *error_info, uint64_t session_id) {};
 
-			///请求查询融资融券业务中的现金直接还款报单的响应
-			///@param cash_repay_info 查询到的某一笔现金直接还款通知的具体信息
-			///@param error_info 查询现金直接报单发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢融資融券業務中的現金直接還款報單的響應
+			///@param cash_repay_info 查詢到的某一筆現金直接還款通知的具體資訊
+			///@param error_info 查詢現金直接報單發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryCreditCashRepayInfo(XTPCrdCashRepayInfo *cash_repay_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询信用账户额外信息的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param fund_info 查询到的信用账户额外信息情况
-			///@param error_info 查询信用账户额外信息发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢信用賬戶額外資訊的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param fund_info 查詢到的信用賬戶額外資訊情況
+			///@param error_info 查詢信用賬戶額外資訊發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryCreditFundInfo(XTPCrdFundInfo *fund_info, XTPRI *error_info, int request_id, uint64_t session_id) {};
 
-			///请求查询信用账户负债信息的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param debt_info 查询到的信用账户合约负债情况
-			///@param error_info 查询信用账户负债信息发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢信用賬戶負債資訊的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param debt_info 查詢到的信用賬戶合約負債情況
+			///@param error_info 查詢信用賬戶負債資訊發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryCreditDebtInfo(XTPCrdDebtInfo *debt_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询信用账户指定证券负债未还信息响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param debt_info 查询到的信用账户指定证券负债未还信息情况
-			///@param error_info 查询信用账户指定证券负债未还信息发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢信用賬戶指定證券負債未還資訊響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param debt_info 查詢到的信用賬戶指定證券負債未還資訊情況
+			///@param error_info 查詢信用賬戶指定證券負債未還資訊發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryCreditTickerDebtInfo(XTPCrdDebtStockInfo *debt_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///请求查询信用账户待还资金的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param remain_amount 查询到的信用账户待还资金
-			///@param error_info 查询信用账户待还资金发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢信用賬戶待還資金的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param remain_amount 查詢到的信用賬戶待還資金
+			///@param error_info 查詢信用賬戶待還資金髮生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryCreditAssetDebtInfo(double remain_amount, XTPRI *error_info, int request_id, uint64_t session_id) {};
 
-			///请求查询信用账户可融券头寸信息的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param assign_info 查询到的信用账户可融券头寸信息
-			///@param error_info 查询信用账户可融券头寸信息发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param is_last 此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///請求查詢信用賬戶可融券頭寸資訊的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param assign_info 查詢到的信用賬戶可融券頭寸資訊
+			///@param error_info 查詢信用賬戶可融券頭寸資訊發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param is_last 此訊息響應函式是否為request_id這條請求所對應的最後一個響應，當為最後一個的時候為true，如果為false，表示還有其他後續訊息響應
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryCreditTickerAssignInfo(XTPClientQueryCrdPositionStkInfo *assign_info, XTPRI *error_info, int request_id, bool is_last, uint64_t session_id) {};
 
-			///融资融券业务中请求查询指定余券信息的响应，需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
-			///@param stock_info 查询到的余券信息
-			///@param error_info 查询信用账户余券信息发生错误时返回的错误信息，当error_info为空，或者error_info.error_id为0时，表明没有错误
-			///@param request_id 此消息响应函数对应的请求ID
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@remark 需要快速返回，否则会堵塞后续消息，当堵塞严重时，会触发断线
+			///融資融券業務中請求查詢指定餘券資訊的響應，需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
+			///@param stock_info 查詢到的餘券資訊
+			///@param error_info 查詢信用賬戶餘券資訊發生錯誤時返回的錯誤資訊，當error_info為空，或者error_info.error_id為0時，表明沒有錯誤
+			///@param request_id 此訊息響應函式對應的請求ID
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@remark 需要快速返回，否則會堵塞後續訊息，當堵塞嚴重時，會觸發斷線
 			virtual void OnQueryCreditExcessStock(XTPClientQueryCrdSurplusStkRspInfo* stock_info, XTPRI *error_info, int request_id, uint64_t session_id) {};
 
 		};
@@ -255,9 +255,9 @@ namespace XTP {
 /*!
 * \class XTP::API::TraderApi
 *
-* \brief 交易接口类
+* \brief 交易介面類
 *
-* \author 中泰证券股份有限公司
+* \author 中泰證券股份有限公司
 * \date 十月 2015
 */
 namespace XTP {
@@ -266,252 +266,252 @@ namespace XTP {
 		class TRADER_API_EXPORT TraderApi
 		{
 		public:
-			///创建TraderApi
-			///@param client_id （必须输入）客户端id，用于区分同一用户的不同客户端，由用户自定义
-			///@param save_file_path （必须输入）存贮订阅信息文件的目录，请设定一个真实存在的有可写权限的路径
-			///@param log_level 日志输出级别
-			///@return 创建出的UserApi
-			///@remark 如果一个账户需要在多个客户端登录，请使用不同的client_id，系统允许一个账户同时登录多个客户端，但是对于同一账户，相同的client_id只能保持一个session连接，后面的登录在前一个session存续期间，无法连接。系统不支持过夜，请确保每天开盘前重新启动
+			///建立TraderApi
+			///@param client_id （必須輸入）客戶端id，用於區分同一使用者的不同客戶端，由使用者自定義
+			///@param save_file_path （必須輸入）存貯訂閱資訊檔案的目錄，請設定一個真實存在的有可寫許可權的路徑
+			///@param log_level 日誌輸出級別
+			///@return 創建出的UserApi
+			///@remark 如果一個賬戶需要在多個客戶端登入，請使用不同的client_id，系統允許一個賬戶同時登入多個客戶端，但是對於同一賬戶，相同的client_id只能保持一個session連線，後面的登入在前一個session存續期間，無法連線。系統不支援過夜，請確保每天開盤前重新啟動
 			static TraderApi *CreateTraderApi(uint8_t client_id, const char *save_file_path, XTP_LOG_LEVEL log_level = XTP_LOG_LEVEL_DEBUG);
 
-			///删除接口对象本身
-			///@remark 不再使用本接口对象时,调用该函数删除接口对象
+			///刪除介面物件本身
+			///@remark 不再使用本介面物件時,呼叫該函式刪除介面物件
 			virtual void Release() = 0;
 
-			///获取当前交易日
-			///@return 获取到的交易日
-			///@remark 只有登录成功后,才能得到正确的交易日
+			///獲取當前交易日
+			///@return 獲取到的交易日
+			///@remark 只有登入成功後,才能得到正確的交易日
 			virtual const char *GetTradingDay() = 0;
 
-			///注册回调接口
-			///@param spi 派生自回调接口类的实例，请在登录之前设定
+			///註冊回撥介面
+			///@param spi 派生自回撥介面類的例項，請在登入之前設定
 			virtual void RegisterSpi(TraderSpi *spi) = 0;
 
-			///获取API的系统错误
-			///@return 返回的错误信息，可以在Login、InsertOrder、CancelOrder返回值为0时调用，获取失败的原因
-			///@remark 可以在调用api接口失败时调用，例如login失败时
+			///獲取API的系統錯誤
+			///@return 返回的錯誤資訊，可以在Login、InsertOrder、CancelOrder返回值為0時呼叫，獲取失敗的原因
+			///@remark 可以在呼叫api介面失敗時呼叫，例如login失敗時
 			virtual XTPRI *GetApiLastError() = 0;
 
-			///获取API的发行版本号
-			///@return 返回api发行版本号
+			///獲取API的發行版本號
+			///@return 返回api發行版本號
 			virtual const char* GetApiVersion() = 0;
 
-			///通过报单在xtp系统中的ID获取下单的客户端id
-			///@return 返回客户端id，可以用此方法过滤自己下的订单
-			///@param order_xtp_id 报单在xtp系统中的ID
-			///@remark 由于系统允许同一用户在不同客户端上登录操作，每个客户端通过不同的client_id进行区分
+			///通過報單在xtp系統中的ID獲取下單的客戶端id
+			///@return 返回客戶端id，可以用此方法過濾自己下的訂單
+			///@param order_xtp_id 報單在xtp系統中的ID
+			///@remark 由於系統允許同一使用者在不同客戶端上登入操作，每個客戶端通過不同的client_id進行區分
 			virtual uint8_t GetClientIDByXTPID(uint64_t order_xtp_id) = 0;
 
-			///通过报单在xtp系统中的ID获取相关资金账户名
-			///@return 返回资金账户名
-			///@param order_xtp_id 报单在xtp系统中的ID
-			///@remark 只有资金账户登录成功后,才能得到正确的信息
+			///通過報單在xtp系統中的ID獲取相關資金賬戶名
+			///@return 返回資金賬戶名
+			///@param order_xtp_id 報單在xtp系統中的ID
+			///@remark 只有資金賬戶登入成功後,才能得到正確的資訊
 			virtual const char* GetAccountByXTPID(uint64_t order_xtp_id) = 0;
 
-			///订阅公共流。
-			///@param resume_type 公共流（订单响应、成交回报）重传方式  
-			///        XTP_TERT_RESTART:从本交易日开始重传
-			///        XTP_TERT_RESUME:(保留字段，此方式暂未支持)从上次收到的续传
-			///        XTP_TERT_QUICK:只传送登录后公共流的内容
-			///@remark 该方法要在Login方法前调用。若不调用则不会收到公共流的数据。注意在用户断线后，如果不登出就login()，公共流订阅方式不会起作用。用户只会收到断线后的所有消息。如果先logout()再login()，那么公共流订阅方式会起作用，用户收到的数据会根据用户的选择方式而定。
+			///訂閱公共流。
+			///@param resume_type 公共流（訂單響應、成交回報）重傳方式  
+			///        XTP_TERT_RESTART:從本交易日開始重傳
+			///        XTP_TERT_RESUME:(保留欄位，此方式暫未支援)從上次收到的續傳
+			///        XTP_TERT_QUICK:只傳送登入後公共流的內容
+			///@remark 該方法要在Login方法前呼叫。若不呼叫則不會收到公共流的資料。注意在使用者斷線後，如果不登出就login()，公共流訂閱方式不會起作用。使用者只會收到斷線後的所有訊息。如果先logout()再login()，那麼公共流訂閱方式會起作用，使用者收到的資料會根據使用者的選擇方式而定。
 			virtual void SubscribePublicTopic(XTP_TE_RESUME_TYPE resume_type) = 0;
 
-			///设置软件开发版本号
-			///@param version 用户开发软件版本号，非api发行版本号，长度不超过15位，以'\0'结尾
-			///@remark 此函数必须在Login之前调用，标识的是客户端版本号，而不是API的版本号，由用户自定义
+			///設定軟體開發版本號
+			///@param version 使用者開發軟體版本號，非api發行版本號，長度不超過15位，以'\0'結尾
+			///@remark 此函式必須在Login之前呼叫，標識的是客戶端版本號，而不是API的版本號，由使用者自定義
 			virtual void SetSoftwareVersion(const char* version) = 0;
 
-			///设置软件开发Key
-			///@param key 用户开发软件Key，用户申请开户时给予，以'\0'结尾
-			///@remark 此函数必须在Login之前调用
+			///設定軟體開發Key
+			///@param key 使用者開發軟體Key，使用者申請開戶時給予，以'\0'結尾
+			///@remark 此函式必須在Login之前呼叫
 			virtual void SetSoftwareKey(const char* key) = 0;
 
-			///设置心跳检测时间间隔，单位为秒
-			///@param interval 心跳检测时间间隔，单位为秒
-			///@remark 此函数必须在Login之前调用
+			///設定心跳檢測時間間隔，單位為秒
+			///@param interval 心跳檢測時間間隔，單位為秒
+			///@remark 此函式必須在Login之前呼叫
 			virtual void SetHeartBeatInterval(uint32_t interval) = 0;
 
-			///用户登录请求
-			///@return session_id表明此资金账号登录是否成功，“0”表示登录失败，可以调用GetApiLastError()来获取错误代码，非“0”表示登录成功，此时需要记录下这个返回值session_id，与登录的资金账户对应
-			///@param ip 服务器地址，类似“127.0.0.1”
-			///@param port 服务器端口号
-			///@param user 登录用户名
-			///@param password 登录密码
-			///@param sock_type “1”代表TCP，“2”代表UDP，目前暂时只支持TCP
-			///@remark 此函数为同步阻塞式，不需要异步等待登录成功，当函数返回即可进行后续操作，此api可支持多个账户连接，但是同一个账户同一个client_id只能有一个session连接，后面的登录在前一个session存续期间，无法连接
+			///使用者登入請求
+			///@return session_id表明此資金賬號登入是否成功，“0”表示登入失敗，可以呼叫GetApiLastError()來獲取錯誤程式碼，非“0”表示登入成功，此時需要記錄下這個返回值session_id，與登入的資金賬戶對應
+			///@param ip 伺服器地址，類似“127.0.0.1”
+			///@param port 伺服器埠號
+			///@param user 登入使用者名稱
+			///@param password 登入密碼
+			///@param sock_type “1”代表TCP，“2”代表UDP，目前暫時只支援TCP
+			///@remark 此函式為同步阻塞式，不需要非同步等待登入成功，當函式返回即可進行後續操作，此api可支援多個賬戶連線，但是同一個賬戶同一個client_id只能有一個session連線，後面的登入在前一個session存續期間，無法連線
 			virtual uint64_t Login(const char* ip, int port, const char* user, const char* password, XTP_PROTOCOL_TYPE sock_type) = 0;
 
 
-			///登出请求
-			///@return 登出是否成功，“0”表示登出成功，“-1”表示登出失败
-			///@param session_id 资金账户对应的session_id,登录时得到
+			///登出請求
+			///@return 登出是否成功，“0”表示登出成功，“-1”表示登出失敗
+			///@param session_id 資金賬戶對應的session_id,登入時得到
 			virtual int Logout(uint64_t session_id) = 0;
 
-			///报单录入请求
-			///@return 报单在XTP系统中的ID,如果为‘0’表示报单发送失败，此时用户可以调用GetApiLastError()来获取错误代码，非“0”表示报单发送成功，用户需要记录下返回的order_xtp_id，它保证一个交易日内唯一，不同的交易日不保证唯一性
-			///@param order 报单录入信息，其中order.order_client_id字段是用户自定义字段，用户输入什么值，订单响应OnOrderEvent()返回时就会带回什么值，类似于备注，方便用户自己定位订单。当然，如果你什么都不填，也是可以的。order.order_xtp_id字段无需用户填写，order.ticker必须不带空格，以'\0'结尾
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@remark 交易所接收订单后，会在报单响应函数OnOrderEvent()中返回报单未成交的状态，之后所有的订单状态改变（除了部成状态）都会通过报单响应函数返回
+			///報單錄入請求
+			///@return 報單在XTP系統中的ID,如果為‘0’表示報單傳送失敗，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼，非“0”表示報單傳送成功，使用者需要記錄下返回的order_xtp_id，它保證一個交易日內唯一，不同的交易日不保證唯一性
+			///@param order 報單錄入資訊，其中order.order_client_id欄位是使用者自定義欄位，使用者輸入什麼值，訂單響應OnOrderEvent()返回時就會帶回什麼值，類似於備註，方便使用者自己定位訂單。當然，如果你什麼都不填，也是可以的。order.order_xtp_id欄位無需使用者填寫，order.ticker必須不帶空格，以'\0'結尾
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@remark 交易所接收訂單後，會在報單響應函式OnOrderEvent()中返回報單未成交的狀態，之後所有的訂單狀態改變（除了部成狀態）都會通過報單響應函式返回
 			virtual uint64_t InsertOrder(XTPOrderInsertInfo *order, uint64_t session_id) = 0;
 
-			///报单操作请求
-			///@return 撤单在XTP系统中的ID,如果为‘0’表示撤单发送失败，此时用户可以调用GetApiLastError()来获取错误代码，非“0”表示撤单发送成功，用户需要记录下返回的order_cancel_xtp_id，它保证一个交易日内唯一，不同的交易日不保证唯一性
-			///@param order_xtp_id 需要撤销的委托单在XTP系统中的ID
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@remark 如果撤单成功，会在报单响应函数OnOrderEvent()里返回原单部撤或者全撤的消息，如果不成功，会在OnCancelOrderError()响应函数中返回错误原因
+			///報單操作請求
+			///@return 撤單在XTP系統中的ID,如果為‘0’表示撤單傳送失敗，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼，非“0”表示撤單傳送成功，使用者需要記錄下返回的order_cancel_xtp_id，它保證一個交易日內唯一，不同的交易日不保證唯一性
+			///@param order_xtp_id 需要撤銷的委託單在XTP系統中的ID
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@remark 如果撤單成功，會在報單響應函式OnOrderEvent()裡返回原單部撤或者全撤的訊息，如果不成功，會在OnCancelOrderError()響應函式中返回錯誤原因
 			virtual uint64_t CancelOrder(const uint64_t order_xtp_id, uint64_t session_id) = 0;
 
-			///根据报单ID请求查询报单
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param order_xtp_id 需要查询的报单在xtp系统中的ID，即InsertOrder()成功时返回的order_xtp_id
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///根據報單ID請求查詢報單
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param order_xtp_id 需要查詢的報單在xtp系統中的ID，即InsertOrder()成功時返回的order_xtp_id
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryOrderByXTPID(const uint64_t order_xtp_id, uint64_t session_id, int request_id) = 0;
 
-			///请求查询报单
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的订单相关筛选条件，其中合约代码可以为空，则默认所有存在的合约代码，如果不为空，请不带空格，并以'\0'结尾，其中起始时间格式为YYYYMMDDHHMMSSsss，为0则默认当前交易日0点，结束时间格式为YYYYMMDDHHMMSSsss，为0则默认当前时间
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
-			///@remark 该方法支持分时段查询，如果股票代码为空，则默认查询时间段内的所有报单，否则查询时间段内所有跟股票代码相关的报单，此函数查询出的结果可能对应多个查询结果响应。此函数不建议轮询使用，当报单量过多时，容易造成用户线路拥堵，导致api断线
+			///請求查詢報單
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的訂單相關篩選條件，其中合約程式碼可以為空，則預設所有存在的合約程式碼，如果不為空，請不帶空格，並以'\0'結尾，其中起始時間格式為YYYYMMDDHHMMSSsss，為0則預設當前交易日0點，結束時間格式為YYYYMMDDHHMMSSsss，為0則預設當前時間
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
+			///@remark 該方法支援分時段查詢，如果股票程式碼為空，則預設查詢時間段內的所有報單，否則查詢時間段內所有跟股票程式碼相關的報單，此函式查詢出的結果可能對應多個查詢結果響應。此函式不建議輪詢使用，當報單量過多時，容易造成使用者線路擁堵，導致api斷線
 			virtual int QueryOrders(const XTPQueryOrderReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///根据委托编号请求查询相关成交
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param order_xtp_id 需要查询的委托编号，即InsertOrder()成功时返回的order_xtp_id
-			///@param session_id 资金账户对应的session_id，登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
-			///@remark 此函数查询出的结果可能对应多个查询结果响应
+			///根據委託編號請求查詢相關成交
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param order_xtp_id 需要查詢的委託編號，即InsertOrder()成功時返回的order_xtp_id
+			///@param session_id 資金賬戶對應的session_id，登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
+			///@remark 此函式查詢出的結果可能對應多個查詢結果響應
 			virtual int QueryTradesByXTPID(const uint64_t order_xtp_id, uint64_t session_id, int request_id) = 0;
 
-			///请求查询已成交
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的成交回报筛选条件，其中合约代码可以为空，则默认所有存在的合约代码，如果不为空，请不带空格，并以'\0'结尾，其中起始时间格式为YYYYMMDDHHMMSSsss，为0则默认当前交易日0点，结束时间格式为YYYYMMDDHHMMSSsss，为0则默认当前时间
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
-			///@remark 该方法支持分时段查询，如果股票代码为空，则默认查询时间段内的所有成交回报，否则查询时间段内所有跟股票代码相关的成交回报，此函数查询出的结果可能对应多个查询结果响应。此函数不建议轮询使用，当报单量过多时，容易造成用户线路拥堵，导致api断线
+			///請求查詢已成交
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的成交回報篩選條件，其中合約程式碼可以為空，則預設所有存在的合約程式碼，如果不為空，請不帶空格，並以'\0'結尾，其中起始時間格式為YYYYMMDDHHMMSSsss，為0則預設當前交易日0點，結束時間格式為YYYYMMDDHHMMSSsss，為0則預設當前時間
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
+			///@remark 該方法支援分時段查詢，如果股票程式碼為空，則預設查詢時間段內的所有成交回報，否則查詢時間段內所有跟股票程式碼相關的成交回報，此函式查詢出的結果可能對應多個查詢結果響應。此函式不建議輪詢使用，當報單量過多時，容易造成使用者線路擁堵，導致api斷線
 			virtual int QueryTrades(XTPQueryTraderReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///请求查询投资者持仓
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param ticker 需要查询的持仓合约代码，可以为空，如果不为空，请不带空格，并以'\0'结尾
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
-			///@remark 该方法如果用户提供了合约代码，则会查询此合约的持仓信息，如果合约代码为空，则默认查询所有持仓信息
+			///請求查詢投資者持倉
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param ticker 需要查詢的持倉合約程式碼，可以為空，如果不為空，請不帶空格，並以'\0'結尾
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
+			///@remark 該方法如果使用者提供了合約程式碼，則會查詢此合約的持倉資訊，如果合約程式碼為空，則預設查詢所有持倉資訊
 			virtual int QueryPosition(const char *ticker, uint64_t session_id, int request_id) = 0;
 
-			///请求查询资产
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢資產
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryAsset(uint64_t session_id, int request_id) = 0;
 
-			///请求查询分级基金
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的分级基金筛选条件，其中母基金代码可以为空，则默认所有存在的母基金，如果不为空，请不带空格，并以'\0'结尾，其中交易市场不能为空
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
-			///@remark 此函数查询出的结果可能对应多个查询结果响应
+			///請求查詢分級基金
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的分級基金篩選條件，其中母基金程式碼可以為空，則預設所有存在的母基金，如果不為空，請不帶空格，並以'\0'結尾，其中交易市場不能為空
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
+			///@remark 此函式查詢出的結果可能對應多個查詢結果響應
 			virtual int QueryStructuredFund(XTPQueryStructuredFundInfoReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///资金划拨请求
-			///@return 资金划拨订单在XTP系统中的ID,如果为‘0’表示消息发送失败，此时用户可以调用GetApiLastError()来获取错误代码，非“0”表示消息发送成功，用户需要记录下返回的serial_id，它保证一个交易日内唯一，不同的交易日不保证唯一性
-			///@param fund_transfer 资金划拨的请求信息
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@remark 此函数支持一号两中心节点之间的资金划拨，注意资金划拨的方向。
+			///資金劃撥請求
+			///@return 資金劃撥訂單在XTP系統中的ID,如果為‘0’表示訊息傳送失敗，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼，非“0”表示訊息傳送成功，使用者需要記錄下返回的serial_id，它保證一個交易日內唯一，不同的交易日不保證唯一性
+			///@param fund_transfer 資金劃撥的請求資訊
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@remark 此函式支援一號兩中心節點之間的資金劃撥，注意資金劃撥的方向。
 			virtual uint64_t FundTransfer(XTPFundTransferReq *fund_transfer, uint64_t session_id) = 0;
 
-			///请求查询资金划拨
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的资金划拨订单筛选条件，其中serial_id可以为0，则默认所有资金划拨订单，如果不为0，则请求特定的资金划拨订单
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢資金劃撥
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的資金劃撥訂單篩選條件，其中serial_id可以為0，則預設所有資金劃撥訂單，如果不為0，則請求特定的資金劃撥訂單
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryFundTransfer(XTPQueryFundTransferLogReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///请求查询ETF清单文件
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的ETF清单文件的筛选条件，其中合约代码可以为空，则默认所有存在的ETF合约代码，market字段也可以为初始值，则默认所有市场的ETF合约
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢ETF清單檔案
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的ETF清單檔案的篩選條件，其中合約程式碼可以為空，則預設所有存在的ETF合約程式碼，market欄位也可以為初始值，則預設所有市場的ETF合約
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryETF(XTPQueryETFBaseReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///请求查询ETF股票篮
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询股票篮的的ETF合约，其中合约代码不可以为空，market字段也必须指定
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢ETF股票籃
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢股票籃的的ETF合約，其中合約程式碼不可以為空，market欄位也必須指定
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryETFTickerBasket(XTPQueryETFComponentReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///请求查询今日新股申购信息列表
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢今日新股申購資訊列表
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryIPOInfoList(uint64_t session_id, int request_id) = 0;
 
-			///请求查询用户新股申购额度信息
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢使用者新股申購額度資訊
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryIPOQuotaInfo(uint64_t session_id, int request_id) = 0;
 
-			///请求查询期权合约
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的期权合约的筛选条件，可以为NULL（为NULL表示查询所有的期权合约）
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢期權合約
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的期權合約的篩選條件，可以為NULL（為NULL表示查詢所有的期權合約）
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryOptionAuctionInfo(XTPQueryOptionAuctionInfoReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///融资融券业务中现金直接还款请求
-			///@return 现金直接还款订单在XTP系统中的ID,如果为‘0’表示消息发送失败，此时用户可以调用GetApiLastError()来获取错误代码，非“0”表示消息发送成功，用户需要记录下返回的serial_id，它保证一个交易日内唯一，不同的交易日不保证唯一性
-			///@param amount 现金还款的金额
-			///@param session_id 资金账户对应的session_id,登录时得到
+			///融資融券業務中現金直接還款請求
+			///@return 現金直接還款訂單在XTP系統中的ID,如果為‘0’表示訊息傳送失敗，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼，非“0”表示訊息傳送成功，使用者需要記錄下返回的serial_id，它保證一個交易日內唯一，不同的交易日不保證唯一性
+			///@param amount 現金還款的金額
+			///@param session_id 資金賬戶對應的session_id,登入時得到
 			virtual uint64_t CreditCashRepay(double amount, uint64_t session_id) = 0;
 
-			///请求查询融资融券业务中的现金直接还款报单
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢融資融券業務中的現金直接還款報單
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryCreditCashRepayInfo(uint64_t session_id, int request_id) = 0;
 
 
-			///请求查询信用账户特有信息，除资金账户以外的信息
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢信用賬戶特有資訊，除資金賬戶以外的資訊
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryCreditFundInfo(uint64_t session_id, int request_id) = 0;
 
-			///请求查询信用账户负债合约信息
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢信用賬戶負債合約資訊
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryCreditDebtInfo(uint64_t session_id, int request_id) = 0;
 
-			///请求查询指定证券负债未还信息
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的指定证券，筛选条件中ticker可以全填0，如果不为0，请不带空格，并以'\0'结尾
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢指定證券負債未還資訊
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的指定證券，篩選條件中ticker可以全填0，如果不為0，請不帶空格，並以'\0'結尾
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryCreditTickerDebtInfo(XTPClientQueryCrdDebtStockReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			///请求查询信用账户待还资金信息
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢信用賬戶待還資金資訊
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryCreditAssetDebtInfo(uint64_t session_id, int request_id) = 0;
 
-			///请求查询信用账户可融券头寸信息
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的证券，筛选条件中ticker可以全填0，如果不为0，请不带空格，并以'\0'结尾
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
+			///請求查詢信用賬戶可融券頭寸資訊
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的證券，篩選條件中ticker可以全填0，如果不為0，請不帶空格，並以'\0'結尾
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
 			virtual int QueryCreditTickerAssignInfo(XTPClientQueryCrdPositionStockReq *query_param, uint64_t session_id, int request_id) = 0;
 
-			////融资融券业务中请求查询指定证券的余券
-			///@return 查询是否成功，“0”表示成功，非“0”表示出错，此时用户可以调用GetApiLastError()来获取错误代码
-			///@param query_param 需要查询的余券信息，不可以为空，需要明确指定
-			///@param session_id 资金账户对应的session_id,登录时得到
-			///@param request_id 用于用户定位查询响应的ID，由用户自定义
-			///@remark 该方法中用户必须提供了证券代码和所在市场
+			////融資融券業務中請求查詢指定證券的餘券
+			///@return 查詢是否成功，“0”表示成功，非“0”表示出錯，此時使用者可以呼叫GetApiLastError()來獲取錯誤程式碼
+			///@param query_param 需要查詢的餘券資訊，不可以為空，需要明確指定
+			///@param session_id 資金賬戶對應的session_id,登入時得到
+			///@param request_id 用於使用者定位查詢響應的ID，由使用者自定義
+			///@remark 該方法中使用者必須提供了證券程式碼和所在市場
 			virtual int QueryCreditExcessStock(XTPClientQueryCrdSurplusStkReqInfo *query_param, uint64_t session_id, int request_id) = 0;
 
 

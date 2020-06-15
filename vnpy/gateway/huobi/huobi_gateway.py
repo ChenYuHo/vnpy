@@ -1,5 +1,5 @@
 """
-火币交易接口
+火幣交易介面
 """
 
 import re
@@ -82,9 +82,9 @@ class HuobiGateway(BaseGateway):
     default_setting: Dict[str, Any] = {
         "API Key": "",
         "Secret Key": "",
-        "会话数": 3,
+        "會話數": 3,
         "代理地址": "",
-        "代理端口": "",
+        "代理埠": "",
     }
 
     exchanges: List[Exchange] = [Exchange.HUOBI]
@@ -112,9 +112,9 @@ class HuobiGateway(BaseGateway):
         """"""
         key = setting["API Key"]
         secret = setting["Secret Key"]
-        session_number = setting["会话数"]
+        session_number = setting["會話數"]
         proxy_host = setting["代理地址"]
-        proxy_port = setting["代理端口"]
+        proxy_port = setting["代理埠"]
 
         if proxy_port.isdigit():
             proxy_port = int(proxy_port)
@@ -231,7 +231,7 @@ class HuobiRestApi(RestClient):
         self.init(REST_HOST, proxy_host, proxy_port)
         self.start(session_number)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
         self.query_contract()
         self.query_account()
@@ -281,12 +281,12 @@ class HuobiRestApi(RestClient):
         history = []
 
         if resp.status_code // 100 != 2:
-            msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+            msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
             self.gateway.write_log(msg)
         else:
             data = resp.json()
             if not data:
-                msg = f"获取历史数据为空"
+                msg = f"獲取歷史資料為空"
                 self.gateway.write_log(msg)
             else:
                 for d in data["data"]:
@@ -308,7 +308,7 @@ class HuobiRestApi(RestClient):
 
                 begin = history[0].datetime
                 end = history[-1].datetime
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
         return history
@@ -360,17 +360,17 @@ class HuobiRestApi(RestClient):
 
     def on_query_account(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error(data, "查询账户"):
+        if self.check_error(data, "查詢賬戶"):
             return
 
         for d in data["data"]:
             if d["type"] == "spot":
                 self.account_id = d["id"]
-                self.gateway.write_log(f"账户代码{self.account_id}查询成功")
+                self.gateway.write_log(f"賬戶程式碼{self.account_id}查詢成功")
 
     def on_query_order(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error(data, "查询委托"):
+        if self.check_error(data, "查詢委託"):
             return
 
         for d in data["data"]:
@@ -393,11 +393,11 @@ class HuobiRestApi(RestClient):
 
             self.gateway.on_order(order)
 
-        self.gateway.write_log("委托信息查询成功")
+        self.gateway.write_log("委託資訊查詢成功")
 
     def on_query_contract(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error(data, "查询合约"):
+        if self.check_error(data, "查詢合約"):
             return
 
         for d in data["data"]:
@@ -423,13 +423,13 @@ class HuobiRestApi(RestClient):
             huobi_symbols.add(contract.symbol)
             symbol_name_map[contract.symbol] = contract.name
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
     def on_send_order(self, data: dict, request: Request) -> None:
         """"""
         order = request.extra
 
-        if self.check_error(data, "委托"):
+        if self.check_error(data, "委託"):
             order.status = Status.REJECTED
             self.gateway.on_order(order)
 
@@ -441,7 +441,7 @@ class HuobiRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"委托失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"委託失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -469,11 +469,11 @@ class HuobiRestApi(RestClient):
         if not order:
             return
 
-        if self.check_error(data, "撤单"):
+        if self.check_error(data, "撤單"):
             order.status = Status.REJECTED
         else:
             order.status = Status.CANCELLED
-            self.gateway.write_log(f"委托撤单成功：{order.orderid}")
+            self.gateway.write_log(f"委託撤單成功：{order.orderid}")
 
         self.gateway.on_order(order)
 
@@ -487,7 +487,7 @@ class HuobiRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -502,7 +502,7 @@ class HuobiRestApi(RestClient):
         error_code = data["err-code"]
         error_msg = data["err-msg"]
 
-        self.gateway.write_log(f"{func}请求出错，代码：{error_code}，信息：{error_msg}")
+        self.gateway.write_log(f"{func}請求出錯，程式碼：{error_code}，資訊：{error_msg}")
         return True
 
 
@@ -647,17 +647,17 @@ class HuobiTradeWebsocketApi(HuobiWebsocketApiBase):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("交易Websocket API连接成功")
+        self.gateway.write_log("交易Websocket API連線成功")
         self.login()
 
     def on_login(self, packet: dict) -> None:
         """"""
         if "data" in packet and not packet["data"]:
-            self.gateway.write_log("交易Websocket API登录成功")
+            self.gateway.write_log("交易Websocket API登入成功")
             self.subscribe_account_update()
         else:
             msg = packet["message"]
-            error_msg = f"交易Websocket API登录失败，原因：{msg}"
+            error_msg = f"交易Websocket API登入失敗，原因：{msg}"
             self.gateway.write_log(error_msg)
 
     def on_data(self, packet: dict) -> None:
@@ -765,7 +765,7 @@ class HuobiDataWebsocketApi(HuobiWebsocketApiBase):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("行情Websocket API连接成功")
+        self.gateway.write_log("行情Websocket API連線成功")
 
     def subscribe(self, req: SubscribeRequest) -> None:
         """"""
@@ -808,7 +808,7 @@ class HuobiDataWebsocketApi(HuobiWebsocketApiBase):
         elif "err-code" in packet:
             code = packet["err-code"]
             msg = packet["err-msg"]
-            self.gateway.write_log(f"错误代码：{code}, 错误信息：{msg}")
+            self.gateway.write_log(f"錯誤程式碼：{code}, 錯誤資訊：{msg}")
 
     def on_market_depth(self, data: dict) -> None:
         """行情深度推送 """
@@ -832,7 +832,7 @@ class HuobiDataWebsocketApi(HuobiWebsocketApiBase):
             self.gateway.on_tick(copy(tick))
 
     def on_market_detail(self, data: dict) -> None:
-        """市场细节推送"""
+        """市場細節推送"""
         symbol = data["ch"].split(".")[1]
         tick = self.ticks[symbol]
         tick.datetime = generate_datetime(data["ts"] / 1000)
@@ -850,7 +850,7 @@ class HuobiDataWebsocketApi(HuobiWebsocketApiBase):
 
 def _split_url(url):
     """
-    将url拆分为host和path
+    將url拆分為host和path
     :return: host, path
     """
     result = re.match("\w+://([^/]*)(.*)", url)  # noqa
@@ -867,8 +867,8 @@ def create_signature(
     get_params=None
 ) -> Dict[str, str]:
     """
-    创建签名
-    :param get_params: dict 使用GET方法时附带的额外参数(urlparams)
+    建立簽名
+    :param get_params: dict 使用GET方法時附帶的額外引數(urlparams)
     :return:
     """
     sorted_params = [
@@ -906,8 +906,8 @@ def create_signature_v2(
     get_params=None
 ) -> Dict[str, str]:
     """
-    创建签名
-    :param get_params: dict 使用GET方法时附带的额外参数(urlparams)
+    建立簽名
+    :param get_params: dict 使用GET方法時附帶的額外引數(urlparams)
     :return:
     """
     sorted_params = [

@@ -82,7 +82,7 @@ class TigerGateway(BaseGateway):
     default_setting = {
         "tiger_id": "",
         "account": "",
-        "服务器": ["标准", "环球", "仿真"],
+        "伺服器": ["標準", "環球", "模擬"],
         "private_key": "",
     }
 
@@ -140,7 +140,7 @@ class TigerGateway(BaseGateway):
         """"""
         self.private_key = setting["private_key"]
         self.tiger_id = setting["tiger_id"]
-        self.server = setting["服务器"]
+        self.server = setting["伺服器"]
         self.account = setting["account"]
         self.languege = Language.zh_CN
 
@@ -173,11 +173,11 @@ class TigerGateway(BaseGateway):
                 self.quote_client.get_symbol_names(lang=Language.zh_CN))
             self.query_contract()
         except ApiException:
-            self.write_log("查询合约失败")
+            self.write_log("查詢合約失敗")
             return
 
-        self.write_log("行情接口连接成功")
-        self.write_log("合约查询成功")
+        self.write_log("行情介面連線成功")
+        self.write_log("合約查詢成功")
 
     def connect_trade(self):
         """
@@ -189,10 +189,10 @@ class TigerGateway(BaseGateway):
             self.add_task(self.query_position)
             self.add_task(self.query_account)
         except ApiException:
-            self.write_log("交易接口连接失败")
+            self.write_log("交易介面連線失敗")
             return
 
-        self.write_log("交易接口连接成功")
+        self.write_log("交易介面連線成功")
 
     def connect_push(self):
         """
@@ -220,7 +220,7 @@ class TigerGateway(BaseGateway):
     def on_push_connected(self):
         """"""
         self.push_connected = True
-        self.write_log("推送接口连接成功")
+        self.write_log("推送介面連線成功")
 
         self.push_client.subscribe_asset()
         self.push_client.subscribe_position()
@@ -367,7 +367,7 @@ class TigerGateway(BaseGateway):
 
         except:  # noqa
             traceback.print_exc()
-            self.write_log("发单失败")
+            self.write_log("發單失敗")
             return
 
     def cancel_order(self, req: CancelRequest):
@@ -380,10 +380,10 @@ class TigerGateway(BaseGateway):
             order_id = self.ID_VT2TIGER[req.orderid]
             data = self.trade_client.cancel_order(order_id=order_id)
         except ApiException:
-            self.write_log(f"撤单失败：{req.orderid}")
+            self.write_log(f"撤單失敗：{req.orderid}")
 
         if not data:
-            self.write_log("撤单成功")
+            self.write_log("撤單成功")
 
     def query_contract(self):
         """"""
@@ -468,7 +468,7 @@ class TigerGateway(BaseGateway):
         try:
             assets = self.trade_client.get_assets()
         except ApiException:
-            self.write_log("查询资金失败")
+            self.write_log("查詢資金失敗")
             return
 
         for i in assets:
@@ -486,7 +486,7 @@ class TigerGateway(BaseGateway):
         try:
             position = self.trade_client.get_positions()
         except ApiException:
-            self.write_log("查询持仓失败")
+            self.write_log("查詢持倉失敗")
             return
 
         for i in position:
@@ -512,7 +512,7 @@ class TigerGateway(BaseGateway):
             data = sorted(data, key=lambda x: x.order_time, reverse=False)
         except:  # noqa
             traceback.print_exc()
-            self.write_log("查询委托失败")
+            self.write_log("查詢委託失敗")
             return
 
         self.process_order(data)

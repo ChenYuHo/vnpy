@@ -1,6 +1,6 @@
-﻿// stdafx.h: 标准系统包含文件的包含文件，
-// 或是经常使用但不常更改的
-// 项目特定的包含文件
+﻿// stdafx.h: 標準系統包含檔案的包含檔案，
+// 或是經常使用但不常更改的
+// 專案特定的包含檔案
 //
 
 #pragma once
@@ -8,10 +8,10 @@
 #include "targetver.h"
 
 
-#define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
-// Windows 头文件
+#define WIN32_LEAN_AND_MEAN             // 從 Windows 標頭檔案中排除極少使用的內容
+// Windows 標頭檔案
 #include <windows.h>
 
 
 
-// 在此处引用程序需要的其他标头
+// 在此處引用程式需要的其他標頭

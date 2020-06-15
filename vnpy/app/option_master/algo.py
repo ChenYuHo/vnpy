@@ -59,7 +59,7 @@ class ElectronicEyeAlgo:
         self.pricing_active = True
         self.put_status_event()
         self.calculate_price()
-        self.write_log("启动定价")
+        self.write_log("啟動定價")
 
         return True
 
@@ -82,7 +82,7 @@ class ElectronicEyeAlgo:
 
         self.put_status_event()
         self.put_pricing_event()
-        self.write_log("停止定价")
+        self.write_log("停止定價")
 
         return True
 
@@ -92,7 +92,7 @@ class ElectronicEyeAlgo:
             return False
 
         if not self.pricing_active:
-            self.write_log("请先启动定价")
+            self.write_log("請先啟動定價")
             return False
 
         self.long_allowed = params["long_allowed"]
@@ -102,14 +102,14 @@ class ElectronicEyeAlgo:
         self.max_order_size = params["max_order_size"]
 
         if not self.max_order_size:
-            self.write_log("请先设置最大委托数量")
+            self.write_log("請先設定最大委託數量")
             return False
 
         self.trading_active = True
 
         self.put_trading_event()
         self.put_status_event()
-        self.write_log("启动交易")
+        self.write_log("啟動交易")
 
         return True
 
@@ -152,7 +152,7 @@ class ElectronicEyeAlgo:
 
     def on_trade(self, trade: TradeData) -> None:
         """"""
-        self.write_log(f"委托成交，{trade.direction} {trade.offset} {trade.volume}@{trade.price}")
+        self.write_log(f"委託成交，{trade.direction} {trade.offset} {trade.volume}@{trade.price}")
 
     def on_timer(self) -> None:
         """"""
@@ -179,7 +179,7 @@ class ElectronicEyeAlgo:
             volume
         )
 
-        self.write_log(f"发出委托，{direction} {offset} {volume}@{price}")
+        self.write_log(f"發出委託，{direction} {offset} {volume}@{price}")
 
         return vt_orderid
 

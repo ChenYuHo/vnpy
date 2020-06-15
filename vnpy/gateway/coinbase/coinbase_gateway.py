@@ -81,7 +81,7 @@ class CoinbaseGateway(BaseGateway):
         "ID": "",
         "Secret": "",
         "passphrase": "",
-        "会话数": 3,
+        "會話數": 3,
         "server": ["REAL", "SANDBOX"],
         "proxy_host": "",
         "proxy_port": "",
@@ -100,7 +100,7 @@ class CoinbaseGateway(BaseGateway):
         """"""
         key = setting["ID"]
         secret = setting["Secret"]
-        session_number = setting["会话数"]
+        session_number = setting["會話數"]
         proxy_host = setting["proxy_host"]
         proxy_port = setting["proxy_port"]
         server = setting["server"]
@@ -213,7 +213,7 @@ class CoinbaseWebsocketApi(WebsocketClient):
         proxy_port: int
     ):
         """"""
-        self.gateway.write_log("开始连接ws接口")
+        self.gateway.write_log("開始連線ws介面")
         self.key = key
         self.secret = secret.encode()
         self.passphrase = passphrase
@@ -265,14 +265,14 @@ class CoinbaseWebsocketApi(WebsocketClient):
         """
         callback when connection is established
         """
-        self.gateway.write_log("Websocket API连接成功")
+        self.gateway.write_log("Websocket API連線成功")
 
         for req in self.subscribed.values():
             self.subscribe(req)
 
     def on_disconnected(self):
         """"""
-        self.gateway.write_log("Websocket API连接断开")
+        self.gateway.write_log("Websocket API連線斷開")
 
     def on_packet(self, packet: dict):
         """
@@ -280,9 +280,9 @@ class CoinbaseWebsocketApi(WebsocketClient):
         """
         if packet["type"] == "error":
             self.gateway.write_log(
-                "Websocket API报错： %s" % packet["message"])
+                "Websocket API報錯： %s" % packet["message"])
             self.gateway.write_log(
-                "Websocket API报错原因是： %s" % packet["reason"])
+                "Websocket API報錯原因是： %s" % packet["reason"])
             self.active = False
 
         else:
@@ -561,7 +561,7 @@ class CoinbaseRestApi(RestClient):
         self.query_instrument()
         self.query_order()
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
     def query_instrument(self):
         """
@@ -638,7 +638,7 @@ class CoinbaseRestApi(RestClient):
 
             sys_order_map[order.orderid] = order
 
-        self.gateway.write_log(u"委托信息查询成功")
+        self.gateway.write_log(u"委託資訊查詢成功")
 
     def on_query_instrument(self, data, request):
         """"""
@@ -659,7 +659,7 @@ class CoinbaseRestApi(RestClient):
             self.gateway.on_contract(contract)
             symbol_name_map[contract.symbol] = contract.name
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
     def send_order(self, req: OrderRequest):
         """"""
@@ -702,9 +702,9 @@ class CoinbaseRestApi(RestClient):
         if request.response.text:
             data = request.response.json()
             error = data["message"]
-            msg = f"委托失败，状态码：{status_code}，信息：{error}"
+            msg = f"委託失敗，狀態碼：{status_code}，資訊：{error}"
         else:
-            msg = f"委托失败，状态码：{status_code}"
+            msg = f"委託失敗，狀態碼：{status_code}"
 
         self.gateway.write_log(msg)
 
@@ -767,9 +767,9 @@ class CoinbaseRestApi(RestClient):
         if request.response.text:
             data = request.response.json()
             error = data["message"]
-            msg = f"撤单失败，状态码：{status_code}，信息：{error}"
+            msg = f"撤單失敗，狀態碼：{status_code}，資訊：{error}"
         else:
-            msg = f"撤单失败，状态码：{status_code}"
+            msg = f"撤單失敗，狀態碼：{status_code}"
 
         self.gateway.write_log(msg)
 
@@ -779,7 +779,7 @@ class CoinbaseRestApi(RestClient):
         """
         data = request.response.json()
         error = data["message"]
-        msg = f"请求失败，状态码：{status_code},信息：{error}"
+        msg = f"請求失敗，狀態碼：{status_code},資訊：{error}"
         self.gateway.write_log(msg)
 
     def on_error(
@@ -792,7 +792,7 @@ class CoinbaseRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -835,13 +835,13 @@ class CoinbaseRestApi(RestClient):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空，开始时间：{start_time}，数量：{count}"
+                    msg = f"獲取歷史資料為空，開始時間：{start_time}，數量：{count}"
                     break
 
                 # Reverse data list
@@ -871,7 +871,7 @@ class CoinbaseRestApi(RestClient):
 
                 begin = buf[0].datetime
                 end = buf[-1].datetime
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Update start time

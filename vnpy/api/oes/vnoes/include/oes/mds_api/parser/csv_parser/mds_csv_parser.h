@@ -17,13 +17,13 @@
 /**
  * @file    mds_csv_parser.h
  *
- * 行情订阅服务的消息解析处理
+ * 行情訂閱服務的訊息解析處理
  *
  * @version 0.15.7.6    2019/01/05
  * @version 0.15.8_u6   2019/05/07
- *          - 调整 CSV 行情数据的输出格式
- *              - 废弃 __origNetTime 字段, 保留字段位置以兼容之前格式, 但字段名称修改为 __zero, 取值固定为0
- *              - 为指数行情增加 __origMdSource 字段
+ *          - 調整 CSV 行情資料的輸出格式
+ *              - 廢棄 __origNetTime 欄位, 保留欄位位置以相容之前格式, 但欄位名稱修改為 __zero, 取值固定為0
+ *              - 為指數行情增加 __origMdSource 欄位
  *
  * @since   2019/01/05
  */
@@ -44,10 +44,10 @@ extern "C" {
 
 
 /* ===================================================================
- * 函数声明
+ * 函式宣告
  * =================================================================== */
 
-/* 请求消息编码处理（用于向服务器发送请求消息） */
+/* 請求訊息編碼處理（用於向伺服器傳送請求訊息） */
 void*   MdsCsvParser_EncodeReq(
                 SMsgHeadT *pReqHead,
                 const MdsMktReqMsgBodyT *pReqBody,
@@ -55,7 +55,7 @@ void*   MdsCsvParser_EncodeReq(
                 int32 bufSize,
                 const char *pRemoteInfo);
 
-/* 请求消息解码处理（用于接收客户端的请求消息） */
+/* 請求訊息解碼處理（用於接收客戶端的請求訊息） */
 MdsMktReqMsgBodyT*
         MdsCsvParser_DecodeReq(
                 SMsgHeadT *pReqHead,
@@ -63,7 +63,7 @@ MdsMktReqMsgBodyT*
                 MdsMktReqMsgBodyT *pReqMsgBuf,
                 const char *pRemoteInfo);
 
-/* 应答消息编码处理（用于向客户端发送应答消息） */
+/* 應答訊息編碼處理（用於向客戶端傳送應答訊息） */
 void*   MdsCsvParser_EncodeRsp(
                 SMsgHeadT *pRspHead,
                 const MdsMktRspMsgBodyT *pRspBody,
@@ -71,7 +71,7 @@ void*   MdsCsvParser_EncodeRsp(
                 int32 bufSize,
                 const char *pRemoteInfo);
 
-/* 应答消息解码处理（用于接收服务器端返回的应答消息） */
+/* 應答訊息解碼處理（用於接收伺服器端返回的應答訊息） */
 MdsMktRspMsgBodyT*
         MdsCsvParser_DecodeRsp(
                 SMsgHeadT *pRspHead,
@@ -79,7 +79,7 @@ MdsMktRspMsgBodyT*
                 MdsMktRspMsgBodyT *pRspMsgBuf,
                 const char *pRemoteInfo);
 
-/* 返回应答消息编码后的记录格式 (字段列表) */
+/* 返回應答訊息編碼後的記錄格式 (欄位列表) */
 int32   MdsCsvParser_GetRspFields(
                 uint8 msgType,
                 char *pBuf,
@@ -88,16 +88,16 @@ int32   MdsCsvParser_GetRspFields(
 
 
 /* ===================================================================
- * 用于具体数据条目的编码/解码处理的函数声明
+ * 用於具體資料條目的編碼/解碼處理的函式宣告
  * =================================================================== */
 
-/* 证券静态信息条目的编码处理 */
+/* 證券靜態資訊條目的編碼處理 */
 int32   MdsCsvParser_EncodeStockStaticItem(
                 const MdsStockStaticInfoT *pItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 行情快照条目的编码处理 */
+/* 行情快照條目的編碼處理 */
 int32   MdsCsvParser_EncodeSnapshotListItem(
                 const MdsL1SnapshotT *pItem,
                 char *pBuf,

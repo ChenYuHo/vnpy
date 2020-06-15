@@ -17,7 +17,7 @@
 /**
  * @file    spk_log_mode.h
  *
- * 日志模式定义头文件
+ * 日誌模式定義標頭檔案
  *
  * @version $Id$
  * @since   2004.12.23
@@ -39,87 +39,87 @@ extern "C" {
 
 
 /*
- * 常量定义
+ * 常量定義
  */
-/** 日志内容的最大长度 */
+/** 日誌內容的最大長度 */
 #define     SLOG_MAX_INFO_SIZE      (SPK_MAX_BLOCK_SIZE)
-/* TODO 日志内容的最大长度
+/* TODO 日誌內容的最大長度
 #define     SLOG_MAX_INFO_SIZE      (PIPE_BUF)
 */
 
-/** 日志模式名称的长度 */
+/** 日誌模式名稱的長度 */
 #define     SLOG_MAX_MODE_NAME      (32)
 /* -------------------------           */
 
 
 /**
- * 日志模式结构体定义
+ * 日誌模式結構體定義
  */
 typedef struct _SLogMode {
-    uint8               mode;                       /**< 日志模式代码 */
-    uint8               appenderType;               /**< 日志记录器类型 */
-    uint8               isAsyncLog;                 /**< 是否是异步日志 */
-    uint8               __filler1[5];               /**< 按64位对齐的填充域 */
+    uint8               mode;                       /**< 日誌模式程式碼 */
+    uint8               appenderType;               /**< 日誌記錄器型別 */
+    uint8               isAsyncLog;                 /**< 是否是非同步日誌 */
+    uint8               __filler1[5];               /**< 按64位對齊的填充域 */
 
-    void                *logFn;                     /**< 日志实现函数 */
-    void                *__filler2;                 /**< 按64位对齐的填充域 */
-    char                name[SLOG_MAX_MODE_NAME];   /**< 日志模式名称 */
+    void                *logFn;                     /**< 日誌實現函式 */
+    void                *__filler2;                 /**< 按64位對齊的填充域 */
+    char                name[SLOG_MAX_MODE_NAME];   /**< 日誌模式名稱 */
 } SLogModeT;
 /* -------------------------           */
 
 
 /**
- * 日志级别定义表
+ * 日誌級別定義表
  */
 extern  SLogModeT __SPK_DLL_IMPORT      __SPK_slogModes[];
 
 
 /*
- * 日志级别常量定义
+ * 日誌級別常量定義
  */
-/** 日志模式 - 文件日志 - 等同FILE_ROLLING */
+/** 日誌模式 - 檔案日誌 - 等同FILE_ROLLING */
 #define SLOG_MODE_FILE                  (&__SPK_slogModes[0])
 
-/** 日志模式 - 文件日志 - 轮换, 不区分具体日期 */
+/** 日誌模式 - 檔案日誌 - 輪換, 不區分具體日期 */
 #define SLOG_MODE_FILE_ROLLING          (&__SPK_slogModes[1])
 
-/** 日志模式 - 文件日志 - 每天N个日志文件(N >= 1) */
+/** 日誌模式 - 檔案日誌 - 每天N個日誌檔案(N >= 1) */
 #define SLOG_MODE_FILE_DAILY_ROLLING    (&__SPK_slogModes[2])
 
-/** 日志模式 - 文件日志 - 每天一个日志文件 */
+/** 日誌模式 - 檔案日誌 - 每天一個日誌檔案 */
 #define SLOG_MODE_FILE_DAILY            (&__SPK_slogModes[3])
 
-/** 日志模式 - 控制台日志 - 等同CONSOLE_STDOUT */
+/** 日誌模式 - 控制檯日誌 - 等同CONSOLE_STDOUT */
 #define SLOG_MODE_CONSOLE               (&__SPK_slogModes[4])
 
-/** 日志模式 - 控制台日志 - 输出到stdout */
+/** 日誌模式 - 控制檯日誌 - 輸出到stdout */
 #define SLOG_MODE_CONSOLE_STDOUT        (&__SPK_slogModes[5])
 
-/** 日志模式 - 控制台日志 - 输出到stderr */
+/** 日誌模式 - 控制檯日誌 - 輸出到stderr */
 #define SLOG_MODE_CONSOLE_STDERR        (&__SPK_slogModes[6])
 
-/** 日志模式 - 异步文件日志 */
+/** 日誌模式 - 非同步檔案日誌 */
 #define SLOG_MODE_ASYNC_FILE            (&__SPK_slogModes[7])
 /* -------------------------           */
 
 
 /*
- * 函数定义
+ * 函式定義
  */
 
 /*
- * 返回名称对应的日志模式
+ * 返回名稱對應的日誌模式
  */
 const SLogModeT*
         SLog_GetLogMode(const char *modeName);
 
 /*
- * 返回日志模式对应的日志记录器类型是否是文件记录器
+ * 返回日誌模式對應的日誌記錄器型別是否是檔案記錄器
  */
 BOOL    SLog_IsFileLogAppender(const SLogModeT *logMode);
 
 /*
- * 返回日志模式对应的日志记录器类型是否是异步日志记录器
+ * 返回日誌模式對應的日誌記錄器型別是否是非同步日誌記錄器
  */
 BOOL    SLog_IsAsyncLogAppender(const SLogModeT *logMode);
 /* -------------------------           */

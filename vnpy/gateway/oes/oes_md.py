@@ -84,7 +84,7 @@ class OesMdMessageLoop:
 
     def reconnect(self):
         """"""
-        self.gateway.write_log(_("正在尝试重新连接到行情服务器。"))
+        self.gateway.write_log(_("正在嘗試重新連線到行情伺服器。"))
         return self._md.connect_tcp_channel()
 
     def _get_last_tick(self, symbol):
@@ -130,7 +130,7 @@ class OesMdMessageLoop:
                 # if is_timeout(ret):
                 #     pass  # just no message
                 if is_disconnected(ret):
-                    self.gateway.write_log(_("与行情服务器的连接已断开。"))
+                    self.gateway.write_log(_("與行情伺服器的連線已斷開。"))
                     while self._alive and not self.reconnect():
                         time.sleep(1)
         return

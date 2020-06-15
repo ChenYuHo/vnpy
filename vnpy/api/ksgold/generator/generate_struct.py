@@ -24,7 +24,7 @@ class StructGenerator:
                 self.typedefs[name] = getattr(module, name)
 
     def run(self):
-        """运行生成"""
+        """執行生成"""
         self.f_cpp = open(self.filename, "r")
         self.f_struct = open(f"{self.prefix}_struct.py", "w")
 
@@ -37,7 +37,7 @@ class StructGenerator:
         print("Struct生成成功")
 
     def process_line(self, line: str):
-        """处理每行"""
+        """處理每行"""
         line = line.replace(";", "")
         line = line.replace("\n", "")
 
@@ -79,7 +79,7 @@ class StructGenerator:
         self.f_struct.write(new_line)
 
     def process_declare(self, line: str):
-        """处理声明"""
+        """處理宣告"""
         words = line.split(" ")
         name = words[1]
         end = "{"
@@ -88,16 +88,16 @@ class StructGenerator:
         self.f_struct.write(new_line)
 
     def process_start(self, line: str):
-        """处理开始"""
+        """處理開始"""
         pass
 
     def process_end(self, line: str):
-        """处理结束"""
+        """處理結束"""
         new_line = "}\n\n"
         self.f_struct.write(new_line)
 
     def process_member(self, line: str):
-        """处理成员"""
+        """處理成員"""
         content = line.split("//")[0]
         words = content.split(" ")
         words = [word for word in words if word]

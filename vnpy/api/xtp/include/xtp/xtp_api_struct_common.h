@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
-///@author 中泰证券股份有限公司
+///@author 中泰證券股份有限公司
 ///@file xtp_api_struct_common.h
-///@brief 定义业务公共数据结构
+///@brief 定義業務公共資料結構
 /////////////////////////////////////////////////////////////////////////
 
 #ifndef _XTP_API_STRUCT_COMMON_H_
@@ -24,14 +24,14 @@ typedef unsigned long long uint64_t;
 
 #pragma pack(8)
 
-///错误信息的字符串长度
+///錯誤資訊的字串長度
 #define XTP_ERR_MSG_LEN  124
-///响应信息
+///響應資訊
 typedef struct XTPRspInfoStruct
 {
-	///错误代码
+	///錯誤程式碼
 	int32_t	error_id;
-	///错误信息
+	///錯誤資訊
 	char	error_msg[XTP_ERR_MSG_LEN];
 } XTPRI;
 

@@ -18,7 +18,7 @@ class DataTypeGenerator:
         self.prefix: str = prefix
 
     def run(self) -> None:
-        """主函数"""
+        """主函式"""
         self.f_cpp = open(self.filename, "r")
         self.f_define = open(f"{self.prefix}_constant.py", "w")
         self.f_typedef = open(f"{self.prefix}_typedef.py", "w")
@@ -30,10 +30,10 @@ class DataTypeGenerator:
         self.f_define.close()
         self.f_typedef.close()
 
-        print("DataType生成完毕")
+        print("DataType生成完畢")
 
     def process_line(self, line: str) -> None:
-        """处理每行"""
+        """處理每行"""
         line = line.replace("\n", "")
         line = line.replace(";", "")
 
@@ -43,7 +43,7 @@ class DataTypeGenerator:
             self.process_typedef(line)
 
     def process_define(self, line: str) -> None:
-        """处理常量定义"""
+        """處理常量定義"""
         words = line.split(" ")
         words = [word for word in words if word]
         if len(words) < 3:
@@ -56,7 +56,7 @@ class DataTypeGenerator:
         self.f_define.write(new_line)
 
     def process_typedef(self, line: str) -> None:
-        """处理类型定义"""
+        """處理型別定義"""
         words = line.split(" ")
         words = [word for word in words if word != " "]
 

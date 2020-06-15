@@ -102,7 +102,7 @@ class AlgoTemplate:
         self.on_stop()
         self.put_variables_event()
 
-        self.write_log("停止算法")
+        self.write_log("停止演算法")
 
     def subscribe(self, vt_symbol):
         """"""
@@ -117,7 +117,7 @@ class AlgoTemplate:
         offset: Offset = Offset.NONE
     ):
         """"""
-        msg = f"委托买入{vt_symbol}：{volume}@{price}"
+        msg = f"委託買入{vt_symbol}：{volume}@{price}"
         self.write_log(msg)
 
         return self.algo_engine.send_order(
@@ -139,7 +139,7 @@ class AlgoTemplate:
         offset: Offset = Offset.NONE
     ):
         """"""
-        msg = f"委托卖出{vt_symbol}：{volume}@{price}"
+        msg = f"委託賣出{vt_symbol}：{volume}@{price}"
         self.write_log(msg)
 
         return self.algo_engine.send_order(

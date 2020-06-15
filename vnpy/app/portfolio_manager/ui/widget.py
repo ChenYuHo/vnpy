@@ -32,7 +32,7 @@ class PortfolioManager(QtWidgets.QWidget):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("投资组合")
+        self.setWindowTitle("投資組合")
 
         strategy_monitor = PortfolioStrategyMonitor(
             self.main_engine, self.event_engine)
@@ -52,7 +52,7 @@ class PortfolioManager(QtWidgets.QWidget):
         vbox.addWidget(self.management_widget)
         vbox.addWidget(self.create_group("策略", strategy_monitor))
         vbox.addWidget(self.trading_widget)
-        vbox.addWidget(self.create_group("委托", order_monitor))
+        vbox.addWidget(self.create_group("委託", order_monitor))
         vbox.addWidget(self.create_group("成交", trade_monitor))
 
         self.setLayout(vbox)
@@ -87,15 +87,15 @@ class PortfolioStrategyMonitor(BaseMonitor):
     sorting = False
 
     headers = {
-        "name": {"display": "策略名称", "cell": BaseCell, "update": False},
-        "vt_symbol": {"display": "交易合约", "cell": BaseCell, "update": False},
-        "size": {"display": "合约乘数", "cell": BaseCell, "update": False},
-        "net_pos": {"display": "策略持仓", "cell": BaseCell, "update": True},
-        "open_price": {"display": "持仓价格", "cell": BaseCell, "update": True},
-        "last_price": {"display": "最新价格", "cell": BaseCell, "update": True},
-        "pos_pnl": {"display": "持仓盈亏", "cell": PnlCell, "update": True},
-        "realized_pnl": {"display": "平仓盈亏", "cell": PnlCell, "update": True},
-        "create_time": {"display": "创建时间", "cell": BaseCell, "update": False},
+        "name": {"display": "策略名稱", "cell": BaseCell, "update": False},
+        "vt_symbol": {"display": "交易合約", "cell": BaseCell, "update": False},
+        "size": {"display": "合約乘數", "cell": BaseCell, "update": False},
+        "net_pos": {"display": "策略持倉", "cell": BaseCell, "update": True},
+        "open_price": {"display": "持倉價格", "cell": BaseCell, "update": True},
+        "last_price": {"display": "最新價格", "cell": BaseCell, "update": True},
+        "pos_pnl": {"display": "持倉盈虧", "cell": PnlCell, "update": True},
+        "realized_pnl": {"display": "平倉盈虧", "cell": PnlCell, "update": True},
+        "create_time": {"display": "建立時間", "cell": BaseCell, "update": False},
     }
 
     def remove_strategy(self, name: str):
@@ -117,16 +117,16 @@ class PortfolioTradeMonitor(BaseMonitor):
     data_key = ""
 
     headers = {
-        "gateway_name": {"display": "策略名称", "cell": BaseCell, "update": False},
-        "tradeid": {"display": "成交号 ", "cell": BaseCell, "update": False},
-        "orderid": {"display": "委托号", "cell": BaseCell, "update": False},
-        "symbol": {"display": "代码", "cell": BaseCell, "update": False},
+        "gateway_name": {"display": "策略名稱", "cell": BaseCell, "update": False},
+        "tradeid": {"display": "成交號 ", "cell": BaseCell, "update": False},
+        "orderid": {"display": "委託號", "cell": BaseCell, "update": False},
+        "symbol": {"display": "程式碼", "cell": BaseCell, "update": False},
         "exchange": {"display": "交易所", "cell": EnumCell, "update": False},
         "direction": {"display": "方向", "cell": DirectionCell, "update": False},
-        "offset": {"display": "开平", "cell": EnumCell, "update": False},
-        "price": {"display": "价格", "cell": BaseCell, "update": False},
-        "volume": {"display": "数量", "cell": BaseCell, "update": False},
-        "time": {"display": "时间", "cell": BaseCell, "update": False},
+        "offset": {"display": "開平", "cell": EnumCell, "update": False},
+        "price": {"display": "價格", "cell": BaseCell, "update": False},
+        "volume": {"display": "數量", "cell": BaseCell, "update": False},
+        "time": {"display": "時間", "cell": BaseCell, "update": False},
     }
 
 
@@ -140,18 +140,18 @@ class PortfolioOrderMonitor(BaseMonitor):
     sorting = True
 
     headers = {
-        "gateway_name": {"display": "策略名称", "cell": BaseCell, "update": False},
-        "orderid": {"display": "委托号", "cell": BaseCell, "update": False},
-        "symbol": {"display": "代码", "cell": BaseCell, "update": False},
+        "gateway_name": {"display": "策略名稱", "cell": BaseCell, "update": False},
+        "orderid": {"display": "委託號", "cell": BaseCell, "update": False},
+        "symbol": {"display": "程式碼", "cell": BaseCell, "update": False},
         "exchange": {"display": "交易所", "cell": EnumCell, "update": False},
-        "type": {"display": "类型", "cell": EnumCell, "update": False},
+        "type": {"display": "型別", "cell": EnumCell, "update": False},
         "direction": {"display": "方向", "cell": DirectionCell, "update": False},
-        "offset": {"display": "开平", "cell": EnumCell, "update": False},
-        "price": {"display": "价格", "cell": BaseCell, "update": False},
-        "volume": {"display": "总数量", "cell": BaseCell, "update": True},
+        "offset": {"display": "開平", "cell": EnumCell, "update": False},
+        "price": {"display": "價格", "cell": BaseCell, "update": False},
+        "volume": {"display": "總數量", "cell": BaseCell, "update": True},
         "traded": {"display": "已成交", "cell": BaseCell, "update": True},
-        "status": {"display": "状态", "cell": EnumCell, "update": True},
-        "time": {"display": "时间", "cell": BaseCell, "update": True},
+        "status": {"display": "狀態", "cell": EnumCell, "update": True},
+        "time": {"display": "時間", "cell": BaseCell, "update": True},
     }
 
     def init_ui(self):
@@ -160,7 +160,7 @@ class PortfolioOrderMonitor(BaseMonitor):
         """
         super(PortfolioOrderMonitor, self).init_ui()
 
-        self.setToolTip("双击单元格撤单")
+        self.setToolTip("雙擊單元格撤單")
         self.itemDoubleClicked.connect(self.cancel_order)
 
     def cancel_order(self, cell):
@@ -212,7 +212,7 @@ class StrategyTradingWidget(QtWidgets.QWidget):
         ]:
             w.setFixedWidth(150)
 
-        send_button = QtWidgets.QPushButton("委托")
+        send_button = QtWidgets.QPushButton("委託")
         send_button.clicked.connect(self.send_order)
         send_button.setFixedWidth(70)
 
@@ -221,15 +221,15 @@ class StrategyTradingWidget(QtWidgets.QWidget):
         cancel_button.setFixedWidth(70)
 
         hbox = QtWidgets.QHBoxLayout()
-        hbox.addWidget(QtWidgets.QLabel("策略名称"))
+        hbox.addWidget(QtWidgets.QLabel("策略名稱"))
         hbox.addWidget(self.name_combo)
         hbox.addWidget(QtWidgets.QLabel("方向"))
         hbox.addWidget(self.direction_combo)
-        hbox.addWidget(QtWidgets.QLabel("开平"))
+        hbox.addWidget(QtWidgets.QLabel("開平"))
         hbox.addWidget(self.offset_combo)
-        hbox.addWidget(QtWidgets.QLabel("价格"))
+        hbox.addWidget(QtWidgets.QLabel("價格"))
         hbox.addWidget(self.price_line)
-        hbox.addWidget(QtWidgets.QLabel("数量"))
+        hbox.addWidget(QtWidgets.QLabel("數量"))
         hbox.addWidget(self.volume_line)
         hbox.addWidget(send_button)
         hbox.addWidget(cancel_button)
@@ -305,16 +305,16 @@ class StrategyManagementWidget(QtWidgets.QWidget):
         ]:
             w.setFixedWidth(150)
 
-        add_button = QtWidgets.QPushButton("创建策略")
+        add_button = QtWidgets.QPushButton("建立策略")
         add_button.clicked.connect(self.add_strategy)
 
         remove_button = QtWidgets.QPushButton("移除策略")
         remove_button.clicked.connect(self.remove_strategy)
 
         hbox = QtWidgets.QHBoxLayout()
-        hbox.addWidget(QtWidgets.QLabel("策略名称"))
+        hbox.addWidget(QtWidgets.QLabel("策略名稱"))
         hbox.addWidget(self.name_line)
-        hbox.addWidget(QtWidgets.QLabel("交易合约"))
+        hbox.addWidget(QtWidgets.QLabel("交易合約"))
         hbox.addWidget(self.symbol_line)
         hbox.addWidget(add_button)
         hbox.addStretch()
@@ -332,7 +332,7 @@ class StrategyManagementWidget(QtWidgets.QWidget):
             QtWidgets.QMessageBox.information(
                 self,
                 "提示",
-                "请输入策略名称和交易合约",
+                "請輸入策略名稱和交易合約",
                 QtWidgets.QMessageBox.Ok
             )
 
@@ -342,7 +342,7 @@ class StrategyManagementWidget(QtWidgets.QWidget):
             QtWidgets.QMessageBox.information(
                 self,
                 "提示",
-                "策略创建成功",
+                "策略建立成功",
                 QtWidgets.QMessageBox.Ok
             )
 
@@ -351,7 +351,7 @@ class StrategyManagementWidget(QtWidgets.QWidget):
             QtWidgets.QMessageBox.warning(
                 self,
                 "提示",
-                "策略创建失败，存在重名或找不到合约",
+                "策略建立失敗，存在重名或找不到合約",
                 QtWidgets.QMessageBox.Ok
             )
 
@@ -379,7 +379,7 @@ class StrategyManagementWidget(QtWidgets.QWidget):
             QtWidgets.QMessageBox.warning(
                 self,
                 "提示",
-                "策略移除失败，不存在该策略",
+                "策略移除失敗，不存在該策略",
                 QtWidgets.QMessageBox.Ok
             )
 

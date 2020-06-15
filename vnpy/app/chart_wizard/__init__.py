@@ -8,7 +8,7 @@ class ChartWizardApp(BaseApp):
     app_name = APP_NAME
     app_module = __module__
     app_path = Path(__file__).parent
-    display_name = "K线图表"
+    display_name = "K線圖表"
     engine_class = ChartWizardEngine
     widget_name = "ChartWizardWidget"
     icon_name = "cw.ico"

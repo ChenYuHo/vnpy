@@ -8,7 +8,7 @@ from vnpy.app.algo_trading import AlgoTemplate
 class StopAlgo(AlgoTemplate):
     """"""
 
-    display_name = "Stop 条件委托"
+    display_name = "Stop 條件委託"
 
     default_setting = {
         "vt_symbol": "",
@@ -76,7 +76,7 @@ class StopAlgo(AlgoTemplate):
                     offset=self.offset
                 )
                 self.write_log(
-                    f"停止单已触发，代码：{self.vt_symbol}，方向：{self.direction}, 价格：{self.stop_price}，数量：{self.volume}，开平：{self.offset}")
+                    f"停止單已觸發，程式碼：{self.vt_symbol}，方向：{self.direction}, 價格：{self.stop_price}，數量：{self.volume}，開平：{self.offset}")
 
         else:
             if tick.last_price <= self.stop_price:
@@ -92,7 +92,7 @@ class StopAlgo(AlgoTemplate):
                     offset=self.offset
                 )
                 self.write_log(
-                    f"停止单已触发，代码：{self.vt_symbol}，方向：{self.direction}, 价格：{self.stop_price}，数量：{self.volume}，开平：{self.offset}")
+                    f"停止單已觸發，程式碼：{self.vt_symbol}，方向：{self.direction}, 價格：{self.stop_price}，數量：{self.volume}，開平：{self.offset}")
 
         self.put_variables_event()
 

@@ -79,8 +79,8 @@ class AlpacaGateway(BaseGateway):
     default_setting = {
         "KEY ID": "",
         "Secret Key": "",
-        "会话数": 10,
-        "服务器": ["REAL", "PAPER"]
+        "會話數": 10,
+        "伺服器": ["REAL", "PAPER"]
     }
 
     exchanges = [Exchange.SMART]
@@ -97,8 +97,8 @@ class AlpacaGateway(BaseGateway):
         """"""
         key = setting["KEY ID"]
         secret = setting["Secret Key"]
-        session = setting["会话数"]
-        server = setting["服务器"]
+        session = setting["會話數"]
+        server = setting["伺服器"]
 
         rest_url = REST_HOST if server == "REAL" else PAPER_REST_HOST
         websocket_url = WEBSOCKET_HOST if server == "REAL" else PAPER_WEBSOCKET_HOST
@@ -210,7 +210,7 @@ class AlpacaRestApi(RestClient):
         self.init(url)
         self.start(session_num)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
         self.query_contract()
         self.query_account()
         self.query_position()
@@ -325,7 +325,7 @@ class AlpacaRestApi(RestClient):
             )
             self.gateway.on_contract(contract)
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
     def on_query_account(self, data, request):
         """"""
@@ -379,7 +379,7 @@ class AlpacaRestApi(RestClient):
         for d in data:
             self.update_order(d)
 
-        self.gateway.write_log("委托信息查询成功")
+        self.gateway.write_log("委託資訊查詢成功")
 
     def on_send_order(self, data, request: Request):
         """"""
@@ -398,7 +398,7 @@ class AlpacaRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"请求失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"請求失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -411,7 +411,7 @@ class AlpacaRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -421,7 +421,7 @@ class AlpacaRestApi(RestClient):
     def on_cancel_order(self, data, request):
         """"""
         req = request.extra
-        msg = f"撤单成功，委托号：{req.orderid}"
+        msg = f"撤單成功，委託號：{req.orderid}"
         self.gateway.write_log(msg)
 
 
@@ -464,9 +464,9 @@ class AlpacaWebsocketApi(WebsocketClient):
     def on_authenticate(self, data):
         """"""
         if data["status"] == "authorized":
-            self.gateway.write_log("Websocket API登录成功")
+            self.gateway.write_log("Websocket API登入成功")
         else:
-            self.gateway.write_log("Websocket API登录失败")
+            self.gateway.write_log("Websocket API登入失敗")
             return
 
         params = {
@@ -479,12 +479,12 @@ class AlpacaWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("Websocket API连接成功")
+        self.gateway.write_log("Websocket API連線成功")
         self.authenticate()
 
     def on_disconnected(self):
         """"""
-        self.gateway.write_log("Websocket API连接断开")
+        self.gateway.write_log("Websocket API連線斷開")
 
     def on_packet(self, packet: dict):
         """"""
@@ -497,10 +497,10 @@ class AlpacaWebsocketApi(WebsocketClient):
             streams = data["streams"]
 
             if "trade_updates" in streams:
-                self.gateway.write_log("委托成交推送订阅成功")
+                self.gateway.write_log("委託成交推送訂閱成功")
 
             if "account_updates" in streams:
-                self.gateway.write_log("资金变化推送订阅成功")
+                self.gateway.write_log("資金變化推送訂閱成功")
 
         elif stream == "trade_updates":
             self.on_order(data)
@@ -609,7 +609,7 @@ class AlpacaDataRestApi(RestClient):
         self.init(DATA_REST_HOST)
         self.start(session_num)
 
-        self.gateway.write_log("行情REST API启动成功")
+        self.gateway.write_log("行情REST API啟動成功")
 
     def subscribe(self, req: SubscribeRequest):
         """"""

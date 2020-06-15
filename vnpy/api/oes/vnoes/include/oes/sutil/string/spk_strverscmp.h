@@ -17,7 +17,7 @@
 /**
  * @file    spk_strverscmp.h
  *
- * strverscmp函数的简化版本
+ * strverscmp函式的簡化版本
  *
  * @version 1.0 2016/11/24
  * @since   2016/11/24
@@ -44,14 +44,14 @@ extern "C" {
 int32   SStr_Strverscmp(const char *s1, const char *s2);
 
 /*
- * 将字符串类型的版本号转换为整数形式的版本号数值
- * - 版本号数值的格式为 10 位整型数值, 形如: 1AABBCCDD0, 其中:
- *   - 第一位固定为 1
- *   - AA 为主版本号
- *   - BB 为副版本号
- *   - CC 为发布号
- *   - DD 为构建号
- *   - 最后一位固定为 0
+ * 將字串型別的版本號轉換為整數形式的版本號數值
+ * - 版本號數值的格式為 10 位整型數值, 形如: 1AABBCCDD0, 其中:
+ *   - 第一位固定為 1
+ *   - AA 為主版本號
+ *   - BB 為副版本號
+ *   - CC 為釋出號
+ *   - DD 為構建號
+ *   - 最後一位固定為 0
  */
 int32   SStr_GetIntVersion(const char *pStr);
 /* -------------------------           */

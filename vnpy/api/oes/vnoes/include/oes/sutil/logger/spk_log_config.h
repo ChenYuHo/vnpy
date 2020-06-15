@@ -17,7 +17,7 @@
 /**
  * @file    spk_log_config.h
  *
- * 日志配置文件解析处理头文件(非线程安全)
+ * 日誌配置檔案解析處理標頭檔案(非執行緒安全)
  *
  * @version $Id$
  * @since   2005.10.31
@@ -40,17 +40,17 @@ extern "C" {
 
 
 /*
- * 常量定义
+ * 常量定義
  */
-/** 最大的日志配置数量 */
+/** 最大的日誌配置數量 */
 #define     SLOGCFG_MAX_CONFIG_COUNT            (32)
-/** 最大的日志记录器数量 */
+/** 最大的日誌記錄器數量 */
 #define     SLOGCFG_MAX_APPENDER_NUMBER         (16)
 /* -------------------------           */
 
 
 /*
- * 日志默认配置定义
+ * 日誌預設配置定義
  */
 #define     SLOGCFG_DEFAULT_MIN_LOG_LEVEL       SLOG_LEVEL_TRACE
 #define     SLOGCFG_DEFAULT_MAX_LOG_LEVEL       SLOG_LEVEL_FATAL
@@ -64,12 +64,12 @@ extern "C" {
 
 
 /*
- * 配置文件常量定义
+ * 配置檔案常量定義
  */
-/** 默认的日志根配置区段 */
+/** 預設的日誌根配置區段 */
 #define     SLOGCFG_KEY_DEFAULT_ROOT_SECTION    "log"
 
-/** 默认的日志根配置 */
+/** 預設的日誌根配置 */
 #define     SLOGCFG_KEY_DEFAULT_ROOT_CATEGORY   "log.root_category"
 
 /** 多值域的域分隔符 */
@@ -78,42 +78,42 @@ extern "C" {
 
 
 /*
- * 结构体定义
+ * 結構體定義
  */
 
 /**
- * 日志配置信息结构
+ * 日誌配置資訊結構
  */
 typedef struct _SLogCfgItem {
-    /** 日志配置区段名称 */
+    /** 日誌配置區段名稱 */
     char                logSection[SLOGCFG_MAX_SECTION_LENGTH];
 
-    /** 日志模式 */
+    /** 日誌模式 */
     char                logMode[SLOG_MAX_MODE_NAME];
-    /** 日志登记的起始级别 */
+    /** 日誌登記的起始級別 */
     char                minLogLevel[SLOG_MAX_LEVEL_NAME];
-    /** 日志登记的最高级别 */
+    /** 日誌登記的最高級別 */
     char                maxLogLevel[SLOG_MAX_LEVEL_NAME];
-    /** 日志文件名称 */
+    /** 日誌檔名稱 */
     char                logFile[SPK_MAX_PATH_LEN];
 
     /**
-     * 日志文件最大长度
-     * - 日志文件最大长度允许配置为0, 表示无最大长度限制
-     * - 如果配置值小于 2048 则以兆为单位计算, 否则以字节为单位计算, 最大文件长度为2GB
+     * 日誌檔案最大長度
+     * - 日誌檔案最大長度允許配置為0, 表示無最大長度限制
+     * - 如果配置值小於 2048 則以兆為單位計算, 否則以位元組為單位計算, 最大檔案長度為2GB
      */
     int32               maxFileLength;
-    /** 日志文件最大备份数 */
+    /** 日誌檔案最大備份數 */
     int32               maxBackupCount;
 
-    /** 异步日志的消息队列大小 */
+    /** 非同步日誌的訊息佇列大小 */
     int32               asyncQueueSize;
-    /** 异步日志的共享内存ID (0 表示使用默认值) */
+    /** 非同步日誌的共享記憶體ID (0 表示使用預設值) */
     int32               asyncQueueShmId;
 } SLogCfgItemT;
 
 
-/* 结构体初始化值定义 */
+/* 結構體初始化值定義 */
 #define NULLOBJ_LOG_CFG_ITEM                    \
         {0}, {0}, {0}, {0}, {0}, \
         0, 0, \
@@ -122,21 +122,21 @@ typedef struct _SLogCfgItem {
 
 
 /**
- * 日志配置区段
+ * 日誌配置區段
  */
 typedef struct _SLogCfgSectionInfo {
-    /** 日志配置的区段名称 */
+    /** 日誌配置的區段名稱 */
     char        section[SLOGCFG_MAX_SECTION_LENGTH];
 } SLogCfgSectionInfoT;
 /* -------------------------           */
 
 
 /*
- * 函数声明
+ * 函式宣告
  */
 
 /*
- * 尝试加载所有的日志配置区段
+ * 嘗試載入所有的日誌配置區段
  */
 int32   SLogCfg_LoadAllConfig(
                 const char *pConfigFile,
@@ -144,7 +144,7 @@ int32   SLogCfg_LoadAllConfig(
                 int32 maxLogConfigCount);
 
 /*
- * 解析日志配置信息, 读取相关的日志分类列表，并加载所有的日志配置区段
+ * 解析日誌配置資訊, 讀取相關的日誌分類列表，並載入所有的日誌配置區段
  */
 int32   SLogCfg_LoadAllConfigAndCategoryList(
                 const char *pConfigFile,

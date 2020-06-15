@@ -23,7 +23,7 @@ class DataTypeGenerator:
                     self.typedefs[name] = getattr(module, name)
 
     def run(self) -> None:
-        """主函数"""
+        """主函式"""
         self.f_cpp = open(self.filename, "r", encoding="UTF-8")
         if self.name == "td":
             self.f_define = open(f"{self.prefix}_{self.name}_data_constant.py", "w", encoding="UTF-8")
@@ -41,10 +41,10 @@ class DataTypeGenerator:
         self.f_typedef.close()
         self.f_struct.close()
 
-        print(f"{self.name}_DataType生成完毕")
+        print(f"{self.name}_DataType生成完畢")
 
     def process_line(self, line: str) -> None:
-        """处理每行"""
+        """處理每行"""
         line = line.replace("\n", "")
         line = line.replace(";", "")
 
@@ -97,7 +97,7 @@ class DataTypeGenerator:
             self.f_struct.write(new_line)
 
     def process_declare(self, line: str) -> None:
-        """处理声明"""
+        """處理宣告"""
         words = line.split(" ")
         name = words[-1]
         end = "{"
@@ -106,11 +106,11 @@ class DataTypeGenerator:
         self.f_struct.write(new_line)
 
     def process_start(self, line: str):
-        """处理开始"""
+        """處理開始"""
         pass
 
     def process_end(self, line: str) -> None:
-        """处理结束"""
+        """處理結束"""
         new_line = "}\n\n"
         self.f_struct.write(new_line)
 
@@ -131,7 +131,7 @@ class DataTypeGenerator:
         self.f_struct.write(new_line)
 
     def process_typedef_md(self, line: str) -> None:
-        """处理类型定义"""
+        """處理型別定義"""
         words = line.split(" ")[-1].split("\t")
         words = [word for word in words if word != ""]
 
@@ -147,7 +147,7 @@ class DataTypeGenerator:
             self.f_struct.write(short2full)
 
     def process_typedef_td(self, line: str) -> None:
-        """处理类型定义"""
+        """處理型別定義"""
         words = line.split(" ")
         words = [word for word in words if word != ""]
 

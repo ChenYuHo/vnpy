@@ -96,7 +96,7 @@ class MonitorTable(QtWidgets.QTableWidget):
         """
         self.menu = QtWidgets.QMenu(self)
 
-        resize_action = QtWidgets.QAction("调整列宽", self)
+        resize_action = QtWidgets.QAction("調整列寬", self)
         resize_action.triggered.connect(self.resizeColumnsToContents)
         self.menu.addAction(resize_action)
 
@@ -114,20 +114,20 @@ class OptionMarketMonitor(MonitorTable):
     signal_position = QtCore.pyqtSignal(Event)
 
     headers: List[Dict] = [
-        {"name": "symbol", "display": "代码", "cell": MonitorCell},
+        {"name": "symbol", "display": "程式碼", "cell": MonitorCell},
         {"name": "cash_vega", "display": "Vega", "cell": GreeksCell},
         {"name": "cash_theta", "display": "Theta", "cell": GreeksCell},
         {"name": "cash_gamma", "display": "Gamma", "cell": GreeksCell},
         {"name": "cash_delta", "display": "Delta", "cell": GreeksCell},
-        {"name": "open_interest", "display": "持仓量", "cell": MonitorCell},
+        {"name": "open_interest", "display": "持倉量", "cell": MonitorCell},
         {"name": "volume", "display": "成交量", "cell": MonitorCell},
-        {"name": "bid_impv", "display": "买隐波", "cell": BidCell},
-        {"name": "bid_volume", "display": "买量", "cell": BidCell},
-        {"name": "bid_price", "display": "买价", "cell": BidCell},
-        {"name": "ask_price", "display": "卖价", "cell": AskCell},
-        {"name": "ask_volume", "display": "卖量", "cell": AskCell},
-        {"name": "ask_impv", "display": "卖隐波", "cell": AskCell},
-        {"name": "net_pos", "display": "净持仓", "cell": PosCell},
+        {"name": "bid_impv", "display": "買隱波", "cell": BidCell},
+        {"name": "bid_volume", "display": "買量", "cell": BidCell},
+        {"name": "bid_price", "display": "買價", "cell": BidCell},
+        {"name": "ask_price", "display": "賣價", "cell": AskCell},
+        {"name": "ask_volume", "display": "賣量", "cell": AskCell},
+        {"name": "ask_impv", "display": "賣隱波", "cell": AskCell},
+        {"name": "net_pos", "display": "淨持倉", "cell": PosCell},
     ]
 
     def __init__(self, option_engine: OptionEngine, portfolio_name: str):
@@ -147,7 +147,7 @@ class OptionMarketMonitor(MonitorTable):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("T型报价")
+        self.setWindowTitle("T型報價")
         self.verticalHeader().setVisible(False)
         self.setEditTriggers(self.NoEditTriggers)
 
@@ -173,7 +173,7 @@ class OptionMarketMonitor(MonitorTable):
         call_labels = [d["display"] for d in self.headers]
         put_labels = copy(call_labels)
         put_labels.reverse()
-        labels = call_labels + ["行权价"] + put_labels
+        labels = call_labels + ["行權價"] + put_labels
         self.setHorizontalHeaderLabels(labels)
 
         # Init cells
@@ -326,9 +326,9 @@ class OptionGreeksMonitor(MonitorTable):
     signal_position = QtCore.pyqtSignal(Event)
 
     headers: List[Dict] = [
-        {"name": "long_pos", "display": "多仓", "cell": PosCell},
-        {"name": "short_pos", "display": "空仓", "cell": PosCell},
-        {"name": "net_pos", "display": "净仓", "cell": PosCell},
+        {"name": "long_pos", "display": "多倉", "cell": PosCell},
+        {"name": "short_pos", "display": "空倉", "cell": PosCell},
+        {"name": "net_pos", "display": "淨倉", "cell": PosCell},
         {"name": "pos_delta", "display": "Delta", "cell": GreeksCell},
         {"name": "pos_gamma", "display": "Gamma", "cell": GreeksCell},
         {"name": "pos_theta", "display": "Theta", "cell": GreeksCell},
@@ -354,7 +354,7 @@ class OptionGreeksMonitor(MonitorTable):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("希腊值风险")
+        self.setWindowTitle("希臘值風險")
         self.verticalHeader().setVisible(False)
         self.setEditTriggers(self.NoEditTriggers)
 
@@ -377,7 +377,7 @@ class OptionGreeksMonitor(MonitorTable):
         column_count = len(self.headers) + 2
         self.setColumnCount(column_count)
 
-        labels = ["类别", "代码"] + [d["display"] for d in self.headers]
+        labels = ["類別", "程式碼"] + [d["display"] for d in self.headers]
         self.setHorizontalHeaderLabels(labels)
 
         # Init cells
@@ -399,16 +399,16 @@ class OptionGreeksMonitor(MonitorTable):
         row_names.extend(option_symbols)
 
         type_map = {}
-        type_map[self.portfolio_name] = "组合"
+        type_map[self.portfolio_name] = "組合"
 
         for symbol in underlying_symbols:
-            type_map[symbol] = "标的"
+            type_map[symbol] = "標的"
 
         for symbol in chain_symbols:
-            type_map[symbol] = "期权链"
+            type_map[symbol] = "期權鏈"
 
         for symbol in option_symbols:
-            type_map[symbol] = "期权"
+            type_map[symbol] = "期權"
 
         for row, row_name in enumerate(row_names):
             if not row_name:
@@ -539,7 +539,7 @@ class OptionChainMonitor(MonitorTable):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("期权链跟踪")
+        self.setWindowTitle("期權鏈跟蹤")
         self.verticalHeader().setVisible(False)
         self.setEditTriggers(self.NoEditTriggers)
 
@@ -549,7 +549,7 @@ class OptionChainMonitor(MonitorTable):
         # Set table row and column numbers
         self.setRowCount(len(portfolio.chains))
 
-        labels = ["期权链", "剩余交易日", "标的物", "升贴水"]
+        labels = ["期權鏈", "剩餘交易日", "標的物", "升貼水"]
         self.setColumnCount(len(labels))
         self.setHorizontalHeaderLabels(labels)
 

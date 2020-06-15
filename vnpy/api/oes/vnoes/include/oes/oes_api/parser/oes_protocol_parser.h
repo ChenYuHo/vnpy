@@ -17,7 +17,7 @@
 /**
  * @file    oes_protocol_parser.h
  *
- * 协议转换处理
+ * 協議轉換處理
  *
  * @version 1.2 2016/10/24
  * @since   2014/12/23
@@ -38,11 +38,11 @@ extern "C" {
 
 
 /* ===================================================================
- * 编码/解码函数声明 （非查询消息）
+ * 編碼/解碼函式宣告 （非查詢訊息）
  * =================================================================== */
 
 /*
- * 请求消息解码处理（解码为二进制结构体，用于接收客户端的请求消息）
+ * 請求訊息解碼處理（解碼為二進位制結構體，用於接收客戶端的請求訊息）
  */
 OesReqMsgBodyT* OesParser_DecodeReq(
                         SMsgHeadT *pReqHead,
@@ -51,7 +51,7 @@ OesReqMsgBodyT* OesParser_DecodeReq(
                         const char *pRemoteInfo);
 
 /*
- * 应答消息编码处理（编码为JSON等格式，用于向客户端发送应答消息）
+ * 應答訊息編碼處理（編碼為JSON等格式，用於向客戶端傳送應答訊息）
  */
 void*           OesParser_EncodeRsp(
                         SMsgHeadT *pRspHead,
@@ -62,7 +62,7 @@ void*           OesParser_EncodeRsp(
                         BOOL isCopyBinary);
 
 /*
- * 为执行报告回报特别定制的应答消息编码处理（编码为JSON等格式，用于向客户端发送应答消息）
+ * 為執行報告回報特別定製的應答訊息編碼處理（編碼為JSON等格式，用於向客戶端傳送應答訊息）
  */
 void*           OesParser_EncodeRptSpecial(
                         SMsgHeadT *pRspHead,
@@ -76,11 +76,11 @@ void*           OesParser_EncodeRptSpecial(
 
 
 /* ===================================================================
- * 编码/解码函数声明 （查询消息）
+ * 編碼/解碼函式宣告 （查詢訊息）
  * =================================================================== */
 
 /*
- * 查询服务接收消息的解析处理
+ * 查詢服務接收訊息的解析處理
  */
 OesQryReqMsgT*  OesParser_DecodeQueryReq(
                         SMsgHeadT *pReqHead,
@@ -89,7 +89,7 @@ OesQryReqMsgT*  OesParser_DecodeQueryReq(
                         const char *pRemoteInfo);
 
 /*
- * 查询服务构造应答消息处理
+ * 查詢服務構造應答訊息處理
  */
 void*           OesParser_EncodeQueryRsp(
                         SMsgHeadT *pRspHead,

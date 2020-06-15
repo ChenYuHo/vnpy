@@ -11,7 +11,7 @@ from vnpy.trader.object import TickData, BarData
 class PairTradingStrategy(StrategyTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     price_add = 5
     boll_window = 20
@@ -84,7 +84,7 @@ class PairTradingStrategy(StrategyTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

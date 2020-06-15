@@ -112,7 +112,7 @@ class KaisaGateway(BaseGateway):
         "auth_password": "",
         "user_id": "",
         "password": "",
-        "会话数": 3,
+        "會話數": 3,
     }
 
     exchanges: List[Exchange] = [Exchange.HKSE]
@@ -134,7 +134,7 @@ class KaisaGateway(BaseGateway):
         user_id = setting["user_id"]
         _password = setting["password"]
         password = self.encrypt(_password)
-        session_number = setting["会话数"]
+        session_number = setting["會話數"]
 
         if not self.authentica_status:
             self.authentica(auth_id, auth_password)
@@ -180,7 +180,7 @@ class KaisaGateway(BaseGateway):
         error_code = data["retCode"]
         error_msg = data["retMsg"]
 
-        msg = f"错误号 {error_code}, 错误信息 {error_msg}"
+        msg = f"錯誤號 {error_code}, 錯誤資訊 {error_msg}"
 
         self.write_error(msg)
 
@@ -201,14 +201,14 @@ class KaisaGateway(BaseGateway):
         )
 
         if response.status_code // 100 == 2:
-            self.write_log("网关认证成功")
+            self.write_log("閘道器認證成功")
             data = response.json()
             token_body = data["body"]["accessToken"]
             self.token = f"bearer {token_body}"
         else:
             data = response.json()
             error_msg = data["retMsg"]
-            self.write_log(f"网关认证失败，原因： {error_msg}")
+            self.write_log(f"閘道器認證失敗，原因： {error_msg}")
 
     def _query_contract(self):
         """"""
@@ -258,9 +258,9 @@ class KaisaGateway(BaseGateway):
                 )
                 self.on_contract(contract)
 
-            self.write_log("合约信息查询成功")
+            self.write_log("合約資訊查詢成功")
         else:
-            self.write_log("合约查询失败")
+            self.write_log("合約查詢失敗")
 
     def query_contract(self):
         """"""
@@ -340,7 +340,7 @@ class KaisaTradeRestApi(RestClient):
         self.init(REST_HOST)
         self.start(session_number)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
         self.login()
 
     def login(self) -> Request:
@@ -434,10 +434,10 @@ class KaisaTradeRestApi(RestClient):
 
     def on_login(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error(data, "账号登录"):
+        if self.check_error(data, "賬號登入"):
             return
 
-        self.gateway.write_log("账户登陆成功")
+        self.gateway.write_log("賬戶登陸成功")
 
         self.query_account()
         self.query_position()
@@ -445,7 +445,7 @@ class KaisaTradeRestApi(RestClient):
 
     def on_query_account(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error(data, "查询账户"):
+        if self.check_error(data, "查詢賬戶"):
             return
 
         body = data["body"]
@@ -460,7 +460,7 @@ class KaisaTradeRestApi(RestClient):
 
     def on_query_position(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error(data, "查询持仓"):
+        if self.check_error(data, "查詢持倉"):
             return
 
         positions = data["body"]["holdShareUnitList"]
@@ -480,7 +480,7 @@ class KaisaTradeRestApi(RestClient):
 
     def on_query_order(self, data: dict, request: Request) -> None:
         """"""
-        if self.check_error(data, "查询活动委托"):
+        if self.check_error(data, "查詢活動委託"):
             return
 
         body = data["body"]["mutilOrders"]
@@ -525,14 +525,14 @@ class KaisaTradeRestApi(RestClient):
                 )
                 self.gateway.on_trade(trade)
 
-        self.gateway.write_log(f"委托信息查询成功")
-        self.gateway.write_log("成交查询成功")
+        self.gateway.write_log(f"委託資訊查詢成功")
+        self.gateway.write_log("成交查詢成功")
 
     def on_send_order(self, data: dict, request: Request) -> None:
         """"""
         order = request.extra
 
-        if self.check_error(data, "委托"):
+        if self.check_error(data, "委託"):
             order.status = Status.REJECTED
             self.order_manager.on_order(order)
             return
@@ -548,7 +548,7 @@ class KaisaTradeRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"委托失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"委託失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -575,11 +575,11 @@ class KaisaTradeRestApi(RestClient):
         local_orderid = cancel_request.orderid
         order = self.order_manager.get_order_with_local_orderid(local_orderid)
 
-        if self.check_error(data, "撤单"):
+        if self.check_error(data, "撤單"):
             order.status = Status.REJECTED
         else:
             order.status = Status.CANCELLED
-            self.gateway.write_log(f"委托撤单成功：{order.orderid}")
+            self.gateway.write_log(f"委託撤單成功：{order.orderid}")
 
         self.order_manager.on_order(order)
 
@@ -587,7 +587,7 @@ class KaisaTradeRestApi(RestClient):
         """
         Callback when canceling order failed on server.
         """
-        msg = f"撤单失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"撤單失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_error(
@@ -600,7 +600,7 @@ class KaisaTradeRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -615,7 +615,7 @@ class KaisaTradeRestApi(RestClient):
         error_code = data["retCode"]
         error_msg = data["retMsg"]
 
-        self.gateway.write_log(f"{func}请求出错，代码：{error_code}，信息：{error_msg}")
+        self.gateway.write_log(f"{func}請求出錯，程式碼：{error_code}，資訊：{error_msg}")
         return True
 
 
@@ -680,7 +680,7 @@ class KaisaWebsocketApiBase(WebsocketClient):
 
         if packet["status"] != 0:
             error_msg = packet["msg"]
-            msg = f"请求{reqtype}出错，错误信息{error_msg}"
+            msg = f"請求{reqtype}出錯，錯誤資訊{error_msg}"
             self.gateway.write_log(msg)
         else:
             if reqtype == PING:
@@ -718,12 +718,12 @@ class KaisaTradeWebsocketApi(KaisaWebsocketApiBase):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("交易Websocket API连接成功")
+        self.gateway.write_log("交易Websocket API連線成功")
         self.login()
 
     def on_login(self, data):
         """"""
-        self.gateway.write_log("交易Websocket API登录成功")
+        self.gateway.write_log("交易Websocket API登入成功")
 
     def on_data(self, reqtype: int, data: dict) -> None:
         """"""
@@ -834,7 +834,7 @@ class KaisaDataWebsocketApi(KaisaWebsocketApiBase):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("行情Websocket API连接成功")
+        self.gateway.write_log("行情Websocket API連線成功")
         self.connected_status = True
 
     def on_data(self, reqtype: int, data: dict) -> None:

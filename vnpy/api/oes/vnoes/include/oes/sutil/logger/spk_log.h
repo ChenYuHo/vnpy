@@ -17,7 +17,7 @@
 /**
  * @file    spk_log.h
  *
- * 默认的日志处理程序的头文件 (默认开启控制台日志)
+ * 預設的日誌處理程式的標頭檔案 (預設開啟控制檯日誌)
  *
  * @version $Id$
  * @since   2008.8.14
@@ -35,8 +35,8 @@
 
 
 /*
- * 日志屏蔽标志
- * 编译时可通过指定 SLOG_MASK 宏定制
+ * 日誌遮蔽標誌
+ * 編譯時可通過指定 SLOG_MASK 巨集定製
  */
 #undef      SLOG_MASK_FLAG
 #define     SLOG_MASK_FLAG          (0)

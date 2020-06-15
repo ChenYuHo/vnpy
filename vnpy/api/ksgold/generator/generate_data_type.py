@@ -18,7 +18,7 @@ class DataTypeGenerator:
         self.name = name
 
     def run(self):
-        """主函数"""
+        """主函式"""
         self.f_cpp = open(self.filename, "r")
         if self.name == "TradeDefine":
             self.f_define = open(f"{self.prefix}_constant.py", "w")
@@ -39,10 +39,10 @@ class DataTypeGenerator:
         elif self.name == "Error":
             self.f_error_define.close()
 
-        print("DataType生成完毕")
+        print("DataType生成完畢")
 
     def process_line(self, line: str):
-        """处理每行"""
+        """處理每行"""
         line = line.replace("\n", "")
         line = line.replace(";", "")
 
@@ -52,7 +52,7 @@ class DataTypeGenerator:
             self.process_typedef(line)
 
     def process_define(self, line: str):
-        """处理常量定义"""
+        """處理常量定義"""
         line = line.replace("\t", " ")
         content = line.split("#define")[1]
         content = content.split("//")[0]
@@ -71,7 +71,7 @@ class DataTypeGenerator:
             self.f_error_define.write(new_line)
 
     def process_typedef(self, line: str):
-        """处理类型定义"""
+        """處理型別定義"""
         words = line.split(" ")
         words = [word for word in words if word]
 

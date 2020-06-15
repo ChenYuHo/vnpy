@@ -19,7 +19,7 @@ class DataTypeGenerator:
         self.count: int = 0
 
     def run(self):
-        """主函数"""
+        """主函式"""
         self.f_cpp = open(self.filename, "r", encoding="UTF-8")
         self.f_define = open(f"{self.prefix}_constant.py", "w", encoding="UTF-8")
         self.f_typedef = open(f"{self.prefix}_typedef.py", "w", encoding="UTF-8")
@@ -32,10 +32,10 @@ class DataTypeGenerator:
         self.f_define.close()
         self.f_typedef.close()
 
-        print("DataType生成完毕")
+        print("DataType生成完畢")
 
     def process_line(self, line: str):
-        """处理每行"""
+        """處理每行"""
         line = line.replace("\n", "")
         line = line.replace(";", "")
         line = line.replace("\t", "    ")
@@ -59,11 +59,11 @@ class DataTypeGenerator:
         elif line.startswith("}"):
             new_line = "}\n\n"
             self.f_struct.write(new_line)
-        # 处理枚举值表头
+        # 處理列舉值表頭
         # elif line.startswith("typedef enum"):
         #     print(line)
 
-        # 处理枚举值内容
+        # 處理列舉值內容
         elif "//<" in line:
             if "=" in line:
                 name = line.split("=")[0].strip()
@@ -77,11 +77,11 @@ class DataTypeGenerator:
             self.f_struct.write(new_line)
 
     def process_comment(self, line: str):
-        """处理注释"""
+        """處理註釋"""
         line.replace("/", "#")
 
     def process_enum(self, line: str):
-        """处理枚举值"""
+        """處理列舉值"""
         content = line.replace("\n", " ")
         content = content.replace("\r", " ")
         content = content.split(" ")
@@ -96,7 +96,7 @@ class DataTypeGenerator:
         self.f_struct.write(struct_line)
 
     def process_define(self, line: str):
-        """处理常量定义"""
+        """處理常量定義"""
         words = line.split(" ")
         words = [word for word in words if word]
         if len(words) < 3:
@@ -109,7 +109,7 @@ class DataTypeGenerator:
         self.f_define.write(new_line)
 
     def process_typedef(self, line: str):
-        """处理类型定义"""
+        """處理型別定義"""
         word = line.split(" ")[2]
         name = word.split("[")[0]
         typedef = "string"

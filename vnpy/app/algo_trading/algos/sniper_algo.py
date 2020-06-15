@@ -8,7 +8,7 @@ from vnpy.app.algo_trading import AlgoTemplate
 class SniperAlgo(AlgoTemplate):
     """"""
 
-    display_name = "Sniper 狙击手"
+    display_name = "Sniper 狙擊手"
 
     default_setting = {
         "vt_symbol": "",
@@ -95,7 +95,7 @@ class SniperAlgo(AlgoTemplate):
         self.traded += trade.volume
 
         if self.traded >= self.volume:
-            self.write_log(f"已交易数量：{self.traded}，总数量：{self.volume}")
+            self.write_log(f"已交易數量：{self.traded}，總數量：{self.volume}")
             self.stop()
         else:
             self.put_variables_event()

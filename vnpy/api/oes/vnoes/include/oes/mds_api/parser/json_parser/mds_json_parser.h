@@ -17,7 +17,7 @@
 /**
  * @file    mds_json_parser.h
  *
- * 行情订阅服务的消息解析处理
+ * 行情訂閱服務的訊息解析處理
  *
  * @version 1.0 2016/2/19
  * @since   2016/1/3
@@ -39,10 +39,10 @@ extern "C" {
 
 
 /* ===================================================================
- * 函数声明
+ * 函式宣告
  * =================================================================== */
 
-/* 请求消息编码处理（用于向服务器发送请求消息） */
+/* 請求訊息編碼處理（用於向伺服器傳送請求訊息） */
 void*   MdsJsonParser_EncodeReq(
                 SMsgHeadT *pReqHead,
                 const MdsMktReqMsgBodyT *pReqBody,
@@ -50,7 +50,7 @@ void*   MdsJsonParser_EncodeReq(
                 int32 bufSize,
                 const char *pRemoteInfo);
 
-/* 请求消息解码处理（用于接收客户端的请求消息） */
+/* 請求訊息解碼處理（用於接收客戶端的請求訊息） */
 MdsMktReqMsgBodyT*
         MdsJsonParser_DecodeReq(
                 SMsgHeadT *pReqHead,
@@ -58,7 +58,7 @@ MdsMktReqMsgBodyT*
                 MdsMktReqMsgBodyT *pReqMsgBuf,
                 const char *pRemoteInfo);
 
-/* 应答消息编码处理（用于向客户端发送应答消息） */
+/* 應答訊息編碼處理（用於向客戶端傳送應答訊息） */
 void*   MdsJsonParser_EncodeRsp(
                 SMsgHeadT *pRspHead,
                 const MdsMktRspMsgBodyT *pRspBody,
@@ -66,7 +66,7 @@ void*   MdsJsonParser_EncodeRsp(
                 int32 bufSize,
                 const char *pRemoteInfo);
 
-/* 应答消息编码处理（编码为精简的JSON格式） */
+/* 應答訊息編碼處理（編碼為精簡的JSON格式） */
 void*   MdsJsonParser_EncodeRspSimplify(
                 SMsgHeadT *pRspHead,
                 const MdsMktRspMsgBodyT *pRspBody,
@@ -74,7 +74,7 @@ void*   MdsJsonParser_EncodeRspSimplify(
                 int32 bufSize,
                 const char *pRemoteInfo);
 
-/* 应答消息解码处理（用于接收服务器端返回的应答消息） */
+/* 應答訊息解碼處理（用於接收伺服器端返回的應答訊息） */
 MdsMktRspMsgBodyT*
         MdsJsonParser_DecodeRsp(
                 SMsgHeadT *pRspHead,
@@ -85,16 +85,16 @@ MdsMktRspMsgBodyT*
 
 
 /* ===================================================================
- * 用于具体数据条目的编码/解码处理的函数声明
+ * 用於具體資料條目的編碼/解碼處理的函式宣告
  * =================================================================== */
 
-/* 证券静态信息条目的编码处理 */
+/* 證券靜態資訊條目的編碼處理 */
 int32   MdsJsonParser_EncodeStockStaticItem(
                 const MdsStockStaticInfoT *pItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 行情快照条目的编码处理 */
+/* 行情快照條目的編碼處理 */
 int32   MdsJsonParser_EncodeSnapshotListItem(
                 const MdsL1SnapshotT *pItem,
                 char *pBuf,

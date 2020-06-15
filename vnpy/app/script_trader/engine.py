@@ -51,7 +51,7 @@ class ScriptEngine(BaseEngine):
         """
         result = rqdata_client.init()
         if result:
-            self.write_log("RQData数据接口初始化成功")
+            self.write_log("RQData資料介面初始化成功")
 
     def start_strategy(self, script_path: str):
         """
@@ -65,7 +65,7 @@ class ScriptEngine(BaseEngine):
             target=self.run_strategy, args=(script_path,))
         self.strategy_thread.start()
 
-        self.write_log("策略交易脚本启动")
+        self.write_log("策略交易指令碼啟動")
 
     def run_strategy(self, script_path: str):
         """
@@ -82,7 +82,7 @@ class ScriptEngine(BaseEngine):
             importlib.reload(module)
             module.run(self)
         except:     # noqa
-            msg = f"触发异常已停止\n{traceback.format_exc()}"
+            msg = f"觸發異常已停止\n{traceback.format_exc()}"
             self.write_log(msg)
 
     def stop_strategy(self):
@@ -97,7 +97,7 @@ class ScriptEngine(BaseEngine):
             self.strategy_thread.join()
         self.strategy_thread = None
 
-        self.write_log("策略交易脚本停止")
+        self.write_log("策略交易指令碼停止")
 
     def connect_gateway(self, setting: dict, gateway_name: str):
         """"""
@@ -269,7 +269,7 @@ class ScriptEngine(BaseEngine):
 
     def send_email(self, msg: str) -> None:
         """"""
-        subject = "脚本策略引擎通知"
+        subject = "指令碼策略引擎通知"
         self.main_engine.send_email(subject, msg)
 
 

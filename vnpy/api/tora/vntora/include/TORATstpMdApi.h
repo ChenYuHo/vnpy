@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////////////////////////////
-///@company 上海泰琰信息科技有限公司
+///@company 上海泰琰資訊科技有限公司
 ///@file TORATstpMdApi.h
-///@brief 定义了客户端接口
+///@brief 定義了客戶端介面
 ///@history 
 /////////////////////////////////////////////////////////////////////////
 
@@ -28,44 +28,44 @@
 class CTORATstpMdSpi
 {
 public:
-	///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
+	///當客戶端與交易後臺建立起通訊連線時（還未登入前），該方法被呼叫。
 	virtual void OnFrontConnected(){};
 	
-	///当客户端与交易后台通信连接断开时，该方法被调用。当发生这个情况后，API会自动重新连接，客户端可不做处理。
-	///        -3 连接已断开
-	///        -4 网络读失败
-	///        -5 网络写失败
-	///        -6 订阅流错误
-	///        -7 流序号错误
-	///        -8 错误的心跳报文
-	///        -9 错误的报文
+	///當客戶端與交易後臺通訊連線斷開時，該方法被呼叫。當發生這個情況後，API會自動重新連線，客戶端可不做處理。
+	///        -3 連線已斷開
+	///        -4 網路讀失敗
+	///        -5 網路寫失敗
+	///        -6 訂閱流錯誤
+	///        -7 流序號錯誤
+	///        -8 錯誤的心跳報文
+	///        -9 錯誤的報文
 	virtual void OnFrontDisconnected(int nReason){};
 			
-	///错误应答
+	///錯誤應答
 	virtual void OnRspError(CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///登录请求响应
+	///登入請求響應
 	virtual void OnRspUserLogin(CTORATstpRspUserLoginField *pRspUserLogin, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///登出请求响应
+	///登出請求響應
 	virtual void OnRspUserLogout(CTORATstpUserLogoutField *pUserLogout, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///订阅行情应答
+	///訂閱行情應答
 	virtual void OnRspSubMarketData(CTORATstpSpecificSecurityField *pSpecificSecurity, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///取消订阅行情应答
+	///取消訂閱行情應答
 	virtual void OnRspUnSubMarketData(CTORATstpSpecificSecurityField *pSpecificSecurity, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///订阅特定行情应答
+	///訂閱特定行情應答
 	virtual void OnRspSubSpecialMarketData(CTORATstpSpecificSecurityField *pSpecificSecurity, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///取消订阅特定行情应答
+	///取消訂閱特定行情應答
 	virtual void OnRspUnSubSpecialMarketData(CTORATstpSpecificSecurityField *pSpecificSecurity, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///订阅资金流向行情应答
+	///訂閱資金流向行情應答
 	virtual void OnRspSubFundsFlowMarketData(CTORATstpSpecificSecurityField *pSpecificSecurity, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///取消订阅资金流向行情应答
+	///取消訂閱資金流向行情應答
 	virtual void OnRspUnSubFundsFlowMarketData(CTORATstpSpecificSecurityField *pSpecificSecurity, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
 	///深度行情通知
@@ -74,103 +74,103 @@ public:
 	///深度行情通知
 	virtual void OnRtnSpecialMarketData(CTORATstpSpecialMarketDataField *pSpecialMarketData) {};
 
-	///价格波动异常行情通知
+	///價格波動異常行情通知
 	virtual void OnRtnEffectPriceMarketData(CTORATstpEffectPriceMarketDataField *pEffectPriceMarketData) {};
 
-	///数量波动异常行情通知
+	///數量波動異常行情通知
 	virtual void OnRtnEffectVolumeMarketData(CTORATstpEffectVolumeMarketDataField *pEffectVolumeMarketData) {};
 
-	///资金流向行情通知
+	///資金流向行情通知
 	virtual void OnRtnFundsFlowMarketData(CTORATstpFundsFlowMarketDataField *pFundsFlowMarketData) {};
 };
 
 class MD_API_DLL_EXPORT CTORATstpMdApi
 {
 public:
-	///创建MdApi
-	///@return 创建出的MdApi
+	///建立MdApi
+	///@return 創建出的MdApi
 	static CTORATstpMdApi *CreateTstpMdApi();
 	
-	///获取API版本号
-	///@return 版本号
+	///獲取API版本號
+	///@return 版本號
 	static const char* GetApiVersion();
 	
-	///删除接口对象本身
-	///@remark 不再使用本接口对象时,调用该函数删除接口对象
+	///刪除介面物件本身
+	///@remark 不再使用本介面物件時,呼叫該函式刪除介面物件
 	virtual void Release() = 0;
 	
 	///初始化
-	///@remark 初始化运行环境,只有调用后,接口才开始工作
+	///@remark 初始化執行環境,只有呼叫後,接口才開始工作
 	virtual void Init() = 0;
 	
-	///等待接口线程结束运行
-	///@return 线程退出代码
+	///等待介面執行緒結束執行
+	///@return 執行緒退出程式碼
 	virtual int Join() = 0;
 
-	///注册前置机网络地址
-	///@param pszFrontAddress：前置机网络地址。
-	///@remark 网络地址的格式为：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:17001”。 
-	///@remark “tcp”代表传输协议，“127.0.0.1”代表服务器地址。”17001”代表服务器端口号。
+	///註冊前置機網路地址
+	///@param pszFrontAddress：前置機網路地址。
+	///@remark 網路地址的格式為：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:17001”。 
+	///@remark “tcp”代表傳輸協議，“127.0.0.1”代表伺服器地址。”17001”代表伺服器埠號。
 	virtual void RegisterFront(char *pszFrontAddress) = 0;
 
-	///注册名字服务器网络地址
-	///@param pszNsAddress：名字服务器网络地址。
-	///@remark 网络地址的格式为：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:12001”。 
-	///@remark “tcp”代表传输协议，“127.0.0.1”代表服务器地址。”12001”代表服务器端口号。
-	///@remark RegisterNameServer优先于RegisterFront
+	///註冊名字伺服器網路地址
+	///@param pszNsAddress：名字伺服器網路地址。
+	///@remark 網路地址的格式為：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:12001”。 
+	///@remark “tcp”代表傳輸協議，“127.0.0.1”代表伺服器地址。”12001”代表伺服器埠號。
+	///@remark RegisterNameServer優先於RegisterFront
 	virtual void RegisterNameServer(char *pszNsAddress) = 0;
 
-	///注册衍生服务服务器网络地址
-	///@param pszNsAddress：衍生服务服务器网络地址。
-	///@remark 网络地址的格式为：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:15001”。 
-	///@remark “tcp”代表传输协议，“127.0.0.1”代表服务器地址。”15001”代表服务器端口号。
+	///註冊衍生服務伺服器網路地址
+	///@param pszNsAddress：衍生服務伺服器網路地址。
+	///@remark 網路地址的格式為：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:15001”。 
+	///@remark “tcp”代表傳輸協議，“127.0.0.1”代表伺服器地址。”15001”代表伺服器埠號。
 	virtual void RegisterDeriveServer(char *pszDeriveAddress) = 0;
 
-	///注册回调接口
-	///@param pSpi 派生自回调接口类的实例
+	///註冊回撥介面
+	///@param pSpi 派生自回撥介面類的例項
 	virtual void RegisterSpi(CTORATstpMdSpi *pSpi) = 0;
 	
-	///订阅行情。
-	///@param ppInstrumentID 合约ID  
-	///@param nCount 要订阅/退订行情的合约个数
+	///訂閱行情。
+	///@param ppInstrumentID 合約ID  
+	///@param nCount 要訂閱/退訂行情的合約個數
 	///@remark 
 	virtual int SubscribeMarketData(char **ppSecurityID, int nCount, TTORATstpExchangeIDType ExchageID) = 0;
 
-	///退订行情。
-	///@param ppInstrumentID 合约ID  
-	///@param nCount 要订阅/退订行情的合约个数
+	///退訂行情。
+	///@param ppInstrumentID 合約ID  
+	///@param nCount 要訂閱/退訂行情的合約個數
 	///@remark 
 	virtual int UnSubscribeMarketData(char **ppSecurityID, int nCount, TTORATstpExchangeIDType ExchageID) = 0;
 
-	///订阅特定行情。
-	///@param ppInstrumentID 合约ID  
-	///@param nCount 要订阅/退订行情的合约个数
+	///訂閱特定行情。
+	///@param ppInstrumentID 合約ID  
+	///@param nCount 要訂閱/退訂行情的合約個數
 	///@remark 
 	virtual int SubscribeSpecialMarketData(char **ppSecurityID, int nCount, TTORATstpExchangeIDType ExchageID) = 0;
 
-	///退订特定行情。
-	///@param ppInstrumentID 合约ID  
-	///@param nCount 要订阅/退订行情的合约个数
+	///退訂特定行情。
+	///@param ppInstrumentID 合約ID  
+	///@param nCount 要訂閱/退訂行情的合約個數
 	///@remark 
 	virtual int UnSubscribeSpecialMarketData(char **ppSecurityID, int nCount, TTORATstpExchangeIDType ExchageID) = 0;
 
-	///订阅资金流向行情。
-	///@param ppInstrumentID 合约ID
-	///@param nCount 要订阅/退订行情的合约个数
+	///訂閱資金流向行情。
+	///@param ppInstrumentID 合約ID
+	///@param nCount 要訂閱/退訂行情的合約個數
 	///@remark
 	virtual int SubscribeFundsFlowMarketData(char *ppInstrumentID[], int nCount, TTORATstpExchangeIDType ExchageID) = 0;
 
-	///退订资金流向行情。
-	///@param ppInstrumentID 合约ID
-	///@param nCount 要订阅/退订行情的合约个数
+	///退訂資金流向行情。
+	///@param ppInstrumentID 合約ID
+	///@param nCount 要訂閱/退訂行情的合約個數
 	///@remark
 	virtual int UnSubscribeFundsFlowMarketData(char *ppInstrumentID[], int nCount, TTORATstpExchangeIDType ExchageID) = 0;
 
-	///用户登录请求
+	///使用者登入請求
 	virtual int ReqUserLogin(CTORATstpReqUserLoginField *pReqUserLoginField, int nRequestID) = 0;
 	
 
-	///登出请求
+	///登出請求
 	virtual int ReqUserLogout(CTORATstpUserLogoutField *pUserLogout, int nRequestID) = 0;
 protected:
 	~CTORATstpMdApi(){};

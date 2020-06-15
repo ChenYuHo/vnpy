@@ -17,7 +17,7 @@
 /**
  * @file    compiler.h
  *
- * 公共类型定义
+ * 公共型別定義
  *
  * @version $Id$
  * @since   2011/07/07
@@ -40,7 +40,7 @@
 
 
 /*
- * 平台特定的头文件
+ * 平臺特定的標頭檔案
  */
 #if ! (defined (__WINDOWS__) || defined (__MINGW__))
 #   include <sys/select.h>
@@ -53,7 +53,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 针对GCC的扩展属性定义
+ * 針對GCC的擴充套件屬性定義
  * =================================================================== */
 
 #if defined(__GNUC__) && (__GNUC__ >= 3)
@@ -140,7 +140,7 @@ extern "C" {
 
 /*
  * for inline error in g++ and gtest
- * 为了解决编写和编译单元测试代码时的, 待测试函数的可见性而设
+ * 為了解決編寫和編譯單元測試程式碼時的, 待測試函式的可見性而設
  */
 #if defined(__cplusplus) || defined(__TEST) || defined(__DEBUG) \
         || defined(__MINGW__) || defined(__CYGWIN__) || defined(__WINDOWS__) \
@@ -153,7 +153,7 @@ extern "C" {
 
 
 /*
- * 为了对内部函数进行测试而定义的常量
+ * 為了對內部函式進行測試而定義的常量
  */
 #if defined(__TEST)
 #   define  SPK_TESTABLE_STATIC
@@ -164,11 +164,11 @@ extern "C" {
 
 
 /* ===================================================================
- * 常用的数值处理宏定义
+ * 常用的數值處理巨集定義
  * =================================================================== */
 
 /*
- * 返回x对应的负数
+ * 返回x對應的負數
  */
 #ifndef NEG
 #   define  NEG(x)                      ((x) > 0 ? -(x) : (x))
@@ -180,7 +180,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 结构体处理相关的宏函数定义
+ * 結構體處理相關的巨集函式定義
  * =================================================================== */
 
 #ifndef offsetof
@@ -194,14 +194,14 @@ extern "C" {
 
 
 /*
- * 返回以SIZE / BASESIZE 的最大倍数
+ * 返回以SIZE / BASESIZE 的最大倍數
  */
 #undef  SPK_CEIL_TIMES
 #define SPK_CEIL_TIMES(SIZE, BASESIZE)          \
         ( ((SIZE) + (BASESIZE) - 1) / (BASESIZE) )
 
 /*
- * 返回BASESIZE的最大整数倍的SIZE
+ * 返回BASESIZE的最大整數倍的SIZE
  */
 #undef  SPK_ADJUST_SIZE
 #define SPK_ADJUST_SIZE(SIZE, BASESIZE)         \
@@ -209,14 +209,14 @@ extern "C" {
 /* -------------------------           */
 
 /*
- * 返回以SIZE / BASESIZE 4舍5入后的倍数
+ * 返回以SIZE / BASESIZE 4舍5入後的倍數
  */
 #undef  SPK_ROUND_TIMES
 #define SPK_ROUND_TIMES(SIZE, BASESIZE)         \
         ( ((SIZE) + ((BASESIZE) >> 1)) / (BASESIZE) )
 
 /*
- * 返回BASESIZE 4舍5入后的整倍数 SIZE
+ * 返回BASESIZE 4舍5入後的整倍數 SIZE
  */
 #undef  SPK_ROUND_SIZE
 #define SPK_ROUND_SIZE(SIZE, BASESIZE)          \
@@ -233,37 +233,37 @@ extern "C" {
 #undef  SPK_ALIGN_SIZE1024
 
 /*
- * 返回以BASESIZE为单位对齐的SIZE (BASESIZE 需为2的n次方)
+ * 返回以BASESIZE為單位對齊的SIZE (BASESIZE 需為2的n次方)
  */
 #define SPK_ALIGN_SIZE(SIZE, BASESIZE)          \
         ( ((SIZE) + (BASESIZE - 1)) & ~(BASESIZE - 1) )
 
-/* 返回按4字节对齐的SIZE */
+/* 返回按4位元組對齊的SIZE */
 #define SPK_ALIGN_SIZE4(SIZE)           SPK_ALIGN_SIZE((SIZE), 4)
 
-/* 返回按8字节对齐的SIZE */
+/* 返回按8位元組對齊的SIZE */
 #define SPK_ALIGN_SIZE8(SIZE)           SPK_ALIGN_SIZE((SIZE), 8)
 
-/* 返回按16字节对齐的SIZE */
+/* 返回按16位元組對齊的SIZE */
 #define SPK_ALIGN_SIZE16(SIZE)          SPK_ALIGN_SIZE((SIZE), 16)
 
-/* 返回按32字节对齐的SIZE */
+/* 返回按32位元組對齊的SIZE */
 #define SPK_ALIGN_SIZE32(SIZE)          SPK_ALIGN_SIZE((SIZE), 32)
 
-/* 返回按256字节对齐的SIZE */
+/* 返回按256位元組對齊的SIZE */
 #define SPK_ALIGN_SIZE256(SIZE)         SPK_ALIGN_SIZE((SIZE), 256)
 
-/* 返回按1024字节对齐的SIZE */
+/* 返回按1024位元組對齊的SIZE */
 #define SPK_ALIGN_SIZE1024(SIZE)        SPK_ALIGN_SIZE((SIZE), 1024)
 /* -------------------------           */
 
 
 /* ===================================================================
- * sched_yield 及 sleep 定义
+ * sched_yield 及 sleep 定義
  * =================================================================== */
 
 /*
- * 让出CPU, 同时进行最小粒度的Sleep
+ * 讓出CPU, 同時進行最小粒度的Sleep
  */
 #undef  SPK_SLEEP_YIELD
 #if defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199309L)
@@ -289,7 +289,7 @@ extern "C" {
 
 
 /*
- * 让出CPU, 无需进行Sleep
+ * 讓出CPU, 無需進行Sleep
  */
 #undef  SPK_SCHED_YIELD
 #if defined (__LINUX__)
@@ -304,7 +304,7 @@ extern "C" {
 
 
 /*
- * 睡眠指定的毫秒数
+ * 睡眠指定的毫秒數
  */
 #undef  SPK_SLEEP_MS
 #if defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199309L)
@@ -344,7 +344,7 @@ extern "C" {
 
 
 /*
- * 睡眠指定的微秒数
+ * 睡眠指定的微秒數
  */
 #undef  SPK_SLEEP_US
 #if defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199309L)
@@ -387,7 +387,7 @@ extern "C" {
 
 
 /*
- * 睡眠指定的纳秒数 (最大超过1秒)
+ * 睡眠指定的納秒數 (最大超過1秒)
  */
 #undef  SPK_SLEEP_NS
 #if defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199309L)
@@ -417,7 +417,7 @@ extern "C" {
 
 
 /*
- * 定时并睡眠指定的毫秒数 (粗略的定时)
+ * 定時並睡眠指定的毫秒數 (粗略的定時)
  */
 #undef  SPK_TIMED_SLEEP
 #if defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199309L)
@@ -452,7 +452,7 @@ extern "C" {
 
 
 /*
- * 定时并睡眠, 按指定的起始时间计算需要睡眠的毫秒数
+ * 定時並睡眠, 按指定的起始時間計算需要睡眠的毫秒數
  */
 #undef  SPK_TIMED_SLEEP_SINCE
 #if ( defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 600) ) \
@@ -502,7 +502,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 编译屏障（compiler barrier）、内存屏障（memory barrier）等汇编语句定义
+ * 編譯屏障（compiler barrier）、記憶體屏障（memory barrier）等彙編語句定義
  * =================================================================== */
 
 /*

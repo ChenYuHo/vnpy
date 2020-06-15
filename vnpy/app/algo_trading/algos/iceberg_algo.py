@@ -63,7 +63,7 @@ class IcebergAlgo(AlgoTemplate):
 
     def on_stop(self):
         """"""
-        self.write_log("停止算法")
+        self.write_log("停止演算法")
 
     def on_tick(self, tick: TickData):
         """"""
@@ -71,7 +71,7 @@ class IcebergAlgo(AlgoTemplate):
 
     def on_order(self, order: OrderData):
         """"""
-        msg = f"委托号：{order.vt_orderid}，委托状态：{order.status.value}"
+        msg = f"委託號：{order.vt_orderid}，委託狀態：{order.status.value}"
         self.write_log(msg)
 
         if not order.is_active():
@@ -83,7 +83,7 @@ class IcebergAlgo(AlgoTemplate):
         self.traded += trade.volume
 
         if self.traded >= self.volume:
-            self.write_log(f"已交易数量：{self.traded}，总数量：{self.volume}")
+            self.write_log(f"已交易數量：{self.traded}，總數量：{self.volume}")
             self.stop()
         else:
             self.put_variables_event()
@@ -127,11 +127,11 @@ class IcebergAlgo(AlgoTemplate):
                 if self.last_tick.ask_price_1 <= self.price:
                     self.cancel_order(self.vt_orderid)
                     self.vt_orderid = ""
-                    self.write_log(u"最新Tick卖一价，低于买入委托价格，之前委托可能丢失，强制撤单")
+                    self.write_log(u"最新Tick賣一價，低於買入委託價格，之前委託可能丟失，強制撤單")
             else:
                 if self.last_tick.bid_price_1 >= self.price:
                     self.cancel_order(self.vt_orderid)
                     self.vt_orderid = ""
-                    self.write_log(u"最新Tick买一价，高于卖出委托价格，之前委托可能丢失，强制撤单")
+                    self.write_log(u"最新Tick買一價，高於賣出委託價格，之前委託可能丟失，強制撤單")
 
         self.put_variables_event()

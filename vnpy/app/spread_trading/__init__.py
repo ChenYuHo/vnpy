@@ -24,7 +24,7 @@ class SpreadTradingApp(BaseApp):
     app_name = APP_NAME
     app_module = __module__
     app_path = Path(__file__).parent
-    display_name = "价差交易"
+    display_name = "價差交易"
     engine_class = SpreadEngine
     widget_name = "SpreadManager"
     icon_name = "spread.ico"

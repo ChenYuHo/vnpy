@@ -105,11 +105,11 @@ class DaGateway(BaseGateway):
     """
 
     default_setting = {
-        "用户名": "",
-        "密码": "",
-        "交易服务器": "",
-        "行情服务器": "",
-        "授权码": ""
+        "使用者名稱": "",
+        "密碼": "",
+        "交易伺服器": "",
+        "行情伺服器": "",
+        "授權碼": ""
     }
 
     exchanges = list(EXCHANGE_DA2VT.values())
@@ -123,11 +123,11 @@ class DaGateway(BaseGateway):
 
     def connect(self, setting: dict):
         """"""
-        userid = setting["用户名"]
-        password = setting["密码"]
-        future_address = setting["交易服务器"]
-        market_address = setting["行情服务器"]
-        auth_code = setting["授权码"]
+        userid = setting["使用者名稱"]
+        password = setting["密碼"]
+        future_address = setting["交易伺服器"]
+        market_address = setting["行情伺服器"]
+        auth_code = setting["授權碼"]
 
         if not future_address.startswith("tcp://"):
             future_address = "tcp://" + future_address
@@ -166,7 +166,7 @@ class DaGateway(BaseGateway):
         """"""
         error_id = error["ErrorID"]
         error_msg = error["ErrorMsg"]
-        msg = f"{msg}，代码：{error_id}，信息：{error_msg}"
+        msg = f"{msg}，程式碼：{error_id}，資訊：{error_msg}"
         self.write_log(msg)
 
 
@@ -195,7 +195,7 @@ class DaMarketApi(MarketApi):
         """
         Callback when front server is connected.
         """
-        self.gateway.write_log("行情服务器连接成功")
+        self.gateway.write_log("行情伺服器連線成功")
         self.login()
 
     def onFrontDisconnected(self, reason: int):
@@ -203,7 +203,7 @@ class DaMarketApi(MarketApi):
         Callback when front server is disconnected.
         """
         self.login_status = False
-        self.gateway.write_log(f"行情服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"行情伺服器連線斷開，原因{reason}")
 
     def onRspUserLogin(self, error: dict, reqid: int, last: bool):
         """
@@ -211,12 +211,12 @@ class DaMarketApi(MarketApi):
         """
         if not error["ErrorID"]:
             self.login_status = True
-            self.gateway.write_log("行情服务器登录成功")
+            self.gateway.write_log("行情伺服器登入成功")
 
             for req in self.subscribed.values():
                 self.subscribe(req)
         else:
-            self.gateway.write_error("行情服务器登录失败", error)
+            self.gateway.write_error("行情伺服器登入失敗", error)
 
     def onRspMarketData(self, data: dict, error: dict, reqid: int, last: bool):
         """
@@ -312,7 +312,7 @@ class DaMarketApi(MarketApi):
         if self.login_status:
             da_exchange = EXCHANGE_VT2DA.get(req.exchange, "")
             if not da_exchange:
-                self.gateway.write_log(f"不支持的交易所{req.exchange.value}")
+                self.gateway.write_log(f"不支援的交易所{req.exchange.value}")
                 return
 
             da_code = f"{da_exchange},{req.symbol}"
@@ -364,28 +364,28 @@ class DaFutureApi(FutureApi):
 
     def onFrontConnected(self):
         """"""
-        self.gateway.write_log("交易服务器连接成功")
+        self.gateway.write_log("交易伺服器連線成功")
         self.login()
 
     def onFrontDisconnected(self, reason: int):
         """"""
         self.login_status = False
-        self.gateway.write_log(f"交易服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"交易伺服器連線斷開，原因{reason}")
 
     def onRspUserLogin(self, error: dict, reqid: int, last: bool):
         """"""
         if not error["ErrorID"]:
             self.login_status = True
-            self.gateway.write_log("交易服务器登录成功")
+            self.gateway.write_log("交易伺服器登入成功")
 
-            # 查询可交易合约
+            # 查詢可交易合約
             for exchange in EXCHANGE_DA2VT.values():
                 self.query_contract(exchange)
 
             # self.reqid += 1
             # self.reqQryExchange({}, self.reqid)
 
-            # 查询账户信息
+            # 查詢賬戶資訊
             self.query_account()
             self.query_position()
             self.query_order()
@@ -393,7 +393,7 @@ class DaFutureApi(FutureApi):
 
         else:
             self.login_failed = True
-            self.gateway.write_error("交易服务器登录失败", error)
+            self.gateway.write_error("交易伺服器登入失敗", error)
 
     def onRspNeedVerify(self, firstLogin: bool, hasSetQA: bool):
         """"""
@@ -407,7 +407,7 @@ class DaFutureApi(FutureApi):
 
         if errorid:
             order.status = Status.REJECTED
-            self.gateway.write_error("交易委托失败", error)
+            self.gateway.write_error("交易委託失敗", error)
         else:
             timestamp = f"{data['OrderDate']} {data['OrderTime']}"
             dt = datetime.strptime(timestamp, "%Y%m%d %H:%M:%S")
@@ -421,7 +421,7 @@ class DaFutureApi(FutureApi):
         """"""
         errorid = error["ErrorID"]
         if errorid:
-            self.gateway.write_error("交易撤单失败", error)
+            self.gateway.write_error("交易撤單失敗", error)
 
     def onRspQueryMaxOrderVolume(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
@@ -431,7 +431,7 @@ class DaFutureApi(FutureApi):
         """
         Callback of settlment info confimation.
         """
-        self.gateway.write_log("结算信息确认成功")
+        self.gateway.write_log("結算資訊確認成功")
 
         self.reqid += 1
         self.reqQryInstrument({}, self.reqid)
@@ -463,7 +463,7 @@ class DaFutureApi(FutureApi):
             self.gateway.on_contract(contract)
 
         if last:
-            self.gateway.write_log(f"{data['ExchangeNo']}合约信息查询成功")
+            self.gateway.write_log(f"{data['ExchangeNo']}合約資訊查詢成功")
 
     def onRspQryOrder(self, data: dict, error: dict, reqid: int, last: bool):
         """
@@ -496,7 +496,7 @@ class DaFutureApi(FutureApi):
             self.gateway.on_order(copy(order))
 
         if last:
-            self.gateway.write_log("委托信息查询成功")
+            self.gateway.write_log("委託資訊查詢成功")
 
     def onRspQryTrade(self, data: dict, error: dict, reqid: int, last: bool):
         """
@@ -506,7 +506,7 @@ class DaFutureApi(FutureApi):
             self.update_trade(data)
 
         if last:
-            self.gateway.write_log("成交信息查询成功")
+            self.gateway.write_log("成交資訊查詢成功")
 
     def update_trade(self, data: dict):
         """"""
@@ -544,7 +544,7 @@ class DaFutureApi(FutureApi):
         self.gateway.on_account(account)
 
         if last:
-            self.gateway.write_log("资金信息查询成功")
+            self.gateway.write_log("資金資訊查詢成功")
 
     def onRspQryTotalPosition(self, data: dict, error: dict, reqid: int, last: bool):
         """
@@ -572,7 +572,7 @@ class DaFutureApi(FutureApi):
             self.gateway.on_position(short_position)
 
         if last:
-            self.gateway.write_log("持仓信息查询成功")
+            self.gateway.write_log("持倉資訊查詢成功")
 
     def onRtnOrder(self, data: dict, error: dict, reqid: int, last: bool):
         """

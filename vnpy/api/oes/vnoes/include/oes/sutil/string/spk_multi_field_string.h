@@ -17,7 +17,7 @@
 /**
  * @file    spk_multi_field_string.h
  *
- * 多域字符串(如CSV字符串等)处理函数
+ * 多域字串(如CSV字串等)處理函式
  *
  * @version $Id$
  * @since   2012/01/05
@@ -37,23 +37,23 @@ extern "C" {
 
 
 /* ===================================================================
- * 多域字符串相关函数的定义
+ * 多域字串相關函式的定義
  * =================================================================== */
 
-/* 解析多域字符串到数组中 */
+/* 解析多域字串到陣列中 */
 int32   SStr_ParseMFStringToArray2(char *pArr[], int32 maxFieldNumber,
             char **ppPtr, const char *pDelimChars, BOOL isReserveSpace);
 
 
-/* 解析多域字符串到数组中 */
+/* 解析多域字串到陣列中 */
 int32   SStr_ParseMFStringToArray(char *pArr[], int32 maxFieldNumber,
             char *pStr, const char *pDelimChars);
 
-/* 解析多域字符串到数组中 */
+/* 解析多域字串到陣列中 */
 int32   SStr_ParseMFStringToArrayThroughEnd2(char *pArr[], int32 maxFieldNumber,
             char **ppPtr, char delimChar, char endChar, BOOL isReserveSpace);
 
-/* 解析多域字符串到数组中 */
+/* 解析多域字串到陣列中 */
 int32   SStr_ParseMFStringToArrayThroughEnd(char *pArr[], int32 maxFieldNumber,
             char **ppPtr, char delimChar, char endChar);
 /* -------------------------           */

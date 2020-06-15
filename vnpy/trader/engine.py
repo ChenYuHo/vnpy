@@ -118,7 +118,7 @@ class MainEngine:
         """
         gateway = self.gateways.get(gateway_name, None)
         if not gateway:
-            self.write_log(f"找不到底层接口：{gateway_name}")
+            self.write_log(f"找不到底層介面：{gateway_name}")
         return gateway
 
     def get_engine(self, engine_name: str) -> "BaseEngine":

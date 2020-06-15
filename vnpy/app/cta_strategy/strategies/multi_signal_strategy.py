@@ -134,7 +134,7 @@ class MaSignal(CtaSignal):
 class MultiSignalStrategy(TargetPosTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     rsi_window = 14
     rsi_level = 20
@@ -174,7 +174,7 @@ class MultiSignalStrategy(TargetPosTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

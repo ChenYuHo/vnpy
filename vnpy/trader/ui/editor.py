@@ -30,7 +30,7 @@ class CodeEditor(QtWidgets.QMainWindow):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("策略编辑器")
+        self.setWindowTitle("策略編輯器")
 
         self.init_menu()
         self.init_central()
@@ -55,31 +55,31 @@ class CodeEditor(QtWidgets.QMainWindow):
         """"""
         bar = self.menuBar()
 
-        file_menu = bar.addMenu("文件")
-        self.add_menu_action(file_menu, "新建文件", self.new_file, "Ctrl+N")
-        self.add_menu_action(file_menu, "打开文件", self.open_file, "Ctrl+O")
-        self.add_menu_action(file_menu, "关闭文件", self.close_editor, "Ctrl+W")
+        file_menu = bar.addMenu("檔案")
+        self.add_menu_action(file_menu, "新建檔案", self.new_file, "Ctrl+N")
+        self.add_menu_action(file_menu, "開啟檔案", self.open_file, "Ctrl+O")
+        self.add_menu_action(file_menu, "關閉檔案", self.close_editor, "Ctrl+W")
         file_menu.addSeparator()
-        self.add_menu_action(file_menu, "保存", self.save_file, "Ctrl+S")
+        self.add_menu_action(file_menu, "儲存", self.save_file, "Ctrl+S")
         self.add_menu_action(
             file_menu,
-            "另存为",
+            "另存為",
             self.save_file_as,
             "Ctrl+Shift+S"
         )
         file_menu.addSeparator()
         self.add_menu_action(file_menu, "退出", self.close)
 
-        edit_menu = bar.addMenu("编辑")
-        self.add_menu_action(edit_menu, "撤销", self.undo, "Ctrl+Z")
-        self.add_menu_action(edit_menu, "恢复", self.redo, "Ctrl+Y")
+        edit_menu = bar.addMenu("編輯")
+        self.add_menu_action(edit_menu, "撤銷", self.undo, "Ctrl+Z")
+        self.add_menu_action(edit_menu, "恢復", self.redo, "Ctrl+Y")
         edit_menu.addSeparator()
-        self.add_menu_action(edit_menu, "复制", self.copy, "Ctrl+C")
-        self.add_menu_action(edit_menu, "粘贴", self.paste, "Ctrl+P")
-        self.add_menu_action(edit_menu, "剪切", self.cut, "Ctrl+X")
+        self.add_menu_action(edit_menu, "複製", self.copy, "Ctrl+C")
+        self.add_menu_action(edit_menu, "貼上", self.paste, "Ctrl+P")
+        self.add_menu_action(edit_menu, "剪下", self.cut, "Ctrl+X")
         edit_menu.addSeparator()
-        self.add_menu_action(edit_menu, "查找", self.find, "Ctrl+F")
-        self.add_menu_action(edit_menu, "替换", self.replace, "Ctrl+H")
+        self.add_menu_action(edit_menu, "查詢", self.find, "Ctrl+F")
+        self.add_menu_action(edit_menu, "替換", self.replace, "Ctrl+H")
 
     def add_menu_action(
         self,
@@ -201,7 +201,7 @@ class CodeEditor(QtWidgets.QMainWindow):
     def open_file(self) -> None:
         """"""
         file_path, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, "打开文件", "", "Python(*.py)")
+            self, "開啟檔案", "", "Python(*.py)")
 
         if file_path:
             self.open_editor(file_path)
@@ -217,7 +217,7 @@ class CodeEditor(QtWidgets.QMainWindow):
 
         if self.NEW_FILE_NAME in file_path:
             file_path, _ = QtWidgets.QFileDialog.getSaveFileName(
-                self, "保存", "", "Python(*.py)")
+                self, "儲存", "", "Python(*.py)")
 
         self.save_editor_text(editor, file_path)
 
@@ -226,7 +226,7 @@ class CodeEditor(QtWidgets.QMainWindow):
         editor = self.get_active_editor()
 
         file_path, _ = QtWidgets.QFileDialog.getSaveFileName(
-            self, "保存", "", "Python(*.py)")
+            self, "儲存", "", "Python(*.py)")
 
         self.save_editor_text(editor, file_path)
 
@@ -289,8 +289,8 @@ class CodeEditor(QtWidgets.QMainWindow):
         for editor, path in self.editor_path_map.items():
             i = QtWidgets.QMessageBox.question(
                 self,
-                "退出保存",
-                f"是否要保存{path}？",
+                "退出儲存",
+                f"是否要儲存{path}？",
                 QtWidgets.QMessageBox.Save | QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Cancel,
                 QtWidgets.QMessageBox.Save
             )
@@ -298,7 +298,7 @@ class CodeEditor(QtWidgets.QMainWindow):
             if i == QtWidgets.QMessageBox.Save:
                 if self.NEW_FILE_NAME in path:
                     path, _ = QtWidgets.QFileDialog.getSaveFileName(
-                        self, "保存", "", "Python(*.py)")
+                        self, "儲存", "", "Python(*.py)")
 
                 if path:
                     self.save_editor_text(editor, path)
@@ -340,8 +340,8 @@ class FindDialog(QtWidgets.QDialog):
 
     def init_ui(self) -> None:
         """"""
-        find_label = QtWidgets.QLabel("查找")
-        replace_label = QtWidgets.QLabel("替换")
+        find_label = QtWidgets.QLabel("查詢")
+        replace_label = QtWidgets.QLabel("替換")
 
         selected_text = self.editor.selectedText()
         self.find_line = QtWidgets.QLineEdit(selected_text)
@@ -349,20 +349,20 @@ class FindDialog(QtWidgets.QDialog):
 
         self.replace_line = QtWidgets.QLineEdit()
 
-        self.case_check = QtWidgets.QCheckBox("大小写")
+        self.case_check = QtWidgets.QCheckBox("大小寫")
         self.case_check.setChecked(True)
         self.case_check.stateChanged.connect(self.reset_task)
 
-        self.whole_check = QtWidgets.QCheckBox("全词匹配")
+        self.whole_check = QtWidgets.QCheckBox("全詞匹配")
         self.whole_check.stateChanged.connect(self.reset_task)
 
-        self.selection_check = QtWidgets.QCheckBox("选中区域")
+        self.selection_check = QtWidgets.QCheckBox("選中區域")
         self.selection_check.stateChanged.connect(self.reset_task)
 
-        find_button = QtWidgets.QPushButton("查找")
+        find_button = QtWidgets.QPushButton("查詢")
         find_button.clicked.connect(self.find_text)
 
-        self.replace_button = QtWidgets.QPushButton("替换")
+        self.replace_button = QtWidgets.QPushButton("替換")
         self.replace_button.clicked.connect(self.replace_text)
         self.replace_button.setEnabled(False)
 
@@ -387,9 +387,9 @@ class FindDialog(QtWidgets.QDialog):
         self.setLayout(form)
 
         if self.show_replace:
-            self.setWindowTitle("替换")
+            self.setWindowTitle("替換")
         else:
-            self.setWindowTitle("查找")
+            self.setWindowTitle("查詢")
 
             replace_label.setVisible(False)
             self.replace_line.setVisible(False)

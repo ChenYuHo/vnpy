@@ -90,9 +90,9 @@ class OkexoGateway(BaseGateway):
         "API Key": "",
         "Secret Key": "",
         "Passphrase": "",
-        "会话数": 3,
+        "會話數": 3,
         "代理地址": "",
-        "代理端口": "",
+        "代理埠": "",
     }
 
     exchanges: List[Exchange] = [Exchange.OKEX]
@@ -111,9 +111,9 @@ class OkexoGateway(BaseGateway):
         key = setting["API Key"]
         secret = setting["Secret Key"]
         passphrase = setting["Passphrase"]
-        session_number = setting["会话数"]
+        session_number = setting["會話數"]
         proxy_host = setting["代理地址"]
-        proxy_port = setting["代理端口"]
+        proxy_port = setting["代理埠"]
 
         if proxy_port.isdigit():
             proxy_port = int(proxy_port)
@@ -230,7 +230,7 @@ class OkexoRestApi(RestClient):
 
         self.init(REST_HOST, proxy_host, proxy_port)
         self.start(session_number)
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
         self.query_time()
         self.query_underlying()
@@ -360,7 +360,7 @@ class OkexoRestApi(RestClient):
         for underlying in data:
             underlyings.add(underlying)
 
-        self.gateway.write_log("期权标的信息查询成功")
+        self.gateway.write_log("期權標的資訊查詢成功")
         self.query_contract()
 
     def on_query_contract(self, data: List, request: Request) -> None:
@@ -394,7 +394,7 @@ class OkexoRestApi(RestClient):
 
             self.gateway.on_contract(contract)
 
-        self.gateway.write_log("期权合约信息查询成功")
+        self.gateway.write_log("期權合約資訊查詢成功")
         # Start websocket api after instruments data collected
         self.gateway.ws_api.start()
 
@@ -415,7 +415,7 @@ class OkexoRestApi(RestClient):
             )
             self.gateway.on_account(account)
 
-            self.gateway.write_log(f"{account.accountid}账户资金查询成功")
+            self.gateway.write_log(f"{account.accountid}賬戶資金查詢成功")
 
     def on_query_position(self, data: dict, request: Request) -> None:
         """"""
@@ -458,7 +458,7 @@ class OkexoRestApi(RestClient):
         """"""
         server_time = data["iso"]
         local_time = datetime.utcnow().isoformat()
-        msg = f"服务器时间：{server_time}，本机时间：{local_time}"
+        msg = f"伺服器時間：{server_time}，本機時間：{local_time}"
         self.gateway.write_log(msg)
 
     def on_send_order_failed(self, status_code: str, request: Request) -> None:
@@ -469,7 +469,7 @@ class OkexoRestApi(RestClient):
         order.status = Status.REJECTED
         order.time = datetime.now().strftime("%H:%M:%S.%f")
         self.gateway.on_order(order)
-        msg = f"委托失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"委託失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -496,7 +496,7 @@ class OkexoRestApi(RestClient):
             order.status = Status.REJECTED
             self.gateway.on_order(order)
 
-            self.gateway.write_log(f"委托失败：{error_msg}")
+            self.gateway.write_log(f"委託失敗：{error_msg}")
 
     def on_cancel_order_error(
         self, exception_type: type, exception_value: Exception, tb, request: Request
@@ -528,7 +528,7 @@ class OkexoRestApi(RestClient):
         """
         Callback to handle request failed.
         """
-        msg = f"请求失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"請求失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_error(
@@ -537,7 +537,7 @@ class OkexoRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -569,13 +569,13 @@ class OkexoRestApi(RestClient):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空"
+                    msg = f"獲取歷史資料為空"
                     break
 
                 for l in data:
@@ -597,7 +597,7 @@ class OkexoRestApi(RestClient):
 
                 begin = data[-1][0]
                 end = data[0][0]
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Update start time
@@ -680,12 +680,12 @@ class OkexoWebsocketApi(WebsocketClient):
 
     def on_connected(self) -> None:
         """"""
-        self.gateway.write_log("Websocket API连接成功")
+        self.gateway.write_log("Websocket API連線成功")
         self.login()
 
     def on_disconnected(self) -> None:
         """"""
-        self.gateway.write_log("Websocket API连接断开")
+        self.gateway.write_log("Websocket API連線斷開")
 
     def on_packet(self, packet: dict) -> None:
         """"""
@@ -695,7 +695,7 @@ class OkexoWebsocketApi(WebsocketClient):
                 return
             elif event == "error":
                 msg = packet["message"]
-                self.gateway.write_log(f"Websocket API请求异常：{msg}")
+                self.gateway.write_log(f"Websocket API請求異常：{msg}")
             elif event == "login":
                 self.on_login(packet)
         else:
@@ -709,7 +709,7 @@ class OkexoWebsocketApi(WebsocketClient):
 
     def on_error(self, exception_type: type, exception_value: Exception, tb) -> None:
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(self.exception_detail(exception_type, exception_value, tb))
@@ -787,10 +787,10 @@ class OkexoWebsocketApi(WebsocketClient):
         success = data.get("success", False)
 
         if success:
-            self.gateway.write_log("Websocket API登录成功")
+            self.gateway.write_log("Websocket API登入成功")
             self.subscribe_topic()
         else:
-            self.gateway.write_log("Websocket API登录失败")
+            self.gateway.write_log("Websocket API登入失敗")
 
     def on_ticker(self, data: dict) -> None:
         """"""

@@ -1,12 +1,12 @@
 ﻿
-// vntapmd.cpp : 定义 DLL 应用程序的导出函数。
+// vntapmd.cpp : 定義 DLL 應用程式的匯出函式。
 //
 
 #include "vntapmd.h"
 
 
 ///-------------------------------------------------------------------------------------
-///C++的回调函数将数据保存到队列中
+///C++的回撥函式將資料儲存到佇列中
 ///-------------------------------------------------------------------------------------
 
 void MdApi::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info)
@@ -118,7 +118,7 @@ void MdApi::OnRtnQuote(const TapAPIQuoteWhole *info)
 
 
 ///-------------------------------------------------------------------------------------
-///工作线程从队列中取出数据，转化为python对象后，进行推送
+///工作執行緒從佇列中取出資料，轉化為python物件後，進行推送
 ///-------------------------------------------------------------------------------------
 
 void MdApi::processTask()
@@ -467,7 +467,7 @@ void MdApi::processRtnQuote(Task *task)
 
 
 ///-------------------------------------------------------------------------------------
-///主动函数
+///主動函式
 ///-------------------------------------------------------------------------------------
 
 void MdApi::createTapQuoteAPI(const dict &req, int &iResult)
@@ -476,8 +476,8 @@ void MdApi::createTapQuoteAPI(const dict &req, int &iResult)
 	memset(&myreq, 0, sizeof(myreq));
 	getString(req, "AuthCode", myreq.AuthCode);
 	getString(req, "KeyOperationLogPath", myreq.KeyOperationLogPath);
-	this ->api = (ITapQuoteAPI*) CreateTapQuoteAPI(&myreq, iResult); // 创建API接口对象
-	this->api->SetAPINotify(this);  //注册回调函数对象
+	this ->api = (ITapQuoteAPI*) CreateTapQuoteAPI(&myreq, iResult); // 建立API介面物件
+	this->api->SetAPINotify(this);  //註冊回撥函式物件
 };
 
 void MdApi::release()
@@ -593,7 +593,7 @@ int MdApi::qryContract(const dict &req)
 };
 
 ///-------------------------------------------------------------------------------------
-///Boost.Python封装
+///Boost.Python封裝
 ///-------------------------------------------------------------------------------------
 
 class PyMdApi : public MdApi

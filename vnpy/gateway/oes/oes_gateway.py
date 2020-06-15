@@ -101,25 +101,25 @@ class OesGateway(BaseGateway):
         self.td_api.username = username
         self.td_api.password = password
         if self.td_api.connect():
-            self.write_log(_("成功连接到交易服务器"))
+            self.write_log(_("成功連線到交易伺服器"))
             self.td_api.query_contracts()
             # self.td_api.query_account()
-            self.write_log("合约信息查询成功")
+            self.write_log("合約資訊查詢成功")
             # self.td_api.query_position()
             # self.td_api.query_orders()
             self.td_api.start()
         else:
-            self.write_log(_("无法连接到交易服务器，请检查你的配置"))
+            self.write_log(_("無法連線到交易伺服器，請檢查你的配置"))
 
     def _connect_md_sync(self, config_path, username, password):
         self.md_api.config_path = config_path
         self.md_api.username = username
         self.md_api.password = password
         if self.md_api.connect():
-            self.write_log(_("成功连接到行情服务器"))
+            self.write_log(_("成功連線到行情伺服器"))
             self.md_api.start()
         else:
-            self.write_log(_("无法连接到行情服务器，请检查你的配置"))
+            self.write_log(_("無法連線到行情伺服器，請檢查你的配置"))
 
     def subscribe(self, req: SubscribeRequest):
         """"""

@@ -13,7 +13,7 @@ from vnpy.app.cta_strategy import (
 class BollChannelStrategy(CtaTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     boll_window = 18
     boll_dev = 3.4
@@ -69,7 +69,7 @@ class BollChannelStrategy(CtaTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

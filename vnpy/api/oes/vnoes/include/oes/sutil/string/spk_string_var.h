@@ -17,11 +17,11 @@
 /**
  * @file    spk_string_var.h
  *
- * 字符串变量处理, 用于替换字符串(如, 配置信息等)中的字符串变量
- * 以字符'@'起始的字符串变量被作为应用内部预定义变量处理
- * 以字符'$'起始的字符串变量被作为上下文环境变量和系统预定义变量处理（优先使用内部预定义变量）
+ * 字串變數處理, 用於替換字串(如, 配置資訊等)中的字串變數
+ * 以字元'@'起始的字串變數被作為應用內部預定義變數處理
+ * 以字元'$'起始的字串變數被作為上下文環境變數和系統預定義變數處理（優先使用內部預定義變數）
  *
- * 支持如下样式的字符串变量:
+ * 支援如下樣式的字串變數:
  * - ${var}
  * - ${var=string}  Use string and assign string to var
  * - ${var:-string} Use var if set, otherwise use string
@@ -29,7 +29,7 @@
  * - ${var:+string} Use string if var if set, otherwise use nothing
  * - ${var:!string} Use string if var if unset, otherwise use nothing
  *
- * 以及字符串变量的嵌套如:
+ * 以及字串變數的巢狀如:
  * - ${VAR:=${VAR2:+string_${VAR3:-string}_string}}
  *
  * @version 1.1 2015/04/10
@@ -50,9 +50,9 @@ extern "C" {
 
 
 /*
- * 常量定义
+ * 常量定義
  */
-#define STRVAR_MAX_NAME_LENGTH      (128)       /**< 宏名称最大长度 */
+#define STRVAR_MAX_NAME_LENGTH      (128)       /**< 巨集名稱最大長度 */
 #define STRVAR_PREFIX_MIXED         '$'
 #define STRVAR_PREFIX_BUILDIN       '@'
 #define STRVAR_LEFT_BOUND           '{'
@@ -62,55 +62,55 @@ extern "C" {
 
 
 /*
- * 字符串变量取值函数原型定义
+ * 字串變數取值函式原型定義
  */
 
 /**
- * 字符串变量取值函数原型
+ * 字串變數取值函式原型
  */
 typedef const char* (*F_STRVAR_GETTER_T) (void);
 
 /**
- * 可接受参数的宏取值函数原型
+ * 可接受引數的巨集取值函式原型
  */
 typedef void (*F_STRVAR_SETTER_T) (const char *pValue);
 /* -------------------------           */
 
 
 /**
- * 预定义的字符串变量定义结构
+ * 預定義的字串變數定義結構
  *
  */
 typedef struct _SStrVar {
-    /** 字符串变量名称 */
+    /** 字串變數名稱 */
     char                name[STRVAR_MAX_NAME_LENGTH];
 
-    /** 字符串变量取值函数 */
+    /** 字串變數取值函式 */
     F_STRVAR_GETTER_T   pValueGetter;
 
-    /** 字符串变量设置函数 */
+    /** 字串變數設定函式 */
     F_STRVAR_SETTER_T   pValueSetter;
 } SStrVarT;
 
 
-/* 结构体初始化值定义 */
+/* 結構體初始化值定義 */
 #define NULLOBJ_SSTR_VAR                \
         {0}, 0, 0
 /* -------------------------           */
 
 
 /*
- * 函数声明
+ * 函式宣告
  */
 
-/* 通过变量名称返回字符串变量定义 */
+/* 通過變數名稱返回字串變數定義 */
 const SStrVarT*
         SStr_GetVarItemByName(
                 const SStrVarT *pVarItems,
                 int32 varItemsNumber,
                 const char *pVarName);
 
-/* 通过变量名称返回字符串变量的值 */
+/* 通過變數名稱返回字串變數的值 */
 const char*
         SStr_GetVarValueByName(
                 const SStrVarT *pVarItems,
@@ -118,7 +118,7 @@ const char*
                 const char *pVarName,
                 BOOL isSystemEnvAble);
 
-/* 设置字符串变量的值 */
+/* 設定字串變數的值 */
 void    SStr_SetVarValueByName(
                 const SStrVarT *pVarItems,
                 int32 varItemsNumber,
@@ -126,19 +126,19 @@ void    SStr_SetVarValueByName(
                 const char *pVarValue,
                 BOOL isSystemEnvAble);
 
-/* 替换所有的字符串变量 */
+/* 替換所有的字串變數 */
 char*   SStr_ReplaceAllVar(
                 char *pBuf,
                 const char *pTarget);
 
-/* 替换所有的字符串变量 */
+/* 替換所有的字串變數 */
 char*   SStr_ReplaceAllVar2(
                 char *pBuf,
                 const char *pTarget,
                 const SStrVarT *pVarItems,
                 int32 varItemsNumber);
 
-/* 替换所有的字符串变量 */
+/* 替換所有的字串變數 */
 char*   SStr_ReplaceAllVar3(
                 char *pBuf,
                 const char *pTarget,

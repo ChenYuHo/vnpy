@@ -62,7 +62,7 @@ class SpreadAlgoTemplate:
         self.order_trade_volume: Dict[str, int] = defaultdict(int)
         self.orders: Dict[str, OrderData] = {}
 
-        self.write_log("算法已启动")
+        self.write_log("演算法已啟動")
 
     def is_active(self):
         """"""
@@ -162,7 +162,7 @@ class SpreadAlgoTemplate:
         if self.is_active():
             self.cancel_all_order()
             self.status = Status.CANCELLED
-            self.write_log("算法已停止")
+            self.write_log("演算法已停止")
             self.put_event()
 
     def update_tick(self, tick: TickData):
@@ -209,7 +209,7 @@ class SpreadAlgoTemplate:
             if order.vt_orderid in vt_orderids:
                 vt_orderids.remove(order.vt_orderid)
 
-        msg = "委托成交，{}，{}，{}@{}".format(
+        msg = "委託成交，{}，{}，{}@{}".format(
             trade.vt_symbol,
             trade.direction,
             trade.volume,
@@ -288,7 +288,7 @@ class SpreadAlgoTemplate:
                 self.status = Status.ALLTRADED
                 self.put_event()
 
-                msg = "各腿剩余数量均不足最小下单量，算法执行结束"
+                msg = "各腿剩餘數量均不足最小下單量，演算法執行結束"
                 self.write_log(msg)
 
             return
@@ -308,7 +308,7 @@ class SpreadAlgoTemplate:
 
         self.leg_orders[vt_symbol].extend(vt_orderids)
 
-        msg = "发出委托，{}，{}，{}@{}".format(
+        msg = "發出委託，{}，{}，{}@{}".format(
             vt_symbol,
             direction,
             volume,

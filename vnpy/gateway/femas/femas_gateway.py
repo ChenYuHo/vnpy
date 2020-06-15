@@ -113,14 +113,14 @@ class FemasGateway(BaseGateway):
     """
 
     default_setting = {
-        "用户名": "",
-        "密码": "",
-        "经纪商代码": "",
-        "交易服务器": "",
-        "行情服务器": "",
-        "产品名称": "",
-        "授权编码": "",
-        "产品信息": "",
+        "使用者名稱": "",
+        "密碼": "",
+        "經紀商程式碼": "",
+        "交易伺服器": "",
+        "行情伺服器": "",
+        "產品名稱": "",
+        "授權編碼": "",
+        "產品資訊": "",
     }
 
     exchanges = list(EXCHANGE_FEMAS2VT.values())
@@ -134,20 +134,20 @@ class FemasGateway(BaseGateway):
 
     def connect(self, setting: dict):
         """"""
-        userid = setting["用户名"]
-        password = setting["密码"]
-        brokerid = setting["经纪商代码"]
-        td_address = setting["交易服务器"]
-        md_address = setting["行情服务器"]
+        userid = setting["使用者名稱"]
+        password = setting["密碼"]
+        brokerid = setting["經紀商程式碼"]
+        td_address = setting["交易伺服器"]
+        md_address = setting["行情伺服器"]
 
         if not td_address.startswith("tcp://"):
             td_address = "tcp://" + td_address
         if not md_address.startswith("tcp://"):
             md_address = "tcp://" + md_address
 
-        appid = setting["产品名称"]
-        auth_code = setting["授权编码"]
-        product_info = setting["产品信息"]
+        appid = setting["產品名稱"]
+        auth_code = setting["授權編碼"]
+        product_info = setting["產品資訊"]
 
         self.td_api.connect(td_address, userid, password, brokerid, auth_code, appid, product_info)
         self.md_api.connect(md_address, userid, password, brokerid)
@@ -183,7 +183,7 @@ class FemasGateway(BaseGateway):
         """"""
         error_id = error["ErrorID"]
         error_msg = error["ErrorMsg"]
-        msg = f"{msg}，代码：{error_id}，信息：{error_msg}"
+        msg = f"{msg}，程式碼：{error_id}，資訊：{error_msg}"
         self.write_log(msg)
 
     def process_timer_event(self, event):
@@ -231,7 +231,7 @@ class FemasMdApi(MdApi):
         """
         Callback when front server is connected.
         """
-        self.gateway.write_log("行情服务器连接成功")
+        self.gateway.write_log("行情伺服器連線成功")
         self.login()
 
     def onFrontDisconnected(self, reason: int):
@@ -239,7 +239,7 @@ class FemasMdApi(MdApi):
         Callback when front server is disconnected.
         """
         self.login_status = False
-        self.gateway.write_log(f"行情服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"行情伺服器連線斷開，原因{reason}")
 
     def onRspUserLogin(self, data: dict, error: dict, reqid: int, last: bool):
         """
@@ -247,25 +247,25 @@ class FemasMdApi(MdApi):
         """
         if not error["ErrorID"]:
             self.login_status = True
-            self.gateway.write_log("行情服务器登录成功")
+            self.gateway.write_log("行情伺服器登入成功")
 
             for symbol in self.subscribed:
                 self.subMarketData(symbol)
         else:
-            self.gateway.write_error("行情服务器登录失败", error)
+            self.gateway.write_error("行情伺服器登入失敗", error)
 
     def onRspError(self, error: dict, reqid: int, last: bool):
         """
         Callback when error occured.
         """
-        self.gateway.write_error("行情接口报错", error)
+        self.gateway.write_error("行情介面報錯", error)
 
     def onRspSubMarketData(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
         if not error or not error["ErrorID"]:
             return
 
-        self.gateway.write_error("行情订阅失败", error)
+        self.gateway.write_error("行情訂閱失敗", error)
 
     def onRtnDepthMarketData(self, data: dict):
         """
@@ -383,7 +383,7 @@ class FemasTdApi(TdApi):
 
     def onFrontConnected(self):
         """"""
-        self.gateway.write_log("交易服务器连接成功")
+        self.gateway.write_log("交易伺服器連線成功")
 
         if self.auth_code:
             self.authenticate()
@@ -393,16 +393,16 @@ class FemasTdApi(TdApi):
     def onFrontDisconnected(self, reason: int):
         """"""
         self.login_status = False
-        self.gateway.write_log(f"交易服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"交易伺服器連線斷開，原因{reason}")
 
     def onRspDSUserCertification(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
         if not error["ErrorID"]:
             self.auth_staus = True
-            self.gateway.write_log("交易服务器授权验证成功")
+            self.gateway.write_log("交易伺服器授權驗證成功")
             self.login()
         else:
-            self.gateway.write_error("交易服务器授权验证失败", error)
+            self.gateway.write_error("交易伺服器授權驗證失敗", error)
 
     def onRspUserLogin(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
@@ -411,18 +411,18 @@ class FemasTdApi(TdApi):
                 self.localid = int(data["MaxOrderLocalID"])
 
             self.login_status = True
-            self.gateway.write_log("交易服务器登录成功")
+            self.gateway.write_log("交易伺服器登入成功")
 
             self.query_investor()
         else:
             self.login_failed = True
 
-            self.gateway.write_error("交易服务器登录失败", error)
+            self.gateway.write_error("交易伺服器登入失敗", error)
 
     def onRspQryUserInvestor(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
         self.investorid = data['InvestorID']
-        self.gateway.write_log("投资者代码查询成功")
+        self.gateway.write_log("投資者程式碼查詢成功")
 
         sleep(1)    # Wait 1 second due to flow control
         self.reqid += 1
@@ -450,14 +450,14 @@ class FemasTdApi(TdApi):
         )
         self.gateway.on_order(order)
 
-        self.gateway.write_error("交易委托失败", error)
+        self.gateway.write_error("交易委託失敗", error)
 
     def onRspOrderAction(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
         if not error["ErrorID"]:
             return
 
-        self.gateway.write_error("交易撤单失败", error)
+        self.gateway.write_error("交易撤單失敗", error)
 
     def onRspQueryMaxOrderVolume(self, data: dict, error: dict, reqid: int, last: bool):
         """"""
@@ -469,7 +469,7 @@ class FemasTdApi(TdApi):
         """
         Callback of settlment info confimation.
         """
-        self.gateway.write_log("结算信息确认成功")
+        self.gateway.write_log("結算資訊確認成功")
 
         self.reqid += 1
         self.reqQryInstrument({}, self.reqid)
@@ -567,7 +567,7 @@ class FemasTdApi(TdApi):
         symbol_size_map[contract.symbol] = contract.size
 
         if last:
-            self.gateway.write_log("合约信息查询成功")
+            self.gateway.write_log("合約資訊查詢成功")
 
     def onRtnOrder(self, data: dict):
         """
@@ -711,7 +711,7 @@ class FemasTdApi(TdApi):
         Send new order.
         """
         if req.offset not in OFFSET_VT2FEMAS:
-            self.gateway.write_log("请选择开平方向")
+            self.gateway.write_log("請選擇開平方向")
             return ""
 
         self.localid += 1

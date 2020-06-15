@@ -10,7 +10,7 @@ from vnpy.app.spread_trading import (
 class BasicSpreadStrategy(SpreadStrategyTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     buy_price = 0.0
     sell_price = 0.0
@@ -65,7 +65,7 @@ class BasicSpreadStrategy(SpreadStrategyTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

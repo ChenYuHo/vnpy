@@ -12,7 +12,7 @@ from vnpy.app.cta_strategy import (
 
 class MultiTimeframeStrategy(CtaTemplate):
     """"""
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     rsi_signal = 20
     rsi_window = 14
@@ -58,7 +58,7 @@ class MultiTimeframeStrategy(CtaTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

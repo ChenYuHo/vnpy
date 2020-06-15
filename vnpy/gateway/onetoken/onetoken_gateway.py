@@ -90,10 +90,10 @@ class OnetokenGateway(BaseGateway):
         "OT Key": "",
         "OT Secret": "",
         "交易所": ["BINANCE", "BITMEX", "OKEX", "OKEF", "HUOBIP", "HUOBIF"],
-        "账户": "",
-        "会话数": 3,
+        "賬戶": "",
+        "會話數": 3,
         "代理地址": "127.0.0.1",
-        "代理端口": 1080,
+        "代理埠": 1080,
     }
 
     exchanges = list(EXCHANGE_VT2ONETOKEN.keys())
@@ -112,11 +112,11 @@ class OnetokenGateway(BaseGateway):
         """"""
         key = setting["OT Key"]
         secret = setting["OT Secret"]
-        session_number = setting["会话数"]
+        session_number = setting["會話數"]
         exchange = setting["交易所"].lower()
-        account = setting["账户"]
+        account = setting["賬戶"]
         proxy_host = setting["代理地址"]
-        proxy_port = setting["代理端口"]
+        proxy_port = setting["代理埠"]
 
         self.rest_api.connect(key, secret, session_number,
                               exchange, account, proxy_host, proxy_port)
@@ -241,7 +241,7 @@ class OnetokenRestApi(RestClient):
 
         self.start(session_number)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
         self.query_time()
         self.query_contract()
@@ -266,7 +266,7 @@ class OnetokenRestApi(RestClient):
         dt = datetime.utcfromtimestamp(server_timestamp)
         server_time = dt.isoformat() + "Z"
         local_time = datetime.utcnow().isoformat()
-        msg = f"服务器时间：{server_time}，本机时间：{local_time}"
+        msg = f"伺服器時間：{server_time}，本機時間：{local_time}"
         self.gateway.write_log(msg)
 
     def query_contract(self):
@@ -291,7 +291,7 @@ class OnetokenRestApi(RestClient):
                 gateway_name=self.gateway_name
             )
             self.gateway.on_contract(contract)
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
         # Start websocket api after instruments data collected
         self.gateway.data_ws_api.start()
@@ -355,7 +355,7 @@ class OnetokenRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"委托失败，状态码：{status_code}，信息：{request.response.text}"
+        msg = f"委託失敗，狀態碼：{status_code}，資訊：{request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -435,12 +435,12 @@ class OnetokenDataWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("行情Websocket API连接成功")
+        self.gateway.write_log("行情Websocket API連線成功")
         self.login()
 
     def on_disconnected(self):
         """"""
-        self.gateway.write_log("行情Websocket API连接断开")
+        self.gateway.write_log("行情Websocket API連線斷開")
 
     def on_packet(self, packet: dict):
         """"""
@@ -456,7 +456,7 @@ class OnetokenDataWebsocketApi(WebsocketClient):
 
     def on_error(self, exception_type: type, exception_value: Exception, tb):
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(self.exception_detail(
@@ -473,7 +473,7 @@ class OnetokenDataWebsocketApi(WebsocketClient):
 
     def on_login(self, data: dict):
         """"""
-        self.gateway.write_log("行情Websocket API登录成功")
+        self.gateway.write_log("行情Websocket API登入成功")
         for req in list(self.subscribed.values()):
             self.subscribe(req)
 
@@ -575,13 +575,13 @@ class OnetokenTradeWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("交易Websocket API连接成功")
+        self.gateway.write_log("交易Websocket API連線成功")
         self.subscribe_info()
         self.subscribe_order()
 
     def on_disconnected(self):
         """"""
-        self.gateway.write_log("交易Websocket API连接断开")
+        self.gateway.write_log("交易Websocket API連線斷開")
 
     def on_packet(self, packet: dict):
         """"""
@@ -609,7 +609,7 @@ class OnetokenTradeWebsocketApi(WebsocketClient):
 
     def on_error(self, exception_type: type, exception_value: Exception, tb):
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(self.exception_detail(
@@ -618,12 +618,12 @@ class OnetokenTradeWebsocketApi(WebsocketClient):
     def on_subscribe_info(self, data: str):
         """"""
         if data == "success":
-            self.gateway.write_log("账户资金推送订阅成功")
+            self.gateway.write_log("賬戶資金推送訂閱成功")
 
     def on_subscribe_order(self, data: str):
         """"""
         if data == "success":
-            self.gateway.write_log("委托更新推送订阅成功")
+            self.gateway.write_log("委託更新推送訂閱成功")
 
     def on_info(self, data: dict):
         """"""

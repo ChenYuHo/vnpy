@@ -107,15 +107,15 @@ class TapGateway(BaseGateway):
     """
 
     default_setting = {
-        "行情账号": "",
-        "行情密码": "",
-        "行情服务器": "",
-        "行情端口": 0,
-        "交易账号": "",
-        "交易密码": "",
-        "交易服务器": "",
-        "交易端口": 0,
-        "授权码": ""
+        "行情賬號": "",
+        "行情密碼": "",
+        "行情伺服器": "",
+        "行情埠": 0,
+        "交易賬號": "",
+        "交易密碼": "",
+        "交易伺服器": "",
+        "交易埠": 0,
+        "授權碼": ""
     }
 
     exchanges = list(EXCHANGE_VT2TAP.keys())
@@ -129,15 +129,15 @@ class TapGateway(BaseGateway):
 
     def connect(self, setting: dict) -> None:
         """"""
-        quote_username = setting["行情账号"]
-        quote_password = setting["行情密码"]
-        quote_host = setting["行情服务器"]
-        quote_port = setting["行情端口"]
-        trade_username = setting["交易账号"]
-        trade_password = setting["交易密码"]
-        trade_host = setting["交易服务器"]
-        trade_port = setting["交易端口"]
-        auth_code = setting["授权码"]
+        quote_username = setting["行情賬號"]
+        quote_password = setting["行情密碼"]
+        quote_host = setting["行情伺服器"]
+        quote_port = setting["行情埠"]
+        trade_username = setting["交易賬號"]
+        trade_password = setting["交易密碼"]
+        trade_host = setting["交易伺服器"]
+        trade_port = setting["交易埠"]
+        auth_code = setting["授權碼"]
 
         self.md_api.connect(
             quote_username,
@@ -196,9 +196,9 @@ class QuoteApi(MdApi):
         Callback of login request.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"行情服务器登录失败：{error}")
+            self.gateway.write_log(f"行情伺服器登入失敗：{error}")
         else:
-            self.gateway.write_log("行情服务器登录成功")
+            self.gateway.write_log("行情伺服器登入成功")
 
     def onAPIReady(self) -> None:
         """
@@ -210,7 +210,7 @@ class QuoteApi(MdApi):
         """
         Callback when connection to TAP server is lost.
         """
-        self.gateway.write_log(f"行情服务器连接断开，原因：{reason}")
+        self.gateway.write_log(f"行情伺服器連線斷開，原因：{reason}")
 
     def onRspSubscribeQuote(
         self,
@@ -223,7 +223,7 @@ class QuoteApi(MdApi):
         Callback of subscribe market data request.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"订阅行情失败：{error}")
+            self.gateway.write_log(f"訂閱行情失敗：{error}")
         else:
             self.update_tick(data)
 
@@ -242,7 +242,7 @@ class QuoteApi(MdApi):
 
         contract_info = contract_infos.get((symbol, exchange), None)
         if not contract_info:
-            self.gateway.write_log(f"行情合约信息无法匹配：{symbol}和{exchange}")
+            self.gateway.write_log(f"行情合約資訊無法匹配：{symbol}和{exchange}")
             return
 
         tick = TickData(
@@ -326,7 +326,7 @@ class QuoteApi(MdApi):
         contract_info = contract_infos.get((req.symbol, req.exchange), None)
         if not contract_info:
             self.gateway.write_log(
-                f"找不到匹配的合约：{req.symbol}和{req.exchange.value}")
+                f"找不到匹配的合約：{req.symbol}和{req.exchange.value}")
             return
 
         tap_contract = {
@@ -365,16 +365,16 @@ class TradeApi(TdApi):
         """
         Callback when connection is established with TAP server.
         """
-        self.gateway.write_log("交易服务器连接成功")
+        self.gateway.write_log("交易伺服器連線成功")
 
     def onRspLogin(self, error: int, data: dict) -> None:
         """
         Callback of login request.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"交易服务器登录失败，错误码：{error}")
+            self.gateway.write_log(f"交易伺服器登入失敗，錯誤碼：{error}")
         else:
-            self.gateway.write_log("交易服务器登录成功")
+            self.gateway.write_log("交易伺服器登入成功")
 
     def onAPIReady(self, code: int) -> None:
         """
@@ -393,7 +393,7 @@ class TradeApi(TdApi):
         Callback of commodity query with size and pricetick data.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log("查询交易品种信息失败")
+            self.gateway.write_log("查詢交易品種資訊失敗")
             return
 
         commodity_info = CommodityInfo(
@@ -404,7 +404,7 @@ class TradeApi(TdApi):
         commodity_infos[data["CommodityNo"]] = commodity_info
 
         if last == "Y":
-            self.gateway.write_log("查询交易品种信息成功")
+            self.gateway.write_log("查詢交易品種資訊成功")
             req = {}
             self.qryContract(req)
 
@@ -419,7 +419,7 @@ class TradeApi(TdApi):
         Callback of contract query with detailed contract data.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log("查询交易合约信息失败")
+            self.gateway.write_log("查詢交易合約資訊失敗")
             return
 
         exchange = EXCHANGE_TAP2VT.get(data["ExchangeNo"], None)
@@ -458,7 +458,7 @@ class TradeApi(TdApi):
             contract_infos[(contract.symbol, contract.exchange)] = contract_info
 
         if last == "Y":
-            self.gateway.write_log("查询交易合约信息成功")
+            self.gateway.write_log("查詢交易合約資訊成功")
             self.query_account()
 
     def onRtnPositionProfit(self, data: dict) -> None:
@@ -476,7 +476,7 @@ class TradeApi(TdApi):
         Callback of account number query.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"查询账号信息失败")
+            self.gateway.write_log(f"查詢賬號資訊失敗")
             return
 
         req = {
@@ -493,13 +493,13 @@ class TradeApi(TdApi):
     ) -> None:
         """Callback of account fund query"""
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"查询资金信息失败")
+            self.gateway.write_log(f"查詢資金資訊失敗")
             return
 
         self.update_account(data)
 
         if last == "Y":
-            self.gateway.write_log("查询资金信息成功")
+            self.gateway.write_log("查詢資金資訊成功")
             self.query_position()
 
     def onRtnFund(self, data: dict) -> None:
@@ -521,14 +521,14 @@ class TradeApi(TdApi):
         Position summary reflects the sum of positions on each contract.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"查询持仓信息失败")
+            self.gateway.write_log(f"查詢持倉資訊失敗")
             return
 
         if data:
             self.update_position(data)
 
         if last == "Y":
-            self.gateway.write_log(f"查询持仓信息成功")
+            self.gateway.write_log(f"查詢持倉資訊成功")
             self.query_order()
 
     def onRtnPositionSummary(self, data: dict) -> None:
@@ -548,14 +548,14 @@ class TradeApi(TdApi):
         Callback of today's order query.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"查询委托信息失败")
+            self.gateway.write_log(f"查詢委託資訊失敗")
             return
 
         if data:
             self.update_order(data)
 
         if last == "Y":
-            self.gateway.write_log(f"查询委托信息成功")
+            self.gateway.write_log(f"查詢委託資訊成功")
             self.query_trade()
 
     def onRtnOrder(self, data: dict) -> None:
@@ -563,7 +563,7 @@ class TradeApi(TdApi):
         Callback of order update.
         """
         if data["ErrorCode"] != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"委托下单失败，错误码: {data['ErrorCode']}")
+            self.gateway.write_log(f"委託下單失敗，錯誤碼: {data['ErrorCode']}")
             return
 
         self.update_order(data)
@@ -579,14 +579,14 @@ class TradeApi(TdApi):
         Callback of today's order fill (trade) query.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"查询成交信息失败")
+            self.gateway.write_log(f"查詢成交資訊失敗")
             return
 
         if data:
             self.update_trade(data)
 
         if last == "Y":
-            self.gateway.write_log(f"查询成交信息成功")
+            self.gateway.write_log(f"查詢成交資訊成功")
 
     def onRtnFill(self, data: dict) -> None:
         """
@@ -604,7 +604,7 @@ class TradeApi(TdApi):
         Callback of order action (cancel/amend) request.
         """
         if error != ERROR_VT2TAP["TAPIERROR_SUCCEED"]:
-            self.gateway.write_log(f"委托操作失败：{error}")
+            self.gateway.write_log(f"委託操作失敗：{error}")
             return
 
     def update_account(self, data: dict) -> None:
@@ -725,11 +725,11 @@ class TradeApi(TdApi):
         """
         contract_info = contract_infos.get((req.symbol, req.exchange), None)
         if not contract_info:
-            self.gateway.write_log(f"找不到匹配的合约：{req.symbol}和{req.exchange.value}")
+            self.gateway.write_log(f"找不到匹配的合約：{req.symbol}和{req.exchange.value}")
             return ""
 
         if req.type not in ORDERTYPE_VT2TAP:
-            self.gateway.write_log(f"不支持的委托类型: {req.type.value}")
+            self.gateway.write_log(f"不支援的委託型別: {req.type.value}")
             return ""
 
         order_req = {
@@ -747,7 +747,7 @@ class TradeApi(TdApi):
         error_id, sesion, order_id = self.insertOrder(order_req)
 
         if not order_id:
-            self.gateway.write_log(f"委托请求失败，错误号：{error_id}")
+            self.gateway.write_log(f"委託請求失敗，錯誤號：{error_id}")
             return
 
         order = req.create_order_data(

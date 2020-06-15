@@ -11,7 +11,7 @@ class ErrorTypeGenerator:
         self.name: str = name
 
     def run(self) -> None:
-        """主函数"""
+        """主函式"""
         self.f_cpp = open(self.filename, "r", encoding="UTF-8")
         self.f_define = open(f"{self.prefix}_{self.name}_error_constant.py", "w", encoding="UTF-8")
 
@@ -21,10 +21,10 @@ class ErrorTypeGenerator:
         self.f_cpp.close()
         self.f_define.close()
 
-        print(f"{self.name}_ErrorType生成完毕")
+        print(f"{self.name}_ErrorType生成完畢")
 
     def process_line(self, line: str) -> None:
-        """处理每行"""
+        """處理每行"""
         line = line.replace("\n", "")
         line = line.replace(";", "")
 
@@ -38,7 +38,7 @@ class ErrorTypeGenerator:
                 self.process_int(line)
 
     def process_int(self, line: str) -> None:
-        """处理类型定义"""
+        """處理型別定義"""
         sectors = line.split("=")
         value = sectors[1].strip()
 

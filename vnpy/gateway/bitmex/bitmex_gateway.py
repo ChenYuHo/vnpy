@@ -87,10 +87,10 @@ class BitmexGateway(BaseGateway):
     default_setting = {
         "ID": "",
         "Secret": "",
-        "会话数": 3,
-        "服务器": ["REAL", "TESTNET"],
+        "會話數": 3,
+        "伺服器": ["REAL", "TESTNET"],
         "代理地址": "",
-        "代理端口": "",
+        "代理埠": "",
     }
 
     exchanges = [Exchange.BITMEX]
@@ -108,10 +108,10 @@ class BitmexGateway(BaseGateway):
         """"""
         key = setting["ID"]
         secret = setting["Secret"]
-        session_number = setting["会话数"]
-        server = setting["服务器"]
+        session_number = setting["會話數"]
+        server = setting["伺服器"]
         proxy_host = setting["代理地址"]
-        proxy_port = setting["代理端口"]
+        proxy_port = setting["代理埠"]
 
         if proxy_port.isdigit():
             proxy_port = int(proxy_port)
@@ -244,7 +244,7 @@ class BitmexRestApi(RestClient):
 
         self.start(session_number)
 
-        self.gateway.write_log("REST API启动成功")
+        self.gateway.write_log("REST API啟動成功")
 
     def _new_order_id(self):
         """"""
@@ -350,13 +350,13 @@ class BitmexRestApi(RestClient):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空，开始时间：{start_time}，数量：{count}"
+                    msg = f"獲取歷史資料為空，開始時間：{start_time}，數量：{count}"
                     break
 
                 for d in data:
@@ -376,7 +376,7 @@ class BitmexRestApi(RestClient):
 
                 begin = data[0]["timestamp"]
                 end = data[-1]["timestamp"]
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Break if total data count less than 750 (latest date collected)
@@ -401,9 +401,9 @@ class BitmexRestApi(RestClient):
         if request.response.text:
             data = request.response.json()
             error = data["error"]
-            msg = f"委托失败，状态码：{status_code}，类型：{error['name']}, 信息：{error['message']}"
+            msg = f"委託失敗，狀態碼：{status_code}，型別：{error['name']}, 資訊：{error['message']}"
         else:
-            msg = f"委托失败，状态码：{status_code}"
+            msg = f"委託失敗，狀態碼：{status_code}"
 
         self.gateway.write_log(msg)
 
@@ -447,7 +447,7 @@ class BitmexRestApi(RestClient):
 
         data = request.response.json()
         error = data["error"]
-        msg = f"请求失败，状态码：{status_code}，类型：{error['name']}, 信息：{error['message']}"
+        msg = f"請求失敗，狀態碼：{status_code}，型別：{error['name']}, 資訊：{error['message']}"
         self.gateway.write_log(msg)
 
     def on_error(
@@ -456,7 +456,7 @@ class BitmexRestApi(RestClient):
         """
         Callback to handler request exception.
         """
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(
@@ -495,12 +495,12 @@ class BitmexRestApi(RestClient):
         """
         # Already received 429 from server
         if self.rate_limit_sleep:
-            msg = f"请求过于频繁，已被BitMEX限制，请等待{self.rate_limit_sleep}秒后再试"
+            msg = f"請求過於頻繁，已被BitMEX限制，請等待{self.rate_limit_sleep}秒後再試"
             self.gateway.write_log(msg)
             return False
         # Just local request limit is reached
         elif not self.rate_limit_remaining:
-            msg = "请求频率太高，有触发BitMEX流控的风险，请稍候再试"
+            msg = "請求頻率太高，有觸發BitMEX流控的風險，請稍候再試"
             self.gateway.write_log(msg)
             return False
         else:
@@ -566,17 +566,17 @@ class BitmexWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("Websocket API连接成功")
+        self.gateway.write_log("Websocket API連線成功")
         self.authenticate()
 
     def on_disconnected(self):
         """"""
-        self.gateway.write_log("Websocket API连接断开")
+        self.gateway.write_log("Websocket API連線斷開")
 
     def on_packet(self, packet: dict):
         """"""
         if "error" in packet:
-            self.gateway.write_log("Websocket API报错：%s" % packet["error"])
+            self.gateway.write_log("Websocket API報錯：%s" % packet["error"])
 
             if "not valid" in packet["error"]:
                 self.active = False
@@ -587,7 +587,7 @@ class BitmexWebsocketApi(WebsocketClient):
 
             if success:
                 if req["op"] == "authKey":
-                    self.gateway.write_log("Websocket API验证授权成功")
+                    self.gateway.write_log("Websocket API驗證授權成功")
                     self.subscribe_topic()
 
         elif "table" in packet:
@@ -602,7 +602,7 @@ class BitmexWebsocketApi(WebsocketClient):
 
     def on_error(self, exception_type: type, exception_value: Exception, tb):
         """"""
-        msg = f"触发异常，状态码：{exception_type}，信息：{exception_value}"
+        msg = f"觸發異常，狀態碼：{exception_type}，資訊：{exception_value}"
         self.gateway.write_log(msg)
 
         sys.stderr.write(self.exception_detail(

@@ -37,7 +37,7 @@ class StructGenerator:
                 self.typedefs[name] = getattr(module, name)
 
     def run(self) -> None:
-        """运行生成"""
+        """執行生成"""
         self.f_cpp = open(self.filename, "r", encoding="UTF-8")
         self.f_struct = open("test_xtp_struct_oms.py", "w", encoding="UTF-8")
 
@@ -77,7 +77,7 @@ class StructGenerator:
         print("Struct生成成功")
 
     def process_line(self, line: str):
-        """处理每行"""
+        """處理每行"""
         line = line.replace(";", "")
         line = line.replace("\n", "")
 
@@ -101,11 +101,11 @@ class StructGenerator:
             new_line = f"    \"{name}\": \"{py_type}\",\n"
             self.f_struct.write(new_line)
 
-        # 结构体镶嵌表头
+        # 結構體鑲嵌表頭
         elif line.startswith("  ") and (line.endswith("{") or line.endswith("}")):
             pass
 
-        # 结构体镶嵌内容
+        # 結構體鑲嵌內容
         elif line.startswith("            ") or line.startswith("\t\t") or line.startswith("        "):
             if "///" not in line and "reserved" not in line and "u32" not in line:
                 line = line.strip()
@@ -117,7 +117,7 @@ class StructGenerator:
                 name = words[1].strip()
                 new_line = f"    \"{name}\": \"{py_type}\",\n"
                 self.f_struct.write(new_line)
-        # 结构体头部
+        # 結構體頭部
         elif line.startswith("typedef struct"):
             content = line.split()
             if len(content) < 4:
@@ -145,7 +145,7 @@ class StructGenerator:
             new_line = "}\n\n"
             self.f_struct.write(new_line)
 
-        # 内容部分
+        # 內容部分
         elif ("\t" in line or "  " in line) and "//" not in line:
             line = line.strip()
             words = line.split("\t")

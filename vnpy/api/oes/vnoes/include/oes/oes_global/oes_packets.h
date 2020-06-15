@@ -17,78 +17,78 @@
 /**
  * @file    oes_packets.h
  *
- * 订单执行系统订单接收模块通讯报文定义
+ * 訂單執行系統訂單接收模組通訊報文定義
  *
  * @version 0.11.1      2016/11/17
  * @version 0.12        2016/11/30
- *          - 在登录报文中增加协议版本号信息, 并在登录时校验协议版本号的兼容性
+ *          - 在登入報文中增加協議版本號資訊, 並在登入時校驗協議版本號的相容性
  * @version 0.12.3      2017/01/10
- *          - 新增期权持仓查询的消息类型
- *          - 调整查询类消息类型的取值定义
+ *          - 新增期權持倉查詢的訊息型別
+ *          - 調整查詢類訊息型別的取值定義
  * @version 0.12.6.2    2017/03/16
- *          - 重命名 ‘出入金委托’ 消息 OESMSG_NONTRD_CASH_TRSF_REQ => OESMSG_NONTRD_FUND_TRSF_REQ
- *          - 新增 ‘出入金委托响应-业务拒绝’、‘出入金委托执行报告’ 两类回报消息
- *          - 删除 ‘出入金管理登录消息’ 宏定义
- *          - 重命名 ‘出入金委托’消息的结构体定义 OesCashTrsfReqT => OesFundTrsfReqT
+ *          - 重新命名 ‘出入金委託’ 訊息 OESMSG_NONTRD_CASH_TRSF_REQ => OESMSG_NONTRD_FUND_TRSF_REQ
+ *          - 新增 ‘出入金委託響應-業務拒絕’、‘出入金委託執行報告’ 兩類回報訊息
+ *          - 刪除 ‘出入金管理登入訊息’ 巨集定義
+ *          - 重新命名 ‘出入金委託’訊息的結構體定義 OesCashTrsfReqT => OesFundTrsfReqT
  * @version 0.15.2      2017/07/18
- *          - 新增 查询新股配号、中签信息消息类型定义(OESMSG_QRYMSG_LOT_WINNING)
+ *          - 新增 查詢新股配號、中籤資訊訊息型別定義(OESMSG_QRYMSG_LOT_WINNING)
  * @version 0.15.2.1    2017/07/31
- *          - 出入金业务拒绝消息类型变更 OesFundTrsfReqT => OesFundTrsfRejectT
- *          - 出入金委托回报的结构体(OesFundTrsfReportT) 中新增字段 '错误码信息 (rejReasonInfo)'
+ *          - 出入金業務拒絕訊息型別變更 OesFundTrsfReqT => OesFundTrsfRejectT
+ *          - 出入金委託回報的結構體(OesFundTrsfReportT) 中新增欄位 '錯誤碼資訊 (rejReasonInfo)'
  * @version 0.15.4      2017/09/04
- *          - 新增交易类请求消息 '撤单请求消息 (OESMSG_ORD_CANCEL_REQUEST)'
- *          - 新增结构体 '撤单请求 (OesOrdCancelReqT)'
- *          - 新增回报消息类型 '撤单拒绝 (OESMSG_RPT_CANCEL_REJECT)'
- *              - 对应回报消息 OesRptMsgBodyT.cancelRejectRsp
- *          - 委托拒绝消息中将不再包含撤单委托, 所有被OES拒绝的撤单请求和撤单委托都将通过新增的撤单拒绝消息进行回报
- *          - 新增回报消息类型 '资金变动信息 (OESMSG_RPT_CASH_ASSET_VARIATION)'
- *              - 对应回报消息 OesRptMsgBodyT.cashAssetRpt
- *          - 新增回报消息类型 '持仓变动信息 (股票) (OESMSG_RPT_STOCK_HOLDING_VARIATION)'
- *              - 对应回报消息 OesRptMsgBodyT.stkHoldingRpt
- *          - 新增回报消息类型 '持仓变动信息 (期权) (OESMSG_RPT_OPTION_HOLDING_VARIATION)'
- *              - 对应回报消息 OesRptMsgBodyT.optHoldingRpt
+ *          - 新增交易類請求訊息 '撤單請求訊息 (OESMSG_ORD_CANCEL_REQUEST)'
+ *          - 新增結構體 '撤單請求 (OesOrdCancelReqT)'
+ *          - 新增回報訊息型別 '撤單拒絕 (OESMSG_RPT_CANCEL_REJECT)'
+ *              - 對應回報訊息 OesRptMsgBodyT.cancelRejectRsp
+ *          - 委託拒絕訊息中將不再包含撤單委託, 所有被OES拒絕的撤單請求和撤單委託都將通過新增的撤單拒絕訊息進行回報
+ *          - 新增回報訊息型別 '資金變動資訊 (OESMSG_RPT_CASH_ASSET_VARIATION)'
+ *              - 對應回報訊息 OesRptMsgBodyT.cashAssetRpt
+ *          - 新增回報訊息型別 '持倉變動資訊 (股票) (OESMSG_RPT_STOCK_HOLDING_VARIATION)'
+ *              - 對應回報訊息 OesRptMsgBodyT.stkHoldingRpt
+ *          - 新增回報訊息型別 '持倉變動資訊 (期權) (OESMSG_RPT_OPTION_HOLDING_VARIATION)'
+ *              - 對應回報訊息 OesRptMsgBodyT.optHoldingRpt
  * @version 0.15.4.1    2017/09/07
- *          - 调整回报消息类型的定义顺序和取值
+ *          - 調整回報訊息型別的定義順序和取值
  *              - OESMSG_RPT_ORDER_INSERT, OESMSG_RPT_ORDER_REJECT, OESMSG_RPT_CANCEL_REJECT
- *          - 登录应答报文(OesLogonRspT) 中增加字段 客户端环境号(clEnvId)
+ *          - 登入應答報文(OesLogonRspT) 中增加欄位 客戶端環境號(clEnvId)
  * @version 0.15.4.2    2017/10/16
- *          - 新增交易类请求消息 '测试请求 (OesTestRequestReqT)'
- *          - 新增回报消息类型 '测试请求的应答 (OesTestRequestRspT)'
+ *          - 新增交易類請求訊息 '測試請求 (OesTestRequestReqT)'
+ *          - 新增回報訊息型別 '測試請求的應答 (OesTestRequestRspT)'
  * @version 0.15.5      2017/11/03
- *          - 删除回报消息类型 '撤单拒绝 (OESMSG_RPT_CANCEL_REJECT)', 并整合到 '委托拒绝 (OESMSG_RPT_ORDER_REJECT)' 消息中
- *          - 重命名回报消息类型 OESMSG_RPT_ORDER_REJECT => OESMSG_RPT_BUSINESS_REJECT (OES业务拒绝, 委托/撤单未通过风控检查等)
- *          - 增加可订阅的回报消息类型 OES_SUB_RPT_TYPE_BUSINESS_REJECT
- *          - 当前采用的协议版本号(OES_APPL_VER_ID) 升级到 0.15.5
- *          - 兼容最低的协议版本号(OES_MIN_APPL_VER_ID) 升级到 0.15.5
+ *          - 刪除回報訊息型別 '撤單拒絕 (OESMSG_RPT_CANCEL_REJECT)', 並整合到 '委託拒絕 (OESMSG_RPT_ORDER_REJECT)' 訊息中
+ *          - 重新命名回報訊息型別 OESMSG_RPT_ORDER_REJECT => OESMSG_RPT_BUSINESS_REJECT (OES業務拒絕, 委託/撤單未通過風控檢查等)
+ *          - 增加可訂閱的回報訊息型別 OES_SUB_RPT_TYPE_BUSINESS_REJECT
+ *          - 當前採用的協議版本號(OES_APPL_VER_ID) 升級到 0.15.5
+ *          - 相容最低的協議版本號(OES_MIN_APPL_VER_ID) 升級到 0.15.5
  * @version 0.15.5.1    2017/11/15
- *          - 增加数值类型的协议版本号 OES_APPL_VER_VALUE, 以方便比对版本
+ *          - 增加數值型別的協議版本號 OES_APPL_VER_VALUE, 以方便比對版本
  * @version 0.15.6      2018/03/28
- *          - 增加修改密码请求/应答报文和消息代码定义
- *          - 增加批量委托请求报文和消息代码定义
- *          - 登录请求报文(OesLogonReqT) 中增加字段 客户端设备序列号(clientDriverId)
- *          - 增加默认回报消息类型 OES_SUB_RPT_TYPE_DEFAULT
- *          - 新增回报消息类型 '市场状态信息 (OESMSG_RPT_MARKET_STATE)'
- *              - 对应回报消息 OesRspMsgBodyT.mktStateRpt
- *          - 回报消息头(OesRptMsgHeadT) 中增加字段 执行类型(execType), 用以区分回报的执行类型(参考eOesExecTypeT定义）
+ *          - 增加修改密碼請求/應答報文和訊息程式碼定義
+ *          - 增加批量委託請求報文和訊息程式碼定義
+ *          - 登入請求報文(OesLogonReqT) 中增加欄位 客戶端裝置序列號(clientDriverId)
+ *          - 增加預設回報訊息型別 OES_SUB_RPT_TYPE_DEFAULT
+ *          - 新增回報訊息型別 '市場狀態資訊 (OESMSG_RPT_MARKET_STATE)'
+ *              - 對應回報訊息 OesRspMsgBodyT.mktStateRpt
+ *          - 回報訊息頭(OesRptMsgHeadT) 中增加欄位 執行型別(execType), 用以區分回報的執行型別(參考eOesExecTypeT定義）
  * @version 0.15.5.13   2018/07/20
- *          - 登录应答报文(OesLogonRspT) 中增加字段:
- *              - 客户端类型 (clientType)
- *              - 客户端状态 (clientStatus)
+ *          - 登入應答報文(OesLogonRspT) 中增加欄位:
+ *              - 客戶端型別 (clientType)
+ *              - 客戶端狀態 (clientStatus)
  * @version 0.15.5.16   2018/08/31
- *          - 登录应答报文(OesLogonRspT) 中增加字段:
- *              - 客户端类型(clientType)
- *              - 客户端状态(clientStatus)
- *          - 新增 查询客户端总览信息(OESMSG_QRYMSG_CLIENT_OVERVIEW) 消息类型定义
- *          - 新增 查询客户主柜资金信息(OESMSG_QRYMSG_COUNTER_CASH) 消息类型定义
+ *          - 登入應答報文(OesLogonRspT) 中增加欄位:
+ *              - 客戶端型別(clientType)
+ *              - 客戶端狀態(clientStatus)
+ *          - 新增 查詢客戶端總覽資訊(OESMSG_QRYMSG_CLIENT_OVERVIEW) 訊息型別定義
+ *          - 新增 查詢客戶主櫃資金資訊(OESMSG_QRYMSG_COUNTER_CASH) 訊息型別定義
  * @version 0.15.5.17   2018/11/23
- *          - 登录应答报文(OesLogonRspT) 中增加字段:
- *              - 服务端集群号(setNum)
+ *          - 登入應答報文(OesLogonRspT) 中增加欄位:
+ *              - 服務端叢集號(setNum)
  * @version 0.15.7.6    2018/11/03
- *          - 新增 OES服务状态回报消息类型(OESMSG_RPT_SERVICE_STATE)，暂不支持订阅推送
+ *          - 新增 OES服務狀態回報訊息型別(OESMSG_RPT_SERVICE_STATE)，暫不支援訂閱推送
  * @version 0.15.9      2018/03/12
- *          - 为了支持科创板, 新增以下查询消息类型 (兼容之前版本的API)
- *              - 查询证券账户信息 (OESMSG_QRYMSG_INV_ACCT)
- *              - 查询现货产品信息 (OESMSG_QRYMSG_STOCK)
+ *          - 為了支援科創板, 新增以下查詢訊息型別 (相容之前版本的API)
+ *              - 查詢證券賬戶資訊 (OESMSG_QRYMSG_INV_ACCT)
+ *              - 查詢現貨產品資訊 (OESMSG_QRYMSG_STOCK)
  *
  * @since   2015/07/30
  */
@@ -109,161 +109,161 @@ extern "C" {
 
 
 /* ===================================================================
- * 协议版本号定义
+ * 協議版本號定義
  * =================================================================== */
 
-/** 当前采用的协议版本号 */
+/** 當前採用的協議版本號 */
 #define OES_APPL_VER_ID                         "0.15.9"
 
 /**
- * 当前采用的协议版本号数值
- * - 版本号数值的格式为 10 位整型数值, 形如: 1AABBCCDDX, 其中:
- *   - AA 为主版本号
- *   - BB 为副版本号
- *   - CC 为发布号
- *   - DD 为构建号
- *   - X  0, 表示不带时间戳的正常版本; 1, 表示带时间戳的延迟测量版本
+ * 當前採用的協議版本號數值
+ * - 版本號數值的格式為 10 位整型數值, 形如: 1AABBCCDDX, 其中:
+ *   - AA 為主版本號
+ *   - BB 為副版本號
+ *   - CC 為釋出號
+ *   - DD 為構建號
+ *   - X  0, 表示不帶時間戳的正常版本; 1, 表示帶時間戳的延遲測量版本
  */
 #define OES_APPL_VER_VALUE                      (1001509001)
 
-/** 兼容的最低协议版本号 */
+/** 相容的最低協議版本號 */
 #define OES_MIN_APPL_VER_ID                     "0.15.5"
 /* -------------------------           */
 
 
 /* ===================================================================
- * 消息代码及报文中的枚举类型定义
+ * 訊息程式碼及報文中的列舉型別定義
  * =================================================================== */
 
 /**
- * 通信消息的消息类型定义
+ * 通訊訊息的訊息型別定義
  */
 typedef enum _eOesMsgType {
     /*
-     * 交易类消息
+     * 交易類訊息
      */
-    OESMSG_ORD_NEW_ORDER                        = 0x01,     /**< 0x01/01  委托申报消息 */
-    OESMSG_ORD_CANCEL_REQUEST                   = 0x02,     /**< 0x02/02  撤单请求消息 */
-    OESMSG_ORD_BATCH_ORDERS                     = 0x03,     /**< 0x03/03  批量委托消息 */
-    __OESMSG_ORD_MAX,                                       /**< 最大的委托消息类型 */
+    OESMSG_ORD_NEW_ORDER                        = 0x01,     /**< 0x01/01  委託申報訊息 */
+    OESMSG_ORD_CANCEL_REQUEST                   = 0x02,     /**< 0x02/02  撤單請求訊息 */
+    OESMSG_ORD_BATCH_ORDERS                     = 0x03,     /**< 0x03/03  批量委託訊息 */
+    __OESMSG_ORD_MAX,                                       /**< 最大的委託訊息型別 */
 
     /*
-     * 执行报告类消息
+     * 執行報告類訊息
      */
-    __OESMSG_RPT_MIN                            = 0x0F,     /**< 0x0F/15  最小的执行报告消息类型 */
-    OESMSG_RPT_MARKET_STATE                     = 0x10,     /**< 0x10/16  市场状态信息 */
-    OESMSG_RPT_REPORT_SYNCHRONIZATION           = 0x11,     /**< 0x11/17  回报同步的应答消息 */
+    __OESMSG_RPT_MIN                            = 0x0F,     /**< 0x0F/15  最小的執行報告訊息型別 */
+    OESMSG_RPT_MARKET_STATE                     = 0x10,     /**< 0x10/16  市場狀態資訊 */
+    OESMSG_RPT_REPORT_SYNCHRONIZATION           = 0x11,     /**< 0x11/17  回報同步的應答訊息 */
 
-    OESMSG_RPT_BUSINESS_REJECT                  = 0x12,     /**< 0x12/18  OES业务拒绝 (因未通过风控检查等原因而被OES拒绝) */
-    OESMSG_RPT_ORDER_INSERT                     = 0x13,     /**< 0x13/19  OES委托已生成 (已通过风控检查) */
-    OESMSG_RPT_ORDER_REPORT                     = 0x14,     /**< 0x14/20  交易所委托回报 (包括交易所委托拒绝、委托确认和撤单完成通知) */
-    OESMSG_RPT_TRADE_REPORT                     = 0x15,     /**< 0x15/21  交易所成交回报 */
+    OESMSG_RPT_BUSINESS_REJECT                  = 0x12,     /**< 0x12/18  OES業務拒絕 (因未通過風控檢查等原因而被OES拒絕) */
+    OESMSG_RPT_ORDER_INSERT                     = 0x13,     /**< 0x13/19  OES委託已生成 (已通過風控檢查) */
+    OESMSG_RPT_ORDER_REPORT                     = 0x14,     /**< 0x14/20  交易所委託回報 (包括交易所委託拒絕、委託確認和撤單完成通知) */
+    OESMSG_RPT_TRADE_REPORT                     = 0x15,     /**< 0x15/21  交易所成交回報 */
 
-    OESMSG_RPT_FUND_TRSF_REJECT                 = 0x16,     /**< 0x16/22  出入金委托拒绝 */
-    OESMSG_RPT_FUND_TRSF_REPORT                 = 0x17,     /**< 0x17/23  出入金委托执行报告 */
+    OESMSG_RPT_FUND_TRSF_REJECT                 = 0x16,     /**< 0x16/22  出入金委託拒絕 */
+    OESMSG_RPT_FUND_TRSF_REPORT                 = 0x17,     /**< 0x17/23  出入金委託執行報告 */
 
-    OESMSG_RPT_CASH_ASSET_VARIATION             = 0x18,     /**< 0x18/24  资金变动信息 */
-    OESMSG_RPT_STOCK_HOLDING_VARIATION          = 0x19,     /**< 0x19/25  持仓变动信息 (股票) */
-    OESMSG_RPT_OPTION_HOLDING_VARIATION         = 0x1A,     /**< 0x1A/26  持仓变动信息 (期权) */
-    OESMSG_RPT_SERVICE_STATE                    = 0x1B,     /**< 0x1B/27  OES服务状态信息 (暂不支持订阅推送) */
-    __OESMSG_RPT_MAX,                                       /**< 最大的回报消息类型 */
+    OESMSG_RPT_CASH_ASSET_VARIATION             = 0x18,     /**< 0x18/24  資金變動資訊 */
+    OESMSG_RPT_STOCK_HOLDING_VARIATION          = 0x19,     /**< 0x19/25  持倉變動資訊 (股票) */
+    OESMSG_RPT_OPTION_HOLDING_VARIATION         = 0x1A,     /**< 0x1A/26  持倉變動資訊 (期權) */
+    OESMSG_RPT_SERVICE_STATE                    = 0x1B,     /**< 0x1B/27  OES服務狀態資訊 (暫不支援訂閱推送) */
+    __OESMSG_RPT_MAX,                                       /**< 最大的回報訊息型別 */
 
     /*
-     * 非交易类消息
+     * 非交易類訊息
      */
-    __OESMSG_NONTRD_MIN                         = 0x20,     /**< 0x20/32  最小的非交易消息类型 */
-    OESMSG_NONTRD_FUND_TRSF_REQ                 = 0x21,     /**< 0x21/33  出入金委托 */
-    OESMSG_NONTRD_CHANGE_PASSWORD               = 0x22,     /**< 0x22/34  修改客户端登录密码 */
-    __OESMSG_NONTRD_MAX,                                    /**< 最大的非交易消息类型 */
+    __OESMSG_NONTRD_MIN                         = 0x20,     /**< 0x20/32  最小的非交易訊息型別 */
+    OESMSG_NONTRD_FUND_TRSF_REQ                 = 0x21,     /**< 0x21/33  出入金委託 */
+    OESMSG_NONTRD_CHANGE_PASSWORD               = 0x22,     /**< 0x22/34  修改客戶端登入密碼 */
+    __OESMSG_NONTRD_MAX,                                    /**< 最大的非交易訊息型別 */
 
     /*
-     * 查询类消息
+     * 查詢類訊息
      */
-    __OESMSG_QRYMSG_MIN                         = 0x2F,     /**< 0x2F/47  最小的查询消息类型 */
-    OESMSG_QRYMSG_CLIENT_OVERVIEW               = 0x30,     /**< 0x30/48  查询客户端总览信息 */
-    OESMSG_QRYMSG_ORD                           = 0x31,     /**< 0x31/49  查询委托信息 */
-    OESMSG_QRYMSG_TRD                           = 0x32,     /**< 0x32/50  查询成交信息 */
-    OESMSG_QRYMSG_CASH_ASSET                    = 0x33,     /**< 0x33/51  查询客户资金信息 */
-    OESMSG_QRYMSG_STK_HLD                       = 0x34,     /**< 0x34/52  查询股票持仓信息 */
-    OESMSG_QRYMSG_OPT_HLD                       = 0x35,     /**< 0x35/53  查询期权持仓信息 */
-    OESMSG_QRYMSG_CUST                          = 0x36,     /**< 0x36/54  查询客户信息 */
-    OESMSG_QRYMSG_COMMISSION_RATE               = 0x38,     /**< 0x38/56  查询客户佣金信息 */
-    OESMSG_QRYMSG_FUND_TRSF                     = 0x39,     /**< 0x39/57  查询出入金信息 */
-    OESMSG_QRYMSG_ETF                           = 0x3B,     /**< 0x3B/59  查询ETF申赎产品信息 */
-    OESMSG_QRYMSG_ETF_COMPONENT                 = 0x3C,     /**< 0x3C/60  查询ETF成分股信息 */
-    OESMSG_QRYMSG_OPTION                        = 0x3D,     /**< 0x3D/61  查询期权产品信息 */
-    OESMSG_QRYMSG_ISSUE                         = 0x3E,     /**< 0x3E/62  查询证券发行信息 */
-    OESMSG_QRYMSG_LOT_WINNING                   = 0x3F,     /**< 0x3F/63  查询新股配号、中签信息 */
-    OESMSG_QRYMSG_TRADING_DAY                   = 0x40,     /**< 0x40/64  查询当前交易日 */
-    OESMSG_QRYMSG_MARKET_STATE                  = 0x41,     /**< 0x41/65  查询市场状态 */
-    OESMSG_QRYMSG_COUNTER_CASH                  = 0x42,     /**< 0x42/66  查询客户主柜资金信息 */
+    __OESMSG_QRYMSG_MIN                         = 0x2F,     /**< 0x2F/47  最小的查詢訊息型別 */
+    OESMSG_QRYMSG_CLIENT_OVERVIEW               = 0x30,     /**< 0x30/48  查詢客戶端總覽資訊 */
+    OESMSG_QRYMSG_ORD                           = 0x31,     /**< 0x31/49  查詢委託資訊 */
+    OESMSG_QRYMSG_TRD                           = 0x32,     /**< 0x32/50  查詢成交資訊 */
+    OESMSG_QRYMSG_CASH_ASSET                    = 0x33,     /**< 0x33/51  查詢客戶資金資訊 */
+    OESMSG_QRYMSG_STK_HLD                       = 0x34,     /**< 0x34/52  查詢股票持倉資訊 */
+    OESMSG_QRYMSG_OPT_HLD                       = 0x35,     /**< 0x35/53  查詢期權持倉資訊 */
+    OESMSG_QRYMSG_CUST                          = 0x36,     /**< 0x36/54  查詢客戶資訊 */
+    OESMSG_QRYMSG_COMMISSION_RATE               = 0x38,     /**< 0x38/56  查詢客戶佣金資訊 */
+    OESMSG_QRYMSG_FUND_TRSF                     = 0x39,     /**< 0x39/57  查詢出入金資訊 */
+    OESMSG_QRYMSG_ETF                           = 0x3B,     /**< 0x3B/59  查詢ETF申贖產品資訊 */
+    OESMSG_QRYMSG_ETF_COMPONENT                 = 0x3C,     /**< 0x3C/60  查詢ETF成分股資訊 */
+    OESMSG_QRYMSG_OPTION                        = 0x3D,     /**< 0x3D/61  查詢期權產品資訊 */
+    OESMSG_QRYMSG_ISSUE                         = 0x3E,     /**< 0x3E/62  查詢證券發行資訊 */
+    OESMSG_QRYMSG_LOT_WINNING                   = 0x3F,     /**< 0x3F/63  查詢新股配號、中籤資訊 */
+    OESMSG_QRYMSG_TRADING_DAY                   = 0x40,     /**< 0x40/64  查詢當前交易日 */
+    OESMSG_QRYMSG_MARKET_STATE                  = 0x41,     /**< 0x41/65  查詢市場狀態 */
+    OESMSG_QRYMSG_COUNTER_CASH                  = 0x42,     /**< 0x42/66  查詢客戶主櫃資金資訊 */
 
-    OESMSG_QRYMSG_INV_ACCT                      = 0x51,     /**< 0x51/81  查询证券账户信息 (0x37的更新版本, @since 0.15.9) */
-    OESMSG_QRYMSG_STOCK                         = 0x52,     /**< 0x52/82  查询现货产品信息 (0x3A的更新版本, @since 0.15.9) */
-    __OESMSG_QRYMSG_MAX,                                    /**< 最大的查询消息类型 */
+    OESMSG_QRYMSG_INV_ACCT                      = 0x51,     /**< 0x51/81  查詢證券賬戶資訊 (0x37的更新版本, @since 0.15.9) */
+    OESMSG_QRYMSG_STOCK                         = 0x52,     /**< 0x52/82  查詢現貨產品資訊 (0x3A的更新版本, @since 0.15.9) */
+    __OESMSG_QRYMSG_MAX,                                    /**< 最大的查詢訊息型別 */
 
     /*
-     * 公共的会话类消息
+     * 公共的會話類訊息
      */
-    OESMSG_SESS_HEARTBEAT                       = 0xFA,     /**< 0xFA/250 心跳消息 */
-    OESMSG_SESS_TEST_REQUEST                    = 0xFB,     /**< 0xFB/251 测试请求消息 */
-    OESMSG_SESS_LOGIN_EXTEND                    = 0xFC,     /**< 0xFC/252 登录扩展消息 */
-    OESMSG_SESS_LOGOUT                          = 0xFE,     /**< 0xFE/254 登出消息 */
+    OESMSG_SESS_HEARTBEAT                       = 0xFA,     /**< 0xFA/250 心跳訊息 */
+    OESMSG_SESS_TEST_REQUEST                    = 0xFB,     /**< 0xFB/251 測試請求訊息 */
+    OESMSG_SESS_LOGIN_EXTEND                    = 0xFC,     /**< 0xFC/252 登入擴充套件訊息 */
+    OESMSG_SESS_LOGOUT                          = 0xFE,     /**< 0xFE/254 登出訊息 */
 
     /*
-     * 以下消息类型定义已废弃, 只是为了兼容之前的版本而暂时保留
+     * 以下訊息型別定義已廢棄, 只是為了相容之前的版本而暫時保留
      */
     OESMSG_RPT_ORDER_REJECT                     = OESMSG_RPT_BUSINESS_REJECT,
 
-    OESMSG_QRYMSG_INV_ACCT_L001508              = 0x37,     /**< 0x37/55  查询证券账户信息 (兼容 v0.15.8 以及 v0.15.8 之前的版本的消息类型) */
-    OESMSG_QRYMSG_STOCK_L001508                 = 0x3A      /**< 0x3A/58  查询现货产品信息 (兼容 v0.15.8 以及 v0.15.8 之前的版本的消息类型) */
+    OESMSG_QRYMSG_INV_ACCT_L001508              = 0x37,     /**< 0x37/55  查詢證券賬戶資訊 (相容 v0.15.8 以及 v0.15.8 之前的版本的訊息型別) */
+    OESMSG_QRYMSG_STOCK_L001508                 = 0x3A      /**< 0x3A/58  查詢現貨產品資訊 (相容 v0.15.8 以及 v0.15.8 之前的版本的訊息型別) */
 
 } eOesMsgTypeT;
 /* -------------------------           */
 
 
 /**
- * 可订阅的回报消息类型定义
- * - 0:      默认回报 (等价于: 0x01,0x02,0x04,0x08,0x10,0x20,0x40)
- * - 0x0001: OES业务拒绝 (未通过风控检查等)
- * - 0x0002: OES委托已生成 (已通过风控检查)
- * - 0x0004: 交易所委托回报 (包括交易所委托拒绝、委托确认和撤单完成通知)
- * - 0x0008: 交易所成交回报
- * - 0x0010: 出入金委托执行报告 (包括出入金委托拒绝、出入金委托回报)
- * - 0x0020: 资金变动信息
- * - 0x0040: 持仓变动信息
- * - 0x0080: 市场状态信息
- * - 0xFFFF: 所有回报
+ * 可訂閱的回報訊息型別定義
+ * - 0:      預設回報 (等價於: 0x01,0x02,0x04,0x08,0x10,0x20,0x40)
+ * - 0x0001: OES業務拒絕 (未通過風控檢查等)
+ * - 0x0002: OES委託已生成 (已通過風控檢查)
+ * - 0x0004: 交易所委託回報 (包括交易所委託拒絕、委託確認和撤單完成通知)
+ * - 0x0008: 交易所成交回報
+ * - 0x0010: 出入金委託執行報告 (包括出入金委託拒絕、出入金委託回報)
+ * - 0x0020: 資金變動資訊
+ * - 0x0040: 持倉變動資訊
+ * - 0x0080: 市場狀態資訊
+ * - 0xFFFF: 所有回報
  */
 typedef enum _eOesSubscribeReportType {
-    /** 默认回报 */
+    /** 預設回報 */
     OES_SUB_RPT_TYPE_DEFAULT                    = 0,
 
-    /** OES业务拒绝 (未通过风控检查等) */
+    /** OES業務拒絕 (未通過風控檢查等) */
     OES_SUB_RPT_TYPE_BUSINESS_REJECT            = 0x01,
 
-    /** OES委托已生成 (已通过风控检查) */
+    /** OES委託已生成 (已通過風控檢查) */
     OES_SUB_RPT_TYPE_ORDER_INSERT               = 0x02,
 
-    /** 交易所委托回报 (包括交易所委托拒绝、委托确认和撤单完成通知) */
+    /** 交易所委託回報 (包括交易所委託拒絕、委託確認和撤單完成通知) */
     OES_SUB_RPT_TYPE_ORDER_REPORT               = 0x04,
 
-    /** 交易所成交回报 */
+    /** 交易所成交回報 */
     OES_SUB_RPT_TYPE_TRADE_REPORT               = 0x08,
 
-    /** 出入金委托执行报告 (包括出入金委托拒绝、出入金委托回报) */
+    /** 出入金委託執行報告 (包括出入金委託拒絕、出入金委託回報) */
     OES_SUB_RPT_TYPE_FUND_TRSF_REPORT           = 0x10,
 
-    /** 资金变动信息 */
+    /** 資金變動資訊 */
     OES_SUB_RPT_TYPE_CASH_ASSET_VARIATION       = 0x20,
 
-    /** 持仓变动信息 */
+    /** 持倉變動資訊 */
     OES_SUB_RPT_TYPE_HOLDING_VARIATION          = 0x40,
 
-    /** 市场状态信息 */
+    /** 市場狀態資訊 */
     OES_SUB_RPT_TYPE_MARKET_STATE               = 0x80,
 
-    /** 所有回报 */
+    /** 所有回報 */
     OES_SUB_RPT_TYPE_ALL                        = 0xFFFF,
 
     __MAX_OES_SUB_RPT_TYPE                      = 0x7FFFFFFF
@@ -272,19 +272,19 @@ typedef enum _eOesSubscribeReportType {
 
 
 /**
- * 可指定的协议约定类型定义
- * - 0:     默认的协议约定类型
- * - 0x80:  约定以压缩方式传输数据
- * - 0xFF:  无任何协议约定
+ * 可指定的協議約定型別定義
+ * - 0:     預設的協議約定型別
+ * - 0x80:  約定以壓縮方式傳輸資料
+ * - 0xFF:  無任何協議約定
  */
 typedef enum _eOesProtocolHintsType {
-    /** 默认的协议约定类型 */
+    /** 預設的協議約定型別 */
     OES_PROT_HINTS_TYPE_DEFAULT                 = 0,
 
-    /** 协议约定以压缩方式传输数据 */
+    /** 協議約定以壓縮方式傳輸資料 */
     OES_PROT_HINTS_TYPE_COMPRESS                = 0x80,
 
-    /** 无任何协议约定 */
+    /** 無任何協議約定 */
     OES_PROT_HINTS_TYPE_NONE                    = 0xFF,
     __MAX_OES_PROT_HINTS_TYPE                   = 0xFF
 } eOesProtocolHintsTypeT;
@@ -292,43 +292,43 @@ typedef enum _eOesProtocolHintsType {
 
 
 /* ===================================================================
- * 会话消息报文定义
+ * 會話訊息報文定義
  * =================================================================== */
 
 /**
- * 回报同步请求消息
+ * 回報同步請求訊息
  */
 typedef struct _OesReportSynchronizationReq {
     /**
-     * 客户端最后接收到的回报数据的回报编号
-     * - 等于0, 从头开始推送回报数据
-     * - 大于0, 从指定的回报编号开始推送回报数据
-     * - 小于0, 从最新的数据开始推送回报数据
+     * 客戶端最後接收到的回報資料的回報編號
+     * - 等於0, 從頭開始推送回報資料
+     * - 大於0, 從指定的回報編號開始推送回報資料
+     * - 小於0, 從最新的資料開始推送回報資料
      */
     int64               lastRptSeqNum;
 
     /**
-     * 待订阅的客户端环境号
-     * - 大于0, 区分环境号, 仅订阅环境号对应的回报数据
-     * - 小于等于0, 不区分环境号, 订阅该客户下的所有回报数据
+     * 待訂閱的客戶端環境號
+     * - 大於0, 區分環境號, 僅訂閱環境號對應的回報資料
+     * - 小於等於0, 不區分環境號, 訂閱該客戶下的所有回報資料
      */
     int8                subscribeEnvId;
 
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     uint8               __filler[3];
 
     /**
-     * 待订阅的回报消息种类
-     * - 0:      默认回报 (等价于: 0x01,0x02,0x04,0x08,0x10,0x20,0x40)
-     * - 0x0001: OES业务拒绝 (未通过风控检查等)
-     * - 0x0002: OES委托已生成 (已通过风控检查)
-     * - 0x0004: 交易所委托回报 (包括交易所委托拒绝、委托确认和撤单完成通知)
-     * - 0x0008: 交易所成交回报
-     * - 0x0010: 出入金委托执行报告 (包括出入金委托拒绝、出入金委托回报)
-     * - 0x0020: 资金变动信息
-     * - 0x0040: 持仓变动信息
-     * - 0x0080: 市场状态信息
-     * - 0xFFFF: 所有回报
+     * 待訂閱的回報訊息種類
+     * - 0:      預設回報 (等價於: 0x01,0x02,0x04,0x08,0x10,0x20,0x40)
+     * - 0x0001: OES業務拒絕 (未通過風控檢查等)
+     * - 0x0002: OES委託已生成 (已通過風控檢查)
+     * - 0x0004: 交易所委託回報 (包括交易所委託拒絕、委託確認和撤單完成通知)
+     * - 0x0008: 交易所成交回報
+     * - 0x0010: 出入金委託執行報告 (包括出入金委託拒絕、出入金委託回報)
+     * - 0x0020: 資金變動資訊
+     * - 0x0040: 持倉變動資訊
+     * - 0x0080: 市場狀態資訊
+     * - 0xFFFF: 所有回報
      *
      * @see eOesSubscribeReportTypeT
      */
@@ -336,93 +336,93 @@ typedef struct _OesReportSynchronizationReq {
 } OesReportSynchronizationReqT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_REPORT_SYNCHRONIZATION_REQ  \
         0, 0, {0}, 0
 /* -------------------------           */
 
 
 /**
- * 回报同步应答消息
+ * 回報同步應答訊息
  */
 typedef struct _OesReportSynchronizationRsp {
-    /** 服务端最后已发送或已忽略的回报数据的回报编号 */
+    /** 服務端最後已傳送或已忽略的回報資料的回報編號 */
     int64               lastRptSeqNum;
 
     /**
-     * 待订阅的客户端环境号
-     * - 大于0, 区分环境号, 仅订阅环境号对应的回报数据
-     * - 小于等于0, 不区分环境号, 订阅该客户下的所有回报数据
+     * 待訂閱的客戶端環境號
+     * - 大於0, 區分環境號, 僅訂閱環境號對應的回報資料
+     * - 小於等於0, 不區分環境號, 訂閱該客戶下的所有回報資料
      */
     int8                subscribeEnvId;
 
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     uint8               __filler[3];
 
-    /** 已订阅的回报消息种类 */
+    /** 已訂閱的回報訊息種類 */
     int32               subscribeRptTypes;
 } OesReportSynchronizationRspT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_REPORT_SYNCHRONIZATION_RSP  \
         0, 0, {0}, 0
 /* -------------------------           */
 
 
 /**
- * 测试请求报文
+ * 測試請求報文
  */
 typedef struct _OesTestRequestReq {
-    /** 测试请求标识符 */
+    /** 測試請求識別符號 */
     char                testReqId[OES_MAX_TEST_REQ_ID_LEN];
 
-    /** 发送时间 (timeval结构或形如'YYYYMMDD-HH:mm:SS.sss'的字符串) */
+    /** 傳送時間 (timeval結構或形如'YYYYMMDD-HH:mm:SS.sss'的字串) */
     char                sendTime[OES_MAX_SENDING_TIME_LEN];
 
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     char                __filler[2];
 } OesTestRequestReqT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_TEST_REQUEST_REQ            \
         {0}, {0}, {0}
 /* -------------------------           */
 
 
 /**
- * 测试请求的应答报文
+ * 測試請求的應答報文
  */
 typedef struct _OesTestRequestRsp {
-    /** 测试请求标识符 */
+    /** 測試請求識別符號 */
     char                testReqId[OES_MAX_TEST_REQ_ID_LEN];
 
-    /** 测试请求的原始发送时间 (timeval结构或形如'YYYYMMDD-HH:mm:SS.sss'的字符串) */
+    /** 測試請求的原始傳送時間 (timeval結構或形如'YYYYMMDD-HH:mm:SS.sss'的字串) */
     char                origSendTime[OES_MAX_SENDING_TIME_LEN];
 
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     char                __filler1[2];
 
-    /** 测试请求应答的发送时间 (timeval结构或形如'YYYYMMDD-HH:mm:SS.sss'的字符串) */
+    /** 測試請求應答的傳送時間 (timeval結構或形如'YYYYMMDD-HH:mm:SS.sss'的字串) */
     char                respTime[OES_MAX_SENDING_TIME_LEN];
 
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     char                __filler2[2];
 
 #ifdef  _OES_EXPORT_LATENCY_STATS
-    /** 消息实际接收时间 (开始解码等处理之前的时间) */
+    /** 訊息實際接收時間 (開始解碼等處理之前的時間) */
     STimeval32T         __recvTime;
-    /** 消息采集处理完成时间 */
+    /** 訊息採集處理完成時間 */
     STimeval32T         __collectedTime;
-    /** 消息推送时间 (写入推送缓存以后, 实际网络发送之前) */
+    /** 訊息推送時間 (寫入推送快取以後, 實際網路傳送之前) */
     STimeval32T         __pushingTime;
 #endif
 
 } OesTestRequestRspT;
 
 
-/* 结构体初始化值的尾部填充字段定义 */
+/* 結構體初始化值的尾部填充欄位定義 */
 #ifdef  _OES_EXPORT_LATENCY_STATS
 # define    __NULLOBJ_OES_TEST_REQUEST_RSP_TAILER       \
             , {0, 0}, {0, 0}, {0, 0}
@@ -431,7 +431,7 @@ typedef struct _OesTestRequestRsp {
 #endif
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_TEST_REQUEST_RSP                    \
         {0}, {0}, {0}, {0}, {0} \
         __NULLOBJ_OES_TEST_REQUEST_RSP_TAILER
@@ -439,35 +439,35 @@ typedef struct _OesTestRequestRsp {
 
 
 /**
- * 修改密码请求报文
+ * 修改密碼請求報文
  */
 typedef struct _OesChangePasswordReq {
     /** 加密方法 */
     int32               encryptMethod;
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     int32               __filler;
 
-    /** 登录用户名 */
+    /** 登入使用者名稱 */
     char                username[OES_CLIENT_NAME_MAX_LEN];
 
-    /** 用户私有信息 (由客户端自定义填充, 并在回报数据中原样返回) */
+    /** 使用者私有資訊 (由客戶端自定義填充, 並在回報資料中原樣返回) */
     union {
-        uint64          u64;                    /**< uint64 类型的用户私有信息 */
-        int64           i64;                    /**< int64 类型的用户私有信息 */
-        uint32          u32[2];                 /**< uint32[2] 类型的用户私有信息 */
-        int32           i32[2];                 /**< int32[2] 类型的用户私有信息 */
-        char            c8[8];                  /**< char[8] 类型的用户私有信息 */
+        uint64          u64;                    /**< uint64 型別的使用者私有資訊 */
+        int64           i64;                    /**< int64 型別的使用者私有資訊 */
+        uint32          u32[2];                 /**< uint32[2] 型別的使用者私有資訊 */
+        int32           i32[2];                 /**< int32[2] 型別的使用者私有資訊 */
+        char            c8[8];                  /**< char[8] 型別的使用者私有資訊 */
     } userInfo;
 
-    /** 之前的登录密码 */
+    /** 之前的登入密碼 */
     char                oldPassword[OES_PWD_MAX_LEN];
 
-    /** 新的登录密码 */
+    /** 新的登入密碼 */
     char                newPassword[OES_PWD_MAX_LEN];
 } OesChangePasswordReqT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_CHANGE_PASSWORD_REQ         \
         0, 0, \
         {0}, {0}, \
@@ -476,43 +476,43 @@ typedef struct _OesChangePasswordReq {
 
 
 /**
- * 修改密码应答报文
+ * 修改密碼應答報文
  */
 typedef struct _OesChangePasswordRsp {
     /** 加密方法 */
     int32               encryptMethod;
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     int32               __filler;
 
-    /** 登录用户名 */
+    /** 登入使用者名稱 */
     char                username[OES_CLIENT_NAME_MAX_LEN];
 
-    /** 用户私有信息 (由客户端自定义填充, 并在应答数据中原样返回) */
+    /** 使用者私有資訊 (由客戶端自定義填充, 並在應答資料中原樣返回) */
     union {
-        uint64          u64;                    /**< uint64 类型的用户私有信息 */
-        int64           i64;                    /**< int64 类型的用户私有信息 */
-        uint32          u32[2];                 /**< uint32[2] 类型的用户私有信息 */
-        int32           i32[2];                 /**< int32[2] 类型的用户私有信息 */
-        char            c8[8];                  /**< char[8] 类型的用户私有信息 */
+        uint64          u64;                    /**< uint64 型別的使用者私有資訊 */
+        int64           i64;                    /**< int64 型別的使用者私有資訊 */
+        uint32          u32[2];                 /**< uint32[2] 型別的使用者私有資訊 */
+        int32           i32[2];                 /**< int32[2] 型別的使用者私有資訊 */
+        char            c8[8];                  /**< char[8] 型別的使用者私有資訊 */
     } userInfo;
 
-    /** 客户端编号 */
+    /** 客戶端編號 */
     int16               clientId;
-    /** 客户端环境号 */
+    /** 客戶端環境號 */
     int8                clEnvId;
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     int8                __filler2;
 
-    /** 发生日期 (格式为 YYYYMMDD, 形如 20160830) */
+    /** 發生日期 (格式為 YYYYMMDD, 形如 20160830) */
     int32               transDate;
-    /** 发生时间 (格式为 HHMMSSsss, 形如 141205000) */
+    /** 發生時間 (格式為 HHMMSSsss, 形如 141205000) */
     int32               transTime;
-    /** 拒绝原因 */
+    /** 拒絕原因 */
     int32               rejReason;
 } OesChangePasswordRspT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_CHANGE_PASSWORD_RSP         \
         0, 0, \
         {0}, {0}, \
@@ -522,34 +522,34 @@ typedef struct _OesChangePasswordRsp {
 
 
 /**
- * 批量委托请求的消息头
+ * 批量委託請求的訊息頭
  */
 typedef struct _OesBatchOrdersHead {
-    /** 本批次的委托请求数量 */
+    /** 本批次的委託請求數量 */
     int32               itemCount;
-    /** 按64位对齐的填充域 */
+    /** 按64位對齊的填充域 */
     int32               __filler;
 } OesBatchOrdersHeadT;
 
 
 /**
- * 批量委托请求的完整请求报文
- * (只有请求报文, 没有独立的应答报文)
+ * 批量委託請求的完整請求報文
+ * (只有請求報文, 沒有獨立的應答報文)
  */
 typedef struct _OesBatchOrdersReq {
-    /** 批量委托请求的批次消息头 */
+    /** 批量委託請求的批次訊息頭 */
     OesBatchOrdersHeadT batchHead;
 
-    /** 委托请求列表 */
+    /** 委託請求列表 */
     OesOrdReqT          items[1];
 } OesBatchOrdersReqT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_BATCH_ORDERS_HEAD           \
         0, 0
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_BATCH_ORDERS_REQ            \
         {NULLOBJ_OES_BATCH_ORDERS_HEAD}, \
         {{NULLOBJ_OES_ORD_REQ}}
@@ -557,57 +557,57 @@ typedef struct _OesBatchOrdersReq {
 
 
 /* ===================================================================
- * 回报消息定义
+ * 回報訊息定義
  * =================================================================== */
 
 /**
- * 回报消息的消息头定义
+ * 回報訊息的訊息頭定義
  */
 typedef struct _OesRptMsgHead {
-    int64               rptSeqNum;              /**< 执行报告的消息编号 */
+    int64               rptSeqNum;              /**< 執行報告的訊息編號 */
 
-    uint8               rptMsgType;             /**< 回报消息的消息代码 @see eOesMsgTypeT */
-    uint8               execType;               /**< 执行类型 @see eOesExecTypeT */
-    int16               bodyLength;             /**< 回报消息的消息体大小 */
+    uint8               rptMsgType;             /**< 回報訊息的訊息程式碼 @see eOesMsgTypeT */
+    uint8               execType;               /**< 執行型別 @see eOesExecTypeT */
+    int16               bodyLength;             /**< 回報訊息的訊息體大小 */
 
-    int32               ordRejReason;           /**< 订单/撤单被拒绝原因 */
+    int32               ordRejReason;           /**< 訂單/撤單被拒絕原因 */
 } OesRptMsgHeadT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_RPT_MSG_HEAD                \
         0, 0, 0, 0, 0
 /* -------------------------           */
 
 
 /**
- * 回报消息的消息体定义
+ * 回報訊息的訊息體定義
  */
 typedef union _OesRptMsgBody {
-    OesOrdCnfmT         ordInsertRsp;           /**< OES委托响应-委托已生成 */
-    OesOrdRejectT       ordRejectRsp;           /**< OES委托响应-业务拒绝 */
+    OesOrdCnfmT         ordInsertRsp;           /**< OES委託響應-委託已生成 */
+    OesOrdRejectT       ordRejectRsp;           /**< OES委託響應-業務拒絕 */
 
-    OesOrdCnfmT         ordCnfm;                /**< 交易所委托回报 */
-    OesTrdCnfmT         trdCnfm;                /**< 交易所成交回报 */
+    OesOrdCnfmT         ordCnfm;                /**< 交易所委託回報 */
+    OesTrdCnfmT         trdCnfm;                /**< 交易所成交回報 */
 
-    OesFundTrsfRejectT  fundTrsfRejectRsp;      /**< 出入金委托拒绝 */
-    OesFundTrsfReportT  fundTrsfCnfm;           /**< 出入金执行报告 */
+    OesFundTrsfRejectT  fundTrsfRejectRsp;      /**< 出入金委託拒絕 */
+    OesFundTrsfReportT  fundTrsfCnfm;           /**< 出入金執行報告 */
 
-    OesCashAssetItemT   cashAssetRpt;           /**< 资金变动信息 */
-    OesStkHoldingItemT  stkHoldingRpt;          /**< 持仓变动信息 (股票) */
-    OesOptHoldingItemT  optHoldingRpt;          /**< 持仓变动信息 (期权) */
+    OesCashAssetItemT   cashAssetRpt;           /**< 資金變動資訊 */
+    OesStkHoldingItemT  stkHoldingRpt;          /**< 持倉變動資訊 (股票) */
+    OesOptHoldingItemT  optHoldingRpt;          /**< 持倉變動資訊 (期權) */
 
 } OesRptMsgBodyT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_RPT_MSG_BODY                \
         {NULLOBJ_OES_ORD_CNFM}
 /* -------------------------           */
 
 
 /**
- * 完整的回报消息定义
+ * 完整的回報訊息定義
  */
 typedef struct _OesRptMsg {
     OesRptMsgHeadT      rptHead;
@@ -615,7 +615,7 @@ typedef struct _OesRptMsg {
 } OesRptMsgT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_RPT_MSG                     \
         {NULLOBJ_OES_RPT_MSG_HEAD}, \
         {NULLOBJ_OES_RPT_MSG_BODY}
@@ -623,68 +623,68 @@ typedef struct _OesRptMsg {
 
 
 /* ===================================================================
- * 汇总的请求/应答消息定义 (除了查询消息以外的所有其它消息)
+ * 彙總的請求/應答訊息定義 (除了查詢訊息以外的所有其它訊息)
  * =================================================================== */
 
 /**
- * 汇总的请求消息的消息体定义
+ * 彙總的請求訊息的訊息體定義
  */
 typedef union _OesReqMsgBody {
-    /** 委托申报请求报文 */
+    /** 委託申報請求報文 */
     OesOrdReqT          ordReq;
 
-    /** 撤单请求请求报文 */
+    /** 撤單請求請求報文 */
     OesOrdCancelReqT    ordCancelReq;
 
-    /** 批量委托请求报文 */
+    /** 批量委託請求報文 */
     OesBatchOrdersReqT  batchOrdersReq;
 
-    /** 出入金请求报文 */
+    /** 出入金請求報文 */
     OesFundTrsfReqT     fundTrsfReq;
 
-    /** 修改密码请求报文 */
+    /** 修改密碼請求報文 */
     OesChangePasswordReqT
                         changePasswordReq;
 
-    /** 测试请求报文 */
+    /** 測試請求報文 */
     OesTestRequestReqT  testRequestReq;
 
-    /** 回报同步请求报文 */
+    /** 回報同步請求報文 */
     OesReportSynchronizationReqT
                         rptSyncReq;
 } OesReqMsgBodyT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_REQ_MSG_BODY                \
         {NULLOBJ_OES_ORD_REQ}
 /* -------------------------           */
 
 
 /**
- * 汇总的应答消息的消息体定义
+ * 彙總的應答訊息的訊息體定義
  */
 typedef union _OesRspMsgBody {
-    /** 执行报告回报消息 */
+    /** 執行報告回報訊息 */
     OesRptMsgT          rptMsg;
 
-    /** 市场状态消息 */
+    /** 市場狀態訊息 */
     OesMarketStateInfoT mktStateRpt;
 
-    /** 修改密码应答报文 */
+    /** 修改密碼應答報文 */
     OesChangePasswordRspT
                         changePasswordRsp;
 
-    /** 测试请求的应答报文 */
+    /** 測試請求的應答報文 */
     OesTestRequestRspT  testRequestRsp;
 
-    /** 回报同步应答报文 */
+    /** 回報同步應答報文 */
     OesReportSynchronizationRspT
                         reportSynchronizationRsp;
 } OesRspMsgBodyT;
 
 
-/* 结构体的初始化值定义 */
+/* 結構體的初始化值定義 */
 #define NULLOBJ_OES_RSP_MSG_BODY                \
         {NULLOBJ_OES_RPT_MSG}
 /* -------------------------           */

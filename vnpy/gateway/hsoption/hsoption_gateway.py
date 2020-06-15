@@ -118,12 +118,12 @@ class HsoptionGateway(BaseGateway):
     """
 
     default_setting = {
-        "交易用户名": "",
-        "交易密码": "",
-        "行情用户名": "",
-        "行情密码": "",
-        "行情经纪商代码": "",
-        "行情服务器": "",
+        "交易使用者名稱": "",
+        "交易密碼": "",
+        "行情使用者名稱": "",
+        "行情密碼": "",
+        "行情經紀商程式碼": "",
+        "行情伺服器": "",
     }
 
     exchanges = [Exchange.SSE, Exchange.SZSE]
@@ -137,13 +137,13 @@ class HsoptionGateway(BaseGateway):
 
     def connect(self, setting: dict) -> None:
         """"""
-        td_userid = setting["交易用户名"]
-        td_password = setting["交易密码"]
+        td_userid = setting["交易使用者名稱"]
+        td_password = setting["交易密碼"]
 
-        md_userid = setting["行情用户名"]
-        md_password = setting["行情密码"]
-        md_brokerid = setting["行情经纪商代码"]
-        md_address = setting["行情服务器"]
+        md_userid = setting["行情使用者名稱"]
+        md_password = setting["行情密碼"]
+        md_brokerid = setting["行情經紀商程式碼"]
+        md_address = setting["行情伺服器"]
 
         if not md_address.startswith("tcp://"):
             md_address = "tcp://" + md_address
@@ -181,7 +181,7 @@ class HsoptionGateway(BaseGateway):
         """"""
         error_id = error["ErrorID"]
         error_msg = error["ErrorMsg"]
-        msg = f"{msg}，代码：{error_id}，信息：{error_msg}"
+        msg = f"{msg}，程式碼：{error_id}，資訊：{error_msg}"
         self.write_log(msg)
 
     def process_timer_event(self, event) -> None:
@@ -226,7 +226,7 @@ class SoptMdApi(MdApi):
         """
         Callback when front server is connected.
         """
-        self.gateway.write_log("行情服务器连接成功")
+        self.gateway.write_log("行情伺服器連線成功")
         self.login()
 
     def onFrontDisconnected(self, reason: int) -> None:
@@ -234,7 +234,7 @@ class SoptMdApi(MdApi):
         Callback when front server is disconnected.
         """
         self.login_status = False
-        self.gateway.write_log(f"行情服务器连接断开，原因{reason}")
+        self.gateway.write_log(f"行情伺服器連線斷開，原因{reason}")
 
     def onRspUserLogin(self, data: dict, error: dict, reqid: int, last: bool) -> None:
         """
@@ -242,18 +242,18 @@ class SoptMdApi(MdApi):
         """
         if not error["ErrorID"]:
             self.login_status = True
-            self.gateway.write_log("行情服务器登录成功")
+            self.gateway.write_log("行情伺服器登入成功")
 
             for symbol in self.subscribed:
                 self.subscribeMarketData(symbol)
         else:
-            self.gateway.write_error("行情服务器登录失败", error)
+            self.gateway.write_error("行情伺服器登入失敗", error)
 
     def onRspError(self, error: dict, reqid: int, last: bool) -> None:
         """
         Callback when error occured.
         """
-        self.gateway.write_error("行情接口报错", error)
+        self.gateway.write_error("行情介面報錯", error)
 
     def onRspSubMarketData(
         self,
@@ -266,7 +266,7 @@ class SoptMdApi(MdApi):
         if not error or not error["ErrorID"]:
             return
 
-        self.gateway.write_error("行情订阅失败", error)
+        self.gateway.write_error("行情訂閱失敗", error)
 
     def onRtnDepthMarketData(self, data: dict) -> None:
         """
@@ -369,7 +369,7 @@ class SoptMdApi(MdApi):
         self.reqUserLogin(req, self.reqid)
 
         sleep(3)
-        self.gateway.write_log("行情服务器登录成功")
+        self.gateway.write_log("行情伺服器登入成功")
         self.login_status = True
 
     def subscribe(self, req: SubscribeRequest) -> None:
@@ -456,15 +456,15 @@ class TdApi:
             ret = self.connection.Create2BizMsg(async_callback)
             if ret:
                 msg = str(self.connection.GetErrorMsg(ret))
-                self.gateway.write_log(f"初始化失败，错误码：{ret}，信息：{msg}")
+                self.gateway.write_log(f"初始化失敗，錯誤碼：{ret}，資訊：{msg}")
 
             ret = self.connection.Connect(1000)
             if ret:
                 msg = str(self.connection.GetErrorMsg(ret))
-                self.gateway.write_log(f"连接失败，错误码：{ret}，信息：{msg}")
+                self.gateway.write_log(f"連線失敗，錯誤碼：{ret}，資訊：{msg}")
 
             self.connect_status = True
-            self.gateway.write_log("交易服务器连接成功")
+            self.gateway.write_log("交易伺服器連線成功")
 
         # If already connected, then login immediately.
         if not self.login_status:
@@ -473,10 +473,10 @@ class TdApi:
     def on_login(self, data: List[Dict[str, str]]) -> None:
         """"""
         if not data:
-            self.gateway.write_log("交易服务器登录失败")
+            self.gateway.write_log("交易伺服器登入失敗")
             return
         else:
-            self.gateway.write_log("交易服务器登录成功")
+            self.gateway.write_log("交易伺服器登入成功")
 
             self.login_status = True
 
@@ -560,7 +560,7 @@ class TdApi:
     def on_query_order(self, data: List[Dict[str, str]]) -> None:
         """"""
         if not data:
-            self.gateway.write_log("委托信息查询成功")
+            self.gateway.write_log("委託資訊查詢成功")
             self.query_trade()
             return
 
@@ -587,13 +587,13 @@ class TdApi:
             self.gateway.on_order(order)
             self.orders[batch_no] = order
 
-        self.gateway.write_log("委托信息查询成功")
+        self.gateway.write_log("委託資訊查詢成功")
         self.query_trade()
 
     def on_query_trade(self, data: List[Dict[str, str]]) -> None:
         """"""
         if not data:
-            self.gateway.write_log("成交信息查询成功")
+            self.gateway.write_log("成交資訊查詢成功")
             return
 
         for d in data:
@@ -617,7 +617,7 @@ class TdApi:
             )
             self.gateway.on_trade(trade)
 
-        self.gateway.write_log("成交信息查询成功")
+        self.gateway.write_log("成交資訊查詢成功")
 
         self.subcribe_order()
         self.subcribe_trade()
@@ -625,7 +625,7 @@ class TdApi:
     def on_query_contract(self, data: List[Dict[str, str]]) -> None:
         """"""
         if not data:
-            self.gateway.write_log("合约信息查询失败")
+            self.gateway.write_log("合約資訊查詢失敗")
             return
 
         # Process option contract
@@ -662,13 +662,13 @@ class TdApi:
             position_str = d["position_str"]
             self.query_contract(position_str)
         else:
-            self.gateway.write_log("合约信息查询成功")
+            self.gateway.write_log("合約資訊查詢成功")
             self.query_order()
 
     def on_send_order(self, data: List[Dict[str, str]]) -> None:
         """"""
         if not data:
-            self.gateway.write_log("委托失败")
+            self.gateway.write_log("委託失敗")
             return
 
         for d in data:
@@ -687,7 +687,7 @@ class TdApi:
     def on_cancel_order(self, data: List[Dict[str, str]]) -> None:
         """"""
         if not data:
-            self.gateway.write_log("撤单失败")
+            self.gateway.write_log("撤單失敗")
             return
 
     def on_return_order(self, data: List[Dict[str, str]]) -> None:
@@ -735,7 +735,7 @@ class TdApi:
 
     def on_error(self, error: dict) -> None:
         """"""
-        self.gateway.write_log(f"触发错误：{str(error)}")
+        self.gateway.write_log(f"觸發錯誤：{str(error)}")
 
     def on_callback(self, function: int, data: dict) -> None:
         """"""
@@ -875,7 +875,7 @@ class TdApi:
         )
         if ret != 0:
             error_msg = str(self.connection.GetMCLastError(), encoding="gbk")
-            msg = f"订阅推送失败：{error_msg}"
+            msg = f"訂閱推送失敗：{error_msg}"
             self.gateway.write_log(msg)
             return
 
@@ -966,19 +966,19 @@ class TdApi:
         """"""
         n = self.subcribe_topic("order_subcriber", ISSUE_ORDER)
         if n <= 0:
-            msg = f"委托订阅失败，原因{self.connection.GetErrorMsg(n)}"
+            msg = f"委託訂閱失敗，原因{self.connection.GetErrorMsg(n)}"
             self.gateway.write_log(msg)
         else:
-            self.gateway.write_log("委托回报订阅成功")
+            self.gateway.write_log("委託回報訂閱成功")
 
     def subcribe_trade(self) -> None:
         """"""
         n = self.subcribe_topic("trade_subcriber", ISSUE_TRADE)
         if n <= 0:
-            msg = f"成交订阅失败，原因{self.connection.GetErrorMsg(n)}"
+            msg = f"成交訂閱失敗，原因{self.connection.GetErrorMsg(n)}"
             self.gateway.write_log(msg)
         else:
-            self.gateway.write_log("成交回报订阅成功")
+            self.gateway.write_log("成交回報訂閱成功")
 
 
 class TdAsyncCallback:
@@ -1024,7 +1024,7 @@ class TdAsyncCallback:
                 unpacker.Release()
             else:
                 error_msg = str(biz_msg.GetErrorInfo(), encoding="gbk")
-                msg = f"请求失败，信息：{error_msg}"
+                msg = f"請求失敗，資訊：{error_msg}"
                 self.td_api.gateway.write_log(msg)
 
         biz_msg.Release()

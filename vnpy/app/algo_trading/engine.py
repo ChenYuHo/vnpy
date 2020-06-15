@@ -38,7 +38,7 @@ class AlgoEngine(BaseEngine):
 
     def init_engine(self):
         """"""
-        self.write_log("算法交易引擎启动")
+        self.write_log("演算法交易引擎啟動")
         self.load_algo_setting()
 
     def load_algo_template(self):
@@ -72,7 +72,7 @@ class AlgoEngine(BaseEngine):
         for setting_name, setting in self.algo_settings.items():
             self.put_setting_event(setting_name, setting)
 
-        self.write_log("算法配置载入成功")
+        self.write_log("演算法配置載入成功")
 
     def save_algo_setting(self):
         """"""
@@ -145,7 +145,7 @@ class AlgoEngine(BaseEngine):
         """"""
         contract = self.main_engine.get_contract(vt_symbol)
         if not contract:
-            self.write_log(f'订阅行情失败，找不到合约：{vt_symbol}', algo)
+            self.write_log(f'訂閱行情失敗，找不到合約：{vt_symbol}', algo)
             return
 
         algos = self.symbol_algo_map.setdefault(vt_symbol, set())
@@ -172,7 +172,7 @@ class AlgoEngine(BaseEngine):
         """"""
         contract = self.main_engine.get_contract(vt_symbol)
         if not contract:
-            self.write_log(f'委托下单失败，找不到合约：{vt_symbol}', algo)
+            self.write_log(f'委託下單失敗，找不到合約：{vt_symbol}', algo)
             return
 
         volume = round_to(volume, contract.min_volume)
@@ -198,7 +198,7 @@ class AlgoEngine(BaseEngine):
         order = self.main_engine.get_order(vt_orderid)
 
         if not order:
-            self.write_log(f"委托撤单失败，找不到委托：{vt_orderid}", algo)
+            self.write_log(f"委託撤單失敗，找不到委託：{vt_orderid}", algo)
             return
 
         req = order.create_cancel_request()
@@ -209,7 +209,7 @@ class AlgoEngine(BaseEngine):
         tick = self.main_engine.get_tick(vt_symbol)
 
         if not tick:
-            self.write_log(f"查询行情失败，找不到行情：{vt_symbol}", algo)
+            self.write_log(f"查詢行情失敗，找不到行情：{vt_symbol}", algo)
 
         return tick
 
@@ -218,7 +218,7 @@ class AlgoEngine(BaseEngine):
         contract = self.main_engine.get_contract(vt_symbol)
 
         if not contract:
-            self.write_log(f"查询合约失败，找不到合约：{vt_symbol}", algo)
+            self.write_log(f"查詢合約失敗，找不到合約：{vt_symbol}", algo)
 
         return contract
 

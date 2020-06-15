@@ -68,9 +68,9 @@ class RiskManagerEngine(BaseEngine):
         self.order_cancel_limit = setting["order_cancel_limit"]
 
         if self.active:
-            self.write_log("交易风控功能启动")
+            self.write_log("交易風控功能啟動")
         else:
-            self.write_log("交易风控功能停止")
+            self.write_log("交易風控功能停止")
 
     def get_setting(self):
         """"""
@@ -137,37 +137,37 @@ class RiskManagerEngine(BaseEngine):
 
         # Check order volume
         if req.volume <= 0:
-            self.write_log("委托数量必须大于0")
+            self.write_log("委託數量必須大於0")
             return False
 
         if req.volume > self.order_size_limit:
             self.write_log(
-                f"单笔委托数量{req.volume}，超过限制{self.order_size_limit}")
+                f"單筆委託數量{req.volume}，超過限制{self.order_size_limit}")
             return False
 
         # Check trade volume
         if self.trade_count >= self.trade_limit:
             self.write_log(
-                f"今日总成交合约数量{self.trade_count}，超过限制{self.trade_limit}")
+                f"今日總成交合約數量{self.trade_count}，超過限制{self.trade_limit}")
             return False
 
         # Check flow count
         if self.order_flow_count >= self.order_flow_limit:
             self.write_log(
-                f"委托流数量{self.order_flow_count}，超过限制每{self.order_flow_clear}秒{self.order_flow_limit}次")
+                f"委託流數量{self.order_flow_count}，超過限制每{self.order_flow_clear}秒{self.order_flow_limit}次")
             return False
 
         # Check all active orders
         active_order_count = len(self.main_engine.get_all_active_orders())
         if active_order_count >= self.active_order_limit:
             self.write_log(
-                f"当前活动委托次数{active_order_count}，超过限制{self.active_order_limit}")
+                f"當前活動委託次數{active_order_count}，超過限制{self.active_order_limit}")
             return False
 
         # Check order cancel counts
         if req.symbol in self.order_cancel_counts and self.order_cancel_counts[req.symbol] >= self.order_cancel_limit:
             self.write_log(
-                f"当日{req.symbol}撤单次数{self.order_cancel_counts[req.symbol]}，超过限制{self.order_cancel_limit}")
+                f"當日{req.symbol}撤單次數{self.order_cancel_counts[req.symbol]}，超過限制{self.order_cancel_limit}")
             return False
 
         # Add flow count if pass all checks

@@ -36,7 +36,7 @@ class ApiGenerator:
                     self.typedefs[name] = getattr(module, name)
 
     def load_struct(self):
-        """加载Struct"""
+        """載入Struct"""
         module_names = ["tap_md_data_struct", "tap_md_commen_struct", "tap_td_data_struct", "tap_td_commen_struct"]
 
         for module_name in module_names:
@@ -47,7 +47,7 @@ class ApiGenerator:
                     self.structs[name] = getattr(module, name)
 
     def run(self):
-        """运行生成"""
+        """執行生成"""
         self.f_cpp = open(self.filename, "r", encoding="UTF-8")
 
         for line in self.f_cpp:
@@ -76,7 +76,7 @@ class ApiGenerator:
         print(f"{self.name}_API生成成功")
 
     def process_line(self, line: str):
-        """处理每行"""
+        """處理每行"""
         line = line.replace(";", "")
         line = line.replace("\n", "")
         line = line.replace("\t", "")
@@ -90,7 +90,7 @@ class ApiGenerator:
             self.process_function(line)
 
     def process_callback(self, line: str):
-        """处理回掉函数"""
+        """處理回掉函式"""
         name = line[line.index("On"):line.index("(")]
         line = line.replace("        ", "")
         new_line = self.standard_format(line)
@@ -142,14 +142,14 @@ class ApiGenerator:
         return new_line
 
     def process_function(self, line: str):
-        """处理主动函数"""
+        """處理主動函式"""
         name = line[line.index("Qry"):line.index("(")]
 
         d = self.generate_arg_dict(line)
         self.functions[name] = d
 
     def generate_arg_dict(self, line: str):
-        """生成参数字典"""
+        """生成引數字典"""
         args_str = line[line.index("(") + 1:line.index(")")]
         if not args_str:
             return {}

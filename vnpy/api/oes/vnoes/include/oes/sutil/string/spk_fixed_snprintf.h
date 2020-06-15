@@ -17,7 +17,7 @@
 /**
  * @file    spk_fixed_snprintf.h
  *
- * 支持以定长的方式输出的 snprintf 函数
+ * 支援以定長的方式輸出的 snprintf 函式
  * add flags '!', to output with fixed field len
  *
  * @version 1.0 2016/11/20
@@ -39,7 +39,7 @@ extern "C" {
 
 
 /*
- * 函数原型
+ * 函式原型
  */
 int     SStr_Snprintf(char *str, size_t count, const char *fmt, ...);
 int     SStr_VSnprintf(char *str, size_t count, const char *fmt, va_list args);

@@ -57,7 +57,7 @@ def _check_error(none_return: bool = True,
             error_code = error_info.ErrorID
             if error_code != 0:
                 error_msg = error_info.ErrorMsg
-                msg = f'在 {function_name} 中收到错误({error_code})：{error_msg}'
+                msg = f'在 {function_name} 中收到錯誤({error_code})：{error_msg}'
                 if write_log:
                     self.gateway.write_log(msg)
                 if error_return:
@@ -180,8 +180,8 @@ class ToraTdSpi(CTORATstpTraderSpi):
             return
         order_data.status = Status.REJECTED
         self.gateway.on_order(order_data)
-        self.gateway.write_log(f"拒单({order_data.orderid}):"
-                               f"错误码:{error_info.ErrorID}, 错误消息:{error_info.ErrorMsg}")
+        self.gateway.write_log(f"拒單({order_data.orderid}):"
+                               f"錯誤碼:{error_info.ErrorID}, 錯誤訊息:{error_info.ErrorMsg}")
 
     @_check_error(error_return=False, write_log=False, print_function_name=False)
     def OnErrRtnOrderAction(self, info: CTORATstpOrderActionField,
@@ -206,7 +206,7 @@ class ToraTdSpi(CTORATstpTraderSpi):
         try:
             order_data = self.parse_order_field(info)
         except KeyError:
-            self.gateway.write_log(f"收到无法识别的下单回执({info.OrderRef})")
+            self.gateway.write_log(f"收到無法識別的下單回執({info.OrderRef})")
             return
         self.gateway.on_order(order_data)
 
@@ -226,11 +226,11 @@ class ToraTdSpi(CTORATstpTraderSpi):
                          request_id: int, is_last: bool) -> None:
         """"""
         if info.InvestorID != self.session_info.investor_id:
-            self.gateway.write_log("OnRspQryPosition:收到其他账户的仓位信息")
+            self.gateway.write_log("OnRspQryPosition:收到其他賬戶的倉位資訊")
             return
         if info.ExchangeID not in EXCHANGE_TORA2VT:
             self.gateway.write_log(
-                f"OnRspQryPosition:忽略不支持的交易所：{info.ExchangeID}")
+                f"OnRspQryPosition:忽略不支援的交易所：{info.ExchangeID}")
             return
         volume = info.CurrentPosition
         frozen = info.HistoryPosFrozen + info.TodayBSFrozen + \
@@ -282,7 +282,7 @@ class ToraTdSpi(CTORATstpTraderSpi):
                          request_id: int, is_last: bool) -> None:
         """"""
         if is_last:
-            self.gateway.write_log("合约信息查询成功")
+            self.gateway.write_log("合約資訊查詢成功")
         if not info:
             return
 
@@ -307,7 +307,7 @@ class ToraTdSpi(CTORATstpTraderSpi):
 
     def OnFrontConnected(self) -> None:
         """"""
-        self.gateway.write_log("交易服务器连接成功")
+        self.gateway.write_log("交易伺服器連線成功")
         self._api.login()
 
     @_check_error(print_function_name=False)
@@ -317,7 +317,7 @@ class ToraTdSpi(CTORATstpTraderSpi):
         self._api.update_last_local_order_id(int(info.MaxOrderRef))
         self.session_info.front_id = info.FrontID
         self.session_info.session_id = info.SessionID
-        self.gateway.write_log("交易服务器登录成功")
+        self.gateway.write_log("交易伺服器登入成功")
         self._api.query_initialize_status()
 
         self._api.start_query_loop()  # stop at ToraTdApi.stop()
@@ -325,7 +325,7 @@ class ToraTdSpi(CTORATstpTraderSpi):
     def OnFrontDisconnected(self, error_code: int) -> None:
         """"""
         self.gateway.write_log(
-            f"交易服务器连接断开({error_code}):{get_error_msg(error_code)}")
+            f"交易伺服器連線斷開({error_code}):{get_error_msg(error_code)}")
 
     def parse_order_field(self, info):
         """
@@ -387,7 +387,7 @@ class ToraTdApi:
         """"""
         if error_code != 0:
             error_msg = get_error_msg(error_code)
-            msg = f'在执行 {function_name} 时发生错误({error_code}): {error_msg}'
+            msg = f'在執行 {function_name} 時發生錯誤({error_code}): {error_msg}'
             self.gateway.write_log(msg)
             return True
 
@@ -495,12 +495,12 @@ class ToraTdApi:
         info.TimeCondition = tc
         info.VolumeCondition = vc
 
-        # info.MinVolume = 0  # 当成交量类型为MV时有效
+        # info.MinVolume = 0  # 當成交量型別為MV時有效
         info.ForceCloseReason = TORA_TSTP_FCC_NotForceClose
 
-        # info.IsSwapOrder = 0  # 不支持互换单
-        # info.UserForceClose = 0  # 用户强评标志
-        info.Operway = TORA_TSTP_OPERW_PCClient  # 委托方式：PC端委托
+        # info.IsSwapOrder = 0  # 不支援互換單
+        # info.UserForceClose = 0  # 使用者強評標誌
+        info.Operway = TORA_TSTP_OPERW_PCClient  # 委託方式：PC端委託
 
         self.orders[order_id] = OrderInfo(info.OrderRef,
                                           info.ExchangeID,
@@ -518,7 +518,7 @@ class ToraTdApi:
         """"""
         info = CTORATstpInputOrderActionField()
         info.InvestorID = self.session_info.investor_id
-        # 没有的话：(16608)：VIP:未知的交易所代码
+        # 沒有的話：(16608)：VIP:未知的交易所程式碼
         info.ExchangeID = EXCHANGE_VT2TORA[req.exchange]
         info.SecurityID = req.symbol
         # info.OrderActionRef = str(self._get_new_req_id())
@@ -529,8 +529,8 @@ class ToraTdApi:
         info.FrontID = order_info.front_id
         info.SessionID = order_info.session_id
 
-        info.ActionFlag = TORA_TSTP_AF_Delete  # (12673)：VIP:撤单与原报单信息不符
-        # info.ActionFlag = TORA_TSTP_AF_ForceDelete  # (12368)：VIP:报单状态异常
+        info.ActionFlag = TORA_TSTP_AF_Delete  # (12673)：VIP:撤單與原報單資訊不符
+        # info.ActionFlag = TORA_TSTP_AF_ForceDelete  # (12368)：VIP:報單狀態異常
 
         err = self._native_api.ReqOrderAction(info, self._get_new_req_id())
         self._if_error_write_log(err, "cancel_order:ReqOrderAction")

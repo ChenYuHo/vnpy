@@ -9,7 +9,7 @@ from vnpy.trader.object import TickData, BarData
 class PcpArbitrageStrategy(StrategyTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     entry_level = 20
     price_add = 5
@@ -88,7 +88,7 @@ class PcpArbitrageStrategy(StrategyTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

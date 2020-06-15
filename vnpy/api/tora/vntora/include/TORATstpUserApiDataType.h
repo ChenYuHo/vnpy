@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////////////////////////////
-///@company 上海泰琰信息科技有限公司
+///@company 上海泰琰資訊科技有限公司
 ///@file TORATstpUserApiStruct.h
-///@brief 定义了客户端接口使用的业务数据结构
+///@brief 定義了客戶端介面使用的業務資料結構
 ///@history 
 /////////////////////////////////////////////////////////////////////////
 
@@ -113,98 +113,98 @@ enum TORA_TE_RESUME_TYPE
 
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpDateType是一个日期类型
+/// TTORATstpDateType是一個日期型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpDateType[9];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTimeType是一个时间类型
+/// TTORATstpTimeType是一個時間型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpTimeType[9];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMillisecType是一个时间（毫秒）类型
+/// TTORATstpMillisecType是一個時間（毫秒）型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpMillisecType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpPriceType是一个价格类型
+/// TTORATstpPriceType是一個價格型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpPriceType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpRatioType是一个比率类型
+/// TTORATstpRatioType是一個比率型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpRatioType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMoneyType是一个资金类型
+/// TTORATstpMoneyType是一個資金型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpMoneyType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpVolumeType是一个数量类型
+/// TTORATstpVolumeType是一個數量型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpVolumeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLargeVolumeType是一个大额数量类型
+/// TTORATstpLargeVolumeType是一個大額數量型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpLargeVolumeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBoolType是一个布尔型类型
+/// TTORATstpBoolType是一個布林型型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpBoolType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSequenceNoType是一个流水号类型
+/// TTORATstpSequenceNoType是一個流水號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpSequenceNoType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSerialType是一个流水号类型
+/// TTORATstpSerialType是一個流水號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpSerialType[31];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCommFluxType是一个通讯流量类型
+/// TTORATstpCommFluxType是一個通訊流量型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpCommFluxType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpRoleIDType是一个角色编号类型
+/// TTORATstpRoleIDType是一個角色編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpRoleIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpRoleDescriptionType是一个角色描述类型
+/// TTORATstpRoleDescriptionType是一個角色描述型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpRoleDescriptionType[161];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpFunctionsType是一个功能权限集合类型
+/// TTORATstpFunctionsType是一個功能許可權集合型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpFunctionsType[129];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpDeviceIDType是一个设备标识类型
+/// TTORATstpDeviceIDType是一個裝置標識型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpDeviceIDType[129];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpDeviceSerialType是一个设备序列类型
+/// TTORATstpDeviceSerialType是一個裝置序列型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpDeviceSerialType[129];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpExchangeIDType是一个交易所代码类型
+/// TTORATstpExchangeIDType是一個交易所程式碼型別
 /////////////////////////////////////////////////////////////////////////
-///内部使用)
+///內部使用)
 #define TORA_TSTP_EXD_SSE_FO 'h'
-///内部使用)
+///內部使用)
 #define TORA_TSTP_EXD_SZSE_FO 'z'
-///通用(内部使用)
+///通用(內部使用)
 #define TORA_TSTP_EXD_COMM '0'
 ///上海交易所
 #define TORA_TSTP_EXD_SSE '1'
@@ -216,384 +216,384 @@ typedef char TTORATstpDeviceSerialType[129];
 typedef char TTORATstpExchangeIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpAuthModeType是一个认证方式类型
+/// TTORATstpAuthModeType是一個認證方式型別
 /////////////////////////////////////////////////////////////////////////
-///密码
+///密碼
 #define TORA_TSTP_AM_Password '0'
-///指纹
+///指紋
 #define TORA_TSTP_AM_FingerPrint '1'
 
 typedef char TTORATstpAuthModeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpVolumeMultipleType是一个合约数量乘数类型
+/// TTORATstpVolumeMultipleType是一個合約數量乘數型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpVolumeMultipleType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpIdCardNoType是一个证件编号类型
+/// TTORATstpIdCardNoType是一個證件編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpIdCardNoType[51];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpUserIDType是一个交易用户代码类型
+/// TTORATstpUserIDType是一個交易使用者程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpUserIDType[16];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTradeIDType是一个成交编号类型
+/// TTORATstpTradeIDType是一個成交編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpTradeIDType[21];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderSysIDType是一个系统报单编号类型
+/// TTORATstpOrderSysIDType是一個系統報單編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpOrderSysIDType[21];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCondOrderIDType是一个条件报单编号类型
+/// TTORATstpCondOrderIDType是一個條件報單編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpCondOrderIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpPasswordType是一个密码类型
+/// TTORATstpPasswordType是一個密碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpPasswordType[41];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpFrontIDType是一个前置编号类型
+/// TTORATstpFrontIDType是一個前置編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpFrontIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSessionIDType是一个会话编号类型
+/// TTORATstpSessionIDType是一個會話編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpSessionIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpProductInfoType是一个产品信息类型
+/// TTORATstpProductInfoType是一個產品資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpProductInfoType[11];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpProtocolInfoType是一个协议信息类型
+/// TTORATstpProtocolInfoType是一個協議資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpProtocolInfoType[11];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpErrorIDType是一个错误代码类型
+/// TTORATstpErrorIDType是一個錯誤程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpErrorIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpErrorMsgType是一个错误信息类型
+/// TTORATstpErrorMsgType是一個錯誤資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpErrorMsgType[81];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpPositionTypeType是一个持仓类型类型
+/// TTORATstpPositionTypeType是一個持倉型別型別
 /////////////////////////////////////////////////////////////////////////
-///净持仓
+///淨持倉
 #define TORA_TSTP_PT_Net '1'
-///综合持仓
+///綜合持倉
 #define TORA_TSTP_PT_Gross '2'
 
 typedef char TTORATstpPositionTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpParameterCharValType是一个参数文本值类型
+/// TTORATstpParameterCharValType是一個引數文字值型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpParameterCharValType[101];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpNameType是一个名称类型
+/// TTORATstpNameType是一個名稱型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpNameType[61];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpListingMarketType是一个挂牌市场类型
+/// TTORATstpListingMarketType是一個掛牌市場型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpListingMarketType[31];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpProductIDType是一个证券品种代码类型
+/// TTORATstpProductIDType是一個證券品種程式碼型別
 /////////////////////////////////////////////////////////////////////////
-///通用(内部使用)
+///通用(內部使用)
 #define TORA_TSTP_PID_COMMON '0'
 ///上海股票
 #define TORA_TSTP_PID_SHStock '1'
-///上海配股配债
+///上海配股配債
 #define TORA_TSTP_PID_SHWarrant '2'
 ///上海基金
 #define TORA_TSTP_PID_SHFund '3'
-///上海债券
+///上海債券
 #define TORA_TSTP_PID_SHBond '4'
-///上海标准券
+///上海標準券
 #define TORA_TSTP_PID_SHStandard '5'
-///上海质押式回购
+///上海質押式回購
 #define TORA_TSTP_PID_SHRepurchase '6'
 ///深圳股票
 #define TORA_TSTP_PID_SZStock '7'
-///深圳配股配债
+///深圳配股配債
 #define TORA_TSTP_PID_SZWarrant '8'
 ///深圳基金
 #define TORA_TSTP_PID_SZFund '9'
-///深圳债券
+///深圳債券
 #define TORA_TSTP_PID_SZBond 'a'
-///深圳标准券
+///深圳標準券
 #define TORA_TSTP_PID_SZStandard 'b'
-///深圳质押式回购
+///深圳質押式回購
 #define TORA_TSTP_PID_SZRepurchase 'c'
 
 typedef char TTORATstpProductIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSecurityIDType是一个证券代码类型
+/// TTORATstpSecurityIDType是一個證券程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpSecurityIDType[31];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpParValueType是一个面值类型
+/// TTORATstpParValueType是一個面值型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpParValueType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpPriceTickType是一个最小变动价位类型
+/// TTORATstpPriceTickType是一個最小變動價位型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpPriceTickType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTradingUnitType是一个交易单位类型
+/// TTORATstpTradingUnitType是一個交易單位型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpTradingUnitType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSecurityStatusType是一个证券状态类型
+/// TTORATstpSecurityStatusType是一個證券狀態型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpSecurityStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpAccountIDType是一个投资者资金帐号类型
+/// TTORATstpAccountIDType是一個投資者資金帳號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpAccountIDType[21];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpInvestorIDType是一个投资者代码类型
+/// TTORATstpInvestorIDType是一個投資者程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpInvestorIDType[13];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpAddressType是一个通讯地址类型
+/// TTORATstpAddressType是一個通訊地址型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpAddressType[101];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpDepartmentIDType是一个部门代码类型
+/// TTORATstpDepartmentIDType是一個部門程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpDepartmentIDType[11];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTerminalInfoType是一个终端信息类型
+/// TTORATstpTerminalInfoType是一個終端資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpTerminalInfoType[256];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpShareholderIDType是一个股东账户代码类型
+/// TTORATstpShareholderIDType是一個股東賬戶程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpShareholderIDType[11];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpPbuIDType是一个交易单元代码类型
+/// TTORATstpPbuIDType是一個交易單元程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpPbuIDType[11];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpIPAddressType是一个IP地址类型
+/// TTORATstpIPAddressType是一個IP地址型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpIPAddressType[16];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMacAddressType是一个Mac地址类型
+/// TTORATstpMacAddressType是一個Mac地址型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpMacAddressType[21];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLangType是一个语言类型
+/// TTORATstpLangType是一個語言型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpLangType[17];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpInterestType是一个利息类型
+/// TTORATstpInterestType是一個利息型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpInterestType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderLocalIDType是一个本地报单编号类型
+/// TTORATstpOrderLocalIDType是一個本地報單編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpOrderLocalIDType[13];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpPositionVolumeType是一个证券数量类型
+/// TTORATstpPositionVolumeType是一個證券數量型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpPositionVolumeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBusinessUnitIDType是一个投资单元代码类型
+/// TTORATstpBusinessUnitIDType是一個投資單元程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpBusinessUnitIDType[17];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBusinessUnitNameType是一个投资单元名称类型
+/// TTORATstpBusinessUnitNameType是一個投資單元名稱型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpBusinessUnitNameType[61];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTimeStampType是一个时间戳类型
+/// TTORATstpTimeStampType是一個時間戳型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpTimeStampType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBigTimeStampType是一个长时间戳类型
+/// TTORATstpBigTimeStampType是一個長時間戳型別
 /////////////////////////////////////////////////////////////////////////
 typedef long long int TTORATstpBigTimeStampType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSecurityNameType是一个证券名称类型
+/// TTORATstpSecurityNameType是一個證券名稱型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpSecurityNameType[41];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpExternalSerialType是一个外部流水号类型
+/// TTORATstpExternalSerialType是一個外部流水號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpExternalSerialType[65];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderRefType是一个报单引用类型
+/// TTORATstpOrderRefType是一個報單引用型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpOrderRefType[13];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpRequestIDType是一个请求编号类型
+/// TTORATstpRequestIDType是一個請求編號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpRequestIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpIntSerialType是一个整数流水号类型
+/// TTORATstpIntSerialType是一個整數流水號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpIntSerialType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpInvestorNameType是一个投资者名称类型
+/// TTORATstpInvestorNameType是一個投資者名稱型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpInvestorNameType[81];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpUserNameType是一个用户名称类型
+/// TTORATstpUserNameType是一個使用者名稱稱型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpUserNameType[81];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLoginLimitType是一个登录限制类型
+/// TTORATstpLoginLimitType是一個登入限制類型
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpLoginLimitType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCurrencyIDType是一个币种类型
+/// TTORATstpCurrencyIDType是一個幣種類型
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpCurrencyIDType[4];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBankIDType是一个银行代码类型
+/// TTORATstpBankIDType是一個銀行程式碼型別
 /////////////////////////////////////////////////////////////////////////
-///中国建设银行
+///中國建設銀行
 #define TORA_TSTP_BKID_CCB '1'
-///中国农业银行
+///中國農業銀行
 #define TORA_TSTP_BKID_ABC '2'
-///中国工商银行
+///中國工商銀行
 #define TORA_TSTP_BKID_ICBC '3'
-///中国银行
+///中國銀行
 #define TORA_TSTP_BKID_BOC '4'
-///中国招商银行
+///中國招商銀行
 #define TORA_TSTP_BKID_CMB '5'
-///中国交通银行
+///中國交通銀行
 #define TORA_TSTP_BKID_BC '6'
-///浦东发展银行
+///浦東發展銀行
 #define TORA_TSTP_BKID_SPDB '7'
-///兴业银行
+///興業銀行
 #define TORA_TSTP_BKID_CIB '8'
-///中国光大银行
+///中國光大銀行
 #define TORA_TSTP_BKID_CEB '9'
-///广东发展银行
+///廣東發展銀行
 #define TORA_TSTP_BKID_GDB 'a'
-///南京银行
+///南京銀行
 #define TORA_TSTP_BKID_NJCB 'b'
-///上海银行
+///上海銀行
 #define TORA_TSTP_BKID_SHCB 'c'
-///中信银行
+///中信銀行
 #define TORA_TSTP_BKID_CITICB 'd'
-///华夏银行
+///華夏銀行
 #define TORA_TSTP_BKID_HXB 'e'
-///民生银行
+///民生銀行
 #define TORA_TSTP_BKID_CMBC 'f'
-///平安银行
+///平安銀行
 #define TORA_TSTP_BKID_PACB 'g'
-///宁波银行
+///寧波銀行
 #define TORA_TSTP_BKID_NBCB 'h'
 
 typedef char TTORATstpBankIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBankAccountIDType是一个签约银行账号类型
+/// TTORATstpBankAccountIDType是一個簽約銀行賬號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpBankAccountIDType[31];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTransferReasonType是一个外围系统仓位调拨原因类型
+/// TTORATstpTransferReasonType是一個外圍系統倉位調撥原因型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpTransferReasonType[21];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCombOffsetFlagType是一个组合开平标志类型
+/// TTORATstpCombOffsetFlagType是一個組合開平標誌型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpCombOffsetFlagType[5];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCombHedgeFlagType是一个组合投机套保标志类型
+/// TTORATstpCombHedgeFlagType是一個組合投機套保標誌型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpCombHedgeFlagType[5];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpExchangeInstIDType是一个交易所合约代码类型
+/// TTORATstpExchangeInstIDType是一個交易所合約程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpExchangeInstIDType[31];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTelephoneType是一个联系电话类型
+/// TTORATstpTelephoneType是一個聯絡電話型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpTelephoneType[41];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMobileType是一个手机类型
+/// TTORATstpMobileType是一個手機型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpMobileType[41];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTraderIDType是一个交易员代码类型
+/// TTORATstpTraderIDType是一個交易員程式碼型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpTraderIDType[21];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLongVolumeType是一个LongVolume类型
+/// TTORATstpLongVolumeType是一個LongVolume型別
 /////////////////////////////////////////////////////////////////////////
 typedef long long int TTORATstpLongVolumeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLongSequenceType是一个序号类型
+/// TTORATstpLongSequenceType是一個序號型別
 /////////////////////////////////////////////////////////////////////////
 typedef long long int TTORATstpLongSequenceType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderUnitType是一个申报单位类型
+/// TTORATstpOrderUnitType是一個申報單位型別
 /////////////////////////////////////////////////////////////////////////
 ///手
 #define TORA_TSTP_OUT_Shou '0'
@@ -601,59 +601,59 @@ typedef long long int TTORATstpLongSequenceType;
 #define TORA_TSTP_OUT_Gu '1'
 ///份
 #define TORA_TSTP_OUT_Fen '2'
-///张
+///張
 #define TORA_TSTP_OUT_Zhang '3'
 
 typedef char TTORATstpOrderUnitType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpIdCardTypeType是一个证件类型类型
+/// TTORATstpIdCardTypeType是一個證件型別型別
 /////////////////////////////////////////////////////////////////////////
-///组织机构代码
+///組織機構程式碼
 #define TORA_TSTP_ICT_EID '0'
-///中国公民身份证
+///中國公民身份證
 #define TORA_TSTP_ICT_IDCard '1'
-///军官证
+///軍官證
 #define TORA_TSTP_ICT_OfficerIDCard '2'
-///警官证
+///警官證
 #define TORA_TSTP_ICT_PoliceIDCard '3'
-///士兵证
+///士兵證
 #define TORA_TSTP_ICT_SoldierIDCard '4'
-///户口簿
+///戶口簿
 #define TORA_TSTP_ICT_HouseholdRegister  '5'
-///护照
+///護照
 #define TORA_TSTP_ICT_Passport '6'
-///台胞证
+///臺胞證
 #define TORA_TSTP_ICT_TaiwanCompatriotIDCard  '7'
-///回乡证
+///回鄉證
 #define TORA_TSTP_ICT_HomeComingCard '8'
-///营业执照号
+///營業執照號
 #define TORA_TSTP_ICT_LicenseNo '9'
-///税务登记号/当地纳税ID
+///稅務登記號/當地納稅ID
 #define TORA_TSTP_ICT_TaxNo 'A'
-///港澳居民来往内地通行证
+///港澳居民來往內地通行證
 #define TORA_TSTP_ICT_HMMainlandTravelPermit 'B'
-///台湾居民来往大陆通行证
+///臺灣居民來往大陸通行證
 #define TORA_TSTP_ICT_TwMainlandTravelPermit 'C'
-///驾照
+///駕照
 #define TORA_TSTP_ICT_DrivingLicense 'D'
-///当地社保ID
+///當地社保ID
 #define TORA_TSTP_ICT_SocialID 'F'
-///当地身份证
+///當地身份證
 #define TORA_TSTP_ICT_LocalID 'G'
-///商业登记证
+///商業登記證
 #define TORA_TSTP_ICT_BusinessRegistration 'H'
-///港澳永久性居民身份证
+///港澳永久性居民身份證
 #define TORA_TSTP_ICT_HKMCIDCard 'I'
-///人行开户许可证
+///人行開戶許可證
 #define TORA_TSTP_ICT_AccountsPermits 'J'
-///其他证件
+///其他證件
 #define TORA_TSTP_ICT_OtherCard 'x'
 
 typedef char TTORATstpIdCardTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpAccountTypeType是一个资金账户类型类型
+/// TTORATstpAccountTypeType是一個資金賬戶型別型別
 /////////////////////////////////////////////////////////////////////////
 ///普通
 #define TORA_TSTP_FAT_Normal '1'
@@ -665,232 +665,232 @@ typedef char TTORATstpIdCardTypeType;
 typedef char TTORATstpAccountTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpDirectionType是一个报单类别类型
+/// TTORATstpDirectionType是一個報單類別型別
 /////////////////////////////////////////////////////////////////////////
-///买入
+///買入
 #define TORA_TSTP_D_Buy '0'
-///卖出
+///賣出
 #define TORA_TSTP_D_Sell '1'
-///ETF申购
+///ETF申購
 #define TORA_TSTP_D_ETFPur '2'
-///ETF赎回
+///ETF贖回
 #define TORA_TSTP_D_ETFRed '3'
-///新股申购
+///新股申購
 #define TORA_TSTP_D_IPO '4'
-///正回购
+///正回購
 #define TORA_TSTP_D_Repurchase '5'
-///逆回购
+///逆回購
 #define TORA_TSTP_D_ReverseRepur '6'
-///开放式基金申购
+///開放式基金申購
 #define TORA_TSTP_D_OeFundPur '8'
-///开放式基金赎回
+///開放式基金贖回
 #define TORA_TSTP_D_OeFundRed '9'
-///担保品划入
+///擔保品劃入
 #define TORA_TSTP_D_CollateralIn 'a'
-///担保品划出
+///擔保品劃出
 #define TORA_TSTP_D_CollateralOut 'b'
-///质押入库
+///質押入庫
 #define TORA_TSTP_D_PledgeIn 'd'
-///质押出库
+///質押出庫
 #define TORA_TSTP_D_PledgeOut 'e'
-///配股配债
+///配股配債
 #define TORA_TSTP_D_Rationed 'f'
-///开放式基金拆分
+///開放式基金拆分
 #define TORA_TSTP_D_Split 'g'
-///开放式基金合并
+///開放式基金合併
 #define TORA_TSTP_D_Merge 'h'
-///融资买入
+///融資買入
 #define TORA_TSTP_D_MarginBuy 'i'
-///融券卖出
+///融券賣出
 #define TORA_TSTP_D_ShortSell 'j'
-///卖券还款
+///賣券還款
 #define TORA_TSTP_D_SellRepayment 'k'
-///买券还券
+///買券還券
 #define TORA_TSTP_D_BuyRepayment 'l'
-///还券划转
+///還券劃轉
 #define TORA_TSTP_D_SecurityRepay 'm'
-///余券划转
+///餘券劃轉
 #define TORA_TSTP_D_RemainTransfer 'n'
-///债转股
+///債轉股
 #define TORA_TSTP_D_BondConvertStock 't'
-///债券回售
+///債券回售
 #define TORA_TSTP_D_BondPutback 'u'
 
 typedef char TTORATstpDirectionType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBrokerageTypeType是一个佣金类型类型
+/// TTORATstpBrokerageTypeType是一個佣金型別型別
 /////////////////////////////////////////////////////////////////////////
 ///毛佣金
 #define TORA_TSTP_BT_Gross '0'
-///净佣金
+///淨佣金
 #define TORA_TSTP_BT_Net '1'
 
 typedef char TTORATstpBrokerageTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpUserTypeType是一个用户类型类型
+/// TTORATstpUserTypeType是一個使用者型別型別
 /////////////////////////////////////////////////////////////////////////
-///经纪公司用户
+///經紀公司使用者
 #define TORA_TSTP_UTYPE_BrokerUser '0'
-///超级用户
+///超級使用者
 #define TORA_TSTP_UTYPE_SuperUser '1'
-///投资者用户
+///投資者使用者
 #define TORA_TSTP_UTYPE_Investor '2'
 
 typedef char TTORATstpUserTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpContingentConditionType是一个触发条件类型
+/// TTORATstpContingentConditionType是一個觸發條件型別
 /////////////////////////////////////////////////////////////////////////
-///成交触发
+///成交觸發
 #define TORA_TSTP_CC_TradeTouch '0'
-///撤单触发
+///撤單觸發
 #define TORA_TSTP_CC_CancelTouch '1'
-///时间触发
+///時間觸發
 #define TORA_TSTP_CC_TimeTouch '2'
-///交易时段触发
+///交易時段觸發
 #define TORA_TSTP_CC_SegmentTouch '3'
-///最新价大于等于条件价
+///最新價大於等於條件價
 #define TORA_TSTP_CC_LastPriceGreaterThanStopPrice '4'
-///最新价小于等于条件价
+///最新價小於等於條件價
 #define TORA_TSTP_CC_LastPriceLesserThanStopPrice '5'
-///卖一价大于等于条件价
+///賣一價大於等於條件價
 #define TORA_TSTP_CC_AskPriceGreaterEqualStopPrice '6'
-///卖一价小于等于条件价
+///賣一價小於等於條件價
 #define TORA_TSTP_CC_AskPriceLesserEqualStopPrice '7'
-///买一价大于等于条件价
+///買一價大於等於條件價
 #define TORA_TSTP_CC_BidPriceGreaterEqualStopPrice '8'
-///买一价小于等于条件价
+///買一價小於等於條件價
 #define TORA_TSTP_CC_BidPriceLesserEqualStopPrice '9'
 
 typedef char TTORATstpContingentConditionType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpETFCurrenceReplaceStatusType是一个ETF现金替代标志类型
+/// TTORATstpETFCurrenceReplaceStatusType是一個ETF現金替代標誌型別
 /////////////////////////////////////////////////////////////////////////
-///禁止现金替代
+///禁止現金替代
 #define TORA_TSTP_ETFCTSTAT_Forbidden '0'
-///可以现金替代
+///可以現金替代
 #define TORA_TSTP_ETFCTSTAT_Allow '1'
-///必须现金替代
+///必須現金替代
 #define TORA_TSTP_ETFCTSTAT_Force '2'
-///跨市退补现金替代
+///跨市退補現金替代
 #define TORA_TSTP_ETFCTSTAT_CBAllow '3'
-///跨市必须现金替代
+///跨市必須現金替代
 #define TORA_TSTP_ETFCTSTAT_CBForce '4'
 
 typedef char TTORATstpETFCurrenceReplaceStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOperateSourceType是一个操作来源类型
+/// TTORATstpOperateSourceType是一個操作來源型別
 /////////////////////////////////////////////////////////////////////////
-///实时上场
+///實時上場
 #define TORA_TSTP_OPRTSRC_DBCommand '0'
-///API调用
+///API呼叫
 #define TORA_TSTP_OPRTSRC_SyncAPI '1'
 
 typedef char TTORATstpOperateSourceType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOperwayType是一个委托方式类型
+/// TTORATstpOperwayType是一個委託方式型別
 /////////////////////////////////////////////////////////////////////////
-///电话委托
+///電話委託
 #define TORA_TSTP_OPERW_Telephone '0'
-///柜台委托
+///櫃檯委託
 #define TORA_TSTP_OPERW_OTC '1'
-///移动客户端委托
+///移動客戶端委託
 #define TORA_TSTP_OPERW_MobileClient '2'
-///PC客户端委托
+///PC客戶端委託
 #define TORA_TSTP_OPERW_PCClient '3'
-///TY委托
+///TY委託
 #define TORA_TSTP_OPERW_TY '4'
 
 typedef char TTORATstpOperwayType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOperwaysType是一个委托方式合集类型
+/// TTORATstpOperwaysType是一個委託方式合集型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpOperwaysType[41];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderPriceTypeType是一个报单价格条件类型
+/// TTORATstpOrderPriceTypeType是一個報單價格條件型別
 /////////////////////////////////////////////////////////////////////////
-///任意价
+///任意價
 #define TORA_TSTP_OPT_AnyPrice '1'
-///限价
+///限價
 #define TORA_TSTP_OPT_LimitPrice '2'
-///最优价
+///最優價
 #define TORA_TSTP_OPT_BestPrice '3'
-///最新价
+///最新價
 #define TORA_TSTP_OPT_LastPrice '4'
-///卖一价
+///賣一價
 #define TORA_TSTP_OPT_AskPrice1 '5'
-///买一价
+///買一價
 #define TORA_TSTP_OPT_BidPrice1 '6'
-///相关价
+///相關價
 #define TORA_TSTP_OPT_Relative '7'
-///五档价
+///五檔價
 #define TORA_TSTP_OPT_FiveLevelPrice 'G'
-///本方最优
+///本方最優
 #define TORA_TSTP_OPT_HomeBestPrice 'a'
 
 typedef char TTORATstpOrderPriceTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderVolumeTypeType是一个报单数量类型类型
+/// TTORATstpOrderVolumeTypeType是一個報單數量型別型別
 /////////////////////////////////////////////////////////////////////////
-///自定义数量
+///自定義數量
 #define TORA_TSTP_OVT_CustomVol '1'
-///相关数量
+///相關數量
 #define TORA_TSTP_OVT_RelativeVol '2'
 
 typedef char TTORATstpOrderVolumeTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTimeConditionType是一个有效期类型类型
+/// TTORATstpTimeConditionType是一個有效期型別型別
 /////////////////////////////////////////////////////////////////////////
-///立即完成，否则撤销
+///立即完成，否則撤銷
 #define TORA_TSTP_TC_IOC '1'
-///本节有效
+///本節有效
 #define TORA_TSTP_TC_GFS '2'
-///当日有效
+///當日有效
 #define TORA_TSTP_TC_GFD '3'
 ///指定日期前有效
 #define TORA_TSTP_TC_GTD '4'
-///撤销前有效
+///撤銷前有效
 #define TORA_TSTP_TC_GTC '5'
-///集合竞价有效
+///集合競價有效
 #define TORA_TSTP_TC_GFA '6'
 
 typedef char TTORATstpTimeConditionType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpVolumeConditionType是一个成交量类型类型
+/// TTORATstpVolumeConditionType是一個成交量型別型別
 /////////////////////////////////////////////////////////////////////////
-///任何数量
+///任何數量
 #define TORA_TSTP_VC_AV '1'
-///最小数量
+///最小數量
 #define TORA_TSTP_VC_MV '2'
-///全部数量
+///全部數量
 #define TORA_TSTP_VC_CV '3'
 
 typedef char TTORATstpVolumeConditionType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpForceCloseReasonType是一个强平原因类型
+/// TTORATstpForceCloseReasonType是一個強平原因型別
 /////////////////////////////////////////////////////////////////////////
-///非强平
+///非強平
 #define TORA_TSTP_FCC_NotForceClose '0'
-///资金不足
+///資金不足
 #define TORA_TSTP_FCC_LackDeposit '1'
-///客户超仓
+///客戶超倉
 #define TORA_TSTP_FCC_ClientOverPositionLimit '2'
-///会员超仓
+///會員超倉
 #define TORA_TSTP_FCC_MemberOverPositionLimit '3'
-///持仓非整数倍
+///持倉非整數倍
 #define TORA_TSTP_FCC_NotMultiple '4'
-///违规
+///違規
 #define TORA_TSTP_FCC_Violation '5'
 ///其它
 #define TORA_TSTP_FCC_Other '6'
@@ -898,255 +898,255 @@ typedef char TTORATstpVolumeConditionType;
 typedef char TTORATstpForceCloseReasonType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpFileOrderTypeType是一个文件报单类别类型
+/// TTORATstpFileOrderTypeType是一個檔案報單類別型別
 /////////////////////////////////////////////////////////////////////////
-///复核
+///複核
 #define TORA_TSTP_EOT_Review '0'
-///撤单
+///撤單
 #define TORA_TSTP_EOT_Cancel '1'
-///限价单
+///限價單
 #define TORA_TSTP_EOT_Limit '2'
-///最优五档即时成交剩余撤销
+///最優五檔即時成交剩餘撤銷
 #define TORA_TSTP_EOT_FRC '3'
-///最优五档即时成交剩余转限价
+///最優五檔即時成交剩餘轉限價
 #define TORA_TSTP_EOT_FRL '4'
-///对手方最优
+///對手方最優
 #define TORA_TSTP_EOT_BP '5'
-///本方最优
+///本方最優
 #define TORA_TSTP_EOT_HP '6'
-///立即成交剩余撤销
+///立即成交剩餘撤銷
 #define TORA_TSTP_EOT_FAK '7'
-///全额成交或撤销
+///全額成交或撤銷
 #define TORA_TSTP_EOT_FOK '8'
 
 typedef char TTORATstpFileOrderTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTransferDirectionType是一个转移方向类型
+/// TTORATstpTransferDirectionType是一個轉移方向型別
 /////////////////////////////////////////////////////////////////////////
-///蓝补
+///藍補
 #define TORA_TSTP_TRNSD_In '0'
-///红冲
+///紅衝
 #define TORA_TSTP_TRNSD_Out '1'
-///调入
+///調入
 #define TORA_TSTP_TRNSD_MoveIn '2'
-///调出
+///調出
 #define TORA_TSTP_TRNSD_MoveOut '3'
-///冻结
+///凍結
 #define TORA_TSTP_TRNSD_Freeze '4'
-///解冻
+///解凍
 #define TORA_TSTP_TRNSD_UnFreeze '5'
-///证券转银行
+///證券轉銀行
 #define TORA_TSTP_TRNSD_StockToBank '6'
-///银行转证券
+///銀行轉證券
 #define TORA_TSTP_TRNSD_BankToStock '7'
 
 typedef char TTORATstpTransferDirectionType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCollateralDirectionType是一个担保品划入方向类型
+/// TTORATstpCollateralDirectionType是一個擔保品劃入方向型別
 /////////////////////////////////////////////////////////////////////////
-///担保品划入
+///擔保品劃入
 #define TORA_TSTP_CLTD_CollateralIn '6'
-///担保品划出
+///擔保品劃出
 #define TORA_TSTP_CLTD_CollateralOut '7'
 
 typedef char TTORATstpCollateralDirectionType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTransferStatusType是一个转移状态类型
+/// TTORATstpTransferStatusType是一個轉移狀態型別
 /////////////////////////////////////////////////////////////////////////
-///Transfer正在处理
+///Transfer正在處理
 #define TORA_TSTP_TRANST_TranferHandling '0'
 ///Transfer成功
 #define TORA_TSTP_TRANST_TransferSuccess '1'
-///Transfer失败
+///Transfer失敗
 #define TORA_TSTP_TRANST_TransferFail '2'
-///Repeal正在处理
+///Repeal正在處理
 #define TORA_TSTP_TRANST_RepealHandling '3'
 ///Repeal成功
 #define TORA_TSTP_TRANST_RepealSuccess '4'
-///Repeal失败
+///Repeal失敗
 #define TORA_TSTP_TRANST_RepealFail '5'
-///外部系统已接收
+///外部系統已接收
 #define TORA_TSTP_TRANST_ExternalAccepted '6'
 
 typedef char TTORATstpTransferStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpTransferPositionTypeType是一个转移持仓类型类型
+/// TTORATstpTransferPositionTypeType是一個轉移持倉型別型別
 /////////////////////////////////////////////////////////////////////////
-///任意仓
+///任意倉
 #define TORA_TSTP_TPT_ALL '0'
-///昨仓
+///昨倉
 #define TORA_TSTP_TPT_History '1'
-///今买卖仓
+///今買賣倉
 #define TORA_TSTP_TPT_TodayBS '2'
-///今申赎仓
+///今申贖倉
 #define TORA_TSTP_TPT_TodayPR '3'
 
 typedef char TTORATstpTransferPositionTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSystemNameType是一个系统名称类型
+/// TTORATstpSystemNameType是一個系統名稱型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpSystemNameType[41];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpRelativeCondParamType是一个相关条件参数类型
+/// TTORATstpRelativeCondParamType是一個相關條件引數型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpRelativeCondParamType[31];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderStatusType是一个报单状态类型
+/// TTORATstpOrderStatusType是一個報單狀態型別
 /////////////////////////////////////////////////////////////////////////
 ///全部成交
 #define TORA_TSTP_OST_AllTraded '0'
-///部分成交还在队列中
+///部分成交還在佇列中
 #define TORA_TSTP_OST_PartTradedQueueing '1'
-///部分成交不在队列中
+///部分成交不在佇列中
 #define TORA_TSTP_OST_PartTradedNotQueueing '2'
-///未成交还在队列中
+///未成交還在佇列中
 #define TORA_TSTP_OST_NoTradeQueueing '3'
-///未成交不在队列中
+///未成交不在佇列中
 #define TORA_TSTP_OST_NoTradeNotQueueing '4'
-///撤单
+///撤單
 #define TORA_TSTP_OST_Canceled '5'
 ///未知
 #define TORA_TSTP_OST_Unknown 'a'
-///尚未触发
+///尚未觸發
 #define TORA_TSTP_OST_NotTouched 'b'
-///已触发
+///已觸發
 #define TORA_TSTP_OST_Touched 'c'
-///预埋
+///預埋
 #define TORA_TSTP_OST_Cached 'd'
 
 typedef char TTORATstpOrderStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCondOrderStatusType是一个条件单状态类型
+/// TTORATstpCondOrderStatusType是一個條件單狀態型別
 /////////////////////////////////////////////////////////////////////////
 ///初始
 #define TORA_TSTP_COST_Initial '#'
-///未触发
+///未觸發
 #define TORA_TSTP_COST_NotTouched '0'
-///已触发
+///已觸發
 #define TORA_TSTP_COST_Touched '1'
-///已结束
+///已結束
 #define TORA_TSTP_COST_Finished '2'
-///已撤销
+///已撤銷
 #define TORA_TSTP_COST_Cancel '3'
-///触发失败
+///觸發失敗
 #define TORA_TSTP_COST_Failed '4'
 
 typedef char TTORATstpCondOrderStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderSubmitStatusType是一个报单提交状态类型
+/// TTORATstpOrderSubmitStatusType是一個報單提交狀態型別
 /////////////////////////////////////////////////////////////////////////
 ///未提交
 #define TORA_TSTP_OSS_UnSubmit '#'
-///已经提交
+///已經提交
 #define TORA_TSTP_OSS_InsertSubmitted '0'
-///撤单已经提交
+///撤單已經提交
 #define TORA_TSTP_OSS_CancelSubmitted '1'
-///修改已经提交
+///修改已經提交
 #define TORA_TSTP_OSS_ModifySubmitted '2'
-///已经接受
+///已經接受
 #define TORA_TSTP_OSS_Accepted '3'
-///报单已经被拒绝
+///報單已經被拒絕
 #define TORA_TSTP_OSS_InsertRejected '4'
-///撤单已经被拒绝
+///撤單已經被拒絕
 #define TORA_TSTP_OSS_CancelRejected '5'
-///改单已经被拒绝
+///改單已經被拒絕
 #define TORA_TSTP_OSS_ModifyRejected '6'
 
 typedef char TTORATstpOrderSubmitStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderTypeType是一个报单类型类型
+/// TTORATstpOrderTypeType是一個報單型別型別
 /////////////////////////////////////////////////////////////////////////
 ///正常
 #define TORA_TSTP_ORDT_Normal '0'
-///报价衍生
+///報價衍生
 #define TORA_TSTP_ORDT_DeriveFromQuote '1'
-///组合衍生
+///組合衍生
 #define TORA_TSTP_ORDT_DeriveFromCombination '2'
-///组合报单
+///組合報單
 #define TORA_TSTP_ORDT_Combination '3'
-///条件单
+///條件單
 #define TORA_TSTP_ORDT_ConditionalOrder '4'
-///互换单
+///互換單
 #define TORA_TSTP_ORDT_Swap '5'
 
 typedef char TTORATstpOrderTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOffsetFlagType是一个开平标志类型
+/// TTORATstpOffsetFlagType是一個開平標誌型別
 /////////////////////////////////////////////////////////////////////////
-///开仓
+///開倉
 #define TORA_TSTP_OF_Open '0'
-///平仓
+///平倉
 #define TORA_TSTP_OF_Close '1'
-///强平
+///強平
 #define TORA_TSTP_OF_ForceClose '2'
 ///平今
 #define TORA_TSTP_OF_CloseToday '3'
 ///平昨
 #define TORA_TSTP_OF_CloseYesterday '4'
-///强减
+///強減
 #define TORA_TSTP_OF_ForceOff '5'
-///本地强平
+///本地強平
 #define TORA_TSTP_OF_LocalForceClose '6'
 
 typedef char TTORATstpOffsetFlagType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpHedgeFlagType是一个投机套保标志类型
+/// TTORATstpHedgeFlagType是一個投機套保標誌型別
 /////////////////////////////////////////////////////////////////////////
-///投机
+///投機
 #define TORA_TSTP_HF_Speculation '1'
 ///套利
 #define TORA_TSTP_HF_Arbitrage '2'
 ///套保
 #define TORA_TSTP_HF_Hedge '3'
-///备兑
+///備兌
 #define TORA_TSTP_HF_Covered '4'
 
 typedef char TTORATstpHedgeFlagType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpActionFlagType是一个操作标志类型
+/// TTORATstpActionFlagType是一個操作標誌型別
 /////////////////////////////////////////////////////////////////////////
-///删除
+///刪除
 #define TORA_TSTP_AF_Delete '0'
 ///修改
 #define TORA_TSTP_AF_Modify '3'
-///强制删除
+///強制刪除
 #define TORA_TSTP_AF_ForceDelete '4'
 
 typedef char TTORATstpActionFlagType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpOrderActionStatusType是一个报单操作状态类型
+/// TTORATstpOrderActionStatusType是一個報單操作狀態型別
 /////////////////////////////////////////////////////////////////////////
-///已经提交
+///已經提交
 #define TORA_TSTP_OAS_Submitted 'a'
-///已经接受
+///已經接受
 #define TORA_TSTP_OAS_Accepted 'b'
-///已经被拒绝
+///已經被拒絕
 #define TORA_TSTP_OAS_Rejected 'c'
-///预埋未提交
+///預埋未提交
 #define TORA_TSTP_OAS_Cached 'e'
 
 typedef char TTORATstpOrderActionStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpClientIDTypeType是一个交易编码类型类型
+/// TTORATstpClientIDTypeType是一個交易編碼型別型別
 /////////////////////////////////////////////////////////////////////////
 ///未知
 #define TORA_TSTP_CIDT_Unknown '0'
-///投机
+///投機
 #define TORA_TSTP_CIDT_Speculation '1'
 ///套利
 #define TORA_TSTP_CIDT_Arbitrage '2'
@@ -1162,339 +1162,339 @@ typedef char TTORATstpOrderActionStatusType;
 typedef char TTORATstpClientIDTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBizClassType是一个业务类别类型
+/// TTORATstpBizClassType是一個業務類別型別
 /////////////////////////////////////////////////////////////////////////
-///买入
+///買入
 #define TORA_TSTP_BC_Buy '0'
-///卖出
+///賣出
 #define TORA_TSTP_BC_Sell '1'
-///ETF申购
+///ETF申購
 #define TORA_TSTP_BC_ETFPur '2'
-///ETF赎回
+///ETF贖回
 #define TORA_TSTP_BC_ETFRed '3'
-///正回购
+///正回購
 #define TORA_TSTP_BC_Repurchase '5'
-///逆回购
+///逆回購
 #define TORA_TSTP_BC_ReverseRepur '6'
-///配股配债
+///配股配債
 #define TORA_TSTP_BC_Rationed 'f'
-///转托管
+///轉託管
 #define TORA_TSTP_BC_CustodyTransfer 'q'
-///买入开仓
+///買入開倉
 #define TORA_TSTP_BC_BuyOpen 'A'
-///买入平仓
+///買入平倉
 #define TORA_TSTP_BC_BuyClose 'B'
-///卖出开仓
+///賣出開倉
 #define TORA_TSTP_BC_SellOpen 'C'
-///卖出平仓
+///賣出平倉
 #define TORA_TSTP_BC_SellClose 'D'
-///备兑开仓
+///備兌開倉
 #define TORA_TSTP_BC_CoveredOpen 'E'
-///备兑平仓
+///備兌平倉
 #define TORA_TSTP_BC_CoveredClose 'F'
-///行权
+///行權
 #define TORA_TSTP_BC_ExecOrder 'G'
-///自动行权
+///自動行權
 #define TORA_TSTP_BC_AutoExecOrder 'H'
 
 typedef char TTORATstpBizClassType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCreditPositionTypeType是一个头寸类型类型
+/// TTORATstpCreditPositionTypeType是一個頭寸型別型別
 /////////////////////////////////////////////////////////////////////////
 ///普通
 #define TORA_TSTP_CPT_Normal '0'
-///专项
+///專項
 #define TORA_TSTP_CPT_Special '1'
 
 typedef char TTORATstpCreditPositionTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpFunctionIDType是一个功能代码类型
+/// TTORATstpFunctionIDType是一個功能程式碼型別
 /////////////////////////////////////////////////////////////////////////
 ///空
 #define TORA_TSTP_FID_NAN ' '
-///会话管理：强制登出
+///會話管理：強制登出
 #define TORA_TSTP_FID_SessionManager '0'
-///用户管理：强制用户退出(禁用)、激活、密码操作
+///使用者管理：強制使用者退出(禁用)、啟用、密碼操作
 #define TORA_TSTP_FID_UserManager '1'
-///报单插入
+///報單插入
 #define TORA_TSTP_FID_OrderInsert '2'
-///报单操作
+///報單操作
 #define TORA_TSTP_FID_OrderAction '3'
-///权限调整
+///許可權調整
 #define TORA_TSTP_FID_AdjustTradingRight '4'
-///资金调拨
+///資金調撥
 #define TORA_TSTP_FID_MoveFund '5'
-///资金蓝补
+///資金藍補
 #define TORA_TSTP_FID_AddFund '6'
-///资金红冲
+///資金紅衝
 #define TORA_TSTP_FID_SubFund '7'
-///强制冻结资金
+///強制凍結資金
 #define TORA_TSTP_FID_ForceFreezeFund '8'
-///强制解冻资金
+///強制解凍資金
 #define TORA_TSTP_FID_ForceUnFreezeFund '9'
-///仓位蓝补
+///倉位藍補
 #define TORA_TSTP_FID_AddPosition 'a'
-///仓位红冲
+///倉位紅衝
 #define TORA_TSTP_FID_SubPosition 'b'
-///冲正资金
+///衝正資金
 #define TORA_TSTP_FID_RepealFund 'c'
-///冲正仓位
+///衝正倉位
 #define TORA_TSTP_FID_RepealPosition 'd'
-///向外部系统划拨担保券
+///向外部系統劃撥擔保券
 #define TORA_TSTP_FID_CollateralInJZ 'e'
-///投资者费用调整
+///投資者費用調整
 #define TORA_TSTP_FID_AdjustTradingFee 'f'
-///调整特殊交易权限
+///調整特殊交易許可權
 #define TORA_TSTP_FID_AdjustSpecPrivilege 'g'
-///调整股东关联关系
+///調整股東關聯關係
 #define TORA_TSTP_FID_AdjustShareholderAssociation 'h'
-///证券信息调整
+///證券資訊調整
 #define TORA_TSTP_FID_AdjustSecurity 'i'
-///持仓调拨
+///持倉調撥
 #define TORA_TSTP_FID_MovePosition 'j'
-///股东参数调整
+///股東引數調整
 #define TORA_TSTP_FID_AdjustShareholderParam 'k'
-///条件报单插入
+///條件報單插入
 #define TORA_TSTP_FID_CondOrderInsert 'l'
-///条件报单操作
+///條件報單操作
 #define TORA_TSTP_FID_CondOrderAction 'm'
-///查询条件单
+///查詢條件單
 #define TORA_TSTP_FID_QryCondOrder 'n'
-///条件单参数维护
+///條件單引數維護
 #define TORA_TSTP_FID_CondParamAdjust 'o'
-///用户角色管理
+///使用者角色管理
 #define TORA_TSTP_FID_UserRoleManage 'p'
-///费率模板管理
+///費率模板管理
 #define TORA_TSTP_FID_TradingFeeTemplateManage 'q'
-///交易权限模板管理
+///交易許可權模板管理
 #define TORA_TSTP_FID_TradingRightTemplateManage 'r'
-///股东账户证券代码系统权限管理
+///股東賬戶證券程式碼系統許可權管理
 #define TORA_TSTP_FID_SecurityPriorAuthManage 's'
-///持仓交易属性管理
+///持倉交易屬性管理
 #define TORA_TSTP_FID_PosiParamManage 't'
-///报单编号前缀调整
+///報單編號字首調整
 #define TORA_TSTP_FID_OrderLocalSeqPrefixAdjust 'u'
 ///席位管理
 #define TORA_TSTP_FID_TraderManage 'v'
-///新股申购参数额度管理
+///新股申購引數額度管理
 #define TORA_TSTP_FID_IPOManage 'w'
-///内部组件运行配置
+///內部元件執行配置
 #define TORA_TSTP_FID_AppRunManage 'x'
-///市场状态管理
+///市場狀態管理
 #define TORA_TSTP_FID_MarketStatusManage 'y'
-///平台状态管理
+///平臺狀態管理
 #define TORA_TSTP_FID_PlatformStatusManage 'z'
-///查询资金
+///查詢資金
 #define TORA_TSTP_FID_QryTradingAccount 'A'
-///查询持仓
+///查詢持倉
 #define TORA_TSTP_FID_QryPositon 'B'
-///查询股东账户
+///查詢股東賬戶
 #define TORA_TSTP_FID_QryShareholderAccount 'C'
-///查询委托
+///查詢委託
 #define TORA_TSTP_FID_QryOrder 'D'
-///查询成交
+///查詢成交
 #define TORA_TSTP_FID_QryTrade 'E'
-///查询资金变动流水
+///查詢資金變動流水
 #define TORA_TSTP_FID_QryFundSerial 'F'
-///查询持仓变动流水
+///查詢持倉變動流水
 #define TORA_TSTP_FID_QryPositionSerial 'G'
-///Dump资金
+///Dump資金
 #define TORA_TSTP_FID_DumpTradingAccount 'H'
-///Dump持仓
+///Dump持倉
 #define TORA_TSTP_FID_DumpPositon 'I'
-///Dump股东账户
+///Dump股東賬戶
 #define TORA_TSTP_FID_DumpShareholderAccount 'J'
-///Dump委托
+///Dump委託
 #define TORA_TSTP_FID_DumpOrder 'K'
 ///Dump成交
 #define TORA_TSTP_FID_DumpTrade 'L'
-///Dump资金变动流水
+///Dump資金變動流水
 #define TORA_TSTP_FID_DumpFundSerial 'M'
-///Dump持仓变动流水
+///Dump持倉變動流水
 #define TORA_TSTP_FID_DumpPositionSerial 'N'
-///回传数据
+///回傳資料
 #define TORA_TSTP_FID_UploadTradeData 'O'
-///复核资金调整
+///複核資金調整
 #define TORA_TSTP_FID_ReviewFundAdjust 'P'
-///复核仓位调整
+///複核倉位調整
 #define TORA_TSTP_FID_ReviewPositionAdjust 'Q'
-///记录操作日志
+///記錄操作日誌
 #define TORA_TSTP_FID_RecordOperateLog 'R'
-///终端信息管理
+///終端資訊管理
 #define TORA_TSTP_FID_TerminalInfoManage 'S'
-///查询交易权限
+///查詢交易許可權
 #define TORA_TSTP_FID_QryTradingRight 'T'
-///指定交易登记&撤销
+///指定交易登記&撤銷
 #define TORA_TSTP_FID_DesignationRegistration 'U'
-///深证转托管&撤销
+///深證轉託管&撤銷
 #define TORA_TSTP_FID_CustodyTransfer 'V'
-///强制删除报单
+///強制刪除報單
 #define TORA_TSTP_FID_ForceDelete 'W'
-///风控管理
+///風控管理
 #define TORA_TSTP_FID_RiskMgr 'X'
-///复核用户登陆IP/MAC限制调整
+///複核使用者登陸IP/MAC限制調整
 #define TORA_TSTP_FID_ReviewUserIPLimitAdjust 'Y'
-///用户登录IP/MAC限制调整
+///使用者登入IP/MAC限制調整
 #define TORA_TSTP_FID_AdjustUserIPLimit 'Z'
-///调整系统参数
+///調整系統引數
 #define TORA_TSTP_FID_AdjustSystemParam '@'
-///部门信息管理
+///部門資訊管理
 #define TORA_TSTP_FID_DepartmentInfoManage '#'
-///新股配号中签信息管理
+///新股配號中籤資訊管理
 #define TORA_TSTP_FID_IPONumberMatchManage '$'
-///客户信息管理
+///客戶資訊管理
 #define TORA_TSTP_FID_CustomerInfoManage '*'
-///查询用户事件
+///查詢使用者事件
 #define TORA_TSTP_FID_QryTradeEvent '+'
-///交易所回报序号维护
+///交易所回報序號維護
 #define TORA_TSTP_FID_ExchRtnSeqManage '='
-///银证转账
+///銀證轉賬
 #define TORA_TSTP_FID_TransferFund '-'
 
 typedef char TTORATstpFunctionIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpSecurityTypeType是一个证券类别类型
+/// TTORATstpSecurityTypeType是一個證券類別型別
 /////////////////////////////////////////////////////////////////////////
-///通用(内部使用)
+///通用(內部使用)
 #define TORA_TSTP_STP_COMMON '0'
 ///上海A股
 #define TORA_TSTP_STP_SHAShares 'a'
-///上海单市场股票ETF
+///上海單市場股票ETF
 #define TORA_TSTP_STP_SHSingleMarketStockETF 'b'
-///上海单市场实物债券ETF
+///上海單市場實物債券ETF
 #define TORA_TSTP_STP_SHSingleMarketBondETF 'c'
-///上海黄金ETF
+///上海黃金ETF
 #define TORA_TSTP_STP_SHGoldETF 'd'
-///上海货币ETF
+///上海貨幣ETF
 #define TORA_TSTP_STP_SHTradableMonetaryFund 'e'
-///上海国债、地方债
+///上海國債、地方債
 #define TORA_TSTP_STP_SHBondNation 'f'
-///上海企业债
+///上海企業債
 #define TORA_TSTP_STP_SHBondCorporation 'g'
-///上海公司债
+///上海公司債
 #define TORA_TSTP_STP_SHBondCompany 'h'
-///上海可转债
+///上海可轉債
 #define TORA_TSTP_STP_SHBondConversion 'i'
-///上海分离债
+///上海分離債
 #define TORA_TSTP_STP_SHBondSeparation 'j'
-///上海A股期权
+///上海A股期權
 #define TORA_TSTP_STP_SHASharesOption 'k'
-///上海ETF期权
+///上海ETF期權
 #define TORA_TSTP_STP_SHETFOption 'l'
 ///上海配股
 #define TORA_TSTP_STP_SHAllotment 'm'
-///上海配债
+///上海配債
 #define TORA_TSTP_STP_SHDistributeDebt 'n'
-///上海标准券
+///上海標準券
 #define TORA_TSTP_STP_SHStandard 'o'
-///上海质押式回购
+///上海質押式回購
 #define TORA_TSTP_STP_SHRepo 'p'
-///上海封闭式基金
+///上海封閉式基金
 #define TORA_TSTP_STP_SHCEFund 'q'
-///上海开放式基金
+///上海開放式基金
 #define TORA_TSTP_STP_SHOEFund 'r'
-///上海跨市场ETF
+///上海跨市場ETF
 #define TORA_TSTP_STP_SHCrossMarketStockETF 's'
 ///上海跨境ETF
 #define TORA_TSTP_STP_SHCrossBorderETF 't'
-///上海分级母基金
+///上海分級母基金
 #define TORA_TSTP_STP_SHMontherStructFund 'u'
-///上海分级子基金
+///上海分級子基金
 #define TORA_TSTP_STP_SHSubStructFund 'v'
-///上海实时申赎货币基金
+///上海實時申贖貨幣基金
 #define TORA_TSTP_STP_SHRealTimeMonetaryFund 'w'
-///上海可交换债
+///上海可交換債
 #define TORA_TSTP_STP_SHExchangeableBond 'x'
-///上海标准LOF基金
+///上海標準LOF基金
 #define TORA_TSTP_STP_SHLOF 'A'
-///深圳主板A股
+///深圳主機板A股
 #define TORA_TSTP_STP_SZMainAShares 'B'
-///深圳中小企业板
+///深圳中小企業板
 #define TORA_TSTP_STP_SZSME 'C'
-///深圳国债、地方债
+///深圳國債、地方債
 #define TORA_TSTP_STP_SZBondNation 'D'
-///深圳企业债
+///深圳企業債
 #define TORA_TSTP_STP_SZBondCorporation 'E'
-///深圳公司债
+///深圳公司債
 #define TORA_TSTP_STP_SZBondCompany 'F'
-///深圳可转债
+///深圳可轉債
 #define TORA_TSTP_STP_SZBondConversion 'G'
-///深圳分离债
+///深圳分離債
 #define TORA_TSTP_STP_SZBondSeparation 'H'
-///深圳A股期权
+///深圳A股期權
 #define TORA_TSTP_STP_SZASharesOption 'I'
-///深圳ETF期权
+///深圳ETF期權
 #define TORA_TSTP_STP_SZETFOption 'J'
 ///深圳跨境ETF
 #define TORA_TSTP_STP_SZCrossBorderETF 'K'
-///深圳黄金ETF
+///深圳黃金ETF
 #define TORA_TSTP_STP_SZGoldETF 'L'
-///深圳现金债券ETF
+///深圳現金債券ETF
 #define TORA_TSTP_STP_SZCashBondETF 'M'
-///深圳单市场股票ETF
+///深圳單市場股票ETF
 #define TORA_TSTP_STP_SZSingleMarketStockETF 'N'
-///深圳单市场实物债券ETF
+///深圳單市場實物債券ETF
 #define TORA_TSTP_STP_SZSingleMarketBondETF 'O'
-///深圳货币ETF
+///深圳貨幣ETF
 #define TORA_TSTP_STP_SZMonetaryFundETF 'P'
-///深圳创业板
+///深圳創業板
 #define TORA_TSTP_STP_SZGEM 'Q'
 ///深圳配股
 #define TORA_TSTP_STP_SZAllotment 'R'
-///深圳配债
+///深圳配債
 #define TORA_TSTP_STP_SZDistributeDebt 'S'
-///深圳标准券
+///深圳標準券
 #define TORA_TSTP_STP_SZStandard 'T'
-///深圳质押式回购
+///深圳質押式回購
 #define TORA_TSTP_STP_SZRepo 'U'
-///深圳封闭式基金
+///深圳封閉式基金
 #define TORA_TSTP_STP_SZCEFund 'V'
-///深圳开放式基金
+///深圳開放式基金
 #define TORA_TSTP_STP_SZOEFund 'W'
-///深圳跨境开放式基金
+///深圳跨境開放式基金
 #define TORA_TSTP_STP_SZCrossBorderOEFund 'X'
-///深圳跨市场市场股票ETF
+///深圳跨市場市場股票ETF
 #define TORA_TSTP_STP_SZCrossMarketStockETF 'Y'
-///深圳标准LOF基金
+///深圳標準LOF基金
 #define TORA_TSTP_STP_SZLOF 'Z'
 ///深圳跨境LOF基金
 #define TORA_TSTP_STP_SZCrossBorderLOF '1'
-///深圳传统分级母基金
+///深圳傳統分級母基金
 #define TORA_TSTP_STP_SZMontherStructFund '2'
-///深圳传统分级子基金
+///深圳傳統分級子基金
 #define TORA_TSTP_STP_SZSubStructFund '3'
-///深圳跨境分级母基金
+///深圳跨境分級母基金
 #define TORA_TSTP_STP_SZMontherCrossBorderStructFund '4'
-///深圳跨境分级子基金
+///深圳跨境分級子基金
 #define TORA_TSTP_STP_SZSubCrossBorderStructFund '5'
-///深圳可交换债
+///深圳可交換債
 #define TORA_TSTP_STP_SZExchangeableBond '6'
-///深圳创业板可转债
+///深圳創業板可轉債
 #define TORA_TSTP_STP_SZGEMConversionBond '7'
 
 typedef char TTORATstpSecurityTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpEndFlagType是一个结束标志类型
+/// TTORATstpEndFlagType是一個結束標誌型別
 /////////////////////////////////////////////////////////////////////////
-///待续
+///待續
 #define TORA_TSTP_EF_ToBeContinued '1'
-///批结束
+///批結束
 #define TORA_TSTP_EF_BatchEnd '2'
 ///全部完成
 #define TORA_TSTP_EF_Completed '3'
-///无数据
+///無資料
 #define TORA_TSTP_EF_NOP '4'
 
 typedef char TTORATstpEndFlagType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMarketIDType是一个市场代码类型
+/// TTORATstpMarketIDType是一個市場程式碼型別
 /////////////////////////////////////////////////////////////////////////
-///通用(内部使用)
+///通用(內部使用)
 #define TORA_TSTP_MKD_COMMON '0'
 ///上海A股
 #define TORA_TSTP_MKD_SHA '1'
@@ -1508,22 +1508,22 @@ typedef char TTORATstpEndFlagType;
 #define TORA_TSTP_MKD_SZThreeA '5'
 ///深圳三版B股
 #define TORA_TSTP_MKD_SZThreeB '6'
-///境外市场
+///境外市場
 #define TORA_TSTP_MKD_Foreign '7'
 
 typedef char TTORATstpMarketIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLogInAccountType是一个登录账户类型
+/// TTORATstpLogInAccountType是一個登入賬戶型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpLogInAccountType[21];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLogInAccountTypeType是一个登录账户类型类型
+/// TTORATstpLogInAccountTypeType是一個登入賬戶型別型別
 /////////////////////////////////////////////////////////////////////////
-///用户代码
+///使用者程式碼
 #define TORA_TSTP_LACT_UserID '0'
-///资金账号
+///資金賬號
 #define TORA_TSTP_LACT_AccountID '1'
 ///上海A股
 #define TORA_TSTP_LACT_SHAStock '2'
@@ -1543,78 +1543,78 @@ typedef char TTORATstpLogInAccountType[21];
 typedef char TTORATstpLogInAccountTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMarketStatusType是一个市场状态类型
+/// TTORATstpMarketStatusType是一個市場狀態型別
 /////////////////////////////////////////////////////////////////////////
 ///未知
 #define TORA_TSTP_MST_UnKnown '#'
-///开盘前
+///開盤前
 #define TORA_TSTP_MST_BeforeTrading '0'
-///连续交易
+///連續交易
 #define TORA_TSTP_MST_Continous '1'
-///收盘
+///收盤
 #define TORA_TSTP_MST_Closed '2'
-///开盘集合竞价
+///開盤集合競價
 #define TORA_TSTP_MST_OpenCallAuction '3'
 
 typedef char TTORATstpMarketStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpBigsInfoType是一个长字符串附加信息类型
+/// TTORATstpBigsInfoType是一個長字串附加資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpBigsInfoType[33];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpShortsInfoType是一个短字符串附加信息类型
+/// TTORATstpShortsInfoType是一個短字串附加資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpShortsInfoType[9];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpIntInfoType是一个整形附加信息类型
+/// TTORATstpIntInfoType是一個整形附加資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpIntInfoType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpFloatInfoType是一个浮点型附加信息类型
+/// TTORATstpFloatInfoType是一個浮點型附加資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef double TTORATstpFloatInfoType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpApiGroupIDType是一个Api工作组号类型
+/// TTORATstpApiGroupIDType是一個Api工作組號型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpApiGroupIDType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpApiRunModeType是一个Api运行模式类型
+/// TTORATstpApiRunModeType是一個Api執行模式型別
 /////////////////////////////////////////////////////////////////////////
-///单一
+///單一
 #define TORA_TSTP_ARM_Single '0'
-///集群
+///叢集
 #define TORA_TSTP_ARM_Group '1'
 
 typedef char TTORATstpApiRunModeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpDesignationTypeType是一个指定交易操作类型类型
+/// TTORATstpDesignationTypeType是一個指定交易操作型別型別
 /////////////////////////////////////////////////////////////////////////
-///指定交易登记
+///指定交易登記
 #define TORA_TSTP_DT_Register '0'
-///指定交易撤销登记
+///指定交易撤銷登記
 #define TORA_TSTP_DT_Cancel '1'
 
 typedef char TTORATstpDesignationTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCustodyTransferTypeType是一个深证转托管类型类型
+/// TTORATstpCustodyTransferTypeType是一個深證轉託管型別型別
 /////////////////////////////////////////////////////////////////////////
-///深证转托管注册
+///深證轉託管註冊
 #define TORA_TSTP_CT_Register '0'
-///深证转托管撤单
+///深證轉託管撤單
 #define TORA_TSTP_CT_Cancel '1'
 
 typedef char TTORATstpCustodyTransferTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpProperCtrlBusinessTypeType是一个适当性控制业务类别类型
+/// TTORATstpProperCtrlBusinessTypeType是一個適當性控制業務類別型別
 /////////////////////////////////////////////////////////////////////////
 ///空值
 #define TORA_TSTP_PCBT_None ' '
@@ -1622,99 +1622,99 @@ typedef char TTORATstpCustodyTransferTypeType;
 #define TORA_TSTP_PCBT_Other '0'
 ///上海退市整理
 #define TORA_TSTP_PCBT_SHDelisting '1'
-///风险警示
+///風險警示
 #define TORA_TSTP_PCBT_ST '2'
-///创业板
+///創業板
 #define TORA_TSTP_PCBT_GEM '3'
-///分级基金
+///分級基金
 #define TORA_TSTP_PCBT_StructFund '4'
-///债券
+///債券
 #define TORA_TSTP_PCBT_BondQualified '5'
-///暂停上市债
+///暫停上市債
 #define TORA_TSTP_PCBT_SuspendBond '6'
-///正回购
+///正回購
 #define TORA_TSTP_PCBT_Repurchase '7'
-///逆回购
+///逆回購
 #define TORA_TSTP_PCBT_ReverseRepur '8'
 ///深圳退市整理
 #define TORA_TSTP_PCBT_SZDelisting '9'
-///常规股票
+///常規股票
 #define TORA_TSTP_PCBT_Stock 'a'
-///常规股票信用
+///常規股票信用
 #define TORA_TSTP_PCBT_CreditStock 'b'
 
 typedef char TTORATstpProperCtrlBusinessTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpProperCtrlPassFlagType是一个适当性控制通过标示类型
+/// TTORATstpProperCtrlPassFlagType是一個適當性控制通過標示型別
 /////////////////////////////////////////////////////////////////////////
 ///空值
 #define TORA_TSTP_PCPF_None ' '
-///无条件通过
+///無條件通過
 #define TORA_TSTP_PCPF_AnywayPass '0'
-///匹配通过
+///匹配通過
 #define TORA_TSTP_PCPF_MatchPass '1'
-///有条件通过
+///有條件通過
 #define TORA_TSTP_PCPF_SelectPass '2'
-///专投豁免过
+///專投豁免過
 #define TORA_TSTP_PCPF_ProfInvestorPass '3'
 
 typedef char TTORATstpProperCtrlPassFlagType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCRiskLevelType是一个客户风险等级类型
+/// TTORATstpCRiskLevelType是一個客戶風險等級型別
 /////////////////////////////////////////////////////////////////////////
-///最低级别风险
+///最低級別風險
 #define TORA_TSTP_RLV_Lowest '0'
 ///保守型
 #define TORA_TSTP_RLV_Conservative '1'
-///谨慎型
+///謹慎型
 #define TORA_TSTP_RLV_Cautious '2'
-///稳健型
+///穩健型
 #define TORA_TSTP_RLV_Steady '3'
-///积极型
+///積極型
 #define TORA_TSTP_RLV_Positive '4'
-///激进型
+///激進型
 #define TORA_TSTP_RLV_Aggressive '5'
 
 typedef char TTORATstpCRiskLevelType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpProfInvestorTypeType是一个专业投资者类别类型
+/// TTORATstpProfInvestorTypeType是一個專業投資者類別型別
 /////////////////////////////////////////////////////////////////////////
-///非专业投资者
+///非專業投資者
 #define TORA_TSTP_PIT_NotProf '0'
-///当然机构专业投资者
+///當然機構專業投資者
 #define TORA_TSTP_PIT_OCInstiPro '1'
-///法人或机构专业投资者
+///法人或機構專業投資者
 #define TORA_TSTP_PIT_InstiPro '2'
-///自然人专业投资者
+///自然人專業投資者
 #define TORA_TSTP_PIT_PersonPro '3'
-///认定法人或机构专业投资者
+///認定法人或機構專業投資者
 #define TORA_TSTP_PIT_ConfirmInstiPro '4'
-///认定自然人专业投资者
+///認定自然人專業投資者
 #define TORA_TSTP_PIT_ConfirmPersonPro '5'
 
 typedef char TTORATstpProfInvestorTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLOrderTypeType是一个订单类别类型
+/// TTORATstpLOrderTypeType是一個訂單類別型別
 /////////////////////////////////////////////////////////////////////////
-///市价
+///市價
 #define TORA_TSTP_LOT_Market '1'
-///限价
+///限價
 #define TORA_TSTP_LOT_Limit '2'
-///本方最优
+///本方最優
 #define TORA_TSTP_LOT_HomeBest '3'
 
 typedef char TTORATstpLOrderTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpLSideType是一个委托方向类型
+/// TTORATstpLSideType是一個委託方向型別
 /////////////////////////////////////////////////////////////////////////
-///买
+///買
 #define TORA_TSTP_LSD_Buy '1'
-///卖
+///賣
 #define TORA_TSTP_LSD_Sell '2'
 ///借入
 #define TORA_TSTP_LSD_Borrow '3'
@@ -1724,129 +1724,129 @@ typedef char TTORATstpLOrderTypeType;
 typedef char TTORATstpLSideType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpExecTypeType是一个成交类别类型
+/// TTORATstpExecTypeType是一個成交類別型別
 /////////////////////////////////////////////////////////////////////////
 ///成交
 #define TORA_TSTP_ECT_Fill '1'
-///撤销
+///撤銷
 #define TORA_TSTP_ECT_Cancel '2'
 
 typedef char TTORATstpExecTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCondCheckType是一个委托条件检查类型
+/// TTORATstpCondCheckType是一個委託條件檢查型別
 /////////////////////////////////////////////////////////////////////////
-///不做任何检查
+///不做任何檢查
 #define TORA_TSTP_CCT_None '0'
-///自成交检查
+///自成交檢查
 #define TORA_TSTP_CCT_SelfDeal '1'
 
 typedef char TTORATstpCondCheckType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpHDSerialType是一个硬盘序列号类型
+/// TTORATstpHDSerialType是一個硬碟序列號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpHDSerialType[33];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMDSubModeType是一个行情订阅模式类型
+/// TTORATstpMDSubModeType是一個行情訂閱模式型別
 /////////////////////////////////////////////////////////////////////////
-///TCP连接模式
+///TCP連線模式
 #define TORA_TSTP_MST_TCP '0'
-///UDP单播模式
+///UDP單播模式
 #define TORA_TSTP_MST_UDP '1'
-///UDP组播模式
+///UDP組播模式
 #define TORA_TSTP_MST_MCAST '2'
 
 typedef char TTORATstpMDSubModeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpMDSecurityStatType是一个行情证券状态类型
+/// TTORATstpMDSecurityStatType是一個行情證券狀態型別
 /////////////////////////////////////////////////////////////////////////
-///开盘前
+///開盤前
 #define TORA_TSTP_MSST_PreOpen '0'
-///集合竞价
+///集合競價
 #define TORA_TSTP_MSST_CallAuction '1'
-///连续交易
+///連續交易
 #define TORA_TSTP_MSST_Continous '2'
 ///休市
 #define TORA_TSTP_MSST_Pause '3'
 ///停牌
 #define TORA_TSTP_MSST_Suspend '4'
-///长期停牌
+///長期停牌
 #define TORA_TSTP_MSST_LongSuspend '5'
-///波动性中断
+///波動性中斷
 #define TORA_TSTP_MSST_UndulationInt '6'
-///熔断可恢复
+///熔斷可恢復
 #define TORA_TSTP_MSST_CircuitBreak '7'
-///熔断不可恢复
+///熔斷不可恢復
 #define TORA_TSTP_MSST_CircuitBreakU '8'
-///闭市
+///閉市
 #define TORA_TSTP_MSST_Close '9'
 ///其它
 #define TORA_TSTP_MSST_Other 'a'
-///收盘集合竞价
+///收盤集合競價
 #define TORA_TSTP_MSST_CloseCallAuction 'b'
 
 typedef char TTORATstpMDSecurityStatType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpCommitStatusType是一个文件委托提交状态类型
+/// TTORATstpCommitStatusType是一個檔案委託提交狀態型別
 /////////////////////////////////////////////////////////////////////////
 ///初始
 #define TORA_TSTP_FOCS_Init '0'
-///已复核
+///已複核
 #define TORA_TSTP_FOCS_Reviewed '1'
-///处理失败
+///處理失敗
 #define TORA_TSTP_FOCS_Failed '2'
 
 typedef char TTORATstpCommitStatusType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpParamTypeType是一个股东参数类型类型
+/// TTORATstpParamTypeType是一個股東引數型別型別
 /////////////////////////////////////////////////////////////////////////
-///最大买量限制
+///最大買量限制
 #define TORA_TSTP_SPT_MaxBuyLimit '0'
-///最大卖量限制
+///最大賣量限制
 #define TORA_TSTP_SPT_MaxSellLimit '1'
-///买入大额申报限制比例
+///買入大額申報限制比例
 #define TORA_TSTP_SPT_LargeBuyLimitRatio '2'
-///卖出大额申报限制比例
+///賣出大額申報限制比例
 #define TORA_TSTP_SPT_LargeSelLimitRatio '3'
-///风险警示买入上限
+///風險警示買入上限
 #define TORA_TSTP_SPT_RiskWarnBoardLimitVol '4'
-///连续申报时间间隔
+///連續申報時間間隔
 #define TORA_TSTP_SPT_SeriesDecInterval '5'
-///连续申报单位时间委托笔数
+///連續申報單位時間委託筆數
 #define TORA_TSTP_SPT_SeriesLimitPerUnit '6'
-///影响收盘价波动比例
+///影響收盤價波動比例
 #define TORA_TSTP_SPT_ClosePriceScopeRatio '7'
-///炒新控制最大上市时间
+///炒新控制最大上市時間
 #define TORA_TSTP_SPT_OpenDateLimit '8'
-///涨跌停板虚假申报占未成交比例
+///漲跌停板虛假申報佔未成交比例
 #define TORA_TSTP_SPT_LimitBoardShamRatio '9'
-///撤单限制比例
+///撤單限制比例
 #define TORA_TSTP_SPT_CancelOrderRatio 'a'
 
 typedef char TTORATstpParamTypeType;
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpContentType是一个消息正文类型
+/// TTORATstpContentType是一個訊息正文型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpContentType[501];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpStatusMsgType是一个状态信息类型
+/// TTORATstpStatusMsgType是一個狀態資訊型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpStatusMsgType[93];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpIPONumberIDType是一个新股申购配股号类型
+/// TTORATstpIPONumberIDType是一個新股申購配股號型別
 /////////////////////////////////////////////////////////////////////////
 typedef char TTORATstpIPONumberIDType[31];
 
 /////////////////////////////////////////////////////////////////////////
-/// TTORATstpPageLocateType是一个页定位符类型
+/// TTORATstpPageLocateType是一個頁定位符型別
 /////////////////////////////////////////////////////////////////////////
 typedef int TTORATstpPageLocateType;
 #endif

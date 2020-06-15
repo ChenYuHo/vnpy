@@ -105,7 +105,7 @@ class SpreadDataEngine:
         self.load_setting()
         self.register_event()
 
-        self.write_log("价差数据引擎启动成功")
+        self.write_log("價差資料引擎啟動成功")
 
     def stop(self):
         """"""
@@ -262,7 +262,7 @@ class SpreadDataEngine:
     ) -> None:
         """"""
         if name in self.spreads:
-            self.write_log("价差创建失败，名称重复：{}".format(name))
+            self.write_log("價差建立失敗，名稱重複：{}".format(name))
             return
 
         legs: List[LegData] = []
@@ -297,7 +297,7 @@ class SpreadDataEngine:
         if save:
             self.save_setting()
 
-        self.write_log("价差创建成功：{}".format(name))
+        self.write_log("價差建立成功：{}".format(name))
         self.put_data_event(spread)
 
     def remove_spread(self, name: str) -> None:
@@ -311,7 +311,7 @@ class SpreadDataEngine:
             self.symbol_spread_map[leg.vt_symbol].remove(spread)
 
         self.save_setting()
-        self.write_log("价差移除成功：{}，重启后生效".format(name))
+        self.write_log("價差移除成功：{}，重啟後生效".format(name))
 
     def get_spread(self, name: str) -> SpreadData:
         """"""
@@ -352,7 +352,7 @@ class SpreadAlgoEngine:
         """"""
         self.register_event()
 
-        self.write_log("价差算法引擎启动成功")
+        self.write_log("價差演算法引擎啟動成功")
 
     def stop(self):
         """"""
@@ -444,7 +444,7 @@ class SpreadAlgoEngine:
         # Find spread object
         spread = self.spreads.get(spread_name, None)
         if not spread:
-            self.write_log("创建价差算法失败，找不到价差：{}".format(spread_name))
+            self.write_log("建立價差演算法失敗，找不到價差：{}".format(spread_name))
             return ""
 
         # Generate algoid str
@@ -483,7 +483,7 @@ class SpreadAlgoEngine:
         """"""
         algo = self.algos.get(algoid, None)
         if not algo:
-            self.write_log("停止价差算法失败，找不到算法：{}".format(algoid))
+            self.write_log("停止價差演算法失敗，找不到演算法：{}".format(algoid))
             return
 
         algo.stop()
@@ -565,7 +565,7 @@ class SpreadAlgoEngine:
         """"""
         order = self.main_engine.get_order(vt_orderid)
         if not order:
-            self.write_algo_log(algo, "撤单失败，找不到委托{}".format(vt_orderid))
+            self.write_algo_log(algo, "撤單失敗，找不到委託{}".format(vt_orderid))
             return
 
         req = order.create_cancel_request()
@@ -612,7 +612,7 @@ class SpreadStrategyEngine:
         self.load_strategy_setting()
         self.register_event()
 
-        self.write_log("价差策略引擎启动成功")
+        self.write_log("價差策略引擎啟動成功")
 
     def close(self):
         """"""
@@ -651,7 +651,7 @@ class SpreadStrategyEngine:
                 if (isinstance(value, type) and issubclass(value, SpreadStrategyTemplate) and value is not SpreadStrategyTemplate):
                     self.classes[value.__name__] = value
         except:  # noqa
-            msg = f"策略文件{module_name}加载失败，触发异常：\n{traceback.format_exc()}"
+            msg = f"策略檔案{module_name}載入失敗，觸發異常：\n{traceback.format_exc()}"
             self.write_log(msg)
 
     def get_all_strategy_class_names(self):
@@ -762,7 +762,7 @@ class SpreadStrategyEngine:
             strategy.trading = False
             strategy.inited = False
 
-            msg = f"触发异常已停止\n{traceback.format_exc()}"
+            msg = f"觸發異常已停止\n{traceback.format_exc()}"
             self.write_strategy_log(strategy, msg)
 
     def add_strategy(
@@ -772,17 +772,17 @@ class SpreadStrategyEngine:
         Add a new strategy.
         """
         if strategy_name in self.strategies:
-            self.write_log(f"创建策略失败，存在重名{strategy_name}")
+            self.write_log(f"建立策略失敗，存在重名{strategy_name}")
             return
 
         strategy_class = self.classes.get(class_name, None)
         if not strategy_class:
-            self.write_log(f"创建策略失败，找不到策略类{class_name}")
+            self.write_log(f"建立策略失敗，找不到策略類{class_name}")
             return
 
         spread = self.spread_engine.get_spread(spread_name)
         if not spread:
-            self.write_log(f"创建策略失败，找不到价差{spread_name}")
+            self.write_log(f"建立策略失敗，找不到價差{spread_name}")
             return
 
         strategy = strategy_class(self, strategy_name, spread, setting)
@@ -813,7 +813,7 @@ class SpreadStrategyEngine:
         """
         strategy = self.strategies[strategy_name]
         if strategy.trading:
-            self.write_log(f"策略{strategy.strategy_name}移除失败，请先停止")
+            self.write_log(f"策略{strategy.strategy_name}移除失敗，請先停止")
             return
 
         # Remove setting
@@ -833,7 +833,7 @@ class SpreadStrategyEngine:
         strategy = self.strategies[strategy_name]
 
         if strategy.inited:
-            self.write_log(f"{strategy_name}已经完成初始化，禁止重复操作")
+            self.write_log(f"{strategy_name}已經完成初始化，禁止重複操作")
             return
 
         self.call_strategy_func(strategy, strategy.on_init)
@@ -846,11 +846,11 @@ class SpreadStrategyEngine:
         """"""
         strategy = self.strategies[strategy_name]
         if not strategy.inited:
-            self.write_log(f"策略{strategy.strategy_name}启动失败，请先初始化")
+            self.write_log(f"策略{strategy.strategy_name}啟動失敗，請先初始化")
             return
 
         if strategy.trading:
-            self.write_log(f"{strategy_name}已经启动，请勿重复操作")
+            self.write_log(f"{strategy_name}已經啟動，請勿重複操作")
             return
 
         self.call_strategy_func(strategy, strategy.on_start)
@@ -994,7 +994,7 @@ class SpreadStrategyEngine:
         order = self.main_engine.get_order(vt_orderid)
         if not order:
             self.write_strategy_log(
-                strategy, "撤单失败，找不到委托{}".format(vt_orderid))
+                strategy, "撤單失敗，找不到委託{}".format(vt_orderid))
             return
 
         req = order.create_cancel_request()
@@ -1020,7 +1020,7 @@ class SpreadStrategyEngine:
         if strategy:
             subject = f"{strategy.strategy_name}"
         else:
-            subject = "价差策略引擎"
+            subject = "價差策略引擎"
 
         self.main_engine.send_email(subject, msg)
 

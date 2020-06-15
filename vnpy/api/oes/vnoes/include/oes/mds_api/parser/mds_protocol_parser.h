@@ -17,7 +17,7 @@
 /**
  * @file    mds_protocol_parser.h
  *
- * 协议转换处理
+ * 協議轉換處理
  *
  * @version 1.0 2016/2/20
  * @since   2016/1/3
@@ -38,11 +38,11 @@ extern "C" {
 
 
 /* ===================================================================
- * 消息编码/解码函数声明
+ * 訊息編碼/解碼函式宣告
  * =================================================================== */
 
 /*
- * 请求消息编码处理（编码为JSON等格式，用于向服务器发送请求消息）
+ * 請求訊息編碼處理（編碼為JSON等格式，用於向伺服器傳送請求訊息）
  */
 void*               MdsParser_EncodeReq(
                             SMsgHeadT *pReqHead,
@@ -52,7 +52,7 @@ void*               MdsParser_EncodeReq(
                             const char *pRemoteInfo);
 
 /*
- * 请求消息解码处理（解码为二进制结构体，用于接收客户端的请求消息）
+ * 請求訊息解碼處理（解碼為二進位制結構體，用於接收客戶端的請求訊息）
  */
 MdsMktReqMsgBodyT*  MdsParser_DecodeReq(
                             SMsgHeadT *pReqHead,
@@ -61,7 +61,7 @@ MdsMktReqMsgBodyT*  MdsParser_DecodeReq(
                             const char *pRemoteInfo);
 
 /*
- * 应答消息编码处理（编码为JSON等格式，用于向客户端发送应答消息）
+ * 應答訊息編碼處理（編碼為JSON等格式，用於向客戶端傳送應答訊息）
  */
 void*               MdsParser_EncodeRsp(
                             SMsgHeadT *pRspHead,
@@ -72,7 +72,7 @@ void*               MdsParser_EncodeRsp(
                             BOOL isCopyBinary);
 
 /*
- * 应答消息解码处理（解码为二进制结构体，用于接收服务器端返回的应答消息）
+ * 應答訊息解碼處理（解碼為二進位制結構體，用於接收伺服器端返回的應答訊息）
  */
 MdsMktRspMsgBodyT*  MdsParser_DecodeRsp(
                             SMsgHeadT *pRspHead,
@@ -81,7 +81,7 @@ MdsMktRspMsgBodyT*  MdsParser_DecodeRsp(
                             const char *pRemoteInfo);
 
 /*
- * 返回字符串形式的行情数据类型
+ * 返回字串形式的行情資料型別
  */
 const char*         MdsParser_GetMdStreamIdString(
                             uint8 exchId,

@@ -128,7 +128,7 @@ class CtaEngine(BaseEngine):
         """
         result = rqdata_client.init()
         if result:
-            self.write_log("RQData数据接口初始化成功")
+            self.write_log("RQData資料介面初始化成功")
 
     def query_bar_from_rq(
         self, symbol: str, exchange: Exchange, interval: Interval, start: datetime, end: datetime
@@ -432,7 +432,7 @@ class CtaEngine(BaseEngine):
         """
         order = self.main_engine.get_order(vt_orderid)
         if not order:
-            self.write_log(f"撤单失败，找不到委托{vt_orderid}", strategy)
+            self.write_log(f"撤單失敗，找不到委託{vt_orderid}", strategy)
             return
 
         req = order.create_cancel_request()
@@ -474,7 +474,7 @@ class CtaEngine(BaseEngine):
         """
         contract = self.main_engine.get_contract(strategy.vt_symbol)
         if not contract:
-            self.write_log(f"委托失败，找不到合约：{strategy.vt_symbol}", strategy)
+            self.write_log(f"委託失敗，找不到合約：{strategy.vt_symbol}", strategy)
             return ""
 
         # Round order price and volume to nearest incremental value
@@ -604,7 +604,7 @@ class CtaEngine(BaseEngine):
             strategy.trading = False
             strategy.inited = False
 
-            msg = f"触发异常已停止\n{traceback.format_exc()}"
+            msg = f"觸發異常已停止\n{traceback.format_exc()}"
             self.write_log(msg, strategy)
 
     def add_strategy(
@@ -614,12 +614,12 @@ class CtaEngine(BaseEngine):
         Add a new strategy.
         """
         if strategy_name in self.strategies:
-            self.write_log(f"创建策略失败，存在重名{strategy_name}")
+            self.write_log(f"建立策略失敗，存在重名{strategy_name}")
             return
 
         strategy_class = self.classes.get(class_name, None)
         if not strategy_class:
-            self.write_log(f"创建策略失败，找不到策略类{class_name}")
+            self.write_log(f"建立策略失敗，找不到策略類{class_name}")
             return
 
         strategy = strategy_class(self, strategy_name, vt_symbol, setting)
@@ -647,10 +647,10 @@ class CtaEngine(BaseEngine):
         strategy = self.strategies[strategy_name]
 
         if strategy.inited:
-            self.write_log(f"{strategy_name}已经完成初始化，禁止重复操作")
+            self.write_log(f"{strategy_name}已經完成初始化，禁止重複操作")
             return
 
-        self.write_log(f"{strategy_name}开始执行初始化")
+        self.write_log(f"{strategy_name}開始執行初始化")
 
         # Call on_init function of strategy
         self.call_strategy_func(strategy, strategy.on_init)
@@ -670,7 +670,7 @@ class CtaEngine(BaseEngine):
                 symbol=contract.symbol, exchange=contract.exchange)
             self.main_engine.subscribe(req, contract.gateway_name)
         else:
-            self.write_log(f"行情订阅失败，找不到合约{strategy.vt_symbol}", strategy)
+            self.write_log(f"行情訂閱失敗，找不到合約{strategy.vt_symbol}", strategy)
 
         # Put event to update init completed status.
         strategy.inited = True
@@ -683,11 +683,11 @@ class CtaEngine(BaseEngine):
         """
         strategy = self.strategies[strategy_name]
         if not strategy.inited:
-            self.write_log(f"策略{strategy.strategy_name}启动失败，请先初始化")
+            self.write_log(f"策略{strategy.strategy_name}啟動失敗，請先初始化")
             return
 
         if strategy.trading:
-            self.write_log(f"{strategy_name}已经启动，请勿重复操作")
+            self.write_log(f"{strategy_name}已經啟動，請勿重複操作")
             return
 
         self.call_strategy_func(strategy, strategy.on_start)
@@ -734,7 +734,7 @@ class CtaEngine(BaseEngine):
         """
         strategy = self.strategies[strategy_name]
         if strategy.trading:
-            self.write_log(f"策略{strategy.strategy_name}移除失败，请先停止")
+            self.write_log(f"策略{strategy.strategy_name}移除失敗，請先停止")
             return
 
         # Remove setting
@@ -791,7 +791,7 @@ class CtaEngine(BaseEngine):
                 if (isinstance(value, type) and issubclass(value, CtaTemplate) and value is not CtaTemplate):
                     self.classes[value.__name__] = value
         except:  # noqa
-            msg = f"策略文件{module_name}加载失败，触发异常：\n{traceback.format_exc()}"
+            msg = f"策略檔案{module_name}載入失敗，觸發異常：\n{traceback.format_exc()}"
             self.write_log(msg)
 
     def load_strategy_data(self):

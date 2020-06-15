@@ -44,9 +44,9 @@ class ComstarGateway(BaseGateway):
     """
 
     default_setting = {
-        "交易服务器": "",
-        "用户名": "",
-        "密码": "",
+        "交易伺服器": "",
+        "使用者名稱": "",
+        "密碼": "",
         "Key": ""
     }
 
@@ -59,9 +59,9 @@ class ComstarGateway(BaseGateway):
 
     def connect(self, setting: dict):
         """"""
-        td_address = setting["交易服务器"]
-        username = setting["用户名"]
-        password = setting["密码"]
+        td_address = setting["交易伺服器"]
+        username = setting["使用者名稱"]
+        password = setting["密碼"]
         key = setting["Key"]
 
         self.api.connect(username, password, key, td_address)
@@ -71,7 +71,7 @@ class ComstarGateway(BaseGateway):
         # Symbol format: 180406_T0 or 180406_T1
         symbol, settle_type, *_ = req.symbol.split("_") + [""]
         if settle_type not in {"T0", "T1"}:
-            self.write_log("请输入清算速度T0或T1")
+            self.write_log("請輸入清算速度T0或T1")
             return ""
 
         data = vn_encode(req)
@@ -85,12 +85,12 @@ class ComstarGateway(BaseGateway):
         req.offset = Offset.NONE
 
         if req.type not in {OrderType.LIMIT, OrderType.FAK}:
-            self.write_log("仅支持限价单和FAK单")
+            self.write_log("僅支援限價單和FAK單")
             return ""
 
         symbol, settle_type, *_ = req.symbol.split("_") + [""]
         if settle_type not in {"T0", "T1"}:
-            self.write_log("请输入清算速度T0或T1")
+            self.write_log("請輸入清算速度T0或T1")
             return ""
 
         data = vn_encode(req)
@@ -184,9 +184,9 @@ class UserApi(TdApi):
         """"""
         if data["status"]:
             self.gateway.query_all()
-            self.gateway.write_log("服务器登录成功")
+            self.gateway.write_log("伺服器登入成功")
         else:
-            self.gateway.write_log("服务器登录失败")
+            self.gateway.write_log("伺服器登入失敗")
 
     def on_disconnected(self, reason: str):
         """"""
@@ -200,7 +200,7 @@ class UserApi(TdApi):
                 contract.gateway_name = self.gateway_name
                 self.gateway.on_contract(contract)
 
-        self.gateway.write_log("合约信息查询成功")
+        self.gateway.write_log("合約資訊查詢成功")
 
     def on_all_orders(self, orders: Sequence[dict]):
         """"""
@@ -209,7 +209,7 @@ class UserApi(TdApi):
             order.gateway_name = self.gateway_name
             self.gateway.on_order(order)
 
-        self.gateway.write_log("委托信息查询成功")
+        self.gateway.write_log("委託資訊查詢成功")
 
     def on_all_trades(self, trades: Sequence[dict]):
         """"""
@@ -218,14 +218,14 @@ class UserApi(TdApi):
             trade.gateway_name = self.gateway_name
             self.gateway.on_trade(trade)
 
-        self.gateway.write_log("成交信息查询成功")
+        self.gateway.write_log("成交資訊查詢成功")
 
     def on_auth(self, status: bool):
         """"""
         if status:
-            self.gateway.write_log("服务器授权验证成功")
+            self.gateway.write_log("伺服器授權驗證成功")
         else:
-            self.gateway.write_log("服务器授权验证失败")
+            self.gateway.write_log("伺服器授權驗證失敗")
 
 
 def parse_tick(data: dict) -> TickData:
@@ -331,7 +331,7 @@ def parse_contract(data: dict, settle_type: str) -> ContractData:
 
 def parse_log(data: dict) -> LogData:
     """
-    从api收到的data里解析出LogData
+    從api收到的data裡解析出LogData
     """
     log = LogData(
         msg=data["msg"],

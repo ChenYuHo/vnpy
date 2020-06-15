@@ -17,7 +17,7 @@
 /**
  * @file    spk_string_convert.h
  *
- * 字符串类型转换函数
+ * 字串型別轉換函式
  *
  * @version $Id$
  * @since   2012/01/05
@@ -43,7 +43,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 跨平台兼容处理
+ * 跨平臺相容處理
  * =================================================================== */
 
 #if defined (__WINDOWS__) || defined (__MINGW__)
@@ -68,122 +68,122 @@ int64       __SPK_WIN32_strtoll(const char *pStr, char **ppEndPtr, int base);
 
 
 /* ===================================================================
- * 类型转换函数声明 (字符串 --> 数值型)
- * ("数值型 --> 字符串" 类的类型转换函数定义在后面的 Inline 函数区)
+ * 型別轉換函式宣告 (字串 --> 數值型)
+ * ("數值型 --> 字串" 類的型別轉換函式定義在後面的 Inline 函式區)
  * =================================================================== */
 
 /*
- * 转换字符串至int32
+ * 轉換字串至int32
  */
 int32   SStr_Strtoi(const char *pStr, int32 *pValue);
 
 /*
- * 转换字符串至long
+ * 轉換字串至long
  */
 int32   SStr_Strtol(const char *pStr, long *pValue);
 
 /*
- * 转换字符串至int64
+ * 轉換字串至int64
  */
 int32   SStr_Strtoll(const char *pStr, int64 *pValue);
 
 /*
- * 转换字符串至float
+ * 轉換字串至float
  */
 int32   SStr_Strtof(const char *pStr, float *pValue);
 
 /*
- * 转换字符串至double
+ * 轉換字串至double
  */
 int32   SStr_Strtod(const char *pStr, double *pValue);
 
 /*
- * 转换字符串至long double
+ * 轉換字串至long double
  */
 int32   SStr_Strtold(const char *pStr, float128 *pValue);
 
 /*
- * 整型数值转为字符串
+ * 整型數值轉為字串
  */
 char*   SStr_ItoStr(char *pBuf, int32 num);
 
 /*
- * 长整型数值转为字符串
+ * 長整型數值轉為字串
  */
 char*   SStr_LtoStr(char *pBuf, long num);
 
 /*
- * int64型数值转为字符串
+ * int64型數值轉為字串
  */
 char*   SStr_LltoStr(char *pBuf, int64 num);
 
 /*
- * float128型数值转为字符串
+ * float128型數值轉為字串
  */
 char*   SStr_LdtoStr(char *pBuf, float128 num, int32 scale);
 
 /*
- * float128型数值转为字符串
+ * float128型數值轉為字串
  */
 char*   SStr_FixedLdtoStr(char *pBuf, float128 num, int32 precision,
                 int32 scale);
 
 /*
- * 整型数值转为十六进制形式的字符串
+ * 整型數值轉為十六進位制形式的字串
  */
 char*   SStr_XtoStr(char *pBuf, int32 num);
 
 /*
- * 校验字符串是否是有效的十进制整型数值字符串
+ * 校驗字串是否是有效的十進位制整型數值字串
  */
 BOOL    SStr_IsDecimalInteger(const char *pStr);
 
 /**
- * 校验字符串是否是有效的十六进制整型数值字符串
+ * 校驗字串是否是有效的十六進位制整型數值字串
  */
 BOOL    SStr_IsHexInteger(const char *pStr);
 
 /*
- * 校验字符串是否是有效的整型数值字符串
+ * 校驗字串是否是有效的整型數值字串
  */
 BOOL    SStr_IsInteger(const char *pStr, BOOL isUnitAble);
 
 /*
- * 校验字符串是否是有效的数值型字符串
+ * 校驗字串是否是有效的數值型字串
  */
 BOOL    SStr_IsNumeric(const char *pStr, BOOL isUnitAble);
 
 /*
- * 转换带单位的数值型字符串为长整型数值
+ * 轉換帶單位的數值型字串為長整型數值
  */
 int64   SStr_ParseUnittedInteger(const char *pStr);
 
 /*
- * 转换带单位的数值型字符串为长整型数值 (可指定当字符串为空时的默认值)
+ * 轉換帶單位的數值型字串為長整型數值 (可指定當字串為空時的預設值)
  */
 int64   SStr_ParseUnittedInteger2(const char *pStr, int32 defaultValue);
 
 /*
- * 解析BOOL型字符串
+ * 解析BOOL型字串
  */
 int32   SStr_ParseBoolean(const char *pStr);
 
 /*
- * 解析BOOL型字符串 (可指定当字符串为空时的默认值)
+ * 解析BOOL型字串 (可指定當字串為空時的預設值)
  */
 int32   SStr_ParseBoolean2(const char *pStr, int32 defaultValue);
 /* -------------------------           */
 
 
 /* ===================================================================
- * 类型转换相关的 Inline 函数 (数值型 --> 字符串)
+ * 型別轉換相關的 Inline 函式 (數值型 --> 字串)
  * =================================================================== */
 
 /**
- * 解析10进制数值型字符串
+ * 解析10進位制數值型字串
  *
- * @param   pValue  待转换的数值字符串
- * @return  转换后的数值
+ * @param   pValue  待轉換的數值字串
+ * @return  轉換後的數值
  */
 static __inline long
 SStr_StrtoL10(const char *pValue) {
@@ -192,10 +192,10 @@ SStr_StrtoL10(const char *pValue) {
 
 
 /**
- * 解析10进制数值型字符串
+ * 解析10進位制數值型字串
  *
- * @param   pValue  待转换的数值字符串
- * @return  转换后的数值
+ * @param   pValue  待轉換的數值字串
+ * @return  轉換後的數值
  */
 static __inline int64
 SStr_StrtoLL10(const char *pValue) {
@@ -204,10 +204,10 @@ SStr_StrtoLL10(const char *pValue) {
 
 
 /**
- * 解析10进制数值型字符串
+ * 解析10進位制數值型字串
  *
- * @param   pValue  待转换的数值字符串
- * @return  转换后的数值
+ * @param   pValue  待轉換的數值字串
+ * @return  轉換後的數值
  */
 static __inline int32
 SStr_StrtoI10(const char *pValue) {
@@ -216,11 +216,11 @@ SStr_StrtoI10(const char *pValue) {
 
 
 /**
- * 解析指定长度的10进制数值型字符串
+ * 解析指定長度的10進位制數值型字串
  *
- * @param   pValue  待转换的数值字符串
- * @param   len     数值字符串的有效长度
- * @return  转换后的数值
+ * @param   pValue  待轉換的數值字串
+ * @param   len     數值字串的有效長度
+ * @return  轉換後的數值
  */
 static __inline long
 SStr_FixedStrtoL10(const char *pValue, int32 len) {
@@ -235,11 +235,11 @@ SStr_FixedStrtoL10(const char *pValue, int32 len) {
 
 
 /**
- * 解析指定长度的10进制数值型字符串
+ * 解析指定長度的10進位制數值型字串
  *
- * @param   pValue  待转换的数值字符串
- * @param   len     数值字符串的有效长度
- * @return  转换后的数值
+ * @param   pValue  待轉換的數值字串
+ * @param   len     數值字串的有效長度
+ * @return  轉換後的數值
  */
 static __inline int64
 SStr_FixedStrtoLL10(const char *pValue, int32 len) {
@@ -254,11 +254,11 @@ SStr_FixedStrtoLL10(const char *pValue, int32 len) {
 
 
 /**
- * 解析指定长度的10进制数值型字符串
+ * 解析指定長度的10進位制數值型字串
  *
- * @param   pValue  待转换的数值字符串
- * @param   len     数值字符串的有效长度
- * @return  转换后的数值
+ * @param   pValue  待轉換的數值字串
+ * @param   len     數值字串的有效長度
+ * @return  轉換後的數值
  */
 static __inline int32
 SStr_FixedStrtoI10(const char *pValue, int32 len) {

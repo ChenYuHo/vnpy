@@ -155,7 +155,7 @@ class SinopacGateway(BaseGateway):
 
     def connect(self, setting: dict):
         simulation = True if setting["環境"] == "模擬" else False
-        self.write_log(f"使用永豐金證券 {setting['環境']} 平台")
+        self.write_log(f"使用永豐金證券 {setting['環境']} 平臺")
         if self.api:
             self.api.logout()
         self.api = sj.Shioaji(simulation=simulation)
@@ -164,7 +164,7 @@ class SinopacGateway(BaseGateway):
         try:
             self.api.login(userid, password, contracts_cb=self.query_contract)
         except Exception as exc:
-            self.write_log(f"登入失败. [{exc}]")
+            self.write_log(f"登入失敗. [{exc}]")
             return
         self.write_log(f"登入成功. [{userid}]")
         self.select_default_account(setting.get("預設現貨帳號", 0), setting.get("預設期貨帳號", 0))

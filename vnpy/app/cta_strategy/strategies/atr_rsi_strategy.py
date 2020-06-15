@@ -13,7 +13,7 @@ from vnpy.app.cta_strategy import (
 class AtrRsiStrategy(CtaTemplate):
     """"""
 
-    author = "用Python的交易员"
+    author = "用Python的交易員"
 
     atr_length = 22
     atr_ma_length = 10
@@ -69,7 +69,7 @@ class AtrRsiStrategy(CtaTemplate):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """

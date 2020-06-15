@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////////////////////////////
-///@company 上海泰琰信息科技有限公司
+///@company 上海泰琰資訊科技有限公司
 ///@file TORATstpTraderApi.h
-///@brief 定义了客户端接口
+///@brief 定義了客戶端介面
 ///@history 
 /////////////////////////////////////////////////////////////////////////
 
@@ -27,223 +27,223 @@
 class CTORATstpTraderSpi
 {
 public:
-	///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
+	///當客戶端與交易後臺建立起通訊連線時（還未登入前），該方法被呼叫。
 	virtual void OnFrontConnected(){};
 	
-	///当客户端与交易后台通信连接断开时，该方法被调用。当发生这个情况后，API会自动重新连接，客户端可不做处理。
-	///@param nReason 错误原因
-	///        -3 连接已断开
-	///        -4 网络读失败
-	///        -5 网络写失败
-	///        -6 订阅流错误
-	///        -7 流序号错误
-	///        -8 错误的心跳报文
-	///        -9 错误的报文
+	///當客戶端與交易後臺通訊連線斷開時，該方法被呼叫。當發生這個情況後，API會自動重新連線，客戶端可不做處理。
+	///@param nReason 錯誤原因
+	///        -3 連線已斷開
+	///        -4 網路讀失敗
+	///        -5 網路寫失敗
+	///        -6 訂閱流錯誤
+	///        -7 流序號錯誤
+	///        -8 錯誤的心跳報文
+	///        -9 錯誤的報文
 	virtual void OnFrontDisconnected(int nReason){};
 				
-	///错误应答
+	///錯誤應答
 	virtual void OnRspError(CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 	
 		
-	//登录应答	
+	//登入應答	
 	virtual void OnRspUserLogin(CTORATstpRspUserLoginField *pRspUserLoginField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//登出应答	
+	//登出應答	
 	virtual void OnRspUserLogout(CTORATstpUserLogoutField *pUserLogoutField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//修改密码应答	
+	//修改密碼應答	
 	virtual void OnRspUserPasswordUpdate(CTORATstpUserPasswordUpdateField *pUserPasswordUpdateField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//请求录入设备序列应答	
+	//請求錄入裝置序列應答	
 	virtual void OnRspInputDeviceSerial(CTORATstpRspInputDeviceSerialField *pRspInputDeviceSerialField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//报单录入应答	
+	//報單錄入應答	
 	virtual void OnRspOrderInsert(CTORATstpInputOrderField *pInputOrderField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//报单回报
+	//報單回報
 	virtual void OnRtnOrder(CTORATstpOrderField *pOrder) {};
 			
-	//报单错误回报
+	//報單錯誤回報
 	virtual void OnErrRtnOrderInsert(CTORATstpInputOrderField *pInputOrder, CTORATstpRspInfoField *pRspInfo) {};
 				
-	//撤单应答	
+	//撤單應答	
 	virtual void OnRspOrderAction(CTORATstpInputOrderActionField *pInputOrderActionField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//撤单错误回报
+	//撤單錯誤回報
 	virtual void OnErrRtnOrderAction(CTORATstpOrderActionField *pOrderAction, CTORATstpRspInfoField *pRspInfo) {};
 				
-	//成交回报
+	//成交回報
 	virtual void OnRtnTrade(CTORATstpTradeField *pTrade) {};
 			
-	//推送市场状态
+	//推送市場狀態
 	virtual void OnRtnMarketStatus(CTORATstpMarketStatusField *pMarketStatus) {};
 		
-	//条件单录入请求响应	
+	//條件單錄入請求響應	
 	virtual void OnRspCondOrderInsert(CTORATstpInputCondOrderField *pInputCondOrderField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//条件单通知
+	//條件單通知
 	virtual void OnRtnCondOrder(CTORATstpConditionOrderField *pConditionOrder) {};
 			
-	//条件单录入错误回报
+	//條件單錄入錯誤回報
 	virtual void OnErrRtnCondOrderInsert(CTORATstpInputCondOrderField *pInputCondOrder, CTORATstpRspInfoField *pRspInfo) {};
 				
-	//条件单操作请求响应	
+	//條件單操作請求響應	
 	virtual void OnRspCondOrderAction(CTORATstpInputCondOrderActionField *pInputCondOrderActionField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//条件单撤单操作错误回报
+	//條件單撤單操作錯誤回報
 	virtual void OnErrRtnCondOrderAction(CTORATstpInputCondOrderActionField *pInputCondOrderAction, CTORATstpRspInfoField *pRspInfo) {};
 				
-	//查询集中交易系统资金响应	
+	//查詢集中交易系統資金響應	
 	virtual void OnRspInquiryJZFund(CTORATstpRspInquiryJZFundField *pRspInquiryJZFundField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//资金转移请求应答	
+	//資金轉移請求應答	
 	virtual void OnRspTransferFund(CTORATstpInputTransferFundField *pInputTransferFundField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//资金转移回报
+	//資金轉移回報
 	virtual void OnRtnTransferFund(CTORATstpTransferFundField *pTransferFund) {};
 		
-	//资金转移错误回报
+	//資金轉移錯誤回報
 	virtual void OnErrRtnTransferFund(CTORATstpInputTransferFundField *pInputTransferFund, CTORATstpRspInfoField *pRspInfo) {};
 			
-	//仓位转移回报
+	//倉位轉移回報
 	virtual void OnRtnTransferPosition(CTORATstpTransferPositionField *pTransferPosition) {};
 		
-	//仓位转移错误回报
+	//倉位轉移錯誤回報
 	virtual void OnErrRtnTransferPosition(CTORATstpInputTransferPositionField *pInputTransferPosition, CTORATstpRspInfoField *pRspInfo) {};
 			
-	//担保品划转响应	
+	//擔保品劃轉響應	
 	virtual void OnRspTransferCollateral(CTORATstpInputTransferCollateralField *pInputTransferCollateralField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//查询银行账户余额响应	
+	//查詢銀行賬戶餘額響應	
 	virtual void OnRspInquiryBankAccountFund(CTORATstpRspInquiryBankAccountFundField *pRspInquiryBankAccountFundField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//交易成交集中度查询响应	
+	//交易成交集中度查詢響應	
 	virtual void OnRspInquiryTradeConcentration(CTORATstpInquiryTradeConcentrationField *pInquiryTradeConcentrationField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
 	//交易通知
 	virtual void OnRtnTradingNotice(CTORATstpTradingNoticeField *pTradingNotice) {};
 		
-	//查询最大委托量应答	
+	//查詢最大委託量應答	
 	virtual void OnRspInquiryMaxOrderVolume(CTORATstpRspInquiryMaxOrderVolumeField *pRspInquiryMaxOrderVolumeField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//外围系统仓位转移回报
+	//外圍系統倉位轉移回報
 	virtual void OnRtnPeripheryTransferPosition(CTORATstpPeripheryPositionTransferDetailField *pPeripheryPositionTransferDetail) {};
 			
-	//查询历史委托响应	
+	//查詢歷史委託響應	
 	virtual void OnRspInquiryHistoryOrder(CTORATstpHistoryOrderField *pHistoryOrderField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 			
-	//查询历史成交响应	
+	//查詢歷史成交響應	
 	virtual void OnRspInquiryHistoryTrade(CTORATstpHistoryTradeField *pHistoryTradeField, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 		
-	//查询交易所
+	//查詢交易所
 	virtual void OnRspQryExchange(CTORATstpExchangeField *pExchange, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询实时行情
+	//查詢實時行情
 	virtual void OnRspQryMarketData(CTORATstpMarketDataField *pMarketData, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询证券信息
+	//查詢證券資訊
 	virtual void OnRspQrySecurity(CTORATstpSecurityField *pSecurity, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询ETF清单信息
+	//查詢ETF清單資訊
 	virtual void OnRspQryETFFile(CTORATstpETFFileField *pETFFile, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询ETF成份证券信息
+	//查詢ETF成份證券資訊
 	virtual void OnRspQryETFBasket(CTORATstpETFBasketField *pETFBasket, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询新股信息
+	//查詢新股資訊
 	virtual void OnRspQryIPOInfo(CTORATstpIPOInfoField *pIPOInfo, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询代理关系
+	//查詢代理關係
 	virtual void OnRspQryBUProxy(CTORATstpBUProxyField *pBUProxy, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询User
+	//查詢User
 	virtual void OnRspQryUser(CTORATstpUserField *pUser, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询投资者
+	//查詢投資者
 	virtual void OnRspQryInvestor(CTORATstpInvestorField *pInvestor, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询股东账户
+	//查詢股東賬戶
 	virtual void OnRspQryShareholderAccount(CTORATstpShareholderAccountField *pShareholderAccount, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//报单查询
+	//報單查詢
 	virtual void OnRspQryOrder(CTORATstpOrderField *pOrder, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询撤单
+	//查詢撤單
 	virtual void OnRspQryOrderAction(CTORATstpOrderActionField *pOrderAction, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//成交查询
+	//成交查詢
 	virtual void OnRspQryTrade(CTORATstpTradeField *pTrade, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//资金账户查询
+	//資金賬戶查詢
 	virtual void OnRspQryTradingAccount(CTORATstpTradingAccountField *pTradingAccount, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//投资者持仓查询
+	//投資者持倉查詢
 	virtual void OnRspQryPosition(CTORATstpPositionField *pPosition, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询基础交易费用
+	//查詢基礎交易費用
 	virtual void OnRspQryTradingFee(CTORATstpTradingFeeField *pTradingFee, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询佣金费率
+	//查詢佣金費率
 	virtual void OnRspQryInvestorTradingFee(CTORATstpInvestorTradingFeeField *pInvestorTradingFee, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询新股申购额度
+	//查詢新股申購額度
 	virtual void OnRspQryIPOQuota(CTORATstpIPOQuotaField *pIPOQuota, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询市场
+	//查詢市場
 	virtual void OnRspQryMarket(CTORATstpMarketField *pMarket, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//报单明细资金查询
+	//報單明細資金查詢
 	virtual void OnRspQryOrderFundDetail(CTORATstpOrderFundDetailField *pOrderFundDetail, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询资金转移流水
+	//查詢資金轉移流水
 	virtual void OnRspQryFundTransferDetail(CTORATstpFundTransferDetailField *pFundTransferDetail, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询持仓转移流水
+	//查詢持倉轉移流水
 	virtual void OnRspQryPositionTransferDetail(CTORATstpPositionTransferDetailField *pPositionTransferDetail, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//请求投资者质押持仓查询响应
+	//請求投資者質押持倉查詢響應
 	virtual void OnRspQryPledgePosition(CTORATstpPledgePositionField *pPledgePosition, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//请求证券质押信息查询响应
+	//請求證券質押資訊查詢響應
 	virtual void OnRspQryPledgeInfo(CTORATstpPledgeInfoField *pPledgeInfo, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//请求可转债信息查询响应
+	//請求可轉債資訊查詢響應
 	virtual void OnRspQryConversionBondInfo(CTORATstpConversionBondInfoField *pConversionBondInfo, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//请求债券回售信息查询响应
+	//請求債券回售資訊查詢響應
 	virtual void OnRspQryBondPutbackInfo(CTORATstpBondPutbackInfoField *pBondPutbackInfo, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//请求标准券额度查询响应
+	//請求標準券額度查詢響應
 	virtual void OnRspQryStandardBondPosition(CTORATstpStandardBondPositionField *pStandardBondPosition, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询实时特别行情响应
+	//查詢實時特別行情響應
 	virtual void OnRspQrySpecialMarketData(CTORATstpSpecialMarketDataField *pSpecialMarketData, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询未到期债券质押回购委托响应
+	//查詢未到期債券質押回購委託響應
 	virtual void OnRspQryPrematurityRepoOrder(CTORATstpPrematurityRepoOrderField *pPrematurityRepoOrder, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询股东参数响应
+	//查詢股東引數響應
 	virtual void OnRspQryShareholderParam(CTORATstpShareholderParamField *pShareholderParam, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询外围系统仓位调拨流水
+	//查詢外圍系統倉位調撥流水
 	virtual void OnRspQryPeripheryPositionTransferDetail(CTORATstpPeripheryPositionTransferDetailField *pPeripheryPositionTransferDetail, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询投资者条件单限制参数响应
+	//查詢投資者條件單限制引數響應
 	virtual void OnRspQryInvestorCondOrderLimitParam(CTORATstpInvestorCondOrderLimitParamField *pInvestorCondOrderLimitParam, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询条件单响应
+	//查詢條件單響應
 	virtual void OnRspQryCondOrder(CTORATstpCondOrderField *pCondOrder, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询条件单撤单响应
+	//查詢條件單撤單響應
 	virtual void OnRspQryCondOrderAction(CTORATstpCondOrderActionField *pCondOrderAction, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询交易通知响应
+	//查詢交易通知響應
 	virtual void OnRspQryTradingNotice(CTORATstpTradingNoticeField *pTradingNotice, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询新股申购配号结果响应
+	//查詢新股申購配號結果響應
 	virtual void OnRspQryIPONumberResult(CTORATstpIPONumberResultField *pIPONumberResult, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
-	//查询新股申购中签结果响应
+	//查詢新股申購中籤結果響應
 	virtual void OnRspQryIPOMatchNumberResult(CTORATstpIPOMatchNumberResultField *pIPOMatchNumberResult, CTORATstpRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {}; 
 			
 };
@@ -251,226 +251,226 @@ public:
 class TRADER_API_DLL_EXPORT CTORATstpTraderApi
 {
 public:
-	///创建TraderApi
-	///@param pszFlowPath 存贮订阅信息文件的目录，默认为当前目录
-	///@param bEncrpyt 网络数据是否加密传输，默认不加密
-	///@return 创建出的TraderApi
+	///建立TraderApi
+	///@param pszFlowPath 存貯訂閱資訊檔案的目錄，預設為當前目錄
+	///@param bEncrpyt 網路資料是否加密傳輸，預設不加密
+	///@return 創建出的TraderApi
 	
 	static CTORATstpTraderApi *CreateTstpTraderApi(const char *pszFlowPath = "", bool bEncrypt = false);
 	
-	///获取API版本号
-	///@return 版本号
+	///獲取API版本號
+	///@return 版本號
 	static const char* GetApiVersion();
 	
-	///删除接口对象本身
-	///@remark 不再使用本接口对象时,调用该函数删除接口对象
+	///刪除介面物件本身
+	///@remark 不再使用本介面物件時,呼叫該函式刪除介面物件
 	virtual void Release() = 0;
 	
 	///初始化
-	///@remark 初始化运行环境,只有调用后,接口才开始工作
+	///@remark 初始化執行環境,只有呼叫後,接口才開始工作
 	virtual void Init() = 0;
 	
-	///等待接口线程结束运行
-	///@return 线程退出代码
+	///等待介面執行緒結束執行
+	///@return 執行緒退出程式碼
 	virtual int Join() = 0;
 	
-	///注册前置机网络地址
-	///@param pszFrontAddress：前置机网络地址。
-	///@remark 网络地址的格式为：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:17001”。 
-	///@remark “tcp”代表传输协议，“127.0.0.1”代表服务器地址。”17001”代表服务器端口号。
+	///註冊前置機網路地址
+	///@param pszFrontAddress：前置機網路地址。
+	///@remark 網路地址的格式為：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:17001”。 
+	///@remark “tcp”代表傳輸協議，“127.0.0.1”代表伺服器地址。”17001”代表伺服器埠號。
 	virtual void RegisterFront(char *pszFrontAddress) = 0;
 
-	///注册名字服务器网络地址
-	///@param pszNsAddress：名字服务器网络地址。
-	///@remark 网络地址的格式为：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:12001”。 
-	///@remark “tcp”代表传输协议，“127.0.0.1”代表服务器地址。”12001”代表服务器端口号。
-	///@remark RegisterNameServer优先于RegisterFront
+	///註冊名字伺服器網路地址
+	///@param pszNsAddress：名字伺服器網路地址。
+	///@remark 網路地址的格式為：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:12001”。 
+	///@remark “tcp”代表傳輸協議，“127.0.0.1”代表伺服器地址。”12001”代表伺服器埠號。
+	///@remark RegisterNameServer優先於RegisterFront
 	virtual void RegisterNameServer(char *pszNsAddress) = 0;
 	
-	///注册衍生服务服务器网络地址
-	///@param pszNsAddress：衍生服务服务器网络地址。
-	///@remark 网络地址的格式为：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:16001”。 
-	///@remark “tcp”代表传输协议，“127.0.0.1”代表服务器地址。”16001”代表服务器端口号。
+	///註冊衍生服務伺服器網路地址
+	///@param pszNsAddress：衍生服務伺服器網路地址。
+	///@remark 網路地址的格式為：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:16001”。 
+	///@remark “tcp”代表傳輸協議，“127.0.0.1”代表伺服器地址。”16001”代表伺服器埠號。
 	virtual void RegisterDeriveServer(char *pszDeriveAddress) = 0;
 
-	///注册回调接口
-	///@param pSpi 派生自回调接口类的实例
+	///註冊回撥介面
+	///@param pSpi 派生自回撥介面類的例項
 	virtual void RegisterSpi(CTORATstpTraderSpi *pSpi) = 0;
 	
-	///订阅私有流。
-	///@param nResumeType 私有流重传方式  
-	///        TORA_TERT_RESTART:从本交易日开始重传
-	///        TORA_TERT_RESUME:从上次收到的续传
-	///        TORA_TERT_QUICK:只传送登录后私有流的内容
-	///@remark 该方法要在Init方法前调用。若不调用则不会收到私有流的数据。
+	///訂閱私有流。
+	///@param nResumeType 私有流重傳方式  
+	///        TORA_TERT_RESTART:從本交易日開始重傳
+	///        TORA_TERT_RESUME:從上次收到的續傳
+	///        TORA_TERT_QUICK:只傳送登入後私有流的內容
+	///@remark 該方法要在Init方法前呼叫。若不呼叫則不會收到私有流的資料。
 	virtual void SubscribePrivateTopic(TORA_TE_RESUME_TYPE nResumeType) = 0;
 	
-	///订阅公共流。
-	///@param nResumeType 公共流重传方式  
-	///        TORA_TERT_RESTART:从本交易日开始重传
-	///        TORA_TERT_RESUME:从上次收到的续传
-	///        TORA_TERT_QUICK:只传送登录后公共流的内容
-	///@remark 该方法要在Init方法前调用。若不调用则不会收到公共流的数据。
+	///訂閱公共流。
+	///@param nResumeType 公共流重傳方式  
+	///        TORA_TERT_RESTART:從本交易日開始重傳
+	///        TORA_TERT_RESUME:從上次收到的續傳
+	///        TORA_TERT_QUICK:只傳送登入後公共流的內容
+	///@remark 該方法要在Init方法前呼叫。若不呼叫則不會收到公共流的資料。
 	virtual void SubscribePublicTopic(TORA_TE_RESUME_TYPE nResumeType) = 0;
 	
 	
-	//登录请求		
+	//登入請求		
 	virtual int ReqUserLogin(CTORATstpReqUserLoginField *pReqUserLoginField, int nRequestID) = 0;
 	
-	//登出请求		
+	//登出請求		
 	virtual int ReqUserLogout(CTORATstpUserLogoutField *pUserLogoutField, int nRequestID) = 0;
 	
-	//修改密码请求		
+	//修改密碼請求		
 	virtual int ReqUserPasswordUpdate(CTORATstpUserPasswordUpdateField *pUserPasswordUpdateField, int nRequestID) = 0;
 	
-	//请求录入设备序列		
+	//請求錄入裝置序列		
 	virtual int ReqInputDeviceSerial(CTORATstpReqInputDeviceSerialField *pReqInputDeviceSerialField, int nRequestID) = 0;
 	
-	//报单录入请求		
+	//報單錄入請求		
 	virtual int ReqOrderInsert(CTORATstpInputOrderField *pInputOrderField, int nRequestID) = 0;
 	
-	//撤单请求		
+	//撤單請求		
 	virtual int ReqOrderAction(CTORATstpInputOrderActionField *pInputOrderActionField, int nRequestID) = 0;
 	
-	//条件单录入请求		
+	//條件單錄入請求		
 	virtual int ReqCondOrderInsert(CTORATstpInputCondOrderField *pInputCondOrderField, int nRequestID) = 0;
 	
-	//条件单操作请求		
+	//條件單操作請求		
 	virtual int ReqCondOrderAction(CTORATstpInputCondOrderActionField *pInputCondOrderActionField, int nRequestID) = 0;
 	
-	//查询集中交易系统资金请求		
+	//查詢集中交易系統資金請求		
 	virtual int ReqInquiryJZFund(CTORATstpReqInquiryJZFundField *pReqInquiryJZFundField, int nRequestID) = 0;
 	
-	//资金转移请求		
+	//資金轉移請求		
 	virtual int ReqTransferFund(CTORATstpInputTransferFundField *pInputTransferFundField, int nRequestID) = 0;
 	
-	//担保品划转请求		
+	//擔保品劃轉請求		
 	virtual int ReqTransferCollateral(CTORATstpInputTransferCollateralField *pInputTransferCollateralField, int nRequestID) = 0;
 	
-	//查询银行账户余额请求		
+	//查詢銀行賬戶餘額請求		
 	virtual int ReqInquiryBankAccountFund(CTORATstpReqInquiryBankAccountFundField *pReqInquiryBankAccountFundField, int nRequestID) = 0;
 	
-	//查询交易成交集中度		
+	//查詢交易成交集中度		
 	virtual int ReqInquiryTradeConcentration(CTORATstpInquiryTradeConcentrationField *pInquiryTradeConcentrationField, int nRequestID) = 0;
 	
-	//查询最大委托量请求		
+	//查詢最大委託量請求		
 	virtual int ReqInquiryMaxOrderVolume(CTORATstpReqInquiryMaxOrderVolumeField *pReqInquiryMaxOrderVolumeField, int nRequestID) = 0;
 	
-	//查询历史委托请求		
+	//查詢歷史委託請求		
 	virtual int ReqInquiryHistoryOrder(CTORATstpQryHistoryOrderField *pQryHistoryOrderField, int nRequestID) = 0;
 	
-	//查询历史成交请求		
+	//查詢歷史成交請求		
 	virtual int ReqInquiryHistoryTrade(CTORATstpQryHistoryTradeField *pQryHistoryTradeField, int nRequestID) = 0;
 	
-	//查询交易所		
+	//查詢交易所		
 	virtual int ReqQryExchange(CTORATstpQryExchangeField *pQryExchangeField, int nRequestID) = 0;
 	
-	//查询实时行情		
+	//查詢實時行情		
 	virtual int ReqQryMarketData(CTORATstpQryMarketDataField *pQryMarketDataField, int nRequestID) = 0;
 	
-	//查询证券信息		
+	//查詢證券資訊		
 	virtual int ReqQrySecurity(CTORATstpQrySecurityField *pQrySecurityField, int nRequestID) = 0;
 	
-	//查询ETF清单信息		
+	//查詢ETF清單資訊		
 	virtual int ReqQryETFFile(CTORATstpQryETFFileField *pQryETFFileField, int nRequestID) = 0;
 	
-	//查询ETF成份证券信息		
+	//查詢ETF成份證券資訊		
 	virtual int ReqQryETFBasket(CTORATstpQryETFBasketField *pQryETFBasketField, int nRequestID) = 0;
 	
-	//查询新股信息		
+	//查詢新股資訊		
 	virtual int ReqQryIPOInfo(CTORATstpQryIPOInfoField *pQryIPOInfoField, int nRequestID) = 0;
 	
-	//查询代理关系		
+	//查詢代理關係		
 	virtual int ReqQryBUProxy(CTORATstpQryBUProxyField *pQryBUProxyField, int nRequestID) = 0;
 	
-	//查询User		
+	//查詢User		
 	virtual int ReqQryUser(CTORATstpQryUserField *pQryUserField, int nRequestID) = 0;
 	
-	//查询投资者		
+	//查詢投資者		
 	virtual int ReqQryInvestor(CTORATstpQryInvestorField *pQryInvestorField, int nRequestID) = 0;
 	
-	//查询股东账户		
+	//查詢股東賬戶		
 	virtual int ReqQryShareholderAccount(CTORATstpQryShareholderAccountField *pQryShareholderAccountField, int nRequestID) = 0;
 	
-	//报单查询		
+	//報單查詢		
 	virtual int ReqQryOrder(CTORATstpQryOrderField *pQryOrderField, int nRequestID) = 0;
 	
-	//查询撤单		
+	//查詢撤單		
 	virtual int ReqQryOrderAction(CTORATstpQryOrderActionField *pQryOrderActionField, int nRequestID) = 0;
 	
-	//成交查询		
+	//成交查詢		
 	virtual int ReqQryTrade(CTORATstpQryTradeField *pQryTradeField, int nRequestID) = 0;
 	
-	//资金账户查询		
+	//資金賬戶查詢		
 	virtual int ReqQryTradingAccount(CTORATstpQryTradingAccountField *pQryTradingAccountField, int nRequestID) = 0;
 	
-	//投资者持仓查询		
+	//投資者持倉查詢		
 	virtual int ReqQryPosition(CTORATstpQryPositionField *pQryPositionField, int nRequestID) = 0;
 	
-	//查询基础交易费用		
+	//查詢基礎交易費用		
 	virtual int ReqQryTradingFee(CTORATstpQryTradingFeeField *pQryTradingFeeField, int nRequestID) = 0;
 	
-	//查询佣金费率		
+	//查詢佣金費率		
 	virtual int ReqQryInvestorTradingFee(CTORATstpQryInvestorTradingFeeField *pQryInvestorTradingFeeField, int nRequestID) = 0;
 	
-	//查询新股申购额度		
+	//查詢新股申購額度		
 	virtual int ReqQryIPOQuota(CTORATstpQryIPOQuotaField *pQryIPOQuotaField, int nRequestID) = 0;
 	
-	//查询市场		
+	//查詢市場		
 	virtual int ReqQryMarket(CTORATstpQryMarketField *pQryMarketField, int nRequestID) = 0;
 	
-	//报单明细资金查询		
+	//報單明細資金查詢		
 	virtual int ReqQryOrderFundDetail(CTORATstpQryOrderFundDetailField *pQryOrderFundDetailField, int nRequestID) = 0;
 	
-	//查询资金转移流水		
+	//查詢資金轉移流水		
 	virtual int ReqQryFundTransferDetail(CTORATstpQryFundTransferDetailField *pQryFundTransferDetailField, int nRequestID) = 0;
 	
-	//查询持仓转移流水		
+	//查詢持倉轉移流水		
 	virtual int ReqQryPositionTransferDetail(CTORATstpQryPositionTransferDetailField *pQryPositionTransferDetailField, int nRequestID) = 0;
 	
-	//请求投资者质押持仓查询		
+	//請求投資者質押持倉查詢		
 	virtual int ReqQryPledgePosition(CTORATstpQryPledgePositionField *pQryPledgePositionField, int nRequestID) = 0;
 	
-	//请求证券质押信息查询		
+	//請求證券質押資訊查詢		
 	virtual int ReqQryPledgeInfo(CTORATstpQryPledgeInfoField *pQryPledgeInfoField, int nRequestID) = 0;
 	
-	//请求可转债信息查询		
+	//請求可轉債資訊查詢		
 	virtual int ReqQryConversionBondInfo(CTORATstpQryConversionBondInfoField *pQryConversionBondInfoField, int nRequestID) = 0;
 	
-	//请求债券回售信息查询		
+	//請求債券回售資訊查詢		
 	virtual int ReqQryBondPutbackInfo(CTORATstpQryBondPutbackInfoField *pQryBondPutbackInfoField, int nRequestID) = 0;
 	
-	//请求标准券额度查询		
+	//請求標準券額度查詢		
 	virtual int ReqQryStandardBondPosition(CTORATstpQryStandardBondPositionField *pQryStandardBondPositionField, int nRequestID) = 0;
 	
-	//查询实时特别行情		
+	//查詢實時特別行情		
 	virtual int ReqQrySpecialMarketData(CTORATstpQrySpecialMarketDataField *pQrySpecialMarketDataField, int nRequestID) = 0;
 	
-	//查询未到期债券质押回购委托		
+	//查詢未到期債券質押回購委託		
 	virtual int ReqQryPrematurityRepoOrder(CTORATstpQryPrematurityRepoOrderField *pQryPrematurityRepoOrderField, int nRequestID) = 0;
 	
-	//查询股东参数		
+	//查詢股東引數		
 	virtual int ReqQryShareholderParam(CTORATstpQryShareholderParamField *pQryShareholderParamField, int nRequestID) = 0;
 	
-	//查询外围系统仓位调拨流水		
+	//查詢外圍系統倉位調撥流水		
 	virtual int ReqQryPeripheryPositionTransferDetail(CTORATstpQryPeripheryPositionTransferDetailField *pQryPeripheryPositionTransferDetailField, int nRequestID) = 0;
 	
-	//查询投资者条件单限制参数请求		
+	//查詢投資者條件單限制引數請求		
 	virtual int ReqQryInvestorCondOrderLimitParam(CTORATstpQryInvestorCondOrderLimitParamField *pQryInvestorCondOrderLimitParamField, int nRequestID) = 0;
 	
-	//查询条件单请求		
+	//查詢條件單請求		
 	virtual int ReqQryCondOrder(CTORATstpQryCondOrderField *pQryCondOrderField, int nRequestID) = 0;
 	
-	//查询条件单撤单请求		
+	//查詢條件單撤單請求		
 	virtual int ReqQryCondOrderAction(CTORATstpQryCondOrderActionField *pQryCondOrderActionField, int nRequestID) = 0;
 	
-	//查询交易通知请求		
+	//查詢交易通知請求		
 	virtual int ReqQryTradingNotice(CTORATstpQryTradingNoticeField *pQryTradingNoticeField, int nRequestID) = 0;
 	
-	//查询新股申购配号结果		
+	//查詢新股申購配號結果		
 	virtual int ReqQryIPONumberResult(CTORATstpQryIPONumberResultField *pQryIPONumberResultField, int nRequestID) = 0;
 	
-	//查询新股申购中签结果		
+	//查詢新股申購中籤結果		
 	virtual int ReqQryIPOMatchNumberResult(CTORATstpQryIPOMatchNumberResultField *pQryIPOMatchNumberResultField, int nRequestID) = 0;
 	
 	

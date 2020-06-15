@@ -1,4 +1,4 @@
-﻿// dllmain.cpp : 定义 DLL 应用程序的入口点。
+﻿// dllmain.cpp : 定義 DLL 應用程式的入口點。
 #include "pch.h"
 
 BOOL APIENTRY DllMain( HMODULE hModule,

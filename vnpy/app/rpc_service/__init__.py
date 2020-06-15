@@ -8,7 +8,7 @@ class RpcServiceApp(BaseApp):
     app_name = APP_NAME
     app_module = __module__
     app_path = Path(__file__).parent
-    display_name = "RPC服务"
+    display_name = "RPC服務"
     engine_class = RpcEngine
     widget_name = "RpcManager"
     icon_name = "rpc.ico"

@@ -41,7 +41,7 @@ class SpreadManager(QtWidgets.QWidget):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("价差交易")
+        self.setWindowTitle("價差交易")
 
         self.algo_dialog = SpreadAlgoWidget(self.spread_engine)
         algo_group = self.create_group("交易", self.algo_dialog)
@@ -64,9 +64,9 @@ class SpreadManager(QtWidgets.QWidget):
         )
 
         grid = QtWidgets.QGridLayout()
-        grid.addWidget(self.create_group("价差", self.data_monitor), 0, 0)
-        grid.addWidget(self.create_group("日志", self.log_monitor), 1, 0)
-        grid.addWidget(self.create_group("算法", self.algo_monitor), 0, 1)
+        grid.addWidget(self.create_group("價差", self.data_monitor), 0, 0)
+        grid.addWidget(self.create_group("日誌", self.log_monitor), 1, 0)
+        grid.addWidget(self.create_group("演算法", self.algo_monitor), 0, 1)
         grid.addWidget(self.create_group("策略", self.strategy_monitor), 1, 1)
 
         hbox = QtWidgets.QHBoxLayout()
@@ -104,14 +104,14 @@ class SpreadDataMonitor(BaseMonitor):
     sorting = False
 
     headers = {
-        "name": {"display": "名称", "cell": BaseCell, "update": False},
-        "bid_volume": {"display": "买量", "cell": BidCell, "update": True},
-        "bid_price": {"display": "买价", "cell": BidCell, "update": True},
-        "ask_price": {"display": "卖价", "cell": AskCell, "update": True},
-        "ask_volume": {"display": "卖量", "cell": AskCell, "update": True},
-        "net_pos": {"display": "净仓", "cell": PnlCell, "update": True},
-        "datetime": {"display": "时间", "cell": TimeCell, "update": True},
-        "price_formula": {"display": "定价", "cell": BaseCell, "update": False},
+        "name": {"display": "名稱", "cell": BaseCell, "update": False},
+        "bid_volume": {"display": "買量", "cell": BidCell, "update": True},
+        "bid_price": {"display": "買價", "cell": BidCell, "update": True},
+        "ask_price": {"display": "賣價", "cell": AskCell, "update": True},
+        "ask_volume": {"display": "賣量", "cell": AskCell, "update": True},
+        "net_pos": {"display": "淨倉", "cell": PnlCell, "update": True},
+        "datetime": {"display": "時間", "cell": TimeCell, "update": True},
+        "price_formula": {"display": "定價", "cell": BaseCell, "update": False},
         "trading_formula": {"display": "交易", "cell": BaseCell, "update": False},
     }
 
@@ -166,17 +166,17 @@ class SpreadAlgoMonitor(BaseMonitor):
     sorting = False
 
     headers = {
-        "algoid": {"display": "算法", "cell": BaseCell, "update": False},
-        "spread_name": {"display": "价差", "cell": BaseCell, "update": False},
+        "algoid": {"display": "演算法", "cell": BaseCell, "update": False},
+        "spread_name": {"display": "價差", "cell": BaseCell, "update": False},
         "direction": {"display": "方向", "cell": DirectionCell, "update": False},
-        "offset": {"display": "开平", "cell": EnumCell, "update": False},
-        "price": {"display": "价格", "cell": BaseCell, "update": False},
-        "payup": {"display": "超价", "cell": BaseCell, "update": False},
-        "volume": {"display": "数量", "cell": BaseCell, "update": False},
+        "offset": {"display": "開平", "cell": EnumCell, "update": False},
+        "price": {"display": "價格", "cell": BaseCell, "update": False},
+        "payup": {"display": "超價", "cell": BaseCell, "update": False},
+        "volume": {"display": "數量", "cell": BaseCell, "update": False},
         "traded_volume": {"display": "成交", "cell": BaseCell, "update": True},
-        "interval": {"display": "间隔", "cell": BaseCell, "update": False},
-        "count": {"display": "计数", "cell": BaseCell, "update": True},
-        "status": {"display": "状态", "cell": EnumCell, "update": True},
+        "interval": {"display": "間隔", "cell": BaseCell, "update": False},
+        "count": {"display": "計數", "cell": BaseCell, "update": True},
+        "status": {"display": "狀態", "cell": EnumCell, "update": True},
     }
 
     def __init__(self, spread_engine: SpreadEngine):
@@ -191,7 +191,7 @@ class SpreadAlgoMonitor(BaseMonitor):
         """
         super().init_ui()
 
-        self.setToolTip("双击单元格停止算法")
+        self.setToolTip("雙擊單元格停止演算法")
         self.itemDoubleClicked.connect(self.stop_algo)
 
     def stop_algo(self, cell):
@@ -216,7 +216,7 @@ class SpreadAlgoWidget(QtWidgets.QFrame):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("启动算法")
+        self.setWindowTitle("啟動演算法")
         self.setFrameShape(self.Box)
         self.setLineWidth(1)
 
@@ -248,7 +248,7 @@ class SpreadAlgoWidget(QtWidgets.QFrame):
         self.interval_line = QtWidgets.QLineEdit()
         self.interval_line.setValidator(int_validator)
 
-        button_start = QtWidgets.QPushButton("启动")
+        button_start = QtWidgets.QPushButton("啟動")
         button_start.clicked.connect(self.start_algo)
 
         self.lock_combo = QtWidgets.QComboBox()
@@ -258,33 +258,33 @@ class SpreadAlgoWidget(QtWidgets.QFrame):
 
         self.class_combo = QtWidgets.QComboBox()
 
-        add_button = QtWidgets.QPushButton("添加策略")
+        add_button = QtWidgets.QPushButton("新增策略")
         add_button.clicked.connect(self.add_strategy)
 
         init_button = QtWidgets.QPushButton("全部初始化")
         init_button.clicked.connect(self.strategy_engine.init_all_strategies)
 
-        start_button = QtWidgets.QPushButton("全部启动")
+        start_button = QtWidgets.QPushButton("全部啟動")
         start_button.clicked.connect(self.strategy_engine.start_all_strategies)
 
         stop_button = QtWidgets.QPushButton("全部停止")
         stop_button.clicked.connect(self.strategy_engine.stop_all_strategies)
 
-        add_spread_button = QtWidgets.QPushButton("创建价差")
+        add_spread_button = QtWidgets.QPushButton("建立價差")
         add_spread_button.clicked.connect(self.add_spread)
 
-        remove_spread_button = QtWidgets.QPushButton("移除价差")
+        remove_spread_button = QtWidgets.QPushButton("移除價差")
         remove_spread_button.clicked.connect(self.remove_spread)
 
         form = QtWidgets.QFormLayout()
-        form.addRow("价差", self.name_line)
+        form.addRow("價差", self.name_line)
         form.addRow("方向", self.direction_combo)
-        form.addRow("开平", self.offset_combo)
-        form.addRow("价格", self.price_line)
-        form.addRow("数量", self.volume_line)
-        form.addRow("超价", self.payup_line)
-        form.addRow("间隔", self.interval_line)
-        form.addRow("锁仓", self.lock_combo)
+        form.addRow("開平", self.offset_combo)
+        form.addRow("價格", self.price_line)
+        form.addRow("數量", self.volume_line)
+        form.addRow("超價", self.payup_line)
+        form.addRow("間隔", self.interval_line)
+        form.addRow("鎖倉", self.lock_combo)
         form.addRow(button_start)
 
         vbox = QtWidgets.QVBoxLayout()
@@ -378,7 +378,7 @@ class SpreadDataDialog(QtWidgets.QDialog):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("创建价差")
+        self.setWindowTitle("建立價差")
 
         self.name_line = QtWidgets.QLineEdit()
         self.active_line = QtWidgets.QLineEdit()
@@ -396,24 +396,24 @@ class SpreadDataDialog(QtWidgets.QDialog):
 
         self.grid = QtWidgets.QGridLayout()
 
-        button_add = QtWidgets.QPushButton("创建价差")
+        button_add = QtWidgets.QPushButton("建立價差")
         button_add.clicked.connect(self.add_spread)
 
         Label = QtWidgets.QLabel
 
         grid = QtWidgets.QGridLayout()
-        grid.addWidget(Label("价差名称"), 0, 0)
+        grid.addWidget(Label("價差名稱"), 0, 0)
         grid.addWidget(self.name_line, 0, 1, 1, 4)
-        grid.addWidget(Label("主动腿代码"), 1, 0)
+        grid.addWidget(Label("主動腿程式碼"), 1, 0)
         grid.addWidget(self.active_line, 1, 1, 1, 4)
         grid.addWidget(Label("最小交易量"), 2, 0)
         grid.addWidget(self.min_volume_combo, 2, 1, 1, 4)
 
         grid.addWidget(Label(""), 3, 0)
-        grid.addWidget(Label("本地代码"), 4, 1)
-        grid.addWidget(Label("价格乘数"), 4, 2)
-        grid.addWidget(Label("交易乘数"), 4, 3)
-        grid.addWidget(Label("合约模式"), 4, 4)
+        grid.addWidget(Label("原生代碼"), 4, 1)
+        grid.addWidget(Label("價格乘數"), 4, 2)
+        grid.addWidget(Label("交易乘數"), 4, 3)
+        grid.addWidget(Label("合約模式"), 4, 4)
 
         int_validator = QtGui.QIntValidator()
 
@@ -455,8 +455,8 @@ class SpreadDataDialog(QtWidgets.QDialog):
         if not spread_name:
             QtWidgets.QMessageBox.warning(
                 self,
-                "创建失败",
-                "请输入价差名称",
+                "建立失敗",
+                "請輸入價差名稱",
                 QtWidgets.QMessageBox.Ok
             )
             return
@@ -488,8 +488,8 @@ class SpreadDataDialog(QtWidgets.QDialog):
         if len(leg_settings) < 2:
             QtWidgets.QMessageBox.warning(
                 self,
-                "创建失败",
-                "价差最少需要2条腿",
+                "建立失敗",
+                "價差最少需要2條腿",
                 QtWidgets.QMessageBox.Ok
             )
             return
@@ -497,8 +497,8 @@ class SpreadDataDialog(QtWidgets.QDialog):
         if active_symbol not in leg_settings:
             QtWidgets.QMessageBox.warning(
                 self,
-                "创建失败",
-                "各条腿中找不到主动腿代码",
+                "建立失敗",
+                "各條腿中找不到主動腿程式碼",
                 QtWidgets.QMessageBox.Ok
             )
             return
@@ -525,7 +525,7 @@ class SpreadRemoveDialog(QtWidgets.QDialog):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("移除价差")
+        self.setWindowTitle("移除價差")
         self.setMinimumWidth(300)
 
         self.name_combo = QtWidgets.QComboBox()
@@ -642,13 +642,13 @@ class SpreadStrategyWidget(QtWidgets.QFrame):
         init_button = QtWidgets.QPushButton("初始化")
         init_button.clicked.connect(self.init_strategy)
 
-        start_button = QtWidgets.QPushButton("启动")
+        start_button = QtWidgets.QPushButton("啟動")
         start_button.clicked.connect(self.start_strategy)
 
         stop_button = QtWidgets.QPushButton("停止")
         stop_button.clicked.connect(self.stop_strategy)
 
-        edit_button = QtWidgets.QPushButton("编辑")
+        edit_button = QtWidgets.QPushButton("編輯")
         edit_button.clicked.connect(self.edit_strategy)
 
         remove_button = QtWidgets.QPushButton("移除")
@@ -791,13 +791,13 @@ class SettingEditor(QtWidgets.QDialog):
 
         # Add spread_name and name edit if add new strategy
         if self.class_name:
-            self.setWindowTitle(f"添加策略：{self.class_name}")
-            button_text = "添加"
+            self.setWindowTitle(f"新增策略：{self.class_name}")
+            button_text = "新增"
             parameters = {"strategy_name": "", "spread_name": ""}
             parameters.update(self.parameters)
         else:
-            self.setWindowTitle(f"参数编辑：{self.strategy_name}")
-            button_text = "确定"
+            self.setWindowTitle(f"引數編輯：{self.strategy_name}")
+            button_text = "確定"
             parameters = self.parameters
 
         for name, value in parameters.items():

@@ -36,16 +36,16 @@ class ChartWizardWidget(QtWidgets.QWidget):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("K线图表")
+        self.setWindowTitle("K線圖表")
 
         self.tab: QtWidgets.QTabWidget = QtWidgets.QTabWidget()
         self.symbol_line: QtWidgets.QLineEdit = QtWidgets.QLineEdit()
 
-        self.button = QtWidgets.QPushButton("新建图表")
+        self.button = QtWidgets.QPushButton("新建圖表")
         self.button.clicked.connect(self.new_chart)
 
         hbox = QtWidgets.QHBoxLayout()
-        hbox.addWidget(QtWidgets.QLabel("本地代码"))
+        hbox.addWidget(QtWidgets.QLabel("原生代碼"))
         hbox.addWidget(self.symbol_line)
         hbox.addWidget(self.button)
         hbox.addStretch()

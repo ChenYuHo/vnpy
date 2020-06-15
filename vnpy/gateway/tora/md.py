@@ -40,13 +40,13 @@ class ToraMdSpi(CTORATstpMdSpi):
 
     def OnFrontConnected(self) -> Any:
         """"""
-        self.gateway.write_log("行情服务器连接成功")
+        self.gateway.write_log("行情伺服器連線成功")
         self._api.login()
 
     def OnFrontDisconnected(self, error_code: int) -> Any:
         """"""
         self.gateway.write_log(
-            f"行情服务器连接断开({error_code}):{get_error_msg(error_code)}")
+            f"行情伺服器連線斷開({error_code}):{get_error_msg(error_code)}")
 
     def OnRspError(
         self, error_info: CTORATstpRspInfoField, request_id: int, is_last: bool
@@ -54,7 +54,7 @@ class ToraMdSpi(CTORATstpMdSpi):
         """"""
         error_id = error_info.ErrorID
         error_msg = error_info.ErrorMsg
-        self.gateway.write_log(f"行情服务收到错误消息({error_id})：{error_msg}")
+        self.gateway.write_log(f"行情服務收到錯誤訊息({error_id})：{error_msg}")
 
     def OnRspUserLogin(
         self,
@@ -67,9 +67,9 @@ class ToraMdSpi(CTORATstpMdSpi):
         error_id = error_info.ErrorID
         if error_id != 0:
             error_msg = error_info.ErrorMsg
-            self.gateway.write_log(f"行情服务登录失败({error_id})：{error_msg}")
+            self.gateway.write_log(f"行情服務登入失敗({error_id})：{error_msg}")
             return
-        self.gateway.write_log("行情服务器登录成功")
+        self.gateway.write_log("行情伺服器登入成功")
 
     def OnRspUserLogout(
         self,
@@ -82,9 +82,9 @@ class ToraMdSpi(CTORATstpMdSpi):
         error_id = error_info.ErrorID
         if error_id != 0:
             error_msg = error_info.ErrorMsg
-            self.gateway.write_log(f"行情服务登出失败({error_id})：{error_msg}")
+            self.gateway.write_log(f"行情服務登出失敗({error_id})：{error_msg}")
             return
-        self.gateway.write_log("行情服务器登出成功")
+        self.gateway.write_log("行情伺服器登出成功")
 
     def OnRtnDepthMarketData(self, data: CTORATstpMarketDataField) -> Any:
         """"""
@@ -200,6 +200,6 @@ class ToraMdApi:
         """"""
         if error_code != 0:
             error_msg = get_error_msg(error_code)
-            msg = f'在执行 {function_name} 时发生错误({error_code}): {error_msg}'
+            msg = f'在執行 {function_name} 時發生錯誤({error_code}): {error_msg}'
             self.gateway.write_log(msg)
             return True

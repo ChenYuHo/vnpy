@@ -17,7 +17,7 @@
 /**
  * @file    spk_strings.h
  *
- * 字符串处理函数的头文件(线程安全)
+ * 字串處理函式的標頭檔案(執行緒安全)
  *
  * @version $Id$
  * @since   2012/01/05
@@ -46,7 +46,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 跨平台兼容处理
+ * 跨平臺相容處理
  * =================================================================== */
 
 #if defined (__WINDOWS__)
@@ -57,7 +57,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 函数声明
+ * 函式宣告
  * =================================================================== */
 
 /*
@@ -71,72 +71,72 @@ int32   SStr_Strchcmp(const char *s1, const char *s2, int32 endChar);
 int32   SStr_Strncasecmp(const char *s1, const char *s2, int32 n);
 
 /*
- * 替换目标字符串中的待替换字符串
+ * 替換目標字串中的待替換字串
  */
 char*   SStr_Replace(char *pBuf, const char *pTarget, const char *pOldStr,
             const char *pNewStr);
 
 /*
- * 替换目标字符串中的待替换字符串(可指定替换个数)
+ * 替換目標字串中的待替換字串(可指定替換個數)
  */
 char*   SStr_ReplaceAppointed(char *pBuf, const char *pTarget,
             const char *pOldStr, const char *pNewStr, int32 n);
 
 /*
- * 取得被前、后缀包裹的字符串
+ * 取得被前、字尾包裹的字串
  */
 char*   SStr_GetWrappedString(char *pBuf, const char *pTarget,
             const char *pPrefix, const char *pPostfix);
 
 /*
- * 构造被前、后缀包裹的字符串
+ * 構造被前、字尾包裹的字串
  */
 char*   SStr_BuildWrappedString(char *pBuf, const char *pTarget,
             int32 targetLen, const char *pPrefix, const char *pPostfix);
 
 /*
- * 返回字符串是否是以指定的字符串起始的
+ * 返回字串是否是以指定的字串起始的
  */
 BOOL    SStr_IsStartWith(const char *pStr, const char *pStartWith,
             const char *pAnyChar, int32 n);
 
 /*
- * 返回字符串是否是以指定的字符串起始的
+ * 返回字串是否是以指定的字串起始的
  */
 BOOL    SStr_IsStartWith2(const char *pStr, const char *pStartWith,
             const char *pAnyChar, int32 n, const char **ppAfterMatched);
 
 /*
- * 返回字符串是否是以指定的字符串起始的 (忽略大小写)
+ * 返回字串是否是以指定的字串起始的 (忽略大小寫)
  */
 BOOL    SStr_IsIgnoreCaseStartWith(const char *pStr, const char *pStartWith,
             const char *pAnyChar, int32 n);
 
 /*
- * 返回字符串是否是以指定的字符串起始的 (忽略大小写)
+ * 返回字串是否是以指定的字串起始的 (忽略大小寫)
  */
 BOOL    SStr_IsIgnoreCaseStartWith2(const char *pStr, const char *pStartWith,
             const char *pAnyChar, int32 n, const char **ppAfterMatched);
 
 /*
- * 返回字符串是否是以指定的字符串结尾的
+ * 返回字串是否是以指定的字串結尾的
  */
 BOOL    SStr_IsEndsWith(const char *pStr, const char *pEndsWith);
 
 /*
- * 返回字符串是否是以指定的字符串结尾的 (忽略大小写)
+ * 返回字串是否是以指定的字串結尾的 (忽略大小寫)
  */
 BOOL    SStr_IsIgnoreCaseEndsWith(const char *pStr, const char *pEndsWith);
 
 /*
- * 统计字符串中指定字符出现的次数
+ * 統計字串中指定字元出現的次數
  */
 int32   SStr_TotalChars(const char *pStr, const char *pChars);
 /* -------------------------           */
 
 
 /* ===================================================================
- * Inline 函数
+ * Inline 函式
  * =================================================================== */
 
 /**
@@ -224,9 +224,9 @@ SStr_StrpbrkReverse(const char *s, const char *accept) {
  * extract token from string, and return the end of token
  *
  * 注意：
- * 对于theEnd的处理，要注意是否已考虑到对以下两种特殊情况的处理：
- * 1、delim位于字符串首。这时*theEnd == return
- * 2、若字符串不是以delim结尾的，当最后一次返回时，*theEnd == NULL
+ * 對於theEnd的處理，要注意是否已考慮到對以下兩種特殊情況的處理：
+ * 1、delim位於字串首。這時*theEnd == return
+ * 2、若字串不是以delim結尾的，當最後一次返回時，*theEnd == NULL
  */
 static __inline char*
 SStr_Strsep2(char **ppString, char **ppTokenEnd, const char *pDelim) {
@@ -296,10 +296,10 @@ SStr_Strsep(char **stringp, const char *delim) {
 
 
 /**
- * 返回字符串是否是空字符串
+ * 返回字串是否是空字串
  *
- * @param   pStr    待校验字符串
- * @return  TRUE, 为空; FALSE, 不为空
+ * @param   pStr    待校驗字串
+ * @return  TRUE, 為空; FALSE, 不為空
  */
 static __inline BOOL
 SStr_IsEmpty(const char *pStr) {
@@ -308,10 +308,10 @@ SStr_IsEmpty(const char *pStr) {
 
 
 /**
- * 返回字符串是否是空字符串
+ * 返回字串是否是空字串
  *
- * @param   pStr    待校验字符串
- * @return  TRUE, 为空; FALSE, 不为空
+ * @param   pStr    待校驗字串
+ * @return  TRUE, 為空; FALSE, 不為空
  */
 static __inline BOOL
 SStr_IsBlank(const char *pStr) {
@@ -328,10 +328,10 @@ SStr_IsBlank(const char *pStr) {
 
 
 /**
- * 返回字符串是否全是有效的ASCII可见字符 (不能包含空格和不可见字符等)
+ * 返回字串是否全是有效的ASCII可見字元 (不能包含空格和不可見字元等)
  *
- * @param   pStr    待校验字符串
- * @return  TRUE, 有效; FALSE, 无效
+ * @param   pStr    待校驗字串
+ * @return  TRUE, 有效; FALSE, 無效
  */
 static __inline BOOL
 SStr_IsVisibleAsciiString(const char *pStr) {
@@ -351,11 +351,11 @@ SStr_IsVisibleAsciiString(const char *pStr) {
 
 
 /**
- * 返回字符串是否是有效的MD5字符串
- * (字母+数字)
+ * 返回字串是否是有效的MD5字串
+ * (字母+數字)
  *
- * @param   pStr    待校验字符串
- * @return  TRUE, 有效; FALSE, 无效
+ * @param   pStr    待校驗字串
+ * @return  TRUE, 有效; FALSE, 無效
  */
 static __inline BOOL
 SStr_IsValidMd5String(const char *pStr) {
@@ -378,11 +378,11 @@ SStr_IsValidMd5String(const char *pStr) {
 
 
 /**
- * 返回字符串是否是有效的密码串
- * (字母+数字, 以及 '@._-' 这几个邮箱地址相关的特殊字符)
+ * 返回字串是否是有效的密碼串
+ * (字母+數字, 以及 '@._-' 這幾個郵箱地址相關的特殊字元)
  *
- * @param   pStr    待校验字符串
- * @return  TRUE, 有效; FALSE, 无效
+ * @param   pStr    待校驗字串
+ * @return  TRUE, 有效; FALSE, 無效
  */
 static __inline BOOL
 SStr_IsValidPasswdString(const char *pStr) {
@@ -403,14 +403,14 @@ SStr_IsValidPasswdString(const char *pStr) {
 
 
 /**
- * 校验密码强度
- * (只能包含字母+数字, 以及 '@._-' 这几个邮箱地址相关的特殊字符)
- * (若指定密码强度或密码最小长度, 须符合对应限制条件)
+ * 校驗密碼強度
+ * (只能包含字母+數字, 以及 '@._-' 這幾個郵箱地址相關的特殊字元)
+ * (若指定密碼強度或密碼最小長度, 須符合對應限制條件)
  *
- * @param   pStr          待校验字符串
- * @param   strength      密码强度, 0表示无限制
- * @param   minLength     密码最小长度, 0表示无限制
- * @return  等于0: 有效; 大于0: 密码强度弱; 小于0: 密码包含无效字符
+ * @param   pStr          待校驗字串
+ * @param   strength      密碼強度, 0表示無限制
+ * @param   minLength     密碼最小長度, 0表示無限制
+ * @return  等於0: 有效; 大於0: 密碼強度弱; 小於0: 密碼包含無效字元
  */
 static __inline int32
 SStr_CheckPasswdStrength(const char *pStr, int32 strength, int32 minLength) {
@@ -456,7 +456,7 @@ SStr_CheckPasswdStrength(const char *pStr, int32 strength, int32 minLength) {
 
 
 /**
- * 若字符串为空则返回指定的值
+ * 若字串為空則返回指定的值
  */
 static __inline const char*
 SStr_SwitchBlankStr(const char *s, const char *v) {
@@ -465,10 +465,10 @@ SStr_SwitchBlankStr(const char *s, const char *v) {
 
 
 /**
- * 返回跳过左端空格后的字符串
+ * 返回跳過左端空格後的字串
  *
- * @param   pStr    字符串
- * @return  跳过左端空格后的字符串指针
+ * @param   pStr    字串
+ * @return  跳過左端空格後的字串指標
  */
 static __inline const char*
 SStr_Ltrim(const char *pStr) {
@@ -484,10 +484,10 @@ SStr_Ltrim(const char *pStr) {
 
 
 /**
- * 跳过字符串起始的空格和'0'
+ * 跳過字串起始的空格和'0'
  *
- * @param   pStr    字符串
- * @return  跳过左端空格和'0'后的字符串指针
+ * @param   pStr    字串
+ * @return  跳過左端空格和'0'後的字串指標
  */
 static __inline const char*
 SStr_LtrimZero(const char *pStr) {
@@ -511,10 +511,10 @@ SStr_LtrimZero(const char *pStr) {
 
 
 /**
- * 去除字符串右端的空格
+ * 去除字串右端的空格
  *
- * @param   pStr    字符串
- * @return  去除空格后的字符串
+ * @param   pStr    字串
+ * @return  去除空格後的字串
  */
 static __inline char*
 SStr_RtrimRude(char *pStr) {
@@ -535,10 +535,10 @@ SStr_RtrimRude(char *pStr) {
 
 
 /**
- * 去除字符串前后端的空格
+ * 去除字串前後端的空格
  *
- * @param   pStr    字符串
- * @return  去除空格后的字符串
+ * @param   pStr    字串
+ * @return  去除空格後的字串
  */
 static __inline char*
 SStr_TrimRude(char *pStr) {
@@ -547,7 +547,7 @@ SStr_TrimRude(char *pStr) {
 
 
 /**
- * 返回转换为大写后的字符串
+ * 返回轉換為大寫後的字串
  */
 static __inline char*
 SStr_ToUpper(char *pStr) {
@@ -566,7 +566,7 @@ SStr_ToUpper(char *pStr) {
 
 
 /**
- * 返回转换为大写后的字符串
+ * 返回轉換為大寫後的字串
  */
 static __inline char*
 SStr_ToUpperR(char *pBuf, const char *pStr) {
@@ -589,7 +589,7 @@ SStr_ToUpperR(char *pBuf, const char *pStr) {
 
 
 /**
- * 返回转换为小写后的字符串
+ * 返回轉換為小寫後的字串
  */
 static __inline char*
 SStr_ToLower(char *pStr) {
@@ -608,7 +608,7 @@ SStr_ToLower(char *pStr) {
 
 
 /**
- * 返回转换为小写后的字符串
+ * 返回轉換為小寫後的字串
  */
 static __inline char*
 SStr_ToLowerR(char *pBuf, const char *pStr) {
@@ -632,11 +632,11 @@ SStr_ToLowerR(char *pBuf, const char *pStr) {
 
 
 /**
- * 拷贝指定长度的字符串
- * <p>需保证缓存有足够的空间(maxStrlen + 1)</p>
+ * 拷貝指定長度的字串
+ * <p>需保證快取有足夠的空間(maxStrlen + 1)</p>
  *
- * @param   maxStrlen   最大有效字符长度(不包括结尾的'\0')，即buf的长度需至少
- *                      为 maxStrlen + 1
+ * @param   maxStrlen   最大有效字元長度(不包括結尾的'\0')，即buf的長度需至少
+ *                      為 maxStrlen + 1
  */
 static __inline char*
 SStr_StrCopy(char *pBuf, const char *pStr, int32 maxStrlen) {
@@ -653,16 +653,16 @@ SStr_StrCopy(char *pBuf, const char *pStr, int32 maxStrlen) {
 
 
 /**
- * 从字符串中拷贝指定位置的子字符串
+ * 從字串中拷貝指定位置的子字串
  *
- * @param[out]  pBuf        用于输出数据的缓存区指针
- * @param       pStr        待拷贝的字符串
- * @param       from        子字符串的开始位置 (从0开始计数, 小于等于0则从头开始复制)
- * @param       subLen      子字符串的长度 (小于等于0表示从末尾开始计数的子字符串结束位置)
- *                          - 大于0, 子字符串的长度
- *                          - 等于0, 复制从 from 至末尾的所有字符
- *                          - 小于0, 末尾开始计数的子字符串结束位置
- * @return      返回复制到字符串
+ * @param[out]  pBuf        用於輸出資料的快取區指標
+ * @param       pStr        待拷貝的字串
+ * @param       from        子字串的開始位置 (從0開始計數, 小於等於0則從頭開始複製)
+ * @param       subLen      子字串的長度 (小於等於0表示從末尾開始計數的子字串結束位置)
+ *                          - 大於0, 子字串的長度
+ *                          - 等於0, 複製從 from 至末尾的所有字元
+ *                          - 小於0, 末尾開始計數的子字串結束位置
+ * @return      返回複製到字串
  */
 static __inline char*
 SStr_SubStrCopy(char *pBuf, const char *pStr, int32 from, int32 subLen) {
@@ -698,11 +698,11 @@ SStr_SubStrCopy(char *pBuf, const char *pStr, int32 from, int32 subLen) {
 
 
 /**
- * 连接两个字符串到新字符串中
- * <p>需保证缓存有足够的空间(maxStrlen + 1)</p>
+ * 連線兩個字串到新字串中
+ * <p>需保證快取有足夠的空間(maxStrlen + 1)</p>
  *
- * @param   maxStrlen   最大有效字符长度(不包括结尾的'\0')，即buf的长度需至少
- *                      为 maxStrlen + 1
+ * @param   maxStrlen   最大有效字元長度(不包括結尾的'\0')，即buf的長度需至少
+ *                      為 maxStrlen + 1
  */
 static __inline char*
 SStr_StrCat(char *pBuf, const char *s1, const char *s2, int32 maxStrlen) {
@@ -722,9 +722,9 @@ SStr_StrCat(char *pBuf, const char *s1, const char *s2, int32 maxStrlen) {
 
 
 /**
- * 连接字符串并将字符串指针移动到新字符串末尾
+ * 連線字串並將字串指標移動到新字串末尾
  *
- * @return 原字符串地址
+ * @return 原字串地址
  */
 static __inline char*
 SStr_StrCatP(char **ppString, const char *s) {
@@ -755,10 +755,10 @@ SStr_StrCatP(char **ppString, const char *s) {
 
 
 /**
- * 连接字符和字符串
- * <p>需保证缓存有足够的空间(maxStrlen + 1)</p>
+ * 連線字元和字串
+ * <p>需保證快取有足夠的空間(maxStrlen + 1)</p>
  *
- * @param   maxStrlen   参数 pStr 的最大字符串长度，buf的长度需至少为 maxStrlen + 1
+ * @param   maxStrlen   引數 pStr 的最大字串長度，buf的長度需至少為 maxStrlen + 1
  */
 static __inline char*
 SStr_StrCatChStr(char *pBuf, char ch, const char *pStr, int32 maxStrlen) {
@@ -773,11 +773,11 @@ SStr_StrCatChStr(char *pBuf, char ch, const char *pStr, int32 maxStrlen) {
 
 
 /**
- * 拷贝字符串并去除空格
- * <p>需保证缓存有足够的空间(maxStrlen + 1)</p>
+ * 拷貝字串並去除空格
+ * <p>需保證快取有足夠的空間(maxStrlen + 1)</p>
  *
- * @param   maxStrlen   最大有效字符长度(不包括结尾的'\0')，即buf的长度需至少
- *                      为 maxStrlen + 1
+ * @param   maxStrlen   最大有效字元長度(不包括結尾的'\0')，即buf的長度需至少
+ *                      為 maxStrlen + 1
  */
 static __inline char*
 SStr_StrTrimCopy(char *pBuf, const char *pStr, int32 maxStrlen) {
@@ -809,11 +809,11 @@ SStr_StrTrimCopy(char *pBuf, const char *pStr, int32 maxStrlen) {
 
 
 /**
- * 先拷贝字符串再去除空格
- * <p>需保证缓存有足够的空间(maxStrlen + 1)</p>
+ * 先拷貝字串再去除空格
+ * <p>需保證快取有足夠的空間(maxStrlen + 1)</p>
  *
- * @param   maxStrlen   最大有效字符长度(不包括结尾的'\0')，即buf的长度需至少
- *                      为 maxStrlen + 1
+ * @param   maxStrlen   最大有效字元長度(不包括結尾的'\0')，即buf的長度需至少
+ *                      為 maxStrlen + 1
  */
 static __inline char*
 SStr_StrFixedLengthTrimCopy(char *pBuf, const char *pStr, int32 maxStrlen) {
@@ -846,11 +846,11 @@ SStr_StrFixedLengthTrimCopy(char *pBuf, const char *pStr, int32 maxStrlen) {
 
 
 /**
- * 以右对齐的方式拷贝字符串并去除空格
- * <p>需保证缓存有足够的空间(maxlen + 1)</p>
+ * 以右對齊的方式拷貝字串並去除空格
+ * <p>需保證快取有足夠的空間(maxlen + 1)</p>
  *
- * @param   alignedLen  最大有效字符长度(不包括结尾的'\0')，即buf的长度需至少
- *                      为 alignedLen + 1
+ * @param   alignedLen  最大有效字元長度(不包括結尾的'\0')，即buf的長度需至少
+ *                      為 alignedLen + 1
  */
 static __inline char*
 SStr_StrRightAlignmentCopy(char *pBuf, const char *pStr, int32 alignedLen,
@@ -893,7 +893,7 @@ SStr_StrRightAlignmentCopy(char *pBuf, const char *pStr, int32 alignedLen,
 
 
 /**
- * 跳过空字符
+ * 跳過空字元
  */
 static __inline char*
 SStr_SkipSpaces(char **ppStr) {
@@ -907,7 +907,7 @@ SStr_SkipSpaces(char **ppStr) {
 
 
 /**
- * 从字符串末端反向跳过空字符
+ * 從字串末端反向跳過空字元
  */
 static __inline void
 SStr_SkipSpacesReverse(char **ppEnd, char *pBegin) {
@@ -933,11 +933,11 @@ SStr_SkipSpacesReverse(char **ppEnd, char *pBegin) {
 
 
 /**
- * 跳过所有字符直到指定的字符串末尾
+ * 跳過所有字元直到指定的字串末尾
  *
- * @param   ppStr       <in/out: char**> 待处理字符串的指针的指针
- * @param   pSkipKey    <char*> 待跳过的字符串指针
- * @return  小于0, 未找到指定的字符串; 大于等于0, 已跳过字符串的起始位置(相对值)
+ * @param   ppStr       <in/out: char**> 待處理字串的指標的指標
+ * @param   pSkipKey    <char*> 待跳過的字串指標
+ * @return  小於0, 未找到指定的字串; 大於等於0, 已跳過字串的起始位置(相對值)
  */
 static __inline int32
 SStr_SkipString(char **ppStr, const char *pSkipKey) {
@@ -958,10 +958,10 @@ SStr_SkipString(char **ppStr, const char *pSkipKey) {
 
 
 /**
- * 替换字符串中的指定字符
+ * 替換字串中的指定字元
  *
- * @param   pStr    待处理的字符串
- * @return  已替换的字符数量
+ * @param   pStr    待處理的字串
+ * @return  已替換的字元數量
  */
 static __inline int32
 SStr_ReplaceChar(char *pStr, const char c1, const char c2, int32 n) {
@@ -982,9 +982,9 @@ SStr_ReplaceChar(char *pStr, const char c1, const char c2, int32 n) {
 
 
 /**
- * 从后面开始替换字符串中的指定字符
+ * 從後面開始替換字串中的指定字元
  *
- * @param   pStr    待处理的字符串
+ * @param   pStr    待處理的字串
  * @return
  */
 static __inline int32

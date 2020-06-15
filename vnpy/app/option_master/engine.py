@@ -41,9 +41,9 @@ from .algo import ElectronicEyeAlgo
 
 
 PRICING_MODELS = {
-    "Black-76 欧式期货期权": black_76,
-    "Black-Scholes 欧式股票期权": black_scholes,
-    "二叉树 美式期货期权": binomial_tree
+    "Black-76 歐式期貨期權": black_76,
+    "Black-Scholes 歐式股票期權": black_scholes,
+    "二叉樹 美式期貨期權": binomial_tree
 }
 
 

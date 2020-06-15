@@ -28,15 +28,15 @@ class ScriptManager(QtWidgets.QWidget):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("脚本策略")
+        self.setWindowTitle("指令碼策略")
 
-        start_button = QtWidgets.QPushButton("启动")
+        start_button = QtWidgets.QPushButton("啟動")
         start_button.clicked.connect(self.start_script)
 
         stop_button = QtWidgets.QPushButton("停止")
         stop_button.clicked.connect(self.stop_script)
 
-        select_button = QtWidgets.QPushButton("打开")
+        select_button = QtWidgets.QPushButton("開啟")
         select_button.clicked.connect(self.select_script)
 
         self.strategy_line = QtWidgets.QLineEdit()
@@ -92,7 +92,7 @@ class ScriptManager(QtWidgets.QWidget):
 
         path, type_ = QtWidgets.QFileDialog.getOpenFileName(
             self,
-            u"载入策略脚本",
+            u"載入策略指令碼",
             cwd,
             "Python File(*.py)"
         )

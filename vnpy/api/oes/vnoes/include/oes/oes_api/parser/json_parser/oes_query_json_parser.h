@@ -17,7 +17,7 @@
 /**
  * @file    oes_query_json_parser.h
  *
- * 查询消息解析
+ * 查詢訊息解析
  *
  * @version $Id$
  * @since   2014/12/26
@@ -39,10 +39,10 @@ extern "C" {
 
 
 /* ===================================================================
- * 函数声明
+ * 函式宣告
  * =================================================================== */
 
-/* 查询服务接收到的请求消息解析处理 */
+/* 查詢服務接收到的請求訊息解析處理 */
 OesQryReqMsgT *
         OesJsonParser_DecodeQueryReq(
                 SMsgHeadT *pReqHead,
@@ -50,7 +50,7 @@ OesQryReqMsgT *
                 OesQryReqMsgT *pQryReq,
                 const char *pRemoteInfo);
 
-/* 查询服务构造应答消息处理 */
+/* 查詢服務構造應答訊息處理 */
 void *  OesJsonParser_EncodeQueryRsp(
                 SMsgHeadT *pRspHead,
                 const OesQryRspMsgT *pQryRsp,
@@ -61,119 +61,119 @@ void *  OesJsonParser_EncodeQueryRsp(
 
 
 /* ===================================================================
- * 用于具体数据条目编/解码处理的函数声明
+ * 用於具體資料條目編/解碼處理的函式宣告
  * =================================================================== */
 
-/* 编码查询应答条目 */
+/* 編碼查詢應答條目 */
 void*   OesJsonParser_EncodeQueryRspItem(
                 SMsgHeadT *pRspHead,
                 const void *pQryRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 客户端总览信息序列化 */
+/* 客戶端總覽資訊序列化 */
 int32 JsonParser_EncodeClientOverview(
                 const OesClientOverviewT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条委托查询结果序列化 */
+/* 單條委託查詢結果序列化 */
 int32   JsonParser_EncodeOrdItem(
                 const OesOrdItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条成交查询结果序列化 */
+/* 單條成交查詢結果序列化 */
 int32   JsonParser_EncodeTrdItem(
                 const OesTrdItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条资金查询结果序列化 */
+/* 單條資金查詢結果序列化 */
 int32   JsonParser_EncodeCashAssetItem(
                 const OesCashAssetItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条股东帐户信息查询结果序列化 */
+/* 單條股東帳戶資訊查詢結果序列化 */
 int32   JsonParser_EncodeInvAcctItem(
                 const OesInvAcctItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条佣金信息查询结果序列化 */
+/* 單條佣金資訊查詢結果序列化 */
 int32   JsonParser_EncodeCommissionRateItem(
                 const OesCommissionRateItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条出入金流水查询结果序列化 */
+/* 單條出入金流水查詢結果序列化 */
 int32   JsonParser_EncodeFundTransferSerialItem(
                 const OesFundTransferSerialItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 股票持仓查询编码单条回报处理 */
+/* 股票持倉查詢編碼單條回報處理 */
 int32   JsonParser_EncodeStkHoldingItem(
                 const OesStkHoldingItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 期权持仓查询编码单条回报处理 */
+/* 期權持倉查詢編碼單條回報處理 */
 int32   JsonParser_EncodeOptHoldingItem(
                 const OesOptHoldingItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 期权持仓查询编码单条回报处理 */
+/* 期權持倉查詢編碼單條回報處理 */
 int32   JsonParser_EncodeLotWinningItem(
                 const OesLotWinningItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条证券发行信息查询结果序列化 */
+/* 單條證券發行資訊查詢結果序列化 */
 int32   JsonParser_EncodeIssueItem(
                 const OesIssueItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条股票产品信息查询结果序列化 */
+/* 單條股票產品資訊查詢結果序列化 */
 int32   JsonParser_EncodeStockItem(
                 const OesStockItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 客户信息查询编码单条回报处理 */
+/* 客戶資訊查詢編碼單條回報處理 */
 int32   JsonParser_EncodeCustItem(
                 const OesCustItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条ETF产品信息查询结果序列化 */
+/* 單條ETF產品資訊查詢結果序列化 */
 int32   JsonParser_EncodeEtfItem(
                 const OesEtfItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条ETF成分股信息查询结果序列化 */
+/* 單條ETF成分股資訊查詢結果序列化 */
 int32   JsonParser_EncodeEtfComponentItem(
                 const OesEtfComponentItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条期权产品信息查询结果序列化 */
+/* 單條期權產品資訊查詢結果序列化 */
 int32   JsonParser_EncodeOptionItem(
                 const OesOptionItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条市场状态信息查询结果序列化 */
+/* 單條市場狀態資訊查詢結果序列化 */
 int32   JsonParser_EncodeMktStatusItem(
                 const OesMarketStateItemT *pRspItem,
                 char *pBuf,
                 int32 bufSize);
 
-/* 单条主柜资金查询结果序列化 */
+/* 單條主櫃資金查詢結果序列化 */
 int32   JsonParser_EncodeCounterCashItem(
                 const OesCounterCashItemT *pRspItem,
                 char *pBuf,

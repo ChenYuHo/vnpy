@@ -60,7 +60,7 @@ class OptionVolatilityChart(QtWidgets.QWidget):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("波动率曲线")
+        self.setWindowTitle("波動率曲線")
 
         # Create checkbox for each chain
         hbox = QtWidgets.QHBoxLayout()
@@ -86,10 +86,10 @@ class OptionVolatilityChart(QtWidgets.QWidget):
         pg.setConfigOptions(antialias=True)
 
         graphics_window = pg.GraphicsWindow()
-        self.impv_chart = graphics_window.addPlot(title="隐含波动率曲线")
+        self.impv_chart = graphics_window.addPlot(title="隱含波動率曲線")
         self.impv_chart.showGrid(x=True, y=True)
-        self.impv_chart.setLabel("left", "波动率")
-        self.impv_chart.setLabel("bottom", "行权价")
+        self.impv_chart.setLabel("left", "波動率")
+        self.impv_chart.setLabel("bottom", "行權價")
         self.impv_chart.addLegend()
         self.impv_chart.setMenuEnabled(False)
         self.impv_chart.setMouseEnabled(False, False)
@@ -128,7 +128,7 @@ class OptionVolatilityChart(QtWidgets.QWidget):
         self.call_curves[chain_symbol] = self.impv_chart.plot(
             symbolSize=symbol_size,
             symbol="t1",
-            name=symbol + " 看涨",
+            name=symbol + " 看漲",
             pen=pen,
             symbolBrush=color
         )
@@ -142,7 +142,7 @@ class OptionVolatilityChart(QtWidgets.QWidget):
         self.pricing_curves[chain_symbol] = self.impv_chart.plot(
             symbolSize=symbol_size,
             symbol="o",
-            name=symbol + " 定价",
+            name=symbol + " 定價",
             pen=pen,
             symbolBrush=color
         )
@@ -235,14 +235,14 @@ class ScenarioAnalysisChart(QtWidgets.QWidget):
 
         self.target_combo = QtWidgets.QComboBox()
         self.target_combo.addItems([
-            "盈亏",
+            "盈虧",
             "Delta",
             "Gamma",
             "Theta",
             "Vega"
         ])
 
-        button = QtWidgets.QPushButton("执行分析")
+        button = QtWidgets.QPushButton("執行分析")
         button.clicked.connect(self.run_analysis)
 
         # Create charts
@@ -250,22 +250,22 @@ class ScenarioAnalysisChart(QtWidgets.QWidget):
         canvas = FigureCanvas(fig)
 
         self.ax = fig.gca(projection="3d")
-        self.ax.set_xlabel("价格涨跌 %")
-        self.ax.set_ylabel("波动率涨跌 %")
-        self.ax.set_zlabel("盈亏")
+        self.ax.set_xlabel("價格漲跌 %")
+        self.ax.set_ylabel("波動率漲跌 %")
+        self.ax.set_zlabel("盈虧")
 
         # Set layout
         hbox1 = QtWidgets.QHBoxLayout()
-        hbox1.addWidget(QtWidgets.QLabel("目标数据"))
+        hbox1.addWidget(QtWidgets.QLabel("目標資料"))
         hbox1.addWidget(self.target_combo)
-        hbox1.addWidget(QtWidgets.QLabel("时间衰减"))
+        hbox1.addWidget(QtWidgets.QLabel("時間衰減"))
         hbox1.addWidget(self.time_change_spin)
         hbox1.addStretch()
 
         hbox2 = QtWidgets.QHBoxLayout()
-        hbox2.addWidget(QtWidgets.QLabel("价格变动"))
+        hbox2.addWidget(QtWidgets.QLabel("價格變動"))
         hbox2.addWidget(self.price_change_spin)
-        hbox2.addWidget(QtWidgets.QLabel("波动率变动"))
+        hbox2.addWidget(QtWidgets.QLabel("波動率變動"))
         hbox2.addWidget(self.impv_change_spin)
         hbox2.addStretch()
         hbox2.addWidget(button)
@@ -296,8 +296,8 @@ class ScenarioAnalysisChart(QtWidgets.QWidget):
             if not underlying.mid_price:
                 QtWidgets.QMessageBox.warning(
                     self,
-                    "无法执行情景分析",
-                    f"标的物{underlying.symbol}当前中间价为{underlying.mid_price}",
+                    "無法執行情景分析",
+                    f"標的物{underlying.symbol}當前中間價為{underlying.mid_price}",
                     QtWidgets.QMessageBox.Ok
                 )
                 return
@@ -372,7 +372,7 @@ class ScenarioAnalysisChart(QtWidgets.QWidget):
             vegas.append(vega_buf)
 
         # Plot chart
-        if target_name == "盈亏":
+        if target_name == "盈虧":
             target_data = pnls
         elif target_name == "Delta":
             target_data = deltas

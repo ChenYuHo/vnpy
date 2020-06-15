@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////
-///@author 中泰证券股份有限公司
+///@author 中泰證券股份有限公司
 ///@file xoms_api_struct.h
-///@brief 定义交易类相关数据结构
+///@brief 定義交易類相關資料結構
 /////////////////////////////////////////////////////////////////////////
 #ifndef _XOMS_API_STRUCT_H_
 #define _XOMS_API_STRUCT_H_
@@ -12,685 +12,685 @@
 
 #pragma pack(8)
 
-//=====================客户端接口定义=================================
-///新订单请求
+//=====================客戶端介面定義=================================
+///新訂單請求
 struct XTPOrderInsertInfo
 {
-    ///XTP系统订单ID，无需用户填写，在XTP系统中唯一
+    ///XTP系統訂單ID，無需使用者填寫，在XTP系統中唯一
     uint64_t                order_xtp_id;
-    ///报单引用，由客户自定义
+    ///報單引用，由客戶自定義
     uint32_t	            order_client_id;
-    ///合约代码 客户端请求不带空格，以'\0'结尾
+    ///合約程式碼 客戶端請求不帶空格，以'\0'結尾
     char                    ticker[XTP_TICKER_LEN];
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE         market;
-    ///价格
+    ///價格
     double                  price;
-    ///止损价（保留字段）
+    ///止損價（保留欄位）
     double                  stop_price;
-    ///数量(股票单位为股，逆回购单位为张)
+    ///數量(股票單位為股，逆回購單位為張)
     int64_t                 quantity;
-    ///报单价格
+    ///報單價格
     XTP_PRICE_TYPE          price_type;
     union{
-		///32位字段，用来兼容老版本api，用户无需关心
+		///32位欄位，用來相容老版本api，使用者無需關心
         uint32_t            u32;
         struct {
-            ///买卖方向
+            ///買賣方向
             XTP_SIDE_TYPE               side;
-            ///开平标志
+            ///開平標誌
             XTP_POSITION_EFFECT_TYPE    position_effect;
-			///预留字段1
+			///預留欄位1
             uint8_t                     reserved1;
-			///预留字段2
+			///預留欄位2
 			uint8_t                     reserved2;
         };
     };
-	///业务类型
+	///業務型別
 	XTP_BUSINESS_TYPE       business_type;
 };
 
 
-///撤单失败响应消息
+///撤單失敗響應訊息
 struct XTPOrderCancelInfo
 {
-    ///撤单XTPID
+    ///撤單XTPID
     uint64_t                 order_cancel_xtp_id;
-    ///原始订单XTPID
+    ///原始訂單XTPID
     uint64_t                 order_xtp_id;
 };
 
 
-///报单响应结构体
+///報單響應結構體
 struct XTPOrderInfo
 {
-    ///XTP系统订单ID，在XTP系统中唯一
+    ///XTP系統訂單ID，在XTP系統中唯一
 	uint64_t                order_xtp_id;
-	///报单引用，用户自定义
+	///報單引用，使用者自定義
 	uint32_t	            order_client_id;
-    ///报单操作引用，用户自定义（暂未使用）
+    ///報單操作引用，使用者自定義（暫未使用）
     uint32_t                order_cancel_client_id;
-    ///撤单在XTP系统中的id，在XTP系统中唯一
+    ///撤單在XTP系統中的id，在XTP系統中唯一
     uint64_t                order_cancel_xtp_id;
-	///合约代码
+	///合約程式碼
 	char                    ticker[XTP_TICKER_LEN];
-	///交易市场
+	///交易市場
 	XTP_MARKET_TYPE         market;
-	///价格
+	///價格
 	double                  price;
-	///数量，此订单的报单数量
+	///數量，此訂單的報單數量
 	int64_t                 quantity;
-	///报单价格条件
+	///報單價格條件
 	XTP_PRICE_TYPE          price_type;
     union{
-		///32位字段，用来兼容老版本api，用户无需关心
+		///32位欄位，用來相容老版本api，使用者無需關心
         uint32_t            u32;
         struct {
-            ///买卖方向
+            ///買賣方向
             XTP_SIDE_TYPE               side;
-            ///开平标志
+            ///開平標誌
             XTP_POSITION_EFFECT_TYPE    position_effect;
-			///预留字段1
+			///預留欄位1
 			uint8_t                     reserved1;
-			///预留字段2
+			///預留欄位2
 			uint8_t                     reserved2;
         };
     };
-	///业务类型
+	///業務型別
 	XTP_BUSINESS_TYPE       business_type;
-	///今成交数量，为此订单累计成交数量
+	///今成交數量，為此訂單累計成交數量
 	int64_t                 qty_traded;
-	///剩余数量，当撤单成功时，表示撤单数量
+	///剩餘數量，當撤單成功時，表示撤單數量
 	int64_t                 qty_left;
-	///委托时间，格式为YYYYMMDDHHMMSSsss
+	///委託時間，格式為YYYYMMDDHHMMSSsss
 	int64_t                 insert_time;
-	///最后修改时间，格式为YYYYMMDDHHMMSSsss
+	///最後修改時間，格式為YYYYMMDDHHMMSSsss
 	int64_t                 update_time;
-	///撤销时间，格式为YYYYMMDDHHMMSSsss
+	///撤銷時間，格式為YYYYMMDDHHMMSSsss
 	int64_t                 cancel_time;
-	///成交金额，为此订单的成交总金额
+	///成交金額，為此訂單的成交總金額
 	double                  trade_amount;
-	///本地报单编号 OMS生成的单号，不等同于order_xtp_id，为服务器传到报盘的单号
+	///本地報單編號 OMS生成的單號，不等同於order_xtp_id，為伺服器傳到報盤的單號
 	char                    order_local_id[XTP_LOCAL_ORDER_LEN];
-	///报单状态，订单响应中没有部分成交状态的推送，在查询订单结果中，会有部分成交状态
+	///報單狀態，訂單響應中沒有部分成交狀態的推送，在查詢訂單結果中，會有部分成交狀態
 	XTP_ORDER_STATUS_TYPE   order_status;
-	///报单提交状态，OMS内部使用，用户无需关心
+	///報單提交狀態，OMS內部使用，使用者無需關心
 	XTP_ORDER_SUBMIT_STATUS_TYPE   order_submit_status;
-	///报单类型
+	///報單型別
 	TXTPOrderTypeType       order_type;
 };
 
 
 
-///报单成交结构体
+///報單成交結構體
 struct XTPTradeReport
 {
-    ///XTP系统订单ID，此成交回报相关的订单ID，在XTP系统中唯一
+    ///XTP系統訂單ID，此成交回報相關的訂單ID，在XTP系統中唯一
     uint64_t                 order_xtp_id;
-    ///报单引用
+    ///報單引用
     uint32_t                 order_client_id;
-    ///合约代码
+    ///合約程式碼
     char                     ticker[XTP_TICKER_LEN];
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE          market;
-    ///订单号，引入XTPID后，该字段实际和order_xtp_id重复。接口中暂时保留。
+    ///訂單號，引入XTPID後，該欄位實際和order_xtp_id重複。介面中暫時保留。
     uint64_t                 local_order_id;
-    ///成交编号，深交所唯一，上交所每笔交易唯一，当发现2笔成交回报拥有相同的exec_id，则可以认为此笔交易自成交
+    ///成交編號，深交所唯一，上交所每筆交易唯一，當發現2筆成交回報擁有相同的exec_id，則可以認為此筆交易自成交
     char                     exec_id[XTP_EXEC_ID_LEN];
-    ///价格，此次成交的价格
+    ///價格，此次成交的價格
     double                   price;
-    ///数量，此次成交的数量，不是累计数量
+    ///數量，此次成交的數量，不是累計數量
     int64_t                  quantity;
-    ///成交时间，格式为YYYYMMDDHHMMSSsss
+    ///成交時間，格式為YYYYMMDDHHMMSSsss
     int64_t                  trade_time;
-    ///成交金额，此次成交的总金额 = price*quantity
+    ///成交金額，此次成交的總金額 = price*quantity
     double                   trade_amount;
-    ///成交序号 --回报记录号，对于单个账户来说，每个交易所唯一,report_index+market字段可以组成唯一标识表示成交回报，对于多账户来说，不唯一
+    ///成交序號 --回報記錄號，對於單個賬戶來說，每個交易所唯一,report_index+market欄位可以組成唯一標識表示成交回報，對於多賬戶來說，不唯一
     uint64_t                 report_index;
-    ///报单编号 --交易所单号，上交所为空，深交所有此字段
+    ///報單編號 --交易所單號，上交所為空，深交所有此欄位
     char                     order_exch_id[XTP_ORDER_EXCH_LEN];
-    ///成交类型  --成交回报中的执行类型
+    ///成交型別  --成交回報中的執行型別
     TXTPTradeTypeType        trade_type;
     union{
-		///32位字段，用来兼容老版本api，用户无需关心
+		///32位欄位，用來相容老版本api，使用者無需關心
         uint32_t            u32;
         struct {
-            ///买卖方向
+            ///買賣方向
             XTP_SIDE_TYPE               side;
-            ///开平标志
+            ///開平標誌
             XTP_POSITION_EFFECT_TYPE    position_effect;
-			///预留字段1
+			///預留欄位1
 			uint8_t                     reserved1;
-			///预留字段2
+			///預留欄位2
 			uint8_t                     reserved2;
         };
     };
-	///业务类型
+	///業務型別
 	XTP_BUSINESS_TYPE        business_type;
-    ///交易所交易员代码 
+    ///交易所交易員程式碼 
     char                     branch_pbu[XTP_BRANCH_PBU_LEN];
 };
 
 
 //////////////////////////////////////////////////////////////////////////
-///报单查询
+///報單查詢
 //////////////////////////////////////////////////////////////////////////
-///报单查询请求-条件查询
+///報單查詢請求-條件查詢
 struct XTPQueryOrderReq
 {
-    ///证券代码，可以为空，如果为空，则默认查询时间段内的所有成交回报
+    ///證券程式碼，可以為空，如果為空，則預設查詢時間段內的所有成交回報
     char      ticker[XTP_TICKER_LEN];
-    ///格式为YYYYMMDDHHMMSSsss，为0则默认当前交易日0点
+    ///格式為YYYYMMDDHHMMSSsss，為0則預設當前交易日0點
     int64_t   begin_time;
-    ///格式为YYYYMMDDHHMMSSsss，为0则默认当前时间
+    ///格式為YYYYMMDDHHMMSSsss，為0則預設當前時間
     int64_t   end_time;  
 };
 
-///报单查询响应结构体
+///報單查詢響應結構體
 typedef struct XTPOrderInfo XTPQueryOrderRsp;
 
 
 //////////////////////////////////////////////////////////////////////////
-///成交回报查询
+///成交回報查詢
 //////////////////////////////////////////////////////////////////////////
-///查询成交报告请求-根据执行编号查询（保留字段）
+///查詢成交報告請求-根據執行編號查詢（保留欄位）
 struct XTPQueryReportByExecIdReq
 {
-    ///XTP订单系统ID
+    ///XTP訂單系統ID
     uint64_t  order_xtp_id;  
-    ///成交执行编号
+    ///成交執行編號
     char  exec_id[XTP_EXEC_ID_LEN];
 };
 
-///查询成交回报请求-查询条件
+///查詢成交回報請求-查詢條件
 struct XTPQueryTraderReq
 {
-    ///证券代码，可以为空，如果为空，则默认查询时间段内的所有成交回报
+    ///證券程式碼，可以為空，如果為空，則預設查詢時間段內的所有成交回報
     char      ticker[XTP_TICKER_LEN];
-    ///开始时间，格式为YYYYMMDDHHMMSSsss，为0则默认当前交易日0点
+    ///開始時間，格式為YYYYMMDDHHMMSSsss，為0則預設當前交易日0點
     int64_t   begin_time; 
-    ///结束时间，格式为YYYYMMDDHHMMSSsss，为0则默认当前时间
+    ///結束時間，格式為YYYYMMDDHHMMSSsss，為0則預設當前時間
     int64_t   end_time;  
 };
 
-///成交回报查询响应结构体
+///成交回報查詢響應結構體
 typedef struct XTPTradeReport  XTPQueryTradeRsp;
 
 
 
 //////////////////////////////////////////////////////////////////////////
-///账户资金查询响应结构体
+///賬戶資金查詢響應結構體
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryAssetRsp
 {
-    ///总资产（现货账户/期权账户参考公式：总资产 = 可用资金 + 证券资产（目前为0）+ 预扣的资金），（信用账户参考公式：总资产 = 可用资金 + 融券卖出所得资金余额 + 证券资产+ 预扣的资金）
+    ///總資產（現貨賬戶/期權賬戶參考公式：總資產 = 可用資金 + 證券資產（目前為0）+ 預扣的資金），（信用賬戶參考公式：總資產 = 可用資金 + 融券賣出所得資金餘額 + 證券資產+ 預扣的資金）
     double total_asset;
-    ///可用资金
+    ///可用資金
     double buying_power;
-    ///证券资产（保留字段，目前为0）
+    ///證券資產（保留欄位，目前為0）
     double security_asset;
-    ///累计买入成交证券占用资金（仅限现货账户/期权账户，信用账户暂不可用）
+    ///累計買入成交證券佔用資金（僅限現貨賬戶/期權賬戶，信用賬戶暫不可用）
     double fund_buy_amount;
-    ///累计买入成交交易费用（仅限现货账户/期权账户，信用账户暂不可用）
+    ///累計買入成交交易費用（僅限現貨賬戶/期權賬戶，信用賬戶暫不可用）
     double fund_buy_fee;
-    ///累计卖出成交证券所得资金（仅限现货账户/期权账户，信用账户暂不可用）
+    ///累計賣出成交證券所得資金（僅限現貨賬戶/期權賬戶，信用賬戶暫不可用）
     double fund_sell_amount;
-    ///累计卖出成交交易费用（仅限现货账户/期权账户，信用账户暂不可用）
+    ///累計賣出成交交易費用（僅限現貨賬戶/期權賬戶，信用賬戶暫不可用）
     double fund_sell_fee;
-    ///XTP系统预扣的资金（包括买卖股票时预扣的交易资金+预扣手续费）
+    ///XTP系統預扣的資金（包括買賣股票時預扣的交易資金+預扣手續費）
     double withholding_amount;
-    ///账户类型
+    ///賬戶型別
     XTP_ACCOUNT_TYPE account_type;
 
-    ///冻结的保证金（仅限期权账户）
+    ///凍結的保證金（僅限期權賬戶）
     double frozen_margin;
-    ///行权冻结资金（仅限期权账户）
+    ///行權凍結資金（僅限期權賬戶）
     double frozen_exec_cash;
-    ///行权费用（仅限期权账户）
+    ///行權費用（僅限期權賬戶）
     double frozen_exec_fee;
-    ///垫付资金（仅限期权账户）
+    ///墊付資金（僅限期權賬戶）
     double pay_later;
-    ///预垫付资金（仅限期权账户）
+    ///預墊付資金（僅限期權賬戶）
     double preadva_pay;
-    ///昨日余额（仅限期权账户）
+    ///昨日餘額（僅限期權賬戶）
     double orig_banlance;
-    ///当前余额（仅限期权账户）
+    ///當前餘額（僅限期權賬戶）
     double banlance;
-    ///当天出入金（仅限期权账户）
+    ///當天出入金（僅限期權賬戶）
     double deposit_withdraw;
-    ///当日交易资金轧差（仅限期权账户）
+    ///當日交易資金軋差（僅限期權賬戶）
     double trade_netting;
-    ///资金资产（仅限期权账户）
+    ///資金資產（僅限期權賬戶）
     double captial_asset;
 
-    ///强锁资金（仅限期权账户）
+    ///強鎖資金（僅限期權賬戶）
     double force_freeze_amount;
-    ///可取资金（仅限期权账户）
+    ///可取資金（僅限期權賬戶）
     double preferred_amount;
 
-    // 信用业务新增字段开始（数量1）
-    ///融券卖出所得资金余额（仅限信用账户，只能用于买券还券）
+    // 信用業務新增欄位開始（數量1）
+    ///融券賣出所得資金餘額（僅限信用賬戶，只能用於買券還券）
     double repay_stock_aval_banlance;
 
-    // 信用业务新增字段结束（数量1）
+    // 信用業務新增欄位結束（數量1）
 
-    ///(保留字段)
+    ///(保留欄位)
     uint64_t unknown[43 - 12 - 1];
 };
 
 
 
 //////////////////////////////////////////////////////////////////////////
-///查询股票持仓情况
+///查詢股票持倉情況
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryStkPositionRsp
 {
-    ///证券代码
+    ///證券程式碼
     char                ticker[XTP_TICKER_LEN];
-    ///证券名称
+    ///證券名稱
     char                ticker_name[XTP_TICKER_NAME_LEN];
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE     market;
-    ///总持仓
+    ///總持倉
     int64_t             total_qty;
-    ///可卖持仓
+    ///可賣持倉
     int64_t				sellable_qty;
-    ///持仓成本
+    ///持倉成本
     double              avg_price;
-    ///浮动盈亏（保留字段）
+    ///浮動盈虧（保留欄位）
     double              unrealized_pnl;
-    ///昨日持仓
+    ///昨日持倉
     int64_t             yesterday_position;
-    ///今日申购赎回数量（申购和赎回数量不可能同时存在，因此可以共用一个字段）
+    ///今日申購贖回數量（申購和贖回數量不可能同時存在，因此可以共用一個欄位）
     int64_t				purchase_redeemable_qty;
 
-    /// 持仓方向
+    /// 持倉方向
 	XTP_POSITION_DIRECTION_TYPE      position_direction;
-	///保留字段1
+	///保留欄位1
 	uint32_t			reserved1;
-    /// 可行权合约
+    /// 可行權合約
     int64_t             executable_option;
-    /// 可锁定标的
+    /// 可鎖定標的
     int64_t             lockable_position;
-    /// 可行权标的
+    /// 可行權標的
     int64_t             executable_underlying;
-    /// 已锁定标的
+    /// 已鎖定標的
     int64_t             locked_position;
-    /// 可用已锁定标的
+    /// 可用已鎖定標的
     int64_t             usable_locked_position;
 
 
-    ///(保留字段)
+    ///(保留欄位)
     uint64_t unknown[50 - 6];
 };
 
 
 /////////////////////////////////////////////////////////////////////////
-///资金内转流水通知
+///資金內轉流水通知
 /////////////////////////////////////////////////////////////////////////
 struct XTPFundTransferNotice
 {
-    ///资金内转编号
+    ///資金內轉編號
     uint64_t	            serial_id;
-    ///内转类型
+    ///內轉型別
     XTP_FUND_TRANSFER_TYPE	transfer_type;
-    ///金额
+    ///金額
     double	                amount;
-    ///操作结果 
+    ///操作結果 
     XTP_FUND_OPER_STATUS    oper_status;
-    ///操作时间
+    ///操作時間
     uint64_t	            transfer_time;
 };
 
 
 
 /////////////////////////////////////////////////////////////////////////
-///资金内转流水查询请求与响应
+///資金內轉流水查詢請求與響應
 /////////////////////////////////////////////////////////////////////////
 struct XTPQueryFundTransferLogReq {
-    ///资金内转编号
+    ///資金內轉編號
     uint64_t	serial_id;
 
 };
 
 /////////////////////////////////////////////////////////////////////////
-///资金内转流水记录结构体
+///資金內轉流水記錄結構體
 /////////////////////////////////////////////////////////////////////////
 typedef struct XTPFundTransferNotice XTPFundTransferLog;
 
 //////////////////////////////////////////////////////////////////////////
-///查询分级基金信息结构体
+///查詢分級基金資訊結構體
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryStructuredFundInfoReq
 {
-	XTP_EXCHANGE_TYPE   exchange_id;  ///<交易所代码，不可为空
-	char                sf_ticker[XTP_TICKER_LEN];   ///<分级基金母基金代码，可以为空，如果为空，则默认查询所有的分级基金
+	XTP_EXCHANGE_TYPE   exchange_id;  ///<交易所程式碼，不可為空
+	char                sf_ticker[XTP_TICKER_LEN];   ///<分級基金母基金程式碼，可以為空，如果為空，則預設查詢所有的分級基金
 };
 
 //////////////////////////////////////////////////////////////////////////
-///查询分级基金信息响应结构体
+///查詢分級基金資訊響應結構體
 //////////////////////////////////////////////////////////////////////////
 struct XTPStructuredFundInfo
 {
-    XTP_EXCHANGE_TYPE   exchange_id;  ///<交易所代码
-	char                sf_ticker[XTP_TICKER_LEN];   ///<分级基金母基金代码
-	char                sf_ticker_name[XTP_TICKER_NAME_LEN]; ///<分级基金母基金名称
-    char                ticker[XTP_TICKER_LEN];   ///<分级基金子基金代码
-    char                ticker_name[XTP_TICKER_NAME_LEN]; ///<分级基金子基金名称
-	XTP_SPLIT_MERGE_STATUS	split_merge_status;   ///<基金允许拆分合并状态
-    uint32_t            ratio; ///<拆分合并比例
-    uint32_t            min_split_qty;///<最小拆分数量
-    uint32_t            min_merge_qty; ///<最小合并数量
-    double              net_price;///<基金净值
+    XTP_EXCHANGE_TYPE   exchange_id;  ///<交易所程式碼
+	char                sf_ticker[XTP_TICKER_LEN];   ///<分級基金母基金程式碼
+	char                sf_ticker_name[XTP_TICKER_NAME_LEN]; ///<分級基金母基金名稱
+    char                ticker[XTP_TICKER_LEN];   ///<分級基金子基金程式碼
+    char                ticker_name[XTP_TICKER_NAME_LEN]; ///<分級基金子基金名稱
+	XTP_SPLIT_MERGE_STATUS	split_merge_status;   ///<基金允許拆分合並狀態
+    uint32_t            ratio; ///<拆分合並比例
+    uint32_t            min_split_qty;///<最小拆分數量
+    uint32_t            min_merge_qty; ///<最小合併數量
+    double              net_price;///<基金淨值
 };
 
 
 //////////////////////////////////////////////////////////////////////////
-///查询股票ETF合约基本情况--请求结构体,
-///请求参数为多条件参数:1,不填则返回所有市场的ETF合约信息。
-///                  2,只填写market,返回该交易市场下结果
-///                   3,填写market及ticker参数,只返回该etf信息。
+///查詢股票ETF合約基本情況--請求結構體,
+///請求引數為多條件引數:1,不填則返回所有市場的ETF合約資訊。
+///                  2,只填寫market,返回該交易市場下結果
+///                   3,填寫market及ticker引數,只返回該etf資訊。
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryETFBaseReq
 {
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE    market;
-    ///ETF买卖代码
+    ///ETF買賣程式碼
     char               ticker[XTP_TICKER_LEN];
 };
 
 //////////////////////////////////////////////////////////////////////////
-///查询股票ETF合约基本情况--响应结构体
+///查詢股票ETF合約基本情況--響應結構體
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPQueryETFBaseRsp
 {
-    XTP_MARKET_TYPE     market;                             ///<交易市场
-    char                etf[XTP_TICKER_LEN];                ///<etf代码,买卖,申赎统一使用该代码
-    char                subscribe_redemption_ticker[XTP_TICKER_LEN];    ///<etf申购赎回代码
-    int32_t             unit;                               ///<最小申购赎回单位对应的ETF份数,例如上证"50ETF"就是900000
-    int32_t             subscribe_status;                   ///<是否允许申购,1-允许,0-禁止
-    int32_t             redemption_status;                  ///<是否允许赎回,1-允许,0-禁止
-    double              max_cash_ratio;                     ///<最大现金替代比例,小于1的数值   TODO 是否采用double
-    double              estimate_amount;                    ///<T日预估金额
-    double              cash_component;                     ///<T-X日现金差额
-    double              net_value;                          ///<基金单位净值
-    double              total_amount;                       ///<最小申赎单位净值总金额=net_value*unit
+    XTP_MARKET_TYPE     market;                             ///<交易市場
+    char                etf[XTP_TICKER_LEN];                ///<etf程式碼,買賣,申贖統一使用該程式碼
+    char                subscribe_redemption_ticker[XTP_TICKER_LEN];    ///<etf申購贖回程式碼
+    int32_t             unit;                               ///<最小申購贖回單位對應的ETF份數,例如上證"50ETF"就是900000
+    int32_t             subscribe_status;                   ///<是否允許申購,1-允許,0-禁止
+    int32_t             redemption_status;                  ///<是否允許贖回,1-允許,0-禁止
+    double              max_cash_ratio;                     ///<最大現金替代比例,小於1的數值   TODO 是否採用double
+    double              estimate_amount;                    ///<T日預估金額
+    double              cash_component;                     ///<T-X日現金差額
+    double              net_value;                          ///<基金單位淨值
+    double              total_amount;                       ///<最小申贖單位淨值總金額=net_value*unit
 }XTPQueryETFBaseRsp;
 
 
 
 //////////////////////////////////////////////////////////////////////////
-///查询股票ETF合约成分股信息--请求结构体,请求参数为:交易市场+ETF买卖代码
+///查詢股票ETF合約成分股資訊--請求結構體,請求引數為:交易市場+ETF買賣程式碼
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPQueryETFComponentReq
 {
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE     market;
-    ///ETF买卖代码
+    ///ETF買賣程式碼
     char                ticker[XTP_TICKER_LEN];
 }XTPQueryETFComponentReq;
 
 
 //////////////////////////////////////////////////////////////////////////
-///查询股票ETF合约成分股信息--响应结构体
+///查詢股票ETF合約成分股資訊--響應結構體
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryETFComponentRsp
 {
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE     market;
-    ///ETF代码
+    ///ETF程式碼
     char                ticker[XTP_TICKER_LEN];
-    ///成份股代码
+    ///成份股程式碼
     char                component_ticker[XTP_TICKER_LEN];
-    ///成份股名称
+    ///成份股名稱
     char                component_name[XTP_TICKER_NAME_LEN];
-    ///成份股数量
+    ///成份股數量
     int64_t             quantity;
-    ///成份股交易市场
+    ///成份股交易市場
     XTP_MARKET_TYPE     component_market;
-    ///成份股替代标识
+    ///成份股替代標識
     ETF_REPLACE_TYPE    replace_type;
-    ///溢价比例
+    ///溢價比例
     double              premium_ratio;
-    ///成分股替代标识为必须现金替代时候的总金额
+    ///成分股替代標識為必須現金替代時候的總金額
     double              amount;
 
 };
 
 //////////////////////////////////////////////////////////////////////////
-///查询当日可申购新股信息
+///查詢當日可申購新股資訊
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryIPOTickerRsp {
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE     market;
-    ///申购代码
+    ///申購程式碼
     char                ticker[XTP_TICKER_LEN];
-    ///申购股票名称
+    ///申購股票名稱
     char                ticker_name[XTP_TICKER_NAME_LEN]; 
-    ///申购价格
+    ///申購價格
     double              price;
-    ///申购单元         
+    ///申購單元         
     int32_t             unit;
-    ///最大允许申购数量
+    ///最大允許申購數量
     int32_t             qty_upper_limit;
 };
 
 
 //////////////////////////////////////////////////////////////////////////
-///查询用户申购额度
+///查詢使用者申購額度
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryIPOQuotaRsp {
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE     market;
-    ///可申购额度
+    ///可申購額度
     int32_t             quantity;
 };
 
 //////////////////////////////////////////////////////////////////////////
-///查询期权竞价交易业务参考信息--请求结构体,请求参数为:交易市场+8位期权代码
+///查詢期權競價交易業務參考資訊--請求結構體,請求引數為:交易市場+8位期權程式碼
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryOptionAuctionInfoReq {
-    ///交易市场
+    ///交易市場
     XTP_MARKET_TYPE     market;
-    ///8位期权合约代码
+    ///8位期權合約程式碼
     char                ticker[XTP_TICKER_LEN];
 };
 
 //////////////////////////////////////////////////////////////////////////
-///查询期权竞价交易业务参考信息
+///查詢期權競價交易業務參考資訊
 //////////////////////////////////////////////////////////////////////////
 struct XTPQueryOptionAuctionInfoRsp {
-    char                ticker[XTP_TICKER_LEN];             ///<合约编码，报单ticker采用本字段
-    XTP_MARKET_TYPE     security_id_source;                 ///<证券代码源
-    char                symbol[XTP_TICKER_NAME_LEN];        ///<合约简称
-    char                contract_id[XTP_TICKER_NAME_LEN];   ///<合约交易代码
-    char                underlying_security_id[XTP_TICKER_LEN]; ///<基础证券代码
-	XTP_MARKET_TYPE     underlying_security_id_source;      ///<基础证券代码源
+    char                ticker[XTP_TICKER_LEN];             ///<合約編碼，報單ticker採用本欄位
+    XTP_MARKET_TYPE     security_id_source;                 ///<證券程式碼源
+    char                symbol[XTP_TICKER_NAME_LEN];        ///<合約簡稱
+    char                contract_id[XTP_TICKER_NAME_LEN];   ///<合約交易程式碼
+    char                underlying_security_id[XTP_TICKER_LEN]; ///<基礎證券程式碼
+	XTP_MARKET_TYPE     underlying_security_id_source;      ///<基礎證券程式碼源
 
-    uint32_t            list_date;                          ///<上市日期，格式为YYYYMMDD
-    uint32_t            last_trade_date;                    ///<最后交易日，格式为YYYYMMDD
-    XTP_TICKER_TYPE     ticker_type;                        ///<证券类别
-    int32_t             day_trading;                        ///<是否支持当日回转交易，1-允许，0-不允许
+    uint32_t            list_date;                          ///<上市日期，格式為YYYYMMDD
+    uint32_t            last_trade_date;                    ///<最後交易日，格式為YYYYMMDD
+    XTP_TICKER_TYPE     ticker_type;                        ///<證券類別
+    int32_t             day_trading;                        ///<是否支援當日迴轉交易，1-允許，0-不允許
 
-    XTP_OPT_CALL_OR_PUT_TYPE    call_or_put;                ///<认购或认沽
-    uint32_t            delivery_day;                       ///<行权交割日，格式为YYYYMMDD
-    uint32_t            delivery_month;                     ///<交割月份，格式为YYYYMM
+    XTP_OPT_CALL_OR_PUT_TYPE    call_or_put;                ///<認購或認沽
+    uint32_t            delivery_day;                       ///<行權交割日，格式為YYYYMMDD
+    uint32_t            delivery_month;                     ///<交割月份，格式為YYYYMM
 
-    XTP_OPT_EXERCISE_TYPE_TYPE  exercise_type;              ///<行权方式
-    uint32_t            exercise_begin_date;                ///<行权起始日期，格式为YYYYMMDD
-    uint32_t            exercise_end_date;                  ///<行权结束日期，格式为YYYYMMDD
-    double              exercise_price;                     ///<行权价格
+    XTP_OPT_EXERCISE_TYPE_TYPE  exercise_type;              ///<行權方式
+    uint32_t            exercise_begin_date;                ///<行權起始日期，格式為YYYYMMDD
+    uint32_t            exercise_end_date;                  ///<行權結束日期，格式為YYYYMMDD
+    double              exercise_price;                     ///<行權價格
 
-    int64_t             qty_unit;                           ///<数量单位，对于某一证券申报的委托，其委托数量字段必须为该证券数量单位的整数倍
-    int64_t             contract_unit;                      ///<合约单位
-    int64_t             contract_position;                  ///<合约持仓量
+    int64_t             qty_unit;                           ///<數量單位，對於某一證券申報的委託，其委託數量欄位必須為該證券數量單位的整數倍
+    int64_t             contract_unit;                      ///<合約單位
+    int64_t             contract_position;                  ///<合約持倉量
 
-    double              prev_close_price;                   ///<合约前收盘价
-    double              prev_clearing_price;                ///<合约前结算价
+    double              prev_close_price;                   ///<合約前收盤價
+    double              prev_clearing_price;                ///<合約前結算價
 
-    int64_t             lmt_buy_max_qty;                    ///<限价买最大量
-    int64_t             lmt_buy_min_qty;                    ///<限价买最小量
-    int64_t             lmt_sell_max_qty;                   ///<限价卖最大量
-    int64_t             lmt_sell_min_qty;                   ///<限价卖最小量
-    int64_t             mkt_buy_max_qty;                    ///<市价买最大量
-    int64_t             mkt_buy_min_qty;                    ///<市价买最小量
-    int64_t             mkt_sell_max_qty;                   ///<市价卖最大量
-    int64_t             mkt_sell_min_qty;                   ///<市价卖最小量
+    int64_t             lmt_buy_max_qty;                    ///<限價買最大量
+    int64_t             lmt_buy_min_qty;                    ///<限價買最小量
+    int64_t             lmt_sell_max_qty;                   ///<限價賣最大量
+    int64_t             lmt_sell_min_qty;                   ///<限價賣最小量
+    int64_t             mkt_buy_max_qty;                    ///<市價買最大量
+    int64_t             mkt_buy_min_qty;                    ///<市價買最小量
+    int64_t             mkt_sell_max_qty;                   ///<市價賣最大量
+    int64_t             mkt_sell_min_qty;                   ///<市價賣最小量
 
-    double              price_tick;                         ///<最小报价单位
-    double              upper_limit_price;                  ///<涨停价
-    double              lower_limit_price;                  ///<跌停价
-    double              sell_margin;                        ///<今卖开每张保证金
-    double              margin_ratio_param1;                ///<交易所保证金比例计算参数一
-    double              margin_ratio_param2;                ///<交易所保证金比例计算参数二
+    double              price_tick;                         ///<最小報價單位
+    double              upper_limit_price;                  ///<漲停價
+    double              lower_limit_price;                  ///<跌停價
+    double              sell_margin;                        ///<今賣開每張保證金
+    double              margin_ratio_param1;                ///<交易所保證金比例計算引數一
+    double              margin_ratio_param2;                ///<交易所保證金比例計算引數二
 
-    uint64_t            unknown[20];                        ///<（保留字段）
+    uint64_t            unknown[20];                        ///<（保留欄位）
 };
 
 
 //////////////////////////////////////////////////////////////////////////
-///融资融券直接还款响应信息
+///融資融券直接還款響應資訊
 //////////////////////////////////////////////////////////////////////////
 struct XTPCrdCashRepayRsp
 {
-    int64_t xtp_id;             ///< 直接还款操作的XTPID
-    double  request_amount;     ///< 直接还款的申请金额
-    double  cash_repay_amount;  ///< 实际还款使用金额
+    int64_t xtp_id;             ///< 直接還款操作的XTPID
+    double  request_amount;     ///< 直接還款的申請金額
+    double  cash_repay_amount;  ///< 實際還款使用金額
 };
 
 //////////////////////////////////////////////////////////////////////////
-///融资融券现金还息费响应信息
+///融資融券現金還息費響應資訊
 //////////////////////////////////////////////////////////////////////////
 struct XTPCrdCashRepayDebtInterestFeeRsp
 {
-	int64_t xtp_id;             ///< 直接还款操作的XTPID
-	double  request_amount;     ///< 直接还款的申请金额
-	double  cash_repay_amount;  ///< 实际还款使用金额
-	char	debt_compact_id[XTP_CREDIT_DEBT_ID_LEN]; ///< 指定的负债合约编号
-	char	unknow[32];			///< 保留字段
+	int64_t xtp_id;             ///< 直接還款操作的XTPID
+	double  request_amount;     ///< 直接還款的申請金額
+	double  cash_repay_amount;  ///< 實際還款使用金額
+	char	debt_compact_id[XTP_CREDIT_DEBT_ID_LEN]; ///< 指定的負債合約編號
+	char	unknow[32];			///< 保留欄位
 };
 
 //////////////////////////////////////////////////////////////////////////
-///单条融资融券直接还款记录信息
+///單條融資融券直接還款記錄資訊
 //////////////////////////////////////////////////////////////////////////
 struct XTPCrdCashRepayInfo
 {
-    int64_t                     xtp_id;             ///< 直接还款操作的XTPID
-    XTP_CRD_CR_STATUS           status;             ///< 直接还款处理状态
-    double                      request_amount;     ///< 直接还款的申请金额
-    double                      cash_repay_amount;  ///< 实际还款使用金额
-    XTP_POSITION_EFFECT_TYPE    position_effect;    ///< 强平标志
-	XTPRI						error_info;			///< 直接还款发生错误时的错误信息
+    int64_t                     xtp_id;             ///< 直接還款操作的XTPID
+    XTP_CRD_CR_STATUS           status;             ///< 直接還款處理狀態
+    double                      request_amount;     ///< 直接還款的申請金額
+    double                      cash_repay_amount;  ///< 實際還款使用金額
+    XTP_POSITION_EFFECT_TYPE    position_effect;    ///< 強平標誌
+	XTPRI						error_info;			///< 直接還款發生錯誤時的錯誤資訊
 };
 
 //////////////////////////////////////////////////////////////////////////
-///单条融资融券负债记录信息
+///單條融資融券負債記錄資訊
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPCrdDebtInfo
 {
-    int32_t             debt_type;              ///< 负债合约类型
-    char                debt_id[33];            ///< 负债合约编号
-    int64_t             position_id;            ///< 负债对应两融头寸编号
-    uint64_t            order_xtp_id;           ///< 生成负债的订单编号，非当日负债无此项
-    int32_t             debt_status;            ///< 负债合约状态
-    XTP_MARKET_TYPE     market;                 ///< 市场
-    char                ticker[XTP_TICKER_LEN]; ///< 证券代码
-    uint64_t            order_date;             ///< 委托日期
-    uint64_t            end_date;               ///< 负债截止日期
-    uint64_t            orig_end_date;          ///< 负债原始截止日期
-    bool                is_extended;            ///< 当日是否接收到展期请求
-    double              remain_amt;             ///< 未偿还金额
-    int64_t             remain_qty;             ///< 未偿还融券数量
-    double              remain_principal;       ///< 未偿还本金金额
-	int64_t				due_right_qty;			///< 应偿还权益数量
-	int64_t				unknown[2];				///< 保留字段
+    int32_t             debt_type;              ///< 負債合約型別
+    char                debt_id[33];            ///< 負債合約編號
+    int64_t             position_id;            ///< 負債對應兩融頭寸編號
+    uint64_t            order_xtp_id;           ///< 生成負債的訂單編號，非當日負債無此項
+    int32_t             debt_status;            ///< 負債合約狀態
+    XTP_MARKET_TYPE     market;                 ///< 市場
+    char                ticker[XTP_TICKER_LEN]; ///< 證券程式碼
+    uint64_t            order_date;             ///< 委託日期
+    uint64_t            end_date;               ///< 負債截止日期
+    uint64_t            orig_end_date;          ///< 負債原始截止日期
+    bool                is_extended;            ///< 當日是否接收到展期請求
+    double              remain_amt;             ///< 未償還金額
+    int64_t             remain_qty;             ///< 未償還融券數量
+    double              remain_principal;       ///< 未償還本金金額
+	int64_t				due_right_qty;			///< 應償還權益數量
+	int64_t				unknown[2];				///< 保留欄位
 }XTPCrdDebtInfo;
 
 //////////////////////////////////////////////////////////////////////////
-///融资融券特有帐户数据
+///融資融券特有帳戶資料
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPCrdFundInfo
 {
-    double maintenance_ratio;       ///< 维持担保品比例
-    double all_asset;               ///< 总资产
-    double all_debt;                ///< 总负债
-    double line_of_credit;          ///< 两融授信额度
-    double guaranty;                ///< 两融保证金可用数
-    double position_amount;         ///< 融资头寸可用金额，内部接口，正式版本需要删除
+    double maintenance_ratio;       ///< 維持擔保品比例
+    double all_asset;               ///< 總資產
+    double all_debt;                ///< 總負債
+    double line_of_credit;          ///< 兩融授信額度
+    double guaranty;                ///< 兩融保證金可用數
+    double position_amount;         ///< 融資頭寸可用金額，內部介面，正式版本需要刪除
 }XTPCrdFundInfo;
 
 //////////////////////////////////////////////////////////////////////////
-///融资融券指定证券上的负债未还数量请求结构体
+///融資融券指定證券上的負債未還數量請求結構體
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPClientQueryCrdDebtStockReq
 {
-    XTP_MARKET_TYPE market;                 ///< 市场
-    char            ticker[XTP_TICKER_LEN]; ///< 证券代码
+    XTP_MARKET_TYPE market;                 ///< 市場
+    char            ticker[XTP_TICKER_LEN]; ///< 證券程式碼
 }XTPClientQueryCrdDebtStockReq;
 
 //////////////////////////////////////////////////////////////////////////
-///融资融券指定证券上的负债未还信息
+///融資融券指定證券上的負債未還資訊
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPCrdDebtStockInfo
 {
-    XTP_MARKET_TYPE market;                     ///< 市场
-    char            ticker[XTP_TICKER_LEN];     ///< 证券代码
-    int64_t         remain_quantity;            ///< 负债未还数量
-    int64_t         order_withhold_quantity;    ///< 挂单未成还券数量
+    XTP_MARKET_TYPE market;                     ///< 市場
+    char            ticker[XTP_TICKER_LEN];     ///< 證券程式碼
+    int64_t         remain_quantity;            ///< 負債未還數量
+    int64_t         order_withhold_quantity;    ///< 掛單未成還券數量
 }XTPCrdDebtStockInfo;
 
 //////////////////////////////////////////////////////////////////////////
-///融券头寸证券查询请求结构体
+///融券頭寸證券查詢請求結構體
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPClientQueryCrdPositionStockReq
 {
-    XTP_MARKET_TYPE market;                 ///< 证券市场
-    char            ticker[XTP_TICKER_LEN]; ///< 证券代码
+    XTP_MARKET_TYPE market;                 ///< 證券市場
+    char            ticker[XTP_TICKER_LEN]; ///< 證券程式碼
 }XTPClientQueryCrdPositionStockReq;
 
 //////////////////////////////////////////////////////////////////////////
-///融券头寸证券信息
+///融券頭寸證券資訊
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPClientQueryCrdPositionStkInfo 
 {
-    XTP_MARKET_TYPE market;                 ///< 证券市场
-    char            ticker[XTP_TICKER_LEN]; ///< 证券代码
+    XTP_MARKET_TYPE market;                 ///< 證券市場
+    char            ticker[XTP_TICKER_LEN]; ///< 證券程式碼
     int64_t         limit_qty;              ///< 融券限量
-    int64_t         yesterday_qty;          ///< 昨日日融券数量
-    int64_t         left_qty;               ///< 剩余可融券数量
-    int64_t         frozen_qty;             ///< 冻结融券数量
+    int64_t         yesterday_qty;          ///< 昨日日融券數量
+    int64_t         left_qty;               ///< 剩餘可融券數量
+    int64_t         frozen_qty;             ///< 凍結融券數量
 }XTPClientQueryCrdPositionStkInfo;
 
 
 //////////////////////////////////////////////////////////////////////////
-/// 信用业务余券查询请求结构体
+/// 信用業務餘券查詢請求結構體
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPClientQueryCrdSurplusStkReqInfo
 {
-    XTP_MARKET_TYPE market;                 ///< 证券市场
-    char            ticker[XTP_TICKER_LEN]; ///< 证券代码
+    XTP_MARKET_TYPE market;                 ///< 證券市場
+    char            ticker[XTP_TICKER_LEN]; ///< 證券程式碼
 }XTPClientQueryCrdSurplusStkReqInfo;
 
 //////////////////////////////////////////////////////////////////////////
-///信用业务余券信息
+///信用業務餘券資訊
 //////////////////////////////////////////////////////////////////////////
 typedef struct XTPClientQueryCrdSurplusStkRspInfo
 {
-    XTP_MARKET_TYPE market;                 ///< 证券市场
-    char            ticker[XTP_TICKER_LEN]; ///< 证券代码
-    int64_t         transferable_quantity;  ///< 可划转数量
-    int64_t         transferred_quantity;   ///< 已划转数量
+    XTP_MARKET_TYPE market;                 ///< 證券市場
+    char            ticker[XTP_TICKER_LEN]; ///< 證券程式碼
+    int64_t         transferable_quantity;  ///< 可劃轉數量
+    int64_t         transferred_quantity;   ///< 已劃轉數量
 }XTPClientQueryCrdSurplusStkRspInfo;
 
 
 //////////////////////////////////////////////////////////////////////////
-/// 信用业务负债展期信息
+/// 信用業務負債展期資訊
 //////////////////////////////////////////////////////////////////////////
 
 typedef struct XTPClientCrdExtendDebtInfo
 {
-    uint64_t    xtp_id;                             ///< 订单编号
-    char        debt_id[XTP_CREDIT_DEBT_ID_LEN];    ///< 待展期负债合约编号
+    uint64_t    xtp_id;                             ///< 訂單編號
+    char        debt_id[XTP_CREDIT_DEBT_ID_LEN];    ///< 待展期負債合約編號
 }XTPClientCrdExtendDebtInfo;
 
 #pragma pack()

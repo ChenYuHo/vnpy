@@ -128,15 +128,15 @@ symbol_pricetick_map: Dict[str, float] = {}
 class XtpGateway(BaseGateway):
 
     default_setting: Dict[str, Any] = {
-        "账号": "",
-        "密码": "",
-        "客户号": 1,
+        "賬號": "",
+        "密碼": "",
+        "客戶號": 1,
         "行情地址": "",
-        "行情端口": 0,
+        "行情埠": 0,
         "交易地址": "",
-        "交易端口": 0,
-        "行情协议": ["TCP", "UDP"],
-        "授权码": ""
+        "交易埠": 0,
+        "行情協議": ["TCP", "UDP"],
+        "授權碼": ""
     }
 
     exchanges: List[Exchange] = list(EXCHANGE_VT2XTP.keys())
@@ -150,15 +150,15 @@ class XtpGateway(BaseGateway):
 
     def connect(self, setting: dict) -> None:
         """"""
-        userid = setting["账号"]
-        password = setting["密码"]
-        client_id = int(setting["客户号"])
+        userid = setting["賬號"]
+        password = setting["密碼"]
+        client_id = int(setting["客戶號"])
         quote_ip = setting["行情地址"]
-        quote_port = int(setting["行情端口"])
+        quote_port = int(setting["行情埠"])
         trader_ip = setting["交易地址"]
-        trader_port = int(setting["交易端口"])
-        quote_protocol = setting["行情协议"]
-        software_key = setting["授权码"]
+        trader_port = int(setting["交易埠"])
+        quote_protocol = setting["行情協議"]
+        software_key = setting["授權碼"]
 
         self.md_api.connect(userid, password, client_id, quote_ip, quote_port, quote_protocol)
         self.td_api.connect(userid, password, client_id, trader_ip, trader_port, software_key)
@@ -210,7 +210,7 @@ class XtpGateway(BaseGateway):
         """"""
         error_id = error["error_id"]
         error_msg = error["error_msg"]
-        msg = f"{msg}，代码：{error_id}，信息：{error_msg}"
+        msg = f"{msg}，程式碼：{error_id}，資訊：{error_msg}"
         self.write_log(msg)
 
 
@@ -241,20 +241,20 @@ class XtpMdApi(MdApi):
         """"""
         self.connect_status = False
         self.login_status = False
-        self.gateway.write_log(f"行情服务器连接断开, 原因{reason}")
+        self.gateway.write_log(f"行情伺服器連線斷開, 原因{reason}")
 
         self.login_server()
 
     def onError(self, error: dict) -> None:
         """"""
-        self.gateway.write_error("行情接口报错", error)
+        self.gateway.write_error("行情介面報錯", error)
 
     def onSubMarketData(self, data: dict, error: dict, last: bool) -> None:
         """"""
         if not error or not error["error_id"]:
             return
 
-        self.gateway.write_error("行情订阅失败", error)
+        self.gateway.write_error("行情訂閱失敗", error)
 
     def onUnSubMarketData(self, data: dict, error: dict, last: bool) -> None:
         """"""
@@ -370,7 +370,7 @@ class XtpMdApi(MdApi):
         symbol_pricetick_map[contract.vt_symbol] = contract.pricetick
 
         if last:
-            self.gateway.write_log(f"{contract.exchange.value}合约信息查询成功")
+            self.gateway.write_log(f"{contract.exchange.value}合約資訊查詢成功")
 
             if contract.exchange == Exchange.SSE:
                 self.sse_inited = True
@@ -444,11 +444,11 @@ class XtpMdApi(MdApi):
         if not n:
             self.connect_status = True
             self.login_status = True
-            msg = "行情服务器登录成功"
+            msg = "行情伺服器登入成功"
             self.query_contract()
             self.init()
         else:
-            msg = f"行情服务器登录失败，原因：{n}"
+            msg = f"行情伺服器登入失敗，原因：{n}"
 
         self.gateway.write_log(msg)
 
@@ -503,18 +503,18 @@ class XtpTdApi(TdApi):
         """"""
         self.connect_status = False
         self.login_status = False
-        self.gateway.write_log(f"交易服务器连接断开, 原因{reason}")
+        self.gateway.write_log(f"交易伺服器連線斷開, 原因{reason}")
 
         self.login_server()
 
     def onError(self, error: dict) -> None:
         """"""
-        self.gateway.write_error("交易接口报错", error)
+        self.gateway.write_error("交易介面報錯", error)
 
     def onOrderEvent(self, data: dict, error: dict, session: int) -> None:
         """"""
         if error["error_id"]:
-            self.gateway.write_error("交易委托失败", error)
+            self.gateway.write_error("交易委託失敗", error)
 
         symbol = data["ticker"]
         if len(symbol) == 8:
@@ -588,7 +588,7 @@ class XtpTdApi(TdApi):
 
             self.gateway.on_order(order)
         else:
-            self.gateway.write_log(f"成交找不到对应委托{trade.orderid}")
+            self.gateway.write_log(f"成交找不到對應委託{trade.orderid}")
 
         self.gateway.on_trade(trade)
 
@@ -597,7 +597,7 @@ class XtpTdApi(TdApi):
         if not error or not error["error_id"]:
             return
 
-        self.gateway.write_error("撤单失败", error)
+        self.gateway.write_error("撤單失敗", error)
 
     def onQueryOrder(self, data: dict, error: dict, last: bool, session: int) -> None:
         """"""
@@ -716,7 +716,7 @@ class XtpTdApi(TdApi):
         symbol_pricetick_map[contract.vt_symbol] = contract.pricetick
 
         if last:
-            self.gateway.write_log("期权信息查询成功")
+            self.gateway.write_log("期權資訊查詢成功")
 
     def onQueryCreditDebtInfo(
         self,
@@ -791,11 +791,11 @@ class XtpTdApi(TdApi):
             self.session_id = n
             self.connect_status = True
             self.login_status = True
-            msg = f"交易服务器登录成功, 会话编号：{self.session_id}"
+            msg = f"交易伺服器登入成功, 會話編號：{self.session_id}"
             self.init()
         else:
             error = self.getApiLastError()
-            msg = f"交易服务器登录失败，原因：{error['error_msg']}"
+            msg = f"交易伺服器登入失敗，原因：{error['error_msg']}"
 
         self.gateway.write_log(msg)
 
@@ -812,15 +812,15 @@ class XtpTdApi(TdApi):
     def send_order(self, req: OrderRequest) -> str:
         """"""
         if req.exchange not in MARKET_VT2XTP:
-            self.gateway.write_log(f"委托失败，不支持的交易所{req.exchange.value}")
+            self.gateway.write_log(f"委託失敗，不支援的交易所{req.exchange.value}")
             return ""
 
         if req.type not in ORDERTYPE_VT2XTP:
-            self.gateway.write_log(f"委托失败，不支持的委托类型{req.type.value}")
+            self.gateway.write_log(f"委託失敗，不支援的委託型別{req.type.value}")
             return ""
 
         if self.margin_trading and req.offset == Offset.NONE:
-            self.gateway.write_log(f"委托失败，两融交易需要选择开平方向")
+            self.gateway.write_log(f"委託失敗，兩融交易需要選擇開平方向")
             return ""
 
         # check for option type

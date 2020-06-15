@@ -39,24 +39,24 @@ class PortfolioStrategyManager(QtWidgets.QWidget):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("组合策略")
+        self.setWindowTitle("組合策略")
 
         # Create widgets
         self.class_combo = QtWidgets.QComboBox()
 
-        add_button = QtWidgets.QPushButton("添加策略")
+        add_button = QtWidgets.QPushButton("新增策略")
         add_button.clicked.connect(self.add_strategy)
 
         init_button = QtWidgets.QPushButton("全部初始化")
         init_button.clicked.connect(self.strategy_engine.init_all_strategies)
 
-        start_button = QtWidgets.QPushButton("全部启动")
+        start_button = QtWidgets.QPushButton("全部啟動")
         start_button.clicked.connect(self.strategy_engine.start_all_strategies)
 
         stop_button = QtWidgets.QPushButton("全部停止")
         stop_button.clicked.connect(self.strategy_engine.stop_all_strategies)
 
-        clear_button = QtWidgets.QPushButton("清空日志")
+        clear_button = QtWidgets.QPushButton("清空日誌")
         clear_button.clicked.connect(self.clear_log)
 
         self.scroll_layout = QtWidgets.QVBoxLayout()
@@ -184,7 +184,7 @@ class StrategyManager(QtWidgets.QFrame):
         self.init_button = QtWidgets.QPushButton("初始化")
         self.init_button.clicked.connect(self.init_strategy)
 
-        self.start_button = QtWidgets.QPushButton("启动")
+        self.start_button = QtWidgets.QPushButton("啟動")
         self.start_button.clicked.connect(self.start_strategy)
         self.start_button.setEnabled(False)
 
@@ -192,7 +192,7 @@ class StrategyManager(QtWidgets.QFrame):
         self.stop_button.clicked.connect(self.stop_strategy)
         self.stop_button.setEnabled(False)
 
-        self.edit_button = QtWidgets.QPushButton("编辑")
+        self.edit_button = QtWidgets.QPushButton("編輯")
         self.edit_button.clicked.connect(self.edit_strategy)
 
         self.remove_button = QtWidgets.QPushButton("移除")
@@ -338,8 +338,8 @@ class LogMonitor(BaseMonitor):
     sorting = False
 
     headers = {
-        "time": {"display": "时间", "cell": TimeCell, "update": False},
-        "msg": {"display": "信息", "cell": MsgCell, "update": False},
+        "time": {"display": "時間", "cell": TimeCell, "update": False},
+        "msg": {"display": "資訊", "cell": MsgCell, "update": False},
     }
 
     def init_ui(self):
@@ -385,13 +385,13 @@ class SettingEditor(QtWidgets.QDialog):
 
         # Add vt_symbols and name edit if add new strategy
         if self.class_name:
-            self.setWindowTitle(f"添加策略：{self.class_name}")
-            button_text = "添加"
+            self.setWindowTitle(f"新增策略：{self.class_name}")
+            button_text = "新增"
             parameters = {"strategy_name": "", "vt_symbols": ""}
             parameters.update(self.parameters)
         else:
-            self.setWindowTitle(f"参数编辑：{self.strategy_name}")
-            button_text = "确定"
+            self.setWindowTitle(f"引數編輯：{self.strategy_name}")
+            button_text = "確定"
             parameters = self.parameters
 
         for name, value in parameters.items():

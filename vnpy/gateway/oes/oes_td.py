@@ -164,7 +164,7 @@ class OesTdMessageLoop:
 
     def reconnect(self):
         """"""
-        self.gateway.write_log(_("正在尝试重新连接到交易服务器。"))
+        self.gateway.write_log(_("正在嘗試重新連線到交易伺服器。"))
         self._td.connect_rpt_channel()
 
     def _on_message(self, session_info: SGeneralClientChannelT,
@@ -195,7 +195,7 @@ class OesTdMessageLoop:
                 # if is_timeout(ret):
                 #     pass  # just no message
                 if is_disconnected(ret):
-                    self.gateway.write_log(_("与交易服务器的连接已断开。"))
+                    self.gateway.write_log(_("與交易伺服器的連線已斷開。"))
                     while self._alive and not self.reconnect():
                         pass
         return
@@ -221,7 +221,7 @@ class OesTdMessageLoop:
             self.gateway.write_log(
                 f"Order: {vt_order.vt_symbol}-{vt_order.vt_orderid} Code: {error_code} Rejected: {error_string}")
         else:
-            self.gateway.write_log(f"撤单失败，订单号： {data.origClSeqNo}。原因：{error_string}")
+            self.gateway.write_log(f"撤單失敗，訂單號： {data.origClSeqNo}。原因：{error_string}")
 
     def on_order_inserted(self, d: OesRspMsgBodyT):
         """"""
@@ -341,13 +341,13 @@ class OesTdApi:
         OesApi_SetCustomizedDriverId(self.hdd_serial)
 
         if not self._connect_ord_channel():
-            self.gateway.write_log(_("无法初始化交易下单通道(td_ord_server)"))
+            self.gateway.write_log(_("無法初始化交易下單通道(td_ord_server)"))
 
         if not self._connect_qry_channel():
-            self.gateway.write_log(_("无法初始化交易查询通道(td_qry_server)"))
+            self.gateway.write_log(_("無法初始化交易查詢通道(td_qry_server)"))
 
         if not self.connect_rpt_channel():
-            self.gateway.write_log(_("无法初始化交易查询通道(td_qry_server)"))
+            self.gateway.write_log(_("無法初始化交易查詢通道(td_qry_server)"))
         return True
 
     def start(self):
@@ -416,11 +416,11 @@ class OesTdApi:
 
     def _reconnect_ord_channel(self):
         with self._ord_reconnect_lock:  # prevent spawning multiple reconnect thread
-            self.gateway.write_log(_("正在重新连接到交易下单通道"))
+            self.gateway.write_log(_("正在重新連線到交易下單通道"))
             while not self._connect_ord_channel():
                 time.sleep(1)
 
-            self.gateway.write_log(_("成功重新连接到交易下单通道"))
+            self.gateway.write_log(_("成功重新連線到交易下單通道"))
 
     def _schedule_reconnect_ord_channel(self):
         Thread(target=self._reconnect_ord_channel, ).start()
@@ -562,7 +562,7 @@ class OesTdApi:
         """"""
         data = caster.toOesOptHoldingItemT(body)
 
-        # 权利
+        # 權利
         pos_long = PositionData(
             gateway_name=self.gateway.gateway_name,
             symbol=data.securityId,
@@ -577,7 +577,7 @@ class OesTdApi:
         )
         self.gateway.on_position(pos_long)
 
-        # 义务
+        # 義務
         pos_short = PositionData(
             gateway_name=self.gateway.gateway_name,
             symbol=data.securityId,
@@ -633,9 +633,9 @@ class OesTdApi:
             order.status = Status.SUBMITTING
         else:
             order.status = Status.REJECTED
-            self.gateway.write_log(_("下单失败"))  # todo: can I stringify error?
+            self.gateway.write_log(_("下單失敗"))  # todo: can I stringify error?
             if is_disconnected(ret):
-                self.gateway.write_log(_("下单时连接发现连接已断开，正在尝试重连"))
+                self.gateway.write_log(_("下單時連線發現連線已斷開，正在嘗試重連"))
                 self._schedule_reconnect_ord_channel()
         self.gateway.on_order(order)
 
@@ -657,9 +657,9 @@ class OesTdApi:
         ret = OesApi_SendOrderCancelReq(self._env.ordChannel,
                                         oes_req)
         if ret < 0:
-            self.gateway.write_log(_("撤单失败"))  # todo: can I stringify error?
+            self.gateway.write_log(_("撤單失敗"))  # todo: can I stringify error?
             if is_disconnected(ret):  # is here any other ret code indicating connection lost?
-                self.gateway.write_log(_("撤单时连接发现连接已断开，正在尝试重连"))
+                self.gateway.write_log(_("撤單時連線發現連線已斷開，正在嘗試重連"))
                 self._schedule_reconnect_ord_channel()
 
     def query_order(self, internal_order: InternalOrder) -> bool:

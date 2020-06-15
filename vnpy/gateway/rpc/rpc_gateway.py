@@ -15,8 +15,8 @@ class RpcGateway(BaseGateway):
     """
 
     default_setting = {
-        "主动请求地址": "tcp://127.0.0.1:2014",
-        "推送订阅地址": "tcp://127.0.0.1:4102"
+        "主動請求地址": "tcp://127.0.0.1:2014",
+        "推送訂閱地址": "tcp://127.0.0.1:4102"
     }
 
     exchanges = list(Exchange)
@@ -32,13 +32,13 @@ class RpcGateway(BaseGateway):
 
     def connect(self, setting: dict):
         """"""
-        req_address = setting["主动请求地址"]
-        pub_address = setting["推送订阅地址"]
+        req_address = setting["主動請求地址"]
+        pub_address = setting["推送訂閱地址"]
 
         self.client.subscribe_topic("")
         self.client.start(req_address, pub_address)
 
-        self.write_log("服务器连接成功，开始初始化查询")
+        self.write_log("伺服器連線成功，開始初始化查詢")
 
         self.query_all()
 
@@ -72,31 +72,31 @@ class RpcGateway(BaseGateway):
             self.symbol_gateway_map[contract.vt_symbol] = contract.gateway_name
             contract.gateway_name = self.gateway_name
             self.on_contract(contract)
-        self.write_log("合约信息查询成功")
+        self.write_log("合約資訊查詢成功")
 
         accounts = self.client.get_all_accounts()
         for account in accounts:
             account.gateway_name = self.gateway_name
             self.on_account(account)
-        self.write_log("资金信息查询成功")
+        self.write_log("資金資訊查詢成功")
 
         positions = self.client.get_all_positions()
         for position in positions:
             position.gateway_name = self.gateway_name
             self.on_position(position)
-        self.write_log("持仓信息查询成功")
+        self.write_log("持倉資訊查詢成功")
 
         orders = self.client.get_all_orders()
         for order in orders:
             order.gateway_name = self.gateway_name
             self.on_order(order)
-        self.write_log("委托信息查询成功")
+        self.write_log("委託資訊查詢成功")
 
         trades = self.client.get_all_trades()
         for trade in trades:
             trade.gateway_name = self.gateway_name
             self.on_trade(trade)
-        self.write_log("成交信息查询成功")
+        self.write_log("成交資訊查詢成功")
 
     def close(self):
         """"""

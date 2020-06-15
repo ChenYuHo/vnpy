@@ -17,7 +17,7 @@
 /**
  * @file    spk_platforms.h
  *
- * 涉及跨平台兼容处理的函数定义
+ * 涉及跨平臺相容處理的函式定義
  *
  * @version 1.0 2017/08/10
  * @since   2017/08/10
@@ -32,7 +32,7 @@
 
 
 /* ===================================================================
- * 标准库头文件
+ * 標準庫標頭檔案
  * =================================================================== */
 
 #include    <stdio.h>
@@ -56,7 +56,7 @@
 
 
 /*
- * 平台特定的头文件
+ * 平臺特定的標頭檔案
  */
 #if ! (defined (__WINDOWS__) || (defined (__MINGW__) && ! defined (USE_GNULIB)))
 #   include <unistd.h>
@@ -120,7 +120,7 @@ extern "C" {
 
 
 /* ===================================================================
- * 跨平台兼容性处理
+ * 跨平臺相容性處理
  * =================================================================== */
 
 /* snprintf */
@@ -142,12 +142,12 @@ extern "C" {
 
 
 /* ===================================================================
- * 涉及跨平台兼容的错误号处理
+ * 涉及跨平臺相容的錯誤號處理
  * =================================================================== */
 
 /*
- * 判断errno是否是 EAGAIN / EWOULDBLOCK
- * 用于非阻塞I/O
+ * 判斷errno是否是 EAGAIN / EWOULDBLOCK
+ * 用於非阻塞I/O
  */
 #if defined(EAGAIN) && defined(EWOULDBLOCK) && (EWOULDBLOCK != EAGAIN)
 #   define  _SPK_IS_ERRNO_EAGAIN(e)         ((e) == EAGAIN || (e) == EWOULDBLOCK)
@@ -162,8 +162,8 @@ extern "C" {
 
 
 /*
- * 判断errno是否是 ECONNABORTED
- * 用于非阻塞accept
+ * 判斷errno是否是 ECONNABORTED
+ * 用於非阻塞accept
  */
 #if defined(ECONNABORTED)
 #   define  _SPK_ERRNO_ECONNABORTED_1(e)    ((e) == ECONNABORTED)
@@ -236,42 +236,42 @@ extern "C" {
 
 
 /* ===================================================================
- * 函数声明
+ * 函式宣告
  * =================================================================== */
 
-/* 返回错误号 errno */
+/* 返回錯誤號 errno */
 int32       __SPlatform_GetErrno(void);
 
-/* 返回负的错误号 NEG(errno) */
+/* 返回負的錯誤號 NEG(errno) */
 int32       __SPlatform_GetNegErrno(void);
 
-/* 设置错误号 errno */
+/* 設定錯誤號 errno */
 void        __SPlatform_SetErrno(int32 err);
 
-/* 返回错误号是否是 EAGAIN */
+/* 返回錯誤號是否是 EAGAIN */
 BOOL        __SPlatform_IsErrEagain(int32 err);
-/* 返回错误号是否是 ECONNABORTED */
+/* 返回錯誤號是否是 ECONNABORTED */
 BOOL        __SPlatform_IsErrEconnaborted(int32 err);
-/* 返回错误号是否是 ETIMEDOUT */
+/* 返回錯誤號是否是 ETIMEDOUT */
 BOOL        __SPlatform_IsErrEtimeout(int32 err);
-/* 返回错误号是否是 EPIPE */
+/* 返回錯誤號是否是 EPIPE */
 BOOL        __SPlatform_IsErrEpipe(int32 err);
-/* 返回错误号是否是 EINTR */
+/* 返回錯誤號是否是 EINTR */
 BOOL        __SPlatform_IsErrEintr(int32 err);
-/* 返回错误号是否是 EBADMSG */
+/* 返回錯誤號是否是 EBADMSG */
 BOOL        __SPlatform_IsErrEbadmsg(int32 err);
 
-/* 返回错误号是否是负的 EAGAIN */
+/* 返回錯誤號是否是負的 EAGAIN */
 BOOL        __SPlatform_IsNegEagain(int32 err);
-/* 返回错误号是否是负的 ECONNABORTED */
+/* 返回錯誤號是否是負的 ECONNABORTED */
 BOOL        __SPlatform_IsNegEconnaborted(int32 err);
-/* 返回错误号是否是负的 ETIMEDOUT */
+/* 返回錯誤號是否是負的 ETIMEDOUT */
 BOOL        __SPlatform_IsNegEtimeout(int32 err);
-/* 返回错误号是否是负的 EPIPE */
+/* 返回錯誤號是否是負的 EPIPE */
 BOOL        __SPlatform_IsNegEpipe(int32 err);
-/* 返回错误号是否是负的 EINTR */
+/* 返回錯誤號是否是負的 EINTR */
 BOOL        __SPlatform_IsNegEintr(int32 err);
-/* 返回错误号是否是负的 EBADMSG */
+/* 返回錯誤號是否是負的 EBADMSG */
 BOOL        __SPlatform_IsNegEbadmsg(int32 err);
 /* -------------------------           */
 

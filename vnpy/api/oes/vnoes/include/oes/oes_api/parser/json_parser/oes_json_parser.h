@@ -17,7 +17,7 @@
 /**
  * @file    oes_json_parser.h
  *
- * 流消息接收处理
+ * 流訊息接收處理
  *
  * @version 1.2 2016/10/24
  * @since   2014/12/23
@@ -39,10 +39,10 @@ extern "C" {
 
 
 /* ===================================================================
- * 函数声明
+ * 函式宣告
  * =================================================================== */
 
-/* 请求消息解码处理（用于接收客户端的请求消息） */
+/* 請求訊息解碼處理（用於接收客戶端的請求訊息） */
 OesReqMsgBodyT*
         OesJsonParser_DecodeReq(
                 SMsgHeadT *pReqHead,
@@ -50,7 +50,7 @@ OesReqMsgBodyT*
                 OesReqMsgBodyT *pReqMsgBuf,
                 const char *pRemoteInfo);
 
-/* 应答消息编码处理（用于向客户端发送应答消息） */
+/* 應答訊息編碼處理（用於向客戶端傳送應答訊息） */
 void*   OesJsonParser_EncodeRsp(
                 SMsgHeadT *pRspHead,
                 const OesRspMsgBodyT *pRspBody,
@@ -58,7 +58,7 @@ void*   OesJsonParser_EncodeRsp(
                 int32 bufSize,
                 const char *pRemoteInfo);
 
-/* 为执行报告回报特别定制的应答消息编码处理（编码为JSON格式，用于向客户端发送应答消息） */
+/* 為執行報告回報特別定製的應答訊息編碼處理（編碼為JSON格式，用於向客戶端傳送應答訊息） */
 void*   OesJsonParser_EncodeRptSpecial(
                 SMsgHeadT *pRspHead,
                 const OesRptMsgHeadT *pRptMsgHead,

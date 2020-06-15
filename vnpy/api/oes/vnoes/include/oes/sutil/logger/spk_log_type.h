@@ -17,7 +17,7 @@
 /**
  * @file    spk_log_type.h
  *
- * 日志类型定义
+ * 日誌型別定義
  *
  * @version $Id$
  * @since   2008.8.14
@@ -37,16 +37,16 @@ extern "C" {
 
 
 /**
- * 日志记录器类型定义
+ * 日誌記錄器型別定義
  */
-#define     SLOG_TYPE_FILE          (0x01)          /**< 文件日志 */
-#define     SLOG_TYPE_CONSOLE       (0x02)          /**< 控制台日志 */
+#define     SLOG_TYPE_FILE          (0x01)          /**< 檔案日誌 */
+#define     SLOG_TYPE_CONSOLE       (0x02)          /**< 控制檯日誌 */
 /* -------------------------           */
 
 
 /**
- * 日志屏蔽标志
- * 可通过日志屏蔽标志来阻止登记指定类型的日志信息
+ * 日誌遮蔽標誌
+ * 可通過日誌遮蔽標誌來阻止登記指定型別的日誌資訊
  */
 #define     SLOG_MASK_NONE          (0)
 #define     SLOG_MASK_ALL           (0xFFFF)
