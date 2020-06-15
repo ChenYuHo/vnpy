@@ -1,23 +1,23 @@
-# CTA回测模块
-CTA回测模块是基于PyQt5和pyqtgraph的图形化回测工具。启动VN Trader后，在菜单栏中点击“功能-> CTA回测”即可进入该图形化回测界面，如下图。CTA回测模块主要实现3个功能：历史行情数据的下载、策略回测、参数优化、K线图表买卖点展示。
+# CTA回測模組
+CTA回測模組是基於PyQt5和pyqtgraph的圖形化回測工具。啟動VN Trader後，在選單欄中點選“功能-> CTA回測”即可進入該圖形化回測介面，如下圖。CTA回測模組主要實現3個功能：歷史行情資料的下載、策略回測、引數優化、K線圖表買賣點展示。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/cta_backtester.png)
 
 &nbsp;
 
-## 加载启动
-进入图形化回测界面“CTA回测”后，会立刻完成初始化工作：初始化回测引擎、初始化RQData客户端。
+## 載入啟動
+進入圖形化回測介面“CTA回測”後，會立刻完成初始化工作：初始化回測引擎、初始化RQData客戶端。
 
 ```
     def init_engine(self):
         """"""
-        self.write_log("初始化CTA回测引擎")
+        self.write_log("初始化CTA回測引擎")
 
         self.backtesting_engine = BacktestingEngine()
         # Redirect log from backtesting engine outside.
         self.backtesting_engine.output = self.write_log
 
-        self.write_log("策略文件加载完成")
+        self.write_log("策略檔案載入完成")
 
         self.init_rqdata()
 
@@ -27,18 +27,18 @@ CTA回测模块是基于PyQt5和pyqtgraph的图形化回测工具。启动VN Tra
         """
         result = rqdata_client.init()
         if result:
-            self.write_log("RQData数据接口初始化成功")
+            self.write_log("RQData資料介面初始化成功")
 ```
 
 &nbsp;
 
 
-## 下载数据
-在开始策略回测之前，必须保证数据库内有充足的历史数据。故vnpy提供了历史数据一键下载的功能。
+## 下載資料
+在開始策略回測之前，必須保證資料庫內有充足的歷史資料。故vnpy提供了歷史資料一鍵下載的功能。
 
 ### RQData
-RQData提供国内股票、ETF、期货以及期权的历史数据。
-其下载数据功能主要是基于RQData的get_price()函数实现的。
+RQData提供國內股票、ETF、期貨以及期權的歷史資料。
+其下載資料功能主要是基於RQData的get_price()函式實現的。
 ```
 get_price(
     order_book_ids, start_date='2013-01-04', end_date='2014-01-04',
@@ -48,13 +48,13 @@ get_price(
 ```
 
 
-在使用前要保证RQData初始化完毕，然后填写以下4个字段信息：
-- 本地代码：格式为合约品种+交易所，如IF88.CFFEX、rb88.SHFE；然后在底层通过RqdataClient的to_rq_symbol()函数转换成符合RQData格式，对应RQData中get_price()函数的order_book_ids字段。
-- K线周期：可以填1m、1h、d、w，对应get_price()函数的frequency字段。
-- 开始日期：格式为yy/mm/dd，如2017/4/21，对应get_price()函数的start_date字段。（点击窗口右侧箭头按钮可改变日期大小）
-- 结束日期：格式为yy/mm/dd，如2019/4/22，对应get_price()函数的end_date字段。（点击窗口右侧箭头按钮可改变日期大小）
+在使用前要保證RQData初始化完畢，然後填寫以下4個欄位資訊：
+- 原生代碼：格式為合約品種+交易所，如IF88.CFFEX、rb88.SHFE；然後在底層通過RqdataClient的to_rq_symbol()函式轉換成符合RQData格式，對應RQData中get_price()函式的order_book_ids欄位。
+- K線週期：可以填1m、1h、d、w，對應get_price()函式的frequency欄位。
+- 開始日期：格式為yy/mm/dd，如2017/4/21，對應get_price()函式的start_date欄位。（點選視窗右側箭頭按鈕可改變日期大小）
+- 結束日期：格式為yy/mm/dd，如2019/4/22，對應get_price()函式的end_date欄位。（點選視窗右側箭頭按鈕可改變日期大小）
   
-填写完字段信息后，点击下方“下载数据”按钮启动下载程序，下载成功如图所示。
+填寫完欄位資訊後，點選下方“下載資料”按鈕啟動下載程式，下載成功如圖所示。
 
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/data_loader.png)
@@ -63,8 +63,8 @@ get_price(
 
 ### IB
 
-盈透证券提供外盘股票、期货、期权的历史数据。
-下载前必须连接好IB接口，因为其下载数据功能主要是基于IbGateway类query_history()函数实现的。
+盈透證券提供外盤股票、期貨、期權的歷史資料。
+下載前必須連線好IB介面，因為其下載資料功能主要是基於IbGateway類query_history()函式實現的。
 
 ```
     def query_history(self, req: HistoryRequest):
@@ -121,8 +121,8 @@ get_price(
 
 ### BITMEX
 
-BITMEX交易所提供数字货币历史数据。
-由于仿真环境与实盘环境行情差异比较大，故需要用实盘账号登录BIMEX接口来下载真实行情数据，其下载数据功能主要是基于BitmexGateway类query_history()函数实现的。
+BITMEX交易所提供數字貨幣歷史資料。
+由於模擬環境與實盤環境行情差異比較大，故需要用實盤賬號登入BIMEX介面來下載真實行情資料，其下載資料功能主要是基於BitmexGateway類query_history()函式實現的。
 
 ```
     def query_history(self, req: HistoryRequest):
@@ -156,13 +156,13 @@ BITMEX交易所提供数字货币历史数据。
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                msg = f"獲取歷史資料失敗，狀態碼：{resp.status_code}，資訊：{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空，开始时间：{start_time}，数量：{count}"
+                    msg = f"獲取歷史資料為空，開始時間：{start_time}，數量：{count}"
                     break
 
                 for d in data:
@@ -184,7 +184,7 @@ BITMEX交易所提供数字货币历史数据。
 
                 begin = data[0]["timestamp"]
                 end = data[-1]["timestamp"]
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                msg = f"獲取歷史資料成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Break if total data count less than 750 (latest date collected)
@@ -199,11 +199,11 @@ BITMEX交易所提供数字货币历史数据。
 
 &nbsp;
 
-## 策略回测
-下载完历史数据后，需要配置以下字段：交易策略、手续费率、交易滑点、合约乘数、价格跳动、回测资金。
-这些字段主要对应BacktesterEngine类的run_backtesting函数。
+## 策略回測
+下載完歷史資料後，需要配置以下欄位：交易策略、手續費率、交易滑點、合約乘數、價格跳動、回測資金。
+這些欄位主要對應BacktesterEngine類的run_backtesting函式。
 
-若数据库已存在历史数据，无需重复下载，直接从本地数据库中导入数据进行回测。注意，vt_symbol的格式为品种代码.交易所的形式，如IF1908.CFFEX，导入时会自动将其分割为品种和交易所两部分
+若資料庫已存在歷史資料，無需重複下載，直接從本地資料庫中匯入資料進行回測。注意，vt_symbol的格式為品種程式碼.交易所的形式，如IF1908.CFFEX，匯入時會自動將其分割為品種和交易所兩部分
 
 ```
 def run_backtesting(
@@ -214,61 +214,61 @@ def run_backtesting(
 ```
 
 
-点击下方的“开始回测”按钮可以开始回测：
-首先会弹出如图所示的参数配置窗口，用于调整策略参数。该设置对应的是run_backtesting()函数的setting字典。
+點選下方的“開始回測”按鈕可以開始回測：
+首先會彈出如圖所示的引數配置視窗，用於調整策略引數。該設定對應的是run_backtesting()函式的setting字典。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/parameter_setting.png)
 
 
 
-点击“确认”按钮后开始运行回测，同时日志界面会输出相关信息，如图。
+點選“確認”按鈕後開始執行回測，同時日誌介面會輸出相關資訊，如圖。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/backtesting_log.png)
 
-回测完成后会显示统计数字图表。
+回測完成後會顯示統計數字圖表。
 
 &nbsp;
 
-### 统计数据
-用于显示回测完成后的相关统计数值, 如结束资金、总收益率、夏普比率、收益回撤比。
+### 統計資料
+用於顯示回測完成後的相關統計數值, 如結束資金、總收益率、夏普比率、收益回撤比。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/show_result.png)
 
 &nbsp;
 
-### 图表分析
-以下四个图分别是代表账号净值、净值回撤、每日盈亏、盈亏分布。
+### 圖表分析
+以下四個圖分別是代表賬號淨值、淨值回撤、每日盈虧、盈虧分佈。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/show_result_chat.png)
 
 
 &nbsp;
-### K线图
-K线图是基于PyQtGraph开发的，整个模块由以下五大组件构成：
+### K線圖
+K線圖是基於PyQtGraph開發的，整個模組由以下五大元件構成：
 
-- BarManager：K线序列数据管理工具
-- ChartItem：基础图形类，继承实现后可以绘制K线、成交量、技术指标等
-- DatetimeAxis：针对K线时间戳设计的定制坐标轴
-- ChartCursor：十字光标控件，用于显示特定位置的数据细节
-- ChartWidget：包含以上所有部分，提供单一函数入口的绘图组件
+- BarManager：K線序列資料管理工具
+- ChartItem：基礎圖形類，繼承實現後可以繪製K線、成交量、技術指標等
+- DatetimeAxis：針對K線時間戳設計的定製座標軸
+- ChartCursor：十字游標控制元件，用於顯示特定位置的資料細節
+- ChartWidget：包含以上所有部分，提供單一函式入口的繪圖元件
   
-在回测完毕后，点击“K线图表”按钮即可显示历史K线行情数据（默认1分钟），并且标识有具体的买卖点位，如下图。
+在回測完畢後，點選“K線圖表”按鈕即可顯示歷史K線行情資料（預設1分鐘），並且標識有具體的買賣點位，如下圖。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/bar_chart.png)
 
 
 &nbsp;
 
-## 参数优化
-vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
+## 引數優化
+vnpy提供2種引數優化的解決方案：窮舉演算法、遺傳演算法
 
 
 &nbsp;
 
-### 穷举算法
+### 窮舉演算法
 
-穷举算法原理：
-- 输入需要优化的参数名、优化区间、优化步进，以及优化目标。
+窮舉演算法原理：
+- 輸入需要優化的引數名、優化區間、優化步進，以及優化目標。
 ```
     def add_parameter(
         self, name: str, start: float, end: float = None, step: float = None
@@ -279,11 +279,11 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
             return
 
         if start >= end:
-            print("参数优化起始点必须小于终止点")
+            print("引數優化起始點必須小於終止點")
             return
 
         if step <= 0:
-            print("参数优化步进必须大于0")
+            print("引數優化步進必須大於0")
             return
 
         value = start
@@ -303,7 +303,7 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
 &nbsp;
 
 
-- 形成全局参数组合, 数据结构为[{key: value, key: value}, {key: value, key: value}]。
+- 形成全域性引數組合, 資料結構為[{key: value, key: value}, {key: value, key: value}]。
 ```
     def generate_setting(self):
         """"""
@@ -321,7 +321,7 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
 &nbsp;
 
 
-- 遍历全局中的每一个参数组合：遍历的过程即运行一次策略回测，并且返回优化目标数值；然后根据目标数值排序，输出优化结果。
+- 遍歷全域性中的每一個引數組合：遍歷的過程即執行一次策略回測，並且返回優化目標數值；然後根據目標數值排序，輸出優化結果。
 ```
     def run_optimization(self, optimization_setting: OptimizationSetting, output=True):
         """"""
@@ -330,11 +330,11 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
         target_name = optimization_setting.target_name
 
         if not settings:
-            self.output("优化参数组合为空，请检查")
+            self.output("優化引數組合為空，請檢查")
             return
 
         if not target_name:
-            self.output("优化目标未设置，请检查")
+            self.output("優化目標未設定，請檢查")
             return
 
         # Use multiprocessing pool for running backtesting with different setting
@@ -368,7 +368,7 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
 
         if output:
             for value in result_values:
-                msg = f"参数：{value[0]}, 目标：{value[1]}"
+                msg = f"引數：{value[0]}, 目標：{value[1]}"
                 self.output(msg)
 
         return result_values
@@ -377,35 +377,35 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
 
 
 
-注意：可以使用multiprocessing库来创建多进程实现并行优化。例如：若用户计算机是2核，优化时间为原来1/2；若计算机是10核，优化时间为原来1/10。
+注意：可以使用multiprocessing庫來建立多程序實現並行優化。例如：若使用者計算機是2核，優化時間為原來1/2；若計算機是10核，優化時間為原來1/10。
 
 &nbsp;
 
 
-穷举算法操作：
+窮舉演算法操作：
 
-- 点击“参数优化”按钮，会弹出“优化参数配置”窗口，用于设置优化目标（如最大化夏普比率、最大化收益回撤比）和设置需要优化的参数以及优化区间，如图。
+- 點選“引數優化”按鈕，會彈出“優化引數配置”視窗，用於設定優化目標（如最大化夏普比率、最大化收益回撤比）和設定需要優化的引數以及優化區間，如圖。
   
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/optimize_setting.png)
 
-- 设置好需要优化的参数后，点击“优化参数配置”窗口下方的“确认”按钮开始进行调用CPU多核进行多进程并行优化，同时日志会输出相关信息。
+- 設定好需要優化的引數後，點選“優化引數配置”視窗下方的“確認”按鈕開始進行呼叫CPU多核進行多程序並行優化，同時日誌會輸出相關資訊。
   
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/optimize_log.png)
 
-- 点击“优化结果”按钮可以看出优化结果，如图的参数组合是基于目标数值（夏普比率）由高到低的顺序排列的。
+- 點選“優化結果”按鈕可以看出優化結果，如圖的引數組合是基於目標數值（夏普比率）由高到低的順序排列的。
   
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_backtester/optimize_result.png)
 
 
 &nbsp;
 
-### 遗传算法
+### 遺傳演算法
 
-遗传算法原理：
+遺傳演算法原理：
 
-- 输入需要优化的参数名、优化区间、优化步进，以及优化目标；
+- 輸入需要優化的引數名、優化區間、優化步進，以及優化目標；
 
-- 形成全局参数组合，该组合的数据结构是列表内镶嵌元组，即\[[(key, value), (key, value)] , [(key, value), (key,value)]]，与穷举算法的全局参数组合的数据结构不同。这样做的目的是有利于参数间进行交叉互换和变异。
+- 形成全域性引數組合，該組合的資料結構是列表內鑲嵌元組，即\[[(key, value), (key, value)] , [(key, value), (key,value)]]，與窮舉演算法的全域性引數組合的資料結構不同。這樣做的目的是有利於引數間進行交叉互換和變異。
 ```
     def generate_setting_ga(self):
         """""" 
@@ -420,7 +420,7 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
 &nbsp;
 
 
-- 形成个体：调用random()函数随机从全局参数组合中获取参数。
+- 形成個體：呼叫random()函式隨機從全域性引數組合中獲取引數。
 ```
         def generate_parameter():
             """"""
@@ -430,7 +430,7 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
 &nbsp;
 
 
-- 定义个体变异规则: 即发生变异时，旧的个体完全被新的个体替代。
+- 定義個體變異規則: 即發生變異時，舊的個體完全被新的個體替代。
 ```
         def mutate_individual(individual, indpb):
             """"""
@@ -445,7 +445,7 @@ vnpy提供2种参数优化的解决方案：穷举算法、遗传算法
 &nbsp;
 
 
-- 定义评估函数：入参的是个体，即[(key, value), (key, value)]形式的参数组合，然后通过dict()转化成setting字典，然后运行回测，输出目标优化数值，如夏普比率、收益回撤比。(注意，修饰器@lru_cache作用是缓存计算结果，避免遇到相同的输入重复计算，大大降低运行遗传算法的时间)
+- 定義評估函式：入參的是個體，即[(key, value), (key, value)]形式的引數組合，然後通過dict()轉化成setting字典，然後執行回測，輸出目標優化數值，如夏普比率、收益回撤比。(注意，修飾器@lru_cache作用是快取計算結果，避免遇到相同的輸入重複計算，大大降低執行遺傳演算法的時間)
 ```
 @lru_cache(maxsize=1000000)
 def _ga_optimize(parameter_values: tuple):
@@ -477,14 +477,14 @@ def ga_optimize(parameter_values: list):
 
 &nbsp;
 
-- 运行遗传算法：调用deap库的算法引擎来运行遗传算法，其具体流程如下。
-1）先定义优化方向，如夏普比率最大化；
-2）然后随机从全局参数组合获取个体，并形成族群；
-3）对族群内所有个体进行评估（即运行回测），并且剔除表现不好个体；
-4）剩下的个体会进行交叉或者变异，通过评估和筛选后形成新的族群；（到此为止是完整的一次种群迭代过程）；
-5）多次迭代后，种群内差异性减少，整体适应性提高，最终输出建议结果。该结果为帕累托解集，可以是1个或者多个参数组合。
+- 執行遺傳演算法：呼叫deap庫的演算法引擎來執行遺傳演算法，其具體流程如下。
+1）先定義優化方向，如夏普比率最大化；
+2）然後隨機從全域性引數組合獲取個體，並形成族群；
+3）對族群內所有個體進行評估（即執行回測），並且剔除表現不好個體；
+4）剩下的個體會進行交叉或者變異，通過評估和篩選後形成新的族群；（到此為止是完整的一次種群迭代過程）；
+5）多次迭代後，種群內差異性減少，整體適應性提高，最終輸出建議結果。該結果為帕累託解集，可以是1個或者多個引數組合。
 
-注意：由于用到了@lru_cache, 迭代中后期的速度回提高非常多，因为很多重复的输入都避免了再次的回测，直接在内存中查询并且返回计算结果。
+注意：由於用到了@lru_cache, 迭代中後期的速度回提高非常多，因為很多重複的輸入都避免了再次的回測，直接在記憶體中查詢並且返回計算結果。
 ```
 from deap import creator, base, tools, algorithms
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))

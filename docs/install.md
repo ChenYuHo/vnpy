@@ -1,4 +1,4 @@
-# 安装指南
+# 安裝指南
 
 
 ## Windows
@@ -8,54 +8,54 @@
 ### 使用VNStudio
 
 
-#### 1.下载VNStudio （Python 3.7 64位）
+#### 1.下載VNStudio （Python 3.7 64位）
 
-VNStudio是vn.py团队自行打包的一键安装版本，整合了：
-- Python 3.7（社区官方版本)
-- vn.py框架和其他相关库
-- VN Station量化工作站（vn.py框架的图形化管理工具）
+VNStudio是vn.py團隊自行打包的一鍵安裝版本，整合了：
+- Python 3.7（社群官方版本)
+- vn.py框架和其他相關庫
+- VN Station量化工作站（vn.py框架的圖形化管理工具）
 
-下载地址：[vnstudio-2.1.1.exe](https://download.vnpy.com/vnstudio-2.1.1.exe)
-
-&nbsp;
-
-
-#### 2.安装VNStudio
-
-一路点击“下一步”即可完成VNStudio安装，安装完成后可以查看相关运行目录：
-
-- VNStudio默认安装路径为C:\vnstudio；
-- VNStudio默认json配置文件和数据库路径为C:\Users\Administrator\\.vntrader
-- VN Station量化工作站运行目录为C:\vnstudio\Scripts\vnstation.exe；
-- vnpy运行目录在C:\vnstudio\Lib\site-packages\vnpy（进入该目录后，用户可以修改vnpy的相关功能）
-
+下載地址：[vnstudio-2.1.1.exe](https://download.vnpy.com/vnstudio-2.1.1.exe)
 
 &nbsp;
 
-#### 3.登陆VNStation
 
-输入账号密码或者微信扫码登陆VNStation。（社区账号通过微信扫码可得）
+#### 2.安裝VNStudio
+
+一路點選“下一步”即可完成VNStudio安裝，安裝完成後可以檢視相關執行目錄：
+
+- VNStudio預設安裝路徑為C:\vnstudio；
+- VNStudio預設json配置檔案和資料庫路徑為C:\Users\Administrator\\.vntrader
+- VN Station量化工作站執行目錄為C:\vnstudio\Scripts\vnstation.exe；
+- vnpy執行目錄在C:\vnstudio\Lib\site-packages\vnpy（進入該目錄後，使用者可以修改vnpy的相關功能）
+
+
+&nbsp;
+
+#### 3.登陸VNStation
+
+輸入賬號密碼或者微信掃碼登陸VNStation。（社群賬號通過微信掃碼可得）
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/install.bat/login_VNConda.png "enter image title here")
 
 &nbsp;
 
 #### 4.使用VNStation
-登录后会进入到VN Station的主界面。
+登入後會進入到VN Station的主介面。
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/install.bat/login_VNConda_2.png "enter image title here")
 
-窗口下方有5个选项：
-- VN Trade Lite：直接运行VN Trader (只有CTP接口)
-- VN Trader Pro：先选择保存相关临时文件的目录，再运行VN Trader (接口和上层应用模块任选)
-- Jupyter Notebook：先选择保存相关临时文件的目录，再运行Jupyter Notebook
-- 提问求助：提出相关问题，管理员会每天定时回复
-- 后台更新：一键更新VN Station
+視窗下方有5個選項：
+- VN Trade Lite：直接執行VN Trader (只有CTP介面)
+- VN Trader Pro：先選擇儲存相關臨時檔案的目錄，再執行VN Trader (介面和上層應用模組任選)
+- Jupyter Notebook：先選擇儲存相關臨時檔案的目錄，再執行Jupyter Notebook
+- 提問求助：提出相關問題，管理員會每天定時回覆
+- 後臺更新：一鍵更新VN Station
 
 
 &nbsp;
 
 #### 5.更新VNStation
-更新VNStation除了“一键更新”外；也可以卸载老版本，安装新版本；或者在github上下载最新的dev分支，解压后得到根目录下的vnpy文件夹，对C:\vnstudio\Lib\site-packages\vnpy进行替换。
+更新VNStation除了“一鍵更新”外；也可以解除安裝老版本，安裝新版本；或者在github上下載最新的dev分支，解壓後得到根目錄下的vnpy資料夾，對C:\vnstudio\Lib\site-packages\vnpy進行替換。
 
 
 
@@ -63,34 +63,34 @@ VNStudio是vn.py团队自行打包的一键安装版本，整合了：
 &nbsp;
 
 
-### 手动安装
+### 手動安裝
 
-#### 1.下载并安装最新版Anaconda3.7 64位
+#### 1.下載並安裝最新版Anaconda3.7 64位
 
-下载地址如下：[Anaconda Distribution](https://www.anaconda.com/distribution/)
+下載地址如下：[Anaconda Distribution](https://www.anaconda.com/distribution/)
 
-(更轻量的Miniconda地址：[MiniConda Distribution](https://docs.conda.io/en/latest/miniconda.html))
-
-&nbsp;
-
-#### 2.下载并解压vnpy
-
-进入vnpy的github主页[vnpy](https://github.com/vnpy/vnpy)。
-在左方的Branch选项，master对应是最新的稳定版本，dev对应的是最新测试版本；
-然后在主页右方绿色的clone or download选项，选择Download ZIP来下载压缩版本到本地电脑。
+(更輕量的Miniconda地址：[MiniConda Distribution](https://docs.conda.io/en/latest/miniconda.html))
 
 &nbsp;
 
-#### 3.安装vnpy
-双击install.bat一键安装vnpy：
-- 先安装ta_lib库和ib api
-- 然后安装requirements.txt文件内相关依赖库
-- 最后复制vnpy到Anaconda内
+#### 2.下載並解壓vnpy
+
+進入vnpy的github主頁[vnpy](https://github.com/vnpy/vnpy)。
+在左方的Branch選項，master對應是最新的穩定版本，dev對應的是最新測試版本；
+然後在主頁右方綠色的clone or download選項，選擇Download ZIP來下載壓縮版本到本地電腦。
 
 &nbsp;
 
-#### 4.启动VN Trader
-在文件夹tests\trader中找到run.py文件。按住“Shift” + 鼠标右键进入cmd窗口，输入下面命令即可启动VN Trader。
+#### 3.安裝vnpy
+雙擊install.bat一鍵安裝vnpy：
+- 先安裝ta_lib庫和ib api
+- 然後安裝requirements.txt檔案內相關依賴庫
+- 最後複製vnpy到Anaconda內
+
+&nbsp;
+
+#### 4.啟動VN Trader
+在資料夾tests\trader中找到run.py檔案。按住“Shift” + 滑鼠右鍵進入cmd視窗，輸入下面命令即可啟動VN Trader。
 ```
 python run.py 
 ```
@@ -102,54 +102,54 @@ python run.py
 ## Ubuntu
 
 
-### 1. 下载并安装最新版本的Anaconda或者Miniconda （Python 3.7 64位）
+### 1. 下載並安裝最新版本的Anaconda或者Miniconda （Python 3.7 64位）
 
-以MiniConda为例，进入已下载好 Miniconda3-latest-Linux-x86_64.sh 所在目录，终端运行如下命令开始安装。
+以MiniConda為例，進入已下載好 Miniconda3-latest-Linux-x86_64.sh 所在目錄，終端執行如下命令開始安裝。
 ```
 $ bash Miniconda3-latest-Linux-x86_64.sh
 ```
 
-安装过程中可以一直按“Enter”键继续下去，除了以下这点：
+安裝過程中可以一直按“Enter”鍵繼續下去，除了以下這點：
 
-当询问是否把Miniconda设置为Python 默认环境时，把默认的"no"改成“yes”。原因是Ubuntu 18.04已有自带的Python 3.6与Python 2.7。
+當詢問是否把Miniconda設定為Python 預設環境時，把預設的"no"改成“yes”。原因是Ubuntu 18.04已有自帶的Python 3.6與Python 2.7。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/install.bat/install_Miniconda_ubuntu.png "enter image title here")
 
 
 
-重启Ubuntu后，打开终端直接输入"python" 然后按“Enter”键: 若出现如下图，则表示成功把Miniconda设置为Python默认环境。
+重啟Ubuntu後，開啟終端直接輸入"python" 然後按“Enter”鍵: 若出現如下圖，則表示成功把Miniconda設定為Python預設環境。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/install.bat/Conda_Python_version.png "enter image title here")
 
 &nbsp;
 
-### 2. 下载并解压vnpy
-Linux用户选择tar.gz压缩版本。下载地址如下：[vnpy releases](https://github.com/vnpy/vnpy/releases)
+### 2. 下載並解壓vnpy
+Linux使用者選擇tar.gz壓縮版本。下載地址如下：[vnpy releases](https://github.com/vnpy/vnpy/releases)
 
 &nbsp;
 
-### 3. 安装vnpy
-先安装gcc编译器，用于编译C++类接口文件。在终端中输入以下命令即可。
+### 3. 安裝vnpy
+先安裝gcc編譯器，用於編譯C++類介面檔案。在終端中輸入以下命令即可。
 ```
 sudo apt-get  install  build-essential
 ```
 
 
-然后在vnpy根目录打开终端，输入下面命令一键安装vnpy。
+然後在vnpy根目錄開啟終端，輸入下面命令一鍵安裝vnpy。
 ```
 bash install.sh
 ```
 
-安装过程分为4步：
-- 下载并安装ta_lib库和numpy
-- 安装requirements.txt文件内相关依赖库
-- 安装中文编码（针对英文系统）
-- 复制vnpy到Anaconda内（若是在虚拟机上运行，需要把内存调至4g，否则报错）
+安裝過程分為4步：
+- 下載並安裝ta_lib庫和numpy
+- 安裝requirements.txt檔案內相關依賴庫
+- 安裝中文編碼（針對英文系統）
+- 複製vnpy到Anaconda內（若是在虛擬機器上執行，需要把記憶體調至4g，否則報錯）
 
 &nbsp;
 
-### 4.启动VN Trader
-在文件夹tests\trader中找到run.py文件。右键进入终端，输入下面命令即可启动VN Trader。
+### 4.啟動VN Trader
+在資料夾tests\trader中找到run.py檔案。右鍵進入終端，輸入下面命令即可啟動VN Trader。
 ```
 python run.py 
 ```

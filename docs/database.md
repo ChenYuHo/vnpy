@@ -1,26 +1,26 @@
-# 数据库配置
+# 資料庫配置
 
-VN Trader目前支持以下四种数据库：  
+VN Trader目前支援以下四種資料庫：  
 
- * [SQLite](#sqlite)（默认）
+ * [SQLite](#sqlite)（預設）
  * [MySQL](#sqlmysqlpostgresql)
  * [PostgreSQL](#sqlmysqlpostgresql)
  * [MongoDB](#mongodb)
  
-如果需要配置数据库，请点击配置。然后按照各个数据库所需的字段填入相对应的值即可。
+如果需要配置資料庫，請點選配置。然後按照各個資料庫所需的欄位填入相對應的值即可。
 
 ---
 ## SQLite
-需要填写以下字段：
+需要填寫以下欄位：
 
-| 字段名            | 值 |
+| 欄位名            | 值 |
 |---------           |---- |
 |database.driver     | sqlite |
-|database.database   | 数据库文件（相对于trader目录） |
+|database.database   | 資料庫檔案（相對於trader目錄） |
  
 SQLite的例子：
 
-| 字段名            | 值 |
+| 欄位名            | 值 |
 |---------           |---- |
 |database.driver     | sqlite |
 |database.database   | database.db |
@@ -29,20 +29,20 @@ SQLite的例子：
 ---
 ## SQL(MySQL,PostgreSQL)
 
-需要填写以下字段：
+需要填寫以下欄位：
 
-| 字段名            | 值 |
+| 欄位名            | 值 |
 |---------           |---- |
 |database.driver     | "mysql"或"postgresql" |
 |database.host       | 地址 |
-|database.port       | 端口 |
-|database.database   | 数据库名 |
-|database.user       | 用户名 |
-|database.password   | 密码 |
+|database.port       | 埠 |
+|database.database   | 資料庫名 |
+|database.user       | 使用者名稱 |
+|database.password   | 密碼 |
  
 MySQL的例子：
 
-| 字段名            | 值 |
+| 欄位名            | 值 |
 |---------           |----  |
 |database.driver     | mysql |
 |database.host       | localhost |
@@ -51,27 +51,27 @@ MySQL的例子：
 |database.user       | root |
 |database.password   | .... |
 
-> vnpy不会主动为关系型数据库创建数据库，所以请确保你所填的database.database字段对应的数据库已经创建好了  
-> 若未创建数据库，请手动连上数据库并运行该命令：```create database <你填的database.database>;```   
+> vnpy不會主動為關係型資料庫建立資料庫，所以請確保你所填的database.database欄位對應的資料庫已經建立好了  
+> 若未建立資料庫，請手動連上資料庫並執行該命令：```create database <你填的database.database>;```   
 
 ---
 ## MongoDB
 
-需要填写以下字段：
+需要填寫以下欄位：
 
-| 字段名            | 值 |          是否必填|
+| 欄位名            | 值 |          是否必填|
 |---------           |---- |  ---|
 |database.driver     | "mysql"或"postgresql" | 必填 |
 |database.host       | 地址| 必填 |
-|database.port       | 端口| 必填 |
-|database.database   | 数据库名| 必填 |
-|database.user       | 用户名| 可选 |
-|database.password   | 密码| 可选 |
-|database.authentication_source   | [创建用户所用的数据库][AuthSource]| 可选 |
+|database.port       | 埠| 必填 |
+|database.database   | 資料庫名| 必填 |
+|database.user       | 使用者名稱| 可選 |
+|database.password   | 密碼| 可選 |
+|database.authentication_source   | [建立使用者所用的資料庫][AuthSource]| 可選 |
  
-MongoDB的带认证例子：
+MongoDB的帶認證例子：
 
-| 字段名            | 值 |
+| 欄位名            | 值 |
 |---------           |----  |
 |database.driver     | mongodb |
 |database.host       | localhost |

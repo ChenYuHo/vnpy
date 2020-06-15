@@ -1,18 +1,18 @@
 # 基本使用
 
 
-## 启动程序
+## 啟動程式
 
-### 图形模式
-登陆VN Station后，点击VN Trade Lite快速进入VN Trader（只有CTP接口）；或者点击VN Trader Pro先选择如下图的底层接口和上层应用，再进入VN Trader。
+### 圖形模式
+登陸VN Station後，點選VN Trade Lite快速進入VN Trader（只有CTP介面）；或者點選VN Trader Pro先選擇如下圖的底層介面和上層應用，再進入VN Trader。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/VnTrader_Pro.png "enter image title here")
 
 
 
-### 脚本模式
+### 指令碼模式
 
-在文件夹example\trader中找到run.py文件(不是vnstudio下的，需要在github上单独下载）。按住“Shift” + 鼠标右键进入cmd窗口，输入下面命令进入如图VN Trader
+在資料夾example\trader中找到run.py檔案(不是vnstudio下的，需要在github上單獨下載）。按住“Shift” + 滑鼠右鍵進入cmd視窗，輸入下面命令進入如圖VN Trader
 ```
 python run.py 
 ```
@@ -20,113 +20,113 @@ python run.py
 
 &nbsp;
 
-## 连接接口
-### SimNow仿真
+## 連線介面
+### SimNow模擬
 
-以SinNow仿真交易账号登陆CTP接口为例：点击菜单栏的“系统”->“连接CTP”后，弹出如上图所示CTP接口的配置对话框，输入以下内容后即可登录：
-- 用户名username：111111 （6位纯数字账号）
-- 密码password：1111111  （需要修改一次密码用于盘后测试）
-- 经纪商编号brokerid：9999 （SimNow默认经纪商编号）
-- 交易服务器地址td_address：218.202.237.33 :10102 （盘中测试）
-- 行情服务器地址md_address：218.202.237.33 :10112 （盘中测试）
-- 授权码auth_code：0000000000000000（16个0）
-- 名称app_id：simnow_client_test
+以SinNow模擬交易賬號登陸CTP介面為例：點選選單欄的“系統”->“連線CTP”後，彈出如上圖所示CTP介面的配置對話方塊，輸入以下內容後即可登入：
+- 使用者名稱username：111111 （6位純數字賬號）
+- 密碼password：1111111  （需要修改一次密碼用於盤後測試）
+- 經紀商編號brokerid：9999 （SimNow預設經紀商編號）
+- 交易伺服器地址td_address：218.202.237.33 :10102 （盤中測試）
+- 行情伺服器地址md_address：218.202.237.33 :10112 （盤中測試）
+- 授權碼auth_code：0000000000000000（16個0）
+- 名稱app_id：simnow_client_test
 
-连接成功以后，日志组件会立刻输出陆成功相关信息，同时用户也可以看到账号信息，持仓信息，合约查询等相关信息。
+連線成功以後，日誌元件會立刻輸出陸成功相關資訊，同時使用者也可以看到賬號資訊，持倉資訊，合約查詢等相關資訊。
 
 &nbsp;
 
-## 订阅行情
-在交易组件输入交易所和合约代码，并且按“Enter”键即可订阅器行情。如订阅IF股指期货，交易所：CFFEX，名称：IF905；铁矿石期货，交易所：DCE，名称：i1905。
+## 訂閱行情
+在交易元件輸入交易所和合約程式碼，並且按“Enter”鍵即可訂閱器行情。如訂閱IF股指期貨，交易所：CFFEX，名稱：IF905；鐵礦石期貨，交易所：DCE，名稱：i1905。
 
-此时行情组件会显示最新行情信息；交易组件会显示合约名称，并且在下方显示深度行情报价：如最新价、买一价、卖一价。（数字货币品种可以显示十档行情）
+此時行情元件會顯示最新行情資訊；交易元件會顯示合約名稱，並且在下方顯示深度行情報價：如最新價、買一價、賣一價。（數字貨幣品種可以顯示十檔行情）
 
-注意：订阅行情填写的代码格式可以由菜单栏的”帮助“->“查询合约”里查到
+注意：訂閱行情填寫的程式碼格式可以由選單欄的”幫助“->“查詢合約”裡查到
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/subcribe_contract.png "enter image title here")
 
 
 
 &nbsp;
 
-## 委托交易
-交易组件适用于手动交易。除了在行情订阅中输入的交易所和合约代码以外，还需要填写以下5个字段：委托方向、开平仓类型、委托类型、委托价格和委托数量。（若委托类型为市价单，委托价格可不填。）
+## 委託交易
+交易元件適用於手動交易。除了在行情訂閱中輸入的交易所和合約程式碼以外，還需要填寫以下5個欄位：委託方向、開平倉型別、委託型別、委託價格和委託數量。（若委託型別為市價單，委託價格可不填。）
 
-发出委托同时本地缓存委托相关信息，并且显示到委托组件和活动组件，其委托状态为“提交中”，然后等待委托回报。
+發出委託同時本地快取委託相關資訊，並且顯示到委託元件和活動元件，其委託狀態為“提交中”，然後等待委託回報。
 
-交易所收到用户发送的委托，将其插入中央订单簿来进行撮合成交，并推送委托回报给用户：
-- 若委托还未成交，委托组件和活动组件只会更新时间和委托状态这两字段，委托状态变成“未成交”；
-- 若委托立刻成交，委托相关信息会从活动组件移除，新增至成交组件，委托状态变成“全部成交”。
+交易所收到使用者傳送的委託，將其插入中央訂單簿來進行撮合成交，並推送委託回報給使用者：
+- 若委託還未成交，委託元件和活動元件只會更新時間和委託狀態這兩欄位，委託狀態變成“未成交”；
+- 若委託立刻成交，委託相關資訊會從活動元件移除，新增至成交元件，委託狀態變成“全部成交”。
 
 
 
 
 &nbsp;
 
-## 数据监控
+## 資料監控
 
-数据监控由以下组件构成，并且附带2个辅助功能：选定以下任一组件，鼠标右键可以选择“调整列宽”（特别适用于屏幕分辨率较低），或者选择“保存数据”（csv格式）
+資料監控由以下元件構成，並且附帶2個輔助功能：選定以下任一元件，滑鼠右鍵可以選擇“調整列寬”（特別適用於螢幕解析度較低），或者選擇“儲存資料”（csv格式）
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/2_optiones.png "enter image title here")
 
 
-### 行情组件
-用于对订阅的行情进行实时监控，如下图，监控内容可以分成3类：
+### 行情元件
+用於對訂閱的行情進行實時監控，如下圖，監控內容可以分成3類：
 
-- 合约信息：合约代码、交易所、合约名称
+- 合約資訊：合約程式碼、交易所、合約名稱
 
-- 行情信息：最新价、成交量、开盘价、最高价、最低价、收盘价、买一价、买一量、卖一价、卖一量
+- 行情資訊：最新價、成交量、開盤價、最高價、最低價、收盤價、買一價、買一量、賣一價、賣一量
 
-- 其他信息：数据推送时间、接口
+- 其他資訊：資料推送時間、介面
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/subcribe_contract_module.png "enter image title here")
 
 
-### 活动组件
-活动组件用于存放还未成交的委托，如限价单或者没有立刻成交的市价单，委托状态永远是“提交中”。在该组件中鼠标双击任一委托可以完成撤单操作。
+### 活動元件
+活動元件用於存放還未成交的委託，如限價單或者沒有立刻成交的市價單，委託狀態永遠是“提交中”。在該元件中滑鼠雙擊任一委託可以完成撤單操作。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/active_order.png "enter image title here")
 
-### 成交组件
-成交组件用于存放已成交的委托，需要注意3个字段信息：价格、数量、时间。他们都是交易所推送过来的成交信息，而不是委托信息。
+### 成交元件
+成交元件用於存放已成交的委託，需要注意3個欄位資訊：價格、數量、時間。他們都是交易所推送過來的成交資訊，而不是委託資訊。
 
-注意：有些接口会独立推送成交信息，如CTP接口；有些接口则需要从委托信息里面提取成交相关字段，如Tiger接口。
+注意：有些介面會獨立推送成交資訊，如CTP介面；有些介面則需要從委託資訊裡面提取成交相關欄位，如Tiger介面。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/trade.png "enter image title here")
 
 
 
-### 委托组件
-委托组件用于存放用户发出的所有委托信息，其委托状态可以是提交中、已撤销、部分成交、全部成交、拒单等等。
+### 委託元件
+委託元件用於存放使用者發出的所有委託資訊，其委託狀態可以是提交中、已撤銷、部分成交、全部成交、拒單等等。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/order.png "enter image title here")
 
 
-### 持仓组件
-持仓组件用于记录其历史持仓。其中需要了解以下字段含义
-- 方向：期货品种具有多空方向；而股票品种方向为“净”持仓。
-- 昨仓：其出现衍生于上期所特有的平今、平昨模式的需要
-- 数量：总持仓，即今仓 + 昨仓
-- 均价：历史成交的平均价格（某些巨型委托，会发生多次部分成交，需要计算平均价格）
-- 盈亏：持仓盈亏：多仓情况下，盈利 = 当前价格 - 均价；空仓则反之。
+### 持倉元件
+持倉元件用於記錄其歷史持倉。其中需要了解以下欄位含義
+- 方向：期貨品種具有多空方向；而股票品種方向為“淨”持倉。
+- 昨倉：其出現衍生於上期所特有的平今、平昨模式的需要
+- 數量：總持倉，即今倉 + 昨倉
+- 均價：歷史成交的平均價格（某些巨型委託，會發生多次部分成交，需要計算平均價格）
+- 盈虧：持倉盈虧：多倉情況下，盈利 = 當前價格 - 均價；空倉則反之。
   
-若平仓离场，持仓数量清零，浮动盈亏变成实际盈亏从而影响账号余额变化。故以下字段：数量、昨仓、冻结、均价、盈亏均为“0”，如下图。
+若平倉離場，持倉數量清零，浮動盈虧變成實際盈虧從而影響賬號餘額變化。故以下欄位：數量、昨倉、凍結、均價、盈虧均為“0”，如下圖。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/query_position.png "enter image title here")
 
-### 资金组件
-资金组件显示了账号的基础信息，如下图需要注意3个字段信息：
-- 可用资金：可以用于委托的现金
-- 冻结：委托操作冻结的金额（与保证金不是一个概念）
-- 余额：总资金，即可用资金 + 保证金 + 浮动盈亏 
+### 資金元件
+資金元件顯示了賬號的基礎資訊，如下圖需要注意3個欄位資訊：
+- 可用資金：可以用於委託的現金
+- 凍結：委託操作凍結的金額（與保證金不是一個概念）
+- 餘額：總資金，即可用資金 + 保證金 + 浮動盈虧 
 
-注意：若全部平仓，浮动盈亏变成实际盈亏，保证金和浮动盈亏清零，总资金等于可用资金
+注意：若全部平倉，浮動盈虧變成實際盈虧，保證金和浮動盈虧清零，總資金等於可用資金
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/query_account.png "enter image title here")
 
 
 
-### 日志组件
-日志组件用于显示接口登陆信息以及委托报错信息，如下图。
+### 日誌元件
+日誌元件用於顯示介面登陸資訊以及委託報錯資訊，如下圖。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/write_log.png "enter image title here")
 
@@ -134,23 +134,23 @@ python run.py
 
 &nbsp;
 
-## 应用模块
+## 應用模組
 
-vn.py官方提供了开箱即用的量化交易应用模块，在菜单栏中点击“功能”，即显示应用模块，如下图：
+vn.py官方提供了開箱即用的量化交易應用模組，在選單欄中點選“功能”，即顯示應用模組，如下圖：
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/quick_start/application.png "enter image title here")
 
 &nbsp;
 
-## 全局配置
+## 全域性配置
 
-在菜单栏中点击“配置”，可以进行全局配置：如配置GUI界面字体的大小，类型，数据库种类，RQData的账户密码（用于初始化RQData客户端，下载历史数据，或者盘起载入数据来初始化策略），设置email来发送信息。
+在選單欄中點選“配置”，可以進行全域性配置：如配置GUI介面字型的大小，型別，資料庫種類，RQData的賬戶密碼（用於初始化RQData客戶端，下載歷史資料，或者盤起載入資料來初始化策略），設定email來發送資訊。
 
-其email的设置如下：
-email.server: SMTP邮件服务器地址
-email.port: SMTP邮件服务器端口号
-email.username: 邮箱用户名
-email.password: 邮箱密码
-email.sender: 发送者邮箱
-email.receiver: 接收者邮箱
+其email的設定如下：
+email.server: SMTP郵件伺服器地址
+email.port: SMTP郵件伺服器埠號
+email.username: 郵箱使用者名稱
+email.password: 郵箱密碼
+email.sender: 傳送者郵箱
+email.receiver: 接收者郵箱
 

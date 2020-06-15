@@ -1,47 +1,47 @@
-# 贡献代码
+# 貢獻程式碼
 
 ---
-## 创建PR
-我们欢迎任何人贡献代码到vn.py。  
-如果希望贡献代码请使用github的PR(Pull Request)的流程。
+## 建立PR
+我們歡迎任何人貢獻程式碼到vn.py。  
+如果希望貢獻程式碼請使用github的PR(Pull Request)的流程。
 
 PR流程大致如下：
 
 ---
-1. [创建 Issue][CreateIssue] - 对于较大的改动(如新功能，大型重构等)最好先开issue讨论一下， 较小的improvement(如文档改进，bugfix等)直接发PR即可
+1. [建立 Issue][CreateIssue] - 對於較大的改動(如新功能，大型重構等)最好先開issue討論一下， 較小的improvement(如文件改進，bugfix等)直接發PR即可
 
-2. Fork [vn.py][#GithubVnpy] - 点击右上角**Fork**按钮
+2. Fork [vn.py][#GithubVnpy] - 點選右上角**Fork**按鈕
 
 3. Clone你自己的fork: ```git clone https://github.com/$userid/vnpy.git```
-	> 如果你的fork已经过时，需要手动[sync][GithubDocForSync]
+	> 如果你的fork已經過時，需要手動[sync][GithubDocForSync]
 
-4. 从**dev**创建你自己的branch: ```git checkout -b $my_feature_branch dev```
+4. 從**dev**建立你自己的branch: ```git checkout -b $my_feature_branch dev```
 
-5. 在$my_feature_branch上修改并将修改push到你Fork之后的仓库上
+5. 在$my_feature_branch上修改並將修改push到你Fork之後的倉庫上
 
-6. 创建从你的fork的$my_feature_branch分支到主项目的**dev**分支的[Pull Request]:  
- [点开这里][CreatePR] ，再点击**compare across forks**，选择需要的fork和branch创建PR
-
----
-
-创建完PR之后请耐心等待：我们一旦有空就会检查PR，一旦你的代码有用且[符合要求](#代码风格)，就会被合并！
-
+6. 建立從你的fork的$my_feature_branch分支到主專案的**dev**分支的[Pull Request]:  
+ [點開這裡][CreatePR] ，再點選**compare across forks**，選擇需要的fork和branch建立PR
 
 ---
-## 代码风格
-在为vn.py写代码的时候，需要遵循一些基本的规则，否则你的代码可能无法被merge。
-这些规则包括：
-1. [命名规则](#命名规则)
-2. [代码格式](#代码格式)
-3. [代码质量检查](#代码质量检查)
+
+建立完PR之後請耐心等待：我們一旦有空就會檢查PR，一旦你的程式碼有用且[符合要求](#程式碼風格)，就會被合併！
 
 
-### 命名规则
-我们的代码的命名规则如下：
+---
+## 程式碼風格
+在為vn.py寫程式碼的時候，需要遵循一些基本的規則，否則你的程式碼可能無法被merge。
+這些規則包括：
+1. [命名規則](#命名規則)
+2. [程式碼格式](#程式碼格式)
+3. [程式碼質量檢查](#程式碼質量檢查)
 
-* 类属性、类方法、参数和变量使用小写加下划线的形式
-* 类名使用驼峰式命名
-* 常量使用大写加下划线的形式
+
+### 命名規則
+我們的程式碼的命名規則如下：
+
+* 類屬性、類方法、引數和變數使用小寫加下劃線的形式
+* 類名使用駝峰式命名
+* 常量使用大寫加下劃線的形式
 
 例如：
 ```python
@@ -55,17 +55,17 @@ class ClassA:
 ```
 
 
-### 代码格式
-我们对代码格式没有特别严格的要求，但是至少要符合pep8标准，并且额外要在类和所有函数下面带上docstring(就是一段"""""")。
+### 程式碼格式
+我們對程式碼格式沒有特別嚴格的要求，但是至少要符合pep8標準，並且額外要在類和所有函式下面帶上docstring(就是一段"""""")。
 
-要让代码符合pep8标准，写完代码之后使用[autopep8](https://github.com/hhatto/autopep8)格式化你的代码就可以了:  
+要讓程式碼符合pep8標準，寫完程式碼之後使用[autopep8](https://github.com/hhatto/autopep8)格式化你的程式碼就可以了:  
 ```bash
 autopep8 --in-place --recursive . 
 ```
 
-### 代码质量检查
-使用[flake8](https://pypi.org/project/flake8/)检查你的代码，确保没有error和warning。
-在项目根目录下运行```flake8```就可以检查出代码中书写不严谨的地方了。如果检查出error或者warning，说明你的代码需要进行一些修改以提升质量。
+### 程式碼質量檢查
+使用[flake8](https://pypi.org/project/flake8/)檢查你的程式碼，確保沒有error和warning。
+在專案根目錄下執行```flake8```就可以檢查出程式碼中書寫不嚴謹的地方了。如果檢查出error或者warning，說明你的程式碼需要進行一些修改以提升質量。
 
 [GithubVnpy]:https://github.com/vnpy/vnpy
 [GithubDocForSync]:https://help.github.com/articles/syncing-a-fork/

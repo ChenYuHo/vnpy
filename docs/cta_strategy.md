@@ -1,32 +1,32 @@
-# CTA策略模块
+# CTA策略模組
 
 
-## 模块构成
+## 模組構成
 
-CTA策略模块主要由7部分构成，如下图：
+CTA策略模組主要由7部分構成，如下圖：
 
-- base：定义了CTA模块中用到的一些基础设置，如引擎类型（回测/实盘）、回测模式（K线/Tick）、本地停止单的定义以及停止单状态（等待中/已撤销/已触发）。
+- base：定義了CTA模組中用到的一些基礎設定，如引擎型別（回測/實盤）、回測模式（K線/Tick）、本地停止單的定義以及停止單狀態（等待中/已撤銷/已觸發）。
   
-- template：定义了CTA策略模板（包含信号生成和委托管理）、CTA信号（仅负责信号生成）、目标仓位算法（仅负责委托管理，适用于拆分巨型委托，降低冲击成本）。
-- strategies: 官方提供的cta策略示例，包含从最基础的双均线策略，到通道突破类型的布林带策略，到跨时间周期策略，再到把信号生成和委托管理独立开来的多信号策略。(用户自定义的策略也可以放在strategies文件夹内运行)
-- backesting：包含回测引擎和参数优化。其中回测引擎定义了数据载入、委托撮合机制、计算与统计相关盈利指标、结果绘图等函数。
-- converter：定义了针对上期所品种平今/平昨模式的委托转换模块；对于其他品种用户也可以通过可选参数lock切换至锁仓模式。
-- engine：定义了CTA策略实盘引擎，其中包括：RQData客户端初始化和数据载入、策略的初始化和启动、推送Tick订阅行情到策略中、挂撤单操作、策略的停止和移除等。
-- ui：基于PyQt5的GUI图形应用。
+- template：定義了CTA策略模板（包含訊號生成和委託管理）、CTA訊號（僅負責訊號生成）、目標倉位演算法（僅負責委託管理，適用於拆分巨型委託，降低衝擊成本）。
+- strategies: 官方提供的cta策略示例，包含從最基礎的雙均線策略，到通道突破型別的布林帶策略，到跨時間週期策略，再到把訊號生成和委託管理獨立開來的多訊號策略。(使用者自定義的策略也可以放在strategies資料夾內執行)
+- backesting：包含回測引擎和引數優化。其中回測引擎定義了資料載入、委託撮合機制、計算與統計相關盈利指標、結果繪圖等函式。
+- converter：定義了針對上期所品種平今/平昨模式的委託轉換模組；對於其他品種使用者也可以通過可選引數lock切換至鎖倉模式。
+- engine：定義了CTA策略實盤引擎，其中包括：RQData客戶端初始化和資料載入、策略的初始化和啟動、推送Tick訂閱行情到策略中、掛撤單操作、策略的停止和移除等。
+- ui：基於PyQt5的GUI圖形應用。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_strategy/seix_elementos.png "enter image title here")
 
 &nbsp;
 
-## 数据加载
+## 資料載入
 
-在实盘中，RQData通过实时载入数据进行策略的初始化。该功能主要在CTA实盘引擎engine.py内实现。
-下面介绍具体流程：
-- 在菜单栏点击“配置”，进入全局配置页面输入RQData账号密码；或者直接配置json文件，即在用户目录下.vntrader文件夹找到vt_setting.json，如图。
+在實盤中，RQData通過實時載入資料進行策略的初始化。該功能主要在CTA實盤引擎engine.py內實現。
+下面介紹具體流程：
+- 在選單欄點選“配置”，進入全域性配置頁面輸入RQData賬號密碼；或者直接配置json檔案，即在使用者目錄下.vntrader資料夾找到vt_setting.json，如圖。
   
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_strategy/RQData_setting.png "enter image title here")
 
-- 初始化RQData客户端：从vt_setting.json中读取RQData的账户、密码到rq_client.init()函数进行初始化
+- 初始化RQData客戶端：從vt_setting.json中讀取RQData的賬戶、密碼到rq_client.init()函式進行初始化
 
 ```
     def init_rqdata(self):
@@ -46,7 +46,7 @@ CTA策略模块主要由7部分构成，如下图：
 ```
 
 
-- RQData载入实盘数据：输入vt_symbol后，首先会转换成符合RQData格式的rq_symbol，通过get_price()函数下载数据，并且插入到数据库中。
+- RQData載入實盤資料：輸入vt_symbol後，首先會轉換成符合RQData格式的rq_symbol，通過get_price()函式下載資料，並且插入到資料庫中。
   
 ```
     def query_bar_from_rq(
@@ -89,19 +89,19 @@ CTA策略模块主要由7部分构成，如下图：
 
 &nbsp;
 
-## 策略开发
-CTA策略模板提供完整的信号生成和委托管理功能，用户可以基于该模板自行开发策略。新策略可以放在用户运行的文件内（推荐），如在c:\users\administrator.vntrader目录下创建strategies文件夹；可以放在根目录下vnpy\app\cta_strategy\strategies文件夹内。
-注意：策略文件命名是以下划线模式，如boll_channel_strategy.py；而策略类命名采用的是驼峰式，如BollChannelStrategy。
+## 策略開發
+CTA策略模板提供完整的訊號生成和委託管理功能，使用者可以基於該模板自行開發策略。新策略可以放在使用者執行的檔案內（推薦），如在c:\users\administrator.vntrader目錄下建立strategies資料夾；可以放在根目錄下vnpy\app\cta_strategy\strategies資料夾內。
+注意：策略檔案命名是以下劃線模式，如boll_channel_strategy.py；而策略類命名採用的是駝峰式，如BollChannelStrategy。
 
-下面通过BollChannelStrategy策略示例，来展示策略开发的具体步骤：
+下面通過BollChannelStrategy策略示例，來展示策略開發的具體步驟：
 
-### 参数设置
+### 引數設定
 
-定义策略参数并且初始化策略变量。策略参数为策略类的公有属性，用户可以通过创建新的实例来调用或者改变策略参数。
+定義策略引數並且初始化策略變數。策略引數為策略類的公有屬性，使用者可以通過建立新的例項來呼叫或者改變策略引數。
 
-如针对rb1905品种，用户可以创建基于BollChannelStrategy的策略示例，如RB_BollChannelStrategy，boll_window可以由18改成30。
+如針對rb1905品種，使用者可以建立基於BollChannelStrategy的策略示例，如RB_BollChannelStrategy，boll_window可以由18改成30。
 
-创建策略实例的方法有效地实现了一个策略跑多个品种，并且其策略参数可以通过品种的特征进行调整。
+建立策略例項的方法有效地實現了一個策略跑多個品種，並且其策略引數可以通過品種的特徵進行調整。
 ```
     boll_window = 18
     boll_dev = 3.4
@@ -121,11 +121,11 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
     short_stop = 0
 ```
 
-### 类的初始化
+### 類的初始化
 初始化分3步：
-- 通过super( )的方法继承CTA策略模板，在__init__( )函数传入CTA引擎、策略名称、vt_symbol、参数设置。
-- 调用K线生成模块:通过时间切片来把Tick数据合成1分钟K线数据，然后更大的时间周期数据，如15分钟K线。
-- 调用K线时间序列管理模块：基于K线数据，如1分钟、15分钟，来生成相应的技术指标。
+- 通過super( )的方法繼承CTA策略模板，在__init__( )函式傳入CTA引擎、策略名稱、vt_symbol、引數設定。
+- 呼叫K線生成模組:通過時間切片來把Tick資料合成1分鐘K線資料，然後更大的時間週期數據，如15分鐘K線。
+- 呼叫K線時間序列管理模組：基於K線資料，如1分鐘、15分鐘，來生成相應的技術指標。
   
 ```
     def __init__(self, cta_engine, strategy_name, vt_symbol, setting):
@@ -138,10 +138,10 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
         self.am = ArrayManager()
 ```
 
-### 策略的初始化、启动、停止
-通过“CTA策略”组件的相关功能按钮实现。
+### 策略的初始化、啟動、停止
+通過“CTA策略”元件的相關功能按鈕實現。
 
-注意：函数load_bar(10)，代表策略初始化需要载入10个交易日的历史数据。该历史数据可以是Tick数据，也可以是K线数据。在策略初始化时候，会调用K线时间序列管理器计算并缓存相关的计算指标，但是并不触发交易。
+注意：函式load_bar(10)，代表策略初始化需要載入10個交易日的歷史資料。該歷史資料可以是Tick資料，也可以是K線資料。在策略初始化時候，會呼叫K線時間序列管理器計算並快取相關的計算指標，但是並不觸發交易。
 
 ```
     def on_init(self):
@@ -155,7 +155,7 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        self.write_log("策略啟動")
 
     def on_stop(self):
         """
@@ -163,10 +163,10 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
         """
         self.write_log("策略停止")
 ```
-### Tick数据回报
-策略订阅某品种合约行情，交易所会推送Tick数据到该策略上。
+### Tick資料回報
+策略訂閱某品種合約行情，交易所會推送Tick資料到該策略上。
 
-由于BollChannelStrategy是基于15分钟K线来生成交易信号的，故收到Tick数据后，需要用到K线生成模块里面的update_tick函数，通过时间切片的方法，聚合成1分钟K线数据，并且推送到on_bar函数。
+由於BollChannelStrategy是基於15分鐘K線來生成交易訊號的，故收到Tick資料後，需要用到K線生成模組裡面的update_tick函式，通過時間切片的方法，聚合成1分鐘K線資料，並且推送到on_bar函式。
 
 ```
     def on_tick(self, tick: TickData):
@@ -176,9 +176,9 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
         self.bg.update_tick(tick)
 ```
 
-### K线数据回报
+### K線資料回報
 
-收到推送过来的1分钟K线数据后，通过K线生成模块里面的update_bar函数，以分钟切片的方法，合成15分钟K线数据，并且推送到on_15min_bar函数。
+收到推送過來的1分鐘K線資料後，通過K線生成模組裡面的update_bar函式，以分鐘切片的方法，合成15分鐘K線資料，並且推送到on_15min_bar函式。
 ```
     def on_bar(self, bar: BarData):
         """
@@ -187,14 +187,14 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
         self.bg.update_bar(bar)
 ```
 
-### 15分钟K线数据回报
+### 15分鐘K線資料回報
 
-负责CTA信号的生成，由3部分组成：
-- 清空未成交委托：为了防止之前下的单子在上一个15分钟没有成交，但是下一个15分钟可能已经调整了价格，就用cancel_all()方法立刻撤销之前未成交的所有委托，保证策略在当前这15分钟开始时的整个状态是清晰和唯一的。
-- 调用K线时间序列管理模块：基于最新的15分钟K线数据来计算相应计算指标，如布林带通道上下轨、CCI指标、ATR指标
-- 信号计算：通过持仓的判断以及结合CCI指标、布林带通道、ATR指标在通道突破点挂出停止单委托（buy/sell)，同时设置离场点(short/cover)。
+負責CTA訊號的生成，由3部分組成：
+- 清空未成交委託：為了防止之前下的單子在上一個15分鐘沒有成交，但是下一個15分鐘可能已經調整了價格，就用cancel_all()方法立刻撤銷之前未成交的所有委託，保證策略在當前這15分鐘開始時的整個狀態是清晰和唯一的。
+- 呼叫K線時間序列管理模組：基於最新的15分鐘K線資料來計算相應計算指標，如布林帶通道上下軌、CCI指標、ATR指標
+- 訊號計算：通過持倉的判斷以及結合CCI指標、布林帶通道、ATR指標在通道突破點掛出停止單委託（buy/sell)，同時設定離場點(short/cover)。
 
-注意：CTA策略具有低胜率和高盈亏比的特定：在难以提升胜率的情况下，研究提高策略盈亏比有利于策略盈利水平的上升。
+注意：CTA策略具有低勝率和高盈虧比的特定：在難以提升勝率的情況下，研究提高策略盈虧比有利於策略盈利水平的上升。
 
 ```
     def on_15min_bar(self, bar: BarData):
@@ -236,9 +236,9 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
         self.put_event()
 ```
 
-### 委托回报、成交回报、停止单回报
+### 委託回報、成交回報、停止單回報
 
-在策略中可以直接pass，其具体逻辑应用交给回测/实盘引擎负责。
+在策略中可以直接pass，其具體邏輯應用交給回測/實盤引擎負責。
 ```
     def on_order(self, order: OrderData):
         """
@@ -264,12 +264,12 @@ CTA策略模板提供完整的信号生成和委托管理功能，用户可以�
 
 &nbsp;
 
-## 回测研究
-backtesting.py定义了回测引擎，下面主要介绍相关功能函数，以及回测引擎应用示例：
+## 回測研究
+backtesting.py定義了回測引擎，下面主要介紹相關功能函式，以及回測引擎應用示例：
 
-### 加载策略
+### 載入策略
 
-把CTA策略逻辑，对应合约品种，以及参数设置（可在策略文件外修改）载入到回测引擎中。
+把CTA策略邏輯，對應合約品種，以及引數設定（可在策略檔案外修改）載入到回測引擎中。
 ```
     def add_strategy(self, strategy_class: type, setting: dict):
         """"""
@@ -280,18 +280,18 @@ backtesting.py定义了回测引擎，下面主要介绍相关功能函数，以
 ```
 &nbsp;
 
-### 载入历史数据
+### 載入歷史資料
 
-负责载入对应品种的历史数据，大概有4个步骤：
-- 根据数据类型不同，分成K线模式和Tick模式；
-- 通过select().where()方法，有条件地从数据库中选取数据，其筛选标准包括：vt_symbol、 回测开始日期、回测结束日期、K线周期（K线模式下）；
-- order_by(DbBarData.datetime)表示需要按照时间顺序载入数据；
-- 载入数据是以迭代方式进行的，数据最终存入self.history_data。
+負責載入對應品種的歷史資料，大概有4個步驟：
+- 根據資料型別不同，分成K線模式和Tick模式；
+- 通過select().where()方法，有條件地從資料庫中選取資料，其篩選標準包括：vt_symbol、 回測開始日期、回測結束日期、K線週期（K線模式下）；
+- order_by(DbBarData.datetime)表示需要按照時間順序載入資料；
+- 載入資料是以迭代方式進行的，資料最終存入self.history_data。
 
 ```
     def load_data(self):
         """"""
-        self.output("开始加载历史数据")
+        self.output("開始載入歷史資料")
 
         if self.mode == BacktestingMode.BAR:
             s = (
@@ -317,27 +317,27 @@ backtesting.py定义了回测引擎，下面主要介绍相关功能函数，以
             )
             self.history_data = [db_tick.to_tick() for db_tick in s]
 
-        self.output(f"历史数据加载完成，数据量：{len(self.history_data)}")
+        self.output(f"歷史資料載入完成，資料量：{len(self.history_data)}")
 ```
 &nbsp;
 
 ### 撮合成交
 
-载入CTA策略以及相关历史数据后，策略会根据最新的数据来计算相关指标。若符合条件会生成交易信号，发出具体委托（buy/sell/short/cover），并且在下一根K线成交。
+載入CTA策略以及相關歷史資料後，策略會根據最新的資料來計算相關指標。若符合條件會生成交易訊號，發出具體委託（buy/sell/short/cover），並且在下一根K線成交。
 
-根据委托类型的不同，回测引擎提供2种撮合成交机制来尽量模仿真实交易环节：
+根據委託型別的不同，回測引擎提供2種撮合成交機制來儘量模模擬實交易環節：
 
-- 限价单撮合成交：（以买入方向为例）先确定是否发生成交，成交标准为委托价>= 下一根K线的最低价；然后确定成交价格，成交价格为委托价与下一根K线开盘价的最小值。
+- 限價單撮合成交：（以買入方向為例）先確定是否發生成交，成交標準為委託價>= 下一根K線的最低價；然後確定成交價格，成交價格為委託價與下一根K線開盤價的最小值。
 
-- 停止单撮合成交：（以买入方向为例）先确定是否发生成交，成交标准为委托价<= 下一根K线的最高价；然后确定成交价格，成交价格为委托价与下一根K线开盘价的最大值。
+- 停止單撮合成交：（以買入方向為例）先確定是否發生成交，成交標準為委託價<= 下一根K線的最高價；然後確定成交價格，成交價格為委託價與下一根K線開盤價的最大值。
 
 &nbsp;
 
-下面展示在引擎中限价单撮合成交的流程：
-- 确定会撮合成交的价格；
-- 遍历限价单字典中的所有限价单，推送委托进入未成交队列的更新状态；
-- 判断成交状态，若出现成交，推送成交数据和委托数据；
-- 从字典中删除已成交的限价单。
+下面展示在引擎中限價單撮合成交的流程：
+- 確定會撮合成交的價格；
+- 遍歷限價單字典中的所有限價單，推送委託進入未成交佇列的更新狀態；
+- 判斷成交狀態，若出現成交，推送成交資料和委託資料；
+- 從字典中刪除已成交的限價單。
 
 ```
     def cross_limit_order(self):
@@ -416,16 +416,16 @@ backtesting.py定义了回测引擎，下面主要介绍相关功能函数，以
 
 &nbsp;
 
-### 计算策略盈亏情况
+### 計算策略盈虧情況
 
-基于收盘价、当日持仓量、合约规模、滑点、手续费率等计算总盈亏与净盈亏，并且其计算结果以DataFrame格式输出，完成基于逐日盯市盈亏统计。
+基於收盤價、當日持倉量、合約規模、滑點、手續費率等計算總盈虧與淨盈虧，並且其計算結果以DataFrame格式輸出，完成基於逐日盯市盈虧統計。
 
-下面展示盈亏情况的计算过程
+下面展示盈虧情況的計算過程
 
-- 浮动盈亏 = 持仓量 \*（当日收盘价 - 昨日收盘价）\*  合约规模
-- 实际盈亏 = 持仓变化量  \* （当时收盘价 - 开仓成交价）\* 合约规模
-- 总盈亏 = 浮动盈亏 + 实际盈亏
-- 净盈亏 = 总盈亏 - 总手续费 - 总滑点
+- 浮動盈虧 = 持倉量 \*（當日收盤價 - 昨日收盤價）\*  合約規模
+- 實際盈虧 = 持倉變化量  \* （當時收盤價 - 開倉成交價）\* 合約規模
+- 總盈虧 = 浮動盈虧 + 實際盈虧
+- 淨盈虧 = 總盈虧 - 總手續費 - 總滑點
 
 ```
     def calculate_pnl(
@@ -471,8 +471,8 @@ backtesting.py定义了回测引擎，下面主要介绍相关功能函数，以
 
 
 
-### 计算策略统计指标
-calculate_statistics函数是基于逐日盯市盈亏情况（DateFrame格式）来计算衍生指标，如最大回撤、年化收益、盈亏比、夏普比率等。
+### 計算策略統計指標
+calculate_statistics函式是基於逐日盯市盈虧情況（DateFrame格式）來計算衍生指標，如最大回撤、年化收益、盈虧比、夏普比率等。
 
 ```
             df["balance"] = df["net_pnl"].cumsum() + self.capital
@@ -523,12 +523,12 @@ calculate_statistics函数是基于逐日盯市盈亏情况（DateFrame格式）
 ```
 &nbsp;
 
-### 统计指标绘图
-通过matplotlib绘制4幅图：
-- 资金曲线图
-- 资金回撤图
-- 每日盈亏图
-- 每日盈亏分布图
+### 統計指標繪圖
+通過matplotlib繪製4幅圖：
+- 資金曲線圖
+- 資金回撤圖
+- 每日盈虧圖
+- 每日盈虧分佈圖
 
 ```
     def show_chart(self, df: DataFrame = None):
@@ -562,12 +562,12 @@ calculate_statistics函数是基于逐日盯市盈亏情况（DateFrame格式）
 
 &nbsp;
 
-### 单策略回测示例
+### 單策略回測示例
 
-- 导入回测引擎和CTA策略
-- 设置回测相关参数，如：品种、K线周期、回测开始和结束日期、手续费、滑点、合约规模、起始资金
-- 载入策略和数据到引擎中，运行回测。
-- 计算基于逐日统计盈利情况，计算统计指标，统计指标绘图。
+- 匯入回測引擎和CTA策略
+- 設定回測相關引數，如：品種、K線週期、回測開始和結束日期、手續費、滑點、合約規模、起始資金
+- 載入策略和資料到引擎中，執行回測。
+- 計算基於逐日統計盈利情況，計算統計指標，統計指標繪圖。
 
 
 ```
@@ -600,11 +600,11 @@ engine.show_chart()
 
 &nbsp;
 
-### 投资组合回测示例
+### 投資組合回測示例
 
-投资组合回测是基于单策略回测的，其关键是每个策略都对应着各自的BacktestingEngine对象，下面介绍具体流程：
+投資組合回測是基於單策略回測的，其關鍵是每個策略都對應著各自的BacktestingEngine物件，下面介紹具體流程：
 
-- 创建回测函数run_backtesting()，这样每添加一个策略就创建其BacktestingEngine对象。
+- 建立回測函式run_backtesting()，這樣每新增一個策略就建立其BacktestingEngine物件。
 ```
 from vnpy.app.cta_strategy.backtesting import BacktestingEngine, OptimizationSetting
 from vnpy.app.cta_strategy.strategies.atr_rsi_strategy import AtrRsiStrategy
@@ -633,7 +633,7 @@ def run_backtesting(strategy_class, setting, vt_symbol, interval, start, end, ra
 
 &nbsp;
 
-- 分别进行单策略回测，得到各自的DataFrame，(该DataFrame包含交易时间、今仓、昨仓、手续费、滑点、当日净盈亏、累计净盈亏等基本信息，但是不包括最大回撤，夏普比率等统计信息),然后把DataFrame相加并且去除空值后即得到投资组合的DataFrame。
+- 分別進行單策略回測，得到各自的DataFrame，(該DataFrame包含交易時間、今倉、昨倉、手續費、滑點、當日淨盈虧、累計淨盈虧等基本資訊，但是不包括最大回撤，夏普比率等統計資訊),然後把DataFrame相加並且去除空值後即得到投資組合的DataFrame。
 
 ```
 df1 = run_backtesting(
@@ -671,7 +671,7 @@ dfp =dfp.dropna()
 &nbsp;
 
 
-- 创建show_portafolio()函数，同样也是创建新的BacktestingEngine对象，对传入的DataFrame计算如夏普比率等统计指标，并且画图。故该函数不仅能显示单策略回测效果，也能展示投资组合回测效果。
+- 建立show_portafolio()函式，同樣也是建立新的BacktestingEngine物件，對傳入的DataFrame計算如夏普比率等統計指標，並且畫圖。故該函式不僅能顯示單策略回測效果，也能展示投資組合回測效果。
 ```
 def show_portafolio(df):
     engine = BacktestingEngine()
@@ -683,14 +683,14 @@ show_portafolio(dfp)
 
 &nbsp;
 
-## 参数优化
-参数优化模块主要由3部分构成：
+## 引數優化
+引數優化模組主要由3部分構成：
 
-### 参数设置
+### 引數設定
 
-- 设置参数优化区间：如boll_window设置起始值为18，终止值为24，步进为2，这样就得到了[18, 20, 22, 24] 这4个待优化的参数了。
-- 设置优化目标字段：如夏普比率、盈亏比、总收益率等。
-- 随机生成参数对组合：使用迭代工具产生参数对组合，然后把参数对组合打包到一个个字典组成的列表中
+- 設定引數優化區間：如boll_window設定起始值為18，終止值為24，步進為2，這樣就得到了[18, 20, 22, 24] 這4個待優化的引數了。
+- 設定優化目標欄位：如夏普比率、盈虧比、總收益率等。
+- 隨機生成引數對組合：使用迭代工具產生引數對組合，然後把引數對組合打包到一個個字典組成的列表中
 
 ```
 class OptimizationSetting:
@@ -712,11 +712,11 @@ class OptimizationSetting:
             return
 
         if start >= end:
-            print("参数优化起始点必须小于终止点")
+            print("引數優化起始點必須小於終止點")
             return
 
         if step <= 0:
-            print("参数优化步进必须大于0")
+            print("引數優化步進必須大於0")
             return
 
         value = start
@@ -748,14 +748,14 @@ class OptimizationSetting:
 
 &nbsp;
 
-### 参数对组合回测
+### 引數對組合回測
 
-多进程优化时，每个进程都会运行optimize函数，输出参数对组合以及目标优化字段的结果。其步骤如下：
-- 调用回测引擎
-- 输入回测相关设置
-- 输入参数对组合到策略中
-- 运行回测
-- 返回回测结果，包括：参数对组合、目标优化字段数值、策略统计指标
+多程序優化時，每個程序都會執行optimize函式，輸出引數對組合以及目標優化欄位的結果。其步驟如下：
+- 呼叫回測引擎
+- 輸入回測相關設定
+- 輸入引數對組合到策略中
+- 執行回測
+- 返回回測結果，包括：引數對組合、目標優化欄位數值、策略統計指標
 
 ```
 def optimize(
@@ -802,12 +802,12 @@ def optimize(
 
 &nbsp;
 
-### 多进程优化
+### 多程序優化
 
-- 根据CPU的核数来创建进程：若CPU为4核，则创建4个进程
-- 在每个进程都调用apply_async( )的方法运行参数对组合回测，其回测结果添加到results中 （apply_async是异步非阻塞的，即不用等待当前进程执行完毕，随时根据系统调度来进行进程切换。）
-- pool.close()与pool.join()用于进程跑完任务后，去关闭进程。
-- 对results的内容通过目标优化字段标准进行排序，输出结果。
+- 根據CPU的核數來建立程序：若CPU為4核，則建立4個程序
+- 在每個程序都呼叫apply_async( )的方法執行引數對組合回測，其回測結果新增到results中 （apply_async是非同步非阻塞的，即不用等待當前程序執行完畢，隨時根據系統排程來進行程序切換。）
+- pool.close()與pool.join()用於程序跑完任務後，去關閉程序。
+- 對results的內容通過目標優化欄位標準進行排序，輸出結果。
 
 ```
         pool = multiprocessing.Pool(multiprocessing.cpu_count())
@@ -839,7 +839,7 @@ def optimize(
         result_values.sort(reverse=True, key=lambda result: result[1])
 
         for value in result_values:
-            msg = f"参数：{value[0]}, 目标：{value[1]}"
+            msg = f"引數：{value[0]}, 目標：{value[1]}"
             self.output(msg)
 
         return result_values
@@ -847,22 +847,22 @@ def optimize(
 
 &nbsp;
 
-## 实盘运行
-在实盘环境，用户可以基于编写好的CTA策略来创建新的实例，一键初始化、启动、停止策略。
+## 實盤執行
+在實盤環境，使用者可以基於編寫好的CTA策略來建立新的例項，一鍵初始化、啟動、停止策略。
 
 
-### 创建策略实例
-用户可以基于编写好的CTA策略来创建新的实例，策略实例的好处在于同一个策略可以同时去运行多个品种合约，并且每个实例的参数可以是不同的。
-在创建实例的时候需要填写如图的实例名称、合约品种、参数设置。注意：实例名称不能重名；合约名称是vt_symbol的格式，如IF1905.CFFEX。
+### 建立策略例項
+使用者可以基於編寫好的CTA策略來建立新的例項，策略例項的好處在於同一個策略可以同時去執行多個品種合約，並且每個例項的引數可以是不同的。
+在建立例項的時候需要填寫如圖的例項名稱、合約品種、引數設定。注意：例項名稱不能重名；合約名稱是vt_symbol的格式，如IF1905.CFFEX。
 
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/cta_strategy/add_strategy.png)
 
-创建策略流程如下：
-- 检查策略实例重名
-- 添加策略配置信息(strategy_name, vt_symbol, setting)到strategies字典上
-- 添加该策略要订阅行情的合约信息到symbol_strategy_map字典中；
-- 把策略配置信息保存到json文件内；
-- 在图形化界面更新状态信息。
+建立策略流程如下：
+- 檢查策略例項重名
+- 新增策略配置資訊(strategy_name, vt_symbol, setting)到strategies字典上
+- 新增該策略要訂閱行情的合約資訊到symbol_strategy_map字典中；
+- 把策略配置資訊儲存到json檔案內；
+- 在圖形化介面更新狀態資訊。
 
 ```
     def add_strategy(
@@ -872,7 +872,7 @@ def optimize(
         Add a new strategy.
         """
         if strategy_name in self.strategies:
-            self.write_log(f"创建策略失败，存在重名{strategy_name}")
+            self.write_log(f"建立策略失敗，存在重名{strategy_name}")
             return
 
         strategy_class = self.classes[class_name]
@@ -893,11 +893,11 @@ def optimize(
 &nbsp;
 
 ### 初始化策略
-- 调用策略类的on_init()回调函数,并且载入历史数据；
-- 恢复上次退出之前的策略状态；
-- 从.vntrader/cta_strategy_data.json内读取策略参数，最新的技术指标，以及持仓数量；
-- 调用接口的subcribe()函数订阅指定行情信息；
-- 策略初始化状态变成True，并且更新到日志上。
+- 呼叫策略類的on_init()回撥函式,並且載入歷史資料；
+- 恢復上次退出之前的策略狀態；
+- 從.vntrader/cta_strategy_data.json內讀取策略引數，最新的技術指標，以及持倉數量；
+- 呼叫介面的subcribe()函式訂閱指定行情資訊；
+- 策略初始化狀態變成True，並且更新到日誌上。
   
 ```
     def _init_strategy(self):
@@ -909,10 +909,10 @@ def optimize(
             strategy = self.strategies[strategy_name]
 
             if strategy.inited:
-                self.write_log(f"{strategy_name}已经完成初始化，禁止重复操作")
+                self.write_log(f"{strategy_name}已經完成初始化，禁止重複操作")
                 continue
 
-            self.write_log(f"{strategy_name}开始执行初始化")
+            self.write_log(f"{strategy_name}開始執行初始化")
 
             # Call on_init function of strategy
             self.call_strategy_func(strategy, strategy.on_init)
@@ -932,7 +932,7 @@ def optimize(
                     symbol=contract.symbol, exchange=contract.exchange)
                 self.main_engine.subscribe(req, contract.gateway_name)
             else:
-                self.write_log(f"行情订阅失败，找不到合约{strategy.vt_symbol}", strategy)
+                self.write_log(f"行情訂閱失敗，找不到合約{strategy.vt_symbol}", strategy)
 
             # Put event to update init completed status.
             strategy.inited = True
@@ -944,11 +944,11 @@ def optimize(
 
 &nbsp;
 
-### 启动策略
-- 检查策略初始化状态；
-- 检查策略启动状态，避免重复启动；
-- 调用策略类的on_start()函数启动策略；
-- 策略启动状态变成True，并且更新到图形化界面上。
+### 啟動策略
+- 檢查策略初始化狀態；
+- 檢查策略啟動狀態，避免重複啟動；
+- 呼叫策略類的on_start()函式啟動策略；
+- 策略啟動狀態變成True，並且更新到圖形化介面上。
 
 ```
     def start_strategy(self, strategy_name: str):
@@ -957,11 +957,11 @@ def optimize(
         """
         strategy = self.strategies[strategy_name]
         if not strategy.inited:
-            self.write_log(f"策略{strategy.strategy_name}启动失败，请先初始化")
+            self.write_log(f"策略{strategy.strategy_name}啟動失敗，請先初始化")
             return
 
         if strategy.trading:
-            self.write_log(f"{strategy_name}已经启动，请勿重复操作")
+            self.write_log(f"{strategy_name}已經啟動，請勿重複操作")
             return
 
         self.call_strategy_func(strategy, strategy.on_start)
@@ -973,12 +973,12 @@ def optimize(
 &nbsp;
 
 ### 停止策略
-- 检查策略启动状态；
-- 调用策略类的on_stop()函数停止策略；
-- 更新策略启动状态为False；
-- 对所有为成交的委托（市价单/限价单/本地停止单）进行撤单操作；
-- 把策略参数，最新的技术指标，以及持仓数量保存到.vntrader/cta_strategy_data.json内；
-- 在图形化界面更新策略状态。
+- 檢查策略啟動狀態；
+- 呼叫策略類的on_stop()函式停止策略；
+- 更新策略啟動狀態為False；
+- 對所有為成交的委託（市價單/限價單/本地停止單）進行撤單操作；
+- 把策略引數，最新的技術指標，以及持倉數量儲存到.vntrader/cta_strategy_data.json內；
+- 在圖形化介面更新策略狀態。
 
 ```
     def stop_strategy(self, strategy_name: str):
@@ -1007,10 +1007,10 @@ def optimize(
 
 &nbsp;
 
-### 编辑策略
-- 重新配置策略参数字典setting；
-- 更新参数字典到策略中；
-- 在图像化界面更新策略状态。
+### 編輯策略
+- 重新配置策略引數字典setting；
+- 更新引數字典到策略中；
+- 在影象化介面更新策略狀態。
 
 ```
     def edit_strategy(self, strategy_name: str, setting: dict):
@@ -1027,11 +1027,11 @@ def optimize(
 &nbsp;
 
 ### 移除策略
-- 检查策略状态，只有停止策略后从可以移除策略；
-- 从json文件移除策略配置信息(strategy_name, vt_symbol, setting)；
-- 从symbol_strategy_map字典中移除该策略订阅的合约信息；
-- 从strategy_orderid_map字典移除活动委托记录；
-- 从strategies字典移除该策略的相关配置信息。
+- 檢查策略狀態，只有停止策略後從可以移除策略；
+- 從json檔案移除策略配置資訊(strategy_name, vt_symbol, setting)；
+- 從symbol_strategy_map字典中移除該策略訂閱的合約資訊；
+- 從strategy_orderid_map字典移除活動委託記錄；
+- 從strategies字典移除該策略的相關配置資訊。
 
 ```
     def remove_strategy(self, strategy_name: str):
@@ -1040,7 +1040,7 @@ def optimize(
         """
         strategy = self.strategies[strategy_name]
         if strategy.trading:
-            self.write_log(f"策略{strategy.strategy_name}移除失败，请先停止")
+            self.write_log(f"策略{strategy.strategy_name}移除失敗，請先停止")
             return
 
         # Remove setting
@@ -1067,11 +1067,11 @@ def optimize(
 
 &nbsp;
 
-### 锁仓操作
+### 鎖倉操作
 
-用户在编写策略时，可以通过填写lock字段来让策略完成锁仓操作，即禁止平今，通过反向开仓来代替。
+使用者在編寫策略時，可以通過填寫lock欄位來讓策略完成鎖倉操作，即禁止平今，通過反向開倉來代替。
 
-- 在cta策略模板template中，可以看到如下具体委托函数都有lock字段，并且默认为False。
+- 在cta策略模板template中，可以看到如下具體委託函式都有lock欄位，並且預設為False。
 
 ```
     def buy(self, price: float, volume: float, stop: bool = False, lock: bool = False):
@@ -1121,7 +1121,7 @@ def optimize(
 
 &nbsp;
 
-- 设置lock=True后，cta实盘引擎send_order()函数发生响应，并且调用其最根本的委托函数send_server_order()去处理锁仓委托转换。首先是创建原始委托original_req，然后调用converter文件里面OffsetConverter类的convert_order_request来进行相关转换。
+- 設定lock=True後，cta實盤引擎send_order()函式發生響應，並且呼叫其最根本的委託函式send_server_order()去處理鎖倉委託轉換。首先是建立原始委託original_req，然後呼叫converter檔案裡面OffsetConverter類的convert_order_request來進行相關轉換。
 
 ```
     def send_order(
@@ -1138,7 +1138,7 @@ def optimize(
         """
         contract = self.main_engine.get_contract(strategy.vt_symbol)
         if not contract:
-            self.write_log(f"委托失败，找不到合约：{strategy.vt_symbol}", strategy)
+            self.write_log(f"委託失敗，找不到合約：{strategy.vt_symbol}", strategy)
             return ""
 
         if stop:
@@ -1220,7 +1220,7 @@ def optimize(
 
 &nbsp;
 
-- 在convert_order_request_lock()函数中，先计算今仓的量和昨可用量；然后进行判断：若有今仓，只能开仓（锁仓）；无今仓时候，若平仓量小于等于昨可用，全部平昨，反之，先平昨，剩下的反向开仓。
+- 在convert_order_request_lock()函式中，先計算今倉的量和昨可用量；然後進行判斷：若有今倉，只能開倉（鎖倉）；無今倉時候，若平倉量小於等於昨可用，全部平昨，反之，先平昨，剩下的反向開倉。
 
 ```
     def convert_order_request_lock(self, req: OrderRequest):

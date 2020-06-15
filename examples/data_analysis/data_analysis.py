@@ -58,7 +58,7 @@ class DataAnalysis:
 
     ):
         """"""
-        output("开始加载历史数据")
+        output("開始載入歷史資料")
 
         self.window_volatility = window_volatility
         self.window_index = window_index
@@ -79,7 +79,7 @@ class DataAnalysis:
 
         )
 
-        output(f"历史数据加载完成，数据量：{len(bars)}")
+        output(f"歷史資料載入完成，資料量：{len(bars)}")
 
         # Generate history data in DataFrame
         t = []
@@ -117,11 +117,11 @@ class DataAnalysis:
             df = self.orignal
 
         if df is None:
-            output("数据为空，请输入数据")
+            output("資料為空，請輸入資料")
 
         close_price = df["close"]
 
-        output("第一步:画出行情图，检查数据断点")
+        output("第一步:畫出行情圖，檢查資料斷點")
 
         close_price.plot(figsize=(20, 8), title="close_price")
         plt.show()
@@ -139,9 +139,9 @@ class DataAnalysis:
 
     def relative_volatility_analysis(self, df: DataFrame = None):
         """
-        相对波动率
+        相對波動率
         """
-        output("第五步：相对波动率分析")
+        output("第五步：相對波動率分析")
         df["volatility"] = talib.ATR(
             np.array(df["high"]),
             np.array(df["low"]),
@@ -162,9 +162,9 @@ class DataAnalysis:
 
     def growth_analysis(self, df: DataFrame = None):
         """
-        百分比K线变化率
+        百分比K線變化率
         """
-        output("第六步：变化率分析")
+        output("第六步：變化率分析")
         df["pre_close"] = df["close"].shift(1).fillna(0)
         df["g%"] = 100 * (df["close"] - df["pre_close"]) / df["close"]
 
@@ -178,7 +178,7 @@ class DataAnalysis:
 
     def calculate_index(self, df: DataFrame = None):
         """"""
-        output("第七步：计算相关技术指标，返回DataFrame\n")
+        output("第七步：計算相關技術指標，返回DataFrame\n")
 
         if self.index_1to1:
             for i in self.index_1to1:
@@ -235,19 +235,19 @@ class DataAnalysis:
     def multi_time_frame_analysis(self, intervals: list = None, df: DataFrame = None):
         """"""
         if not intervals:
-            output("请输入K线合成周期")
+            output("請輸入K線合成週期")
             return
 
         if df is None:
             df = self.orignal
 
         if df is None:
-            output("请先加载数据")
+            output("請先載入資料")
             return
 
         for interval in intervals:
             output("------------------------------------------------")
-            output(f"合成{interval}周期K先并开始数据分析")
+            output(f"合成{interval}週期K先並開始資料分析")
 
             data = pd.DataFrame()
             data["open"] = df["open"].resample(interval, how="first")
@@ -295,10 +295,10 @@ def random_test(close_price):
     acorr_result = acorr_ljungbox(close_price, lags=1)
     p_value = acorr_result[1]
     if p_value < 0.05:
-        output("第二步：随机性检验：非纯随机性")
+        output("第二步：隨機性檢驗：非純隨機性")
     else:
-        output("第二步：随机性检验：纯随机性")
-    output(f"白噪声检验结果:{acorr_result}\n")
+        output("第二步：隨機性檢驗：純隨機性")
+    output(f"白噪聲檢驗結果:{acorr_result}\n")
 
 
 def stability_test(close_price):
@@ -308,16 +308,16 @@ def stability_test(close_price):
     t_c = statitstic[4]["10%"]
 
     if t_s > t_c:
-        output("第三步：平稳性检验：存在单位根，时间序列不平稳")
+        output("第三步：平穩性檢驗：存在單位根，時間序列不平穩")
     else:
-        output("第三步：平稳性检验：不存在单位根，时间序列平稳")
+        output("第三步：平穩性檢驗：不存在單位根，時間序列平穩")
 
-    output(f"ADF检验结果：{statitstic}\n")
+    output(f"ADF檢驗結果：{statitstic}\n")
 
 
 def autocorrelation_test(close_price):
     """"""
-    output("第四步：画出自相关性图，观察自相关特性")
+    output("第四步：畫出自相關性圖，觀察自相關特性")
 
     plot_acf(close_price, lags=60)
     plt.show()
@@ -330,26 +330,26 @@ def statitstic_info(df):
     """"""
     mean = round(df.mean(), 4)
     median = round(df.median(), 4)
-    output(f"样本平均数：{mean}, 中位数: {median}")
+    output(f"樣本平均數：{mean}, 中位數: {median}")
 
     skew = round(df.skew(), 4)
     kurt = round(df.kurt(), 4)
 
     if skew == 0:
-        skew_attribute = "对称分布"
+        skew_attribute = "對稱分佈"
     elif skew > 0:
-        skew_attribute = "分布偏左"
+        skew_attribute = "分佈偏左"
     else:
-        skew_attribute = "分布偏右"
+        skew_attribute = "分佈偏右"
 
     if kurt == 0:
-        kurt_attribute = "正态分布"
+        kurt_attribute = "正態分佈"
     elif kurt > 0:
-        kurt_attribute = "分布陡峭"
+        kurt_attribute = "分佈陡峭"
     else:
-        kurt_attribute = "分布平缓"
+        kurt_attribute = "分佈平緩"
 
-    output(f"偏度为：{skew}，属于{skew_attribute}；峰度为：{kurt}，属于{kurt_attribute}\n")
+    output(f"偏度為：{skew}，屬於{skew_attribute}；峰度為：{kurt}，屬於{kurt_attribute}\n")
 
 
 def output(msg):

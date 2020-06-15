@@ -1,39 +1,39 @@
-# 交易风控
+# 交易風控
 
-交易风控模块属于事前风控，即在委托在通过交易API接口发出去前，需要检查其状态不能超过风控限制，其中包括：
-- 委托数量必须大于0
-- 单笔委托的数量上限
-- 当日总成交数量上限
-- 委托流数量上限
-- 当前活动委托次数上限
-- 当日撤单次数上限
+交易風控模組屬於事前風控，即在委託在通過交易API介面發出去前，需要檢查其狀態不能超過風控限制，其中包括：
+- 委託數量必須大於0
+- 單筆委託的數量上限
+- 當日總成交數量上限
+- 委託流數量上限
+- 當前活動委託次數上限
+- 當日撤單次數上限
 
 &nbsp;
 
-## 加载启动
+## 載入啟動
 
-进入VN Trader后，首先登陆接口，如连接CTP；然后在菜单栏中点击“功能”->"交易风控“后，会弹出交易风控窗口，如图。
+進入VN Trader後，首先登陸介面，如連線CTP；然後在選單欄中點選“功能”->"交易風控“後，會彈出交易風控視窗，如圖。
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/risk_manager/risk_manager.png)
 
-窗口中显示的参数，对应的是C:\Users\Administrator\.vntrader里面risk_manager_setting.json的参数字典，如图。
+視窗中顯示的引數，對應的是C:\Users\Administrator\.vntrader裡面risk_manager_setting.json的引數字典，如圖。
 ![](https://vnpy-community.oss-cn-shanghai.aliyuncs.com/forum_experience/yazhang/risk_manager/data_setting.png)
 
-在“风控运行状态”的选择框中点击“启动”后
-- 立刻调用RiskManagerEngine类的update_setting()函数读取risk_manager_setting.json的参数字典并且绑定类的属性。
-- 在日志中输出"交易风控功能启动"。
-- 运行check_risk()函数，去检查每一笔发出去的委托是否符合各种风控要求，若全部满足后，流控计数+1，委托真正通过API接口发送出去。
+在“風控執行狀態”的選擇框中點選“啟動”後
+- 立刻呼叫RiskManagerEngine類的update_setting()函式讀取risk_manager_setting.json的引數字典並且繫結類的屬性。
+- 在日誌中輸出"交易風控功能啟動"。
+- 執行check_risk()函式，去檢查每一筆發出去的委託是否符合各種風控要求，若全部滿足後，流控計數+1，委託真正通過API介面傳送出去。
 
 &nbsp;
 
-## 修改参数
+## 修改引數
 
-交易风控组件允许用户修改风控参数。由于GUI界面的各参数栏是基于PyQt5的QSpinBox，用户可以用鼠标点击上下箭头来修改，也可以直接键盘输入来修改。
+交易風控元件允許使用者修改風控引數。由於GUI介面的各引數欄是基於PyQt5的QSpinBox，使用者可以用滑鼠點選上下箭頭來修改，也可以直接鍵盤輸入來修改。
 
-最后点击窗口下方的“保存”按钮，对调用RiskManagerEngine类的save_setting()函数去更新到risk_manager_setting.json的参数字典中，最后通过update_setting()函数把参数字典绑定到类的属性。
+最後點選視窗下方的“儲存”按鈕，對呼叫RiskManagerEngine類的save_setting()函式去更新到risk_manager_setting.json的引數字典中，最後通過update_setting()函式把引數字典繫結到類的屬性。
 
 &nbsp;
 
-## 停止风控
+## 停止風控
 
-在“风控运行状态”的选择框中点击“停止后”后，RiskManagerEngine类的active变成False，check_risk()函数不再检查委托的风控流控状态，同时在日志中输出"交易风控功能停止"。
+在“風控執行狀態”的選擇框中點選“停止後”後，RiskManagerEngine類的active變成False，check_risk()函式不再檢查委託的風控流控狀態，同時在日誌中輸出"交易風控功能停止"。
 
