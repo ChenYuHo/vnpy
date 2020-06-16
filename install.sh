@@ -38,7 +38,7 @@ $python -m pip install psycopg2-binary
 $python -m pip install -r requirements.txt
 
 # Install local Chinese language environment
-locale-gen zh_CN.GB18030
+locale-gen zh_TW zh_TW.UTF-8 zh_CN.UTF-8 en_US.UTF-8 zh_CN.GB18030
 
 # Install vn.py
 $python -m pip install . $@
