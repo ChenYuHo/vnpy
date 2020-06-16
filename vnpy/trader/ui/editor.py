@@ -104,7 +104,7 @@ class CodeEditor(QtWidgets.QMainWindow):
 
         # Set editor font
         font = QtGui.QFont()
-        font.setFamily('Consolas')
+        font.setFamily('WenQuanYi Zen Hei')
         font.setFixedPitch(True)
         font.setPointSize(10)
 

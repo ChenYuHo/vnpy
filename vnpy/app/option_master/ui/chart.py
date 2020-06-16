@@ -19,7 +19,7 @@ from mpl_toolkits.mplot3d import Axes3D     # noqa
 from pylab import mpl
 
 plt.style.use("dark_background")
-mpl.rcParams['font.sans-serif'] = ['Microsoft YaHei']   # set font for Chinese
+mpl.rcParams['font.sans-serif'] = ['WenQuanYi Zen He']   # set font for Chinese
 mpl.rcParams['axes.unicode_minus'] = False
 
 
